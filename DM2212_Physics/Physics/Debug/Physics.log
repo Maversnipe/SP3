@@ -1,44 +1,6 @@
-﻿  Utility.cpp
-  shader.cpp
-  SceneKinematics.cpp
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(193): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(221): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(244): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(280): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(306): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(309): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(333): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(352): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(353): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(357): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(359): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(361): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(373): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenekinematics.cpp(375): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SceneCollision.cpp
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenecollision.cpp(212): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenecollision.cpp(263): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  SceneBase.cpp
-  SceneAsteroid.cpp
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(114): warning C4305: '-=': truncation from 'double' to 'float'
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(118): warning C4305: '+=': truncation from 'double' to 'float'
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(157): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(211): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(215): warning C4244: 'argument': conversion from 'const int' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(218): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(224): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(231): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(253): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\sceneasteroid.cpp(353): warning C4305: 'argument': truncation from 'double' to 'float'
-  MeshBuilder.cpp
-  Mesh.cpp
-  main.cpp
-  LoadTGA.cpp
-  LoadOBJ.cpp
-  GameObject.cpp
-  Camera.cpp
-  Application.cpp
-  Generating Code...
-e:\school (nyp)\year 2 sem 1\programming physics\dm2212_physics\dm2212_physics\physics\source\scenecollision.cpp(364): warning C4715: 'SceneCollision::CheckCollision': not all control paths return a value
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Physics.vcxproj -> E:\School (NYP)\Year 2 Sem 1\Programming Physics\DM2212_Physics\DM2212_Physics\Debug\Physics.exe
+﻿  SceneCollision.cpp
+c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(218): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(269): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(370): warning C4715: 'SceneCollision::CheckCollision': not all control paths return a value
+  Physics.vcxproj -> C:\Users\hsy00\Desktop\Work\Sch\Yr2\Sem1\SP\DM2212_Physics\Debug\Physics.exe
+  Physics.vcxproj -> C:\Users\hsy00\Desktop\Work\Sch\Yr2\Sem1\SP\DM2212_Physics\Debug\Physics.pdb (Full PDB)

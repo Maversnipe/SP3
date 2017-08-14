@@ -19,8 +19,25 @@ struct GameObject
 		GO_POWERUP,
 		GO_WALL,
 		GO_PILLAR,
+
+		//Game
+		GO_BLOCK,
+
 		GO_TOTAL, //must be last
 	};
+
+
+	enum BLOCK_TYPE
+	{
+		GO_GRASS,
+		GO_GLASS,
+		GO_WOOD,
+		GO_METAL,
+		GO_BTYPTOTAL,
+	};
+
+	BLOCK_TYPE Btype;
+
 	GAMEOBJECT_TYPE type;
 	Vector3 pos;
 	Vector3 vel;
@@ -31,7 +48,7 @@ struct GameObject
 	bool active;
 	float mass;
 
-	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL);
+	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btyp = GO_GRASS);
 	~GameObject();
 };
 

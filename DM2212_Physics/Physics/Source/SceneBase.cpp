@@ -110,6 +110,13 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
+	//Game (Load Block Textures Here)
+	BlockList[GEO_GRASS] = MeshBuilder::GenerateCube("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
+	BlockList[GEO_GLASS] = MeshBuilder::GenerateCube("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
+	BlockList[GEO_WOOD] = MeshBuilder::GenerateCube("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
+	BlockList[GEO_METAL] = MeshBuilder::GenerateCube("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
+
+
 	bLightEnabled = false;
 }
 
@@ -250,6 +257,14 @@ void SceneBase::Exit()
 		if(meshList[i])
 			delete meshList[i];
 	}
+
+	//Clean Blocks
+	for (int i = 0; i < NUM_BLOCKS; ++i)
+	{
+		if (BlockList[i])
+			delete BlockList[i];
+	}
+
 	glDeleteProgram(m_programID);
 	glDeleteVertexArrays(1, &m_vertexArrayID);
 }

@@ -50,6 +50,17 @@ public:
 		GEO_SHIP,
 		NUM_GEOMETRY,
 	};
+
+	enum BLOCK_TYPE
+	{
+		//Blocks
+		GEO_GRASS=0,
+		GEO_GLASS,
+		GEO_WOOD,
+		GEO_METAL,
+		NUM_BLOCKS,
+	};
+
 public:
 	SceneBase();
 	~SceneBase();
@@ -68,6 +79,8 @@ public:
 protected:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
+	//Block list
+	Mesh* BlockList[NUM_BLOCKS];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 

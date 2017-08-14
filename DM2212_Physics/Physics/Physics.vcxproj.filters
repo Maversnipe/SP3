@@ -9,6 +9,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Header Files\GameObj">
+      <UniqueIdentifier>{30b135d0-072d-47bd-a82c-c67a05084d3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObj">
+      <UniqueIdentifier>{1479be42-c13c-427b-b6a7-0309c3d0a789}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -53,15 +59,27 @@
     <ClCompile Include="Source\SceneCollision.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Blocks.cpp">
+      <Filter>Source Files\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GrassBlock.cpp">
+      <Filter>Source Files\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlassBlock.cpp">
+      <Filter>Source Files\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WoodBlock.cpp">
+      <Filter>Source Files\GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MetalBlock.cpp">
+      <Filter>Source Files\GameObj</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Light.h">
@@ -105,6 +123,24 @@
     </ClInclude>
     <ClInclude Include="Source\SceneCollision.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Blocks.h">
+      <Filter>Header Files\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrassBlock.h">
+      <Filter>Header Files\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MetalBlock.h">
+      <Filter>Header Files\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WoodBlock.h">
+      <Filter>Header Files\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlassBlock.h">
+      <Filter>Header Files\GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>Header Files\GameObj</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
