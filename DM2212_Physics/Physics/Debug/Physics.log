@@ -1,5 +1,1 @@
-﻿  SceneCollision.cpp
-c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(225): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(276): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(377): warning C4715: 'SceneCollision::CheckCollision': not all control paths return a value
-  Physics.vcxproj -> C:\Users\Wafieqa\Desktop\wafie's lair\sch\Sudio Project 3\version 1\DM2212_Physics\Debug\Physics.exe
+﻿

@@ -1,156 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Header Files\GameObj">
-      <UniqueIdentifier>{30b135d0-072d-47bd-a82c-c67a05084d3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\GameObj">
-      <UniqueIdentifier>{1479be42-c13c-427b-b6a7-0309c3d0a789}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Source\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Blocks.cpp" />
+    <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\GlassBlock.cpp" />
+    <ClCompile Include="Source\GrassBlock.cpp" />
+    <ClCompile Include="Source\LoadOBJ.cpp" />
+    <ClCompile Include="Source\LoadTGA.cpp" />
+    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\MetalBlock.cpp" />
+    <ClCompile Include="Source\SceneAsteroid.cpp" />
+    <ClCompile Include="Source\SceneBase.cpp" />
+    <ClCompile Include="Source\SceneCollision.cpp" />
+    <ClCompile Include="Source\SceneKinematics.cpp" />
+    <ClCompile Include="Source\shader.cpp" />
+    <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LoadOBJ.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\LoadTGA.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MeshBuilder.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneKinematics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Utility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneAsteroid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneBase.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneCollision.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.cpp">
-      <Filter>Source Files</Filter>
-=======
-    <ClCompile Include="Source\Blocks.cpp">
-      <Filter>Source Files\GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GrassBlock.cpp">
-      <Filter>Source Files\GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GlassBlock.cpp">
-      <Filter>Source Files\GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WoodBlock.cpp">
-      <Filter>Source Files\GameObj</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MetalBlock.cpp">
-      <Filter>Source Files\GameObj</Filter>
->>>>>>> f7cd84c1bcbea2eab787d5ef8ca8fb7ae830e12c
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Source\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LoadOBJ.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\LoadTGA.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MeshBuilder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneKinematics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\shader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Utility.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Vertex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneAsteroid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneCollision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.h">
-      <Filter>Header Files</Filter>
-=======
-    <ClInclude Include="Source\Blocks.h">
-      <Filter>Header Files\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GrassBlock.h">
-      <Filter>Header Files\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MetalBlock.h">
-      <Filter>Header Files\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WoodBlock.h">
-      <Filter>Header Files\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GlassBlock.h">
-      <Filter>Header Files\GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject.h">
-      <Filter>Header Files\GameObj</Filter>
->>>>>>> f7cd84c1bcbea2eab787d5ef8ca8fb7ae830e12c
-    </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation.h" />
+    <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Blocks.h" />
+    <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\GlassBlock.h" />
+    <ClInclude Include="Source\GrassBlock.h" />
+    <ClInclude Include="Source\Light.h" />
+    <ClInclude Include="Source\LoadOBJ.h" />
+    <ClInclude Include="Source\LoadTGA.h" />
+    <ClInclude Include="Source\Material.h" />
+    <ClInclude Include="Source\Mesh.h" />
+    <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\MetalBlock.h" />
+    <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\SceneAsteroid.h" />
+    <ClInclude Include="Source\SceneBase.h" />
+    <ClInclude Include="Source\SceneCollision.h" />
+    <ClInclude Include="Source\SceneKinematics.h" />
+    <ClInclude Include="Source\shader.hpp" />
+    <ClInclude Include="Source\Utility.h" />
+    <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="Source\WoodBlock.h" />
   </ItemGroup>
 </Project>

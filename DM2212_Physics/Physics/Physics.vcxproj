@@ -152,7 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.cpp" />
+    <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Blocks.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
@@ -174,7 +174,7 @@
     <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.h" />
+    <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Blocks.h" />
     <ClInclude Include="Source\Camera.h" />
