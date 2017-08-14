@@ -50,6 +50,11 @@ void SceneCollision::Init()
 	go->type = GameObject::GO_PILLAR;
 	go->pos = centre + Vector3(-20.f, 0.f, 0.f);
 	go->scale.Set(2.f, 2.f, 1.f);
+
+	//Sprite animation ^-^
+	go = FetchGO();
+	go->type = GameObject::GO_TEST_ANIMATION;
+	go->pos = centre;
 }
 
 GameObject* SceneCollision::FetchGO()
@@ -410,6 +415,13 @@ void SceneCollision::RenderGO(GameObject *go)
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(meshList[GEO_BALL], false);
+		modelStack.PopMatrix();
+		break;
+	case GameObject::GO_TEST_ANIMATION:
+		modelStack.PushMatrix();
+		modelStack.Translate(50,50,0);
+		modelStack.Scale(10,10,1);
+		RenderMesh(meshList[GEO_TEST_ANIMATION], false);
 		modelStack.PopMatrix();
 		break;
 	}

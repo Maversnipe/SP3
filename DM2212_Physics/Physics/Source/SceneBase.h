@@ -8,6 +8,7 @@
 #include "MatrixStack.h"
 #include "Light.h"
 #include "GameObject.h"
+#include "SpriteAnimation.h"
 #include <vector>
 
 class SceneBase : public Scene
@@ -48,6 +49,9 @@ public:
 		GEO_BALL,
 		GEO_CUBE,
 		GEO_SHIP,
+		
+		//SP 3
+		GEO_TEST_ANIMATION,
 		NUM_GEOMETRY,
 	};
 public:

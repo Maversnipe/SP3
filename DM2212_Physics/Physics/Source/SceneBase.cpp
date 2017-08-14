@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+
 #include <sstream>
 
 SceneBase::SceneBase()
@@ -110,6 +111,17 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
+	//----------Sprite animation ^-^----------
+	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
+	meshList[GEO_TEST_ANIMATION]->textureID = LoadTGA("Image//maskfish.tga");
+	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_TEST_ANIMATION]);
+	//use dynamic_cast because mesh doesn't have animation
+	if (sa)
+	{
+		sa->m_anim = new Animation();
+		sa->m_anim->Set(0, 5, 0, 1.f, true);
+	}
+
 	bLightEnabled = false;
 }
 
@@ -125,6 +137,16 @@ void SceneBase::Update(double dt)
 	if(Application::IsKeyPressed('4'))
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	
+	//----------Sprite animation ^-^----------
+	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>
+		(meshList[GEO_TEST_ANIMATION]);
+	//use dynamic_cast because mesh doesn't have animation
+	if (sa)
+	{
+		sa->Update(dt);
+		sa->m_anim->animActive = true;
+	}
+
 	fps = (float)(1.f / dt);
 }
 

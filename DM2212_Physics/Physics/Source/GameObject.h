@@ -19,6 +19,9 @@ struct GameObject
 		GO_POWERUP,
 		GO_WALL,
 		GO_PILLAR,
+
+		//sp3 ^-^
+		GO_TEST_ANIMATION,
 		GO_TOTAL, //must be last
 	};
 	GAMEOBJECT_TYPE type;
