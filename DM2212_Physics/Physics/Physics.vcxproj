@@ -154,31 +154,40 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Blocks.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\GlassBlock.cpp" />
+    <ClCompile Include="Source\GrassBlock.cpp" />
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\MetalBlock.cpp" />
     <ClCompile Include="Source\SceneAsteroid.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneCollision.cpp" />
     <ClCompile Include="Source\SceneKinematics.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
+    <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\wafie%27s lair\sch\Sudio Project 3\version 1\DM2212_Physics\Physics\Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Application.h" />
+    <ClInclude Include="Source\Blocks.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\GameObject.h" />
+    <ClInclude Include="Source\GlassBlock.h" />
+    <ClInclude Include="Source\GrassBlock.h" />
     <ClInclude Include="Source\Light.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
+    <ClInclude Include="Source\MetalBlock.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneAsteroid.h" />
     <ClInclude Include="Source\SceneBase.h" />
@@ -187,6 +196,7 @@
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
+    <ClInclude Include="Source\WoodBlock.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
