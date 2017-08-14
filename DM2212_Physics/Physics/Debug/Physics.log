@@ -1,12 +1,5 @@
-<<<<<<< HEAD
-﻿  LINK : C:\Users\Wafieqa\Desktop\wafie's lair\sch\Sudio Project 3\version 1\DM2212_Physics\Debug\Physics.exe not found or not built by the last incremental link; performing full link
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  Physics.vcxproj -> C:\Users\Wafieqa\Desktop\wafie's lair\sch\Sudio Project 3\version 1\DM2212_Physics\Debug\Physics.exe
-=======
 ﻿  SceneCollision.cpp
-c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(218): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(269): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\hsy00\desktop\work\sch\yr2\sem1\sp\dm2212_physics\physics\source\scenecollision.cpp(370): warning C4715: 'SceneCollision::CheckCollision': not all control paths return a value
-  Physics.vcxproj -> C:\Users\hsy00\Desktop\Work\Sch\Yr2\Sem1\SP\DM2212_Physics\Debug\Physics.exe
-  Physics.vcxproj -> C:\Users\hsy00\Desktop\Work\Sch\Yr2\Sem1\SP\DM2212_Physics\Debug\Physics.pdb (Full PDB)
->>>>>>> f7cd84c1bcbea2eab787d5ef8ca8fb7ae830e12c
+c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(225): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(276): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\wafieqa\desktop\wafie's lair\sch\sudio project 3\version 1\dm2212_physics\physics\source\scenecollision.cpp(377): warning C4715: 'SceneCollision::CheckCollision': not all control paths return a value
+  Physics.vcxproj -> C:\Users\Wafieqa\Desktop\wafie's lair\sch\Sudio Project 3\version 1\DM2212_Physics\Debug\Physics.exe

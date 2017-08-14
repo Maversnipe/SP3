@@ -111,7 +111,6 @@ void SceneBase::Init()
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
 
-<<<<<<< HEAD
 	//----------Sprite animation ^-^----------
 	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
 	meshList[GEO_TEST_ANIMATION]->textureID = LoadTGA("Image//maskfish.tga");
@@ -122,14 +121,13 @@ void SceneBase::Init()
 		sa->m_anim = new Animation();
 		sa->m_anim->Set(0, 5, 0, 1.f, true);
 	}
-=======
+
 	//Game (Load Block Textures Here)
 	BlockList[GEO_GRASS] = MeshBuilder::GenerateCube("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
 	BlockList[GEO_GLASS] = MeshBuilder::GenerateCube("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
 	BlockList[GEO_WOOD] = MeshBuilder::GenerateCube("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
 	BlockList[GEO_METAL] = MeshBuilder::GenerateCube("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
 
->>>>>>> f7cd84c1bcbea2eab787d5ef8ca8fb7ae830e12c
 
 	bLightEnabled = false;
 }

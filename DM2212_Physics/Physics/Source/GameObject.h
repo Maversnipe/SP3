@@ -20,14 +20,10 @@ struct GameObject
 		GO_WALL,
 		GO_PILLAR,
 
-<<<<<<< HEAD
 		//sp3 ^-^
 		GO_TEST_ANIMATION,
-=======
-		//Game
 		GO_BLOCK,
 
->>>>>>> f7cd84c1bcbea2eab787d5ef8ca8fb7ae830e12c
 		GO_TOTAL, //must be last
 	};
 
