@@ -21,28 +21,28 @@ public:
 	
 	vector<vector<int> > Map;
 
-	int GetNumOfTiles_Height(void) { return NoofTiles_Height; };		// Get the number of tiles for height of the screen
-	int GetNumOfTiles_Width(void)  { return NoofTiles_Width;  };		// Get the number of tiles for width of the screen
-	int GetTileSize_Height(void) { return theTileSize_Height; };	    // Get height of tile
-	int GetTileSize_Width(void)  { return theTileSize_Width;  };		// Get width of tile
+	int GetNumOfTiles_Height(void) { return m_iNoofTiles_Height; };		// Get the number of tiles for height of the screen
+	int GetNumOfTiles_Width(void)  { return m_iNoofTiles_Width;  };		// Get the number of tiles for width of the screen
+	int GetTileSize_Height(void) { return m_iTileSize_Height; };	    // Get height of tile
+	int GetTileSize_Width(void)  { return m_iTileSize_Width;  };		// Get width of tile
 
-	int getNumOfTiles_MapHeight(void) { return theNumOfTiles_MapHeight; };	// Get the number of tiles for height of the map
-	int getNumOfTiles_MapWidth(void)  { return theNumOfTiles_MapWidth;	};	// Get the number of tiles for width of the map
+	int getNumOfTiles_MapHeight(void) { return m_iNumOfTiles_MapHeight; };	// Get the number of tiles for height of the map
+	int getNumOfTiles_MapWidth(void)  { return m_iNumOfTiles_MapWidth;	};	// Get the number of tiles for width of the map
 
 
 protected:
-	int ScreenHeight;
-	int ScreeenWidth;
-	int NoofTiles_Height;
-	int NoofTiles_Width;
+	int m_iScreenHeight;
+	int m_iScreeenWidth;
+	int m_iNoofTiles_Height;
+	int m_iNoofTiles_Width;
 
-	int theTileSize_Height;
-	int theTileSize_Width;
+	int m_iTileSize_Height;
+	int m_iTileSize_Width;
 
-	int theMap_Height;				// The map's height
-	int theMap_Width;				// The map's width
-	int theNumOfTiles_MapHeight;	// Number of tiles in the map's height
-	int theNumOfTiles_MapWidth;		// Number of tiles in the map's width
+	int m_iMap_Height;				// The map's height
+	int m_iMap_Width;				// The map's width
+	int m_iNumOfTiles_MapHeight;	// Number of tiles in the map's height
+	int m_iNumOfTiles_MapWidth;		// Number of tiles in the map's width
 
 };
 

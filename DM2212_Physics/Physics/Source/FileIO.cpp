@@ -1,10 +1,10 @@
 #include "FileIO.h"
 
 FileIO::FileIO()
-	: ScreenHeight(0),
-	ScreeenWidth(0),
-	NoofTiles_Height(0),
-	NoofTiles_Width(0)
+	: m_iScreenHeight(0),
+	m_iScreeenWidth(0),
+	m_iNoofTiles_Height(0),
+	m_iNoofTiles_Width(0)
 {
 	Map.clear();
 }
@@ -17,25 +17,25 @@ FileIO::~FileIO()
 void FileIO::Init(const int height, const int width, const int Tileheight, const int Tilewidth,
 	const int theMap_Height, const int theMap_Width, int theTileSize_Height, int theTileSize_Width)
 {
-	ScreenHeight = height;
-	ScreeenWidth = width;
-	NoofTiles_Height = Tileheight;
-	NoofTiles_Width = Tilewidth;
-	this->theMap_Height = theMap_Height;
-	this->theMap_Width = theMap_Width;
-	this->theTileSize_Height = theTileSize_Height;
-	this->theTileSize_Width = theTileSize_Width;
+	m_iScreenHeight = height;
+	m_iScreeenWidth = width;
+	m_iNoofTiles_Height = Tileheight;
+	m_iNoofTiles_Width = Tilewidth;
+	m_iMap_Height = theMap_Height;
+	m_iMap_Width = theMap_Width;
+	m_iTileSize_Height = theTileSize_Height;
+	m_iTileSize_Width = theTileSize_Width;
 
-	// Calculate the number of tiles for map height and map width
-	NoofTiles_Height = (int)(theMap_Height / theTileSize_Height);
-	NoofTiles_Width = (int)(theMap_Width / theTileSize_Width);
+	// Calculate number of tiles for map height and map width
+	m_iNoofTiles_Height = (int)(theMap_Height / theTileSize_Height);
+	m_iNoofTiles_Width = (int)(theMap_Width / theTileSize_Width);
 
-	// Resize the screen map array based on the number of tiles in the map height
-	Map.resize(NoofTiles_Height);
-	for (int i = 0; i < NoofTiles_Height; ++i)
+	// Resize the screen map array based on the number of tiles in map height
+	Map.resize(m_iNoofTiles_Height);
+	for (int i = 0; i < m_iNoofTiles_Height; ++i)
 	{
-		// Resize each element inside screen map array based on the number of tiles in the map width
-		Map[i].resize(NoofTiles_Width);
+		// Resize each element inside screen map array based on the number of tiles in map width
+		Map[i].resize(m_iNoofTiles_Width);
 	}
 }
 
@@ -50,37 +50,37 @@ bool FileIO::Read(const string mapName)
 		int i = 0, k = 0;
 		while (file.good())
 		{
-			string aLineOfText = "";
-			getline(file, aLineOfText);
+			string Text = "";
+			getline(file, Text);
 
-			if (height >= NoofTiles_Height)
+			if (height >= m_iNoofTiles_Height)
 				break;
 
 			// If this line is not a comment line, then process it
-			if (!(aLineOfText.find("//*") == NULL) && aLineOfText != "")
+			if (!(Text.find("//*") == NULL) && Text != "")
 			{
 				if (height == 0)
 				{
 					// This is the first line of the map data file
 					string token;
-					istringstream iss(aLineOfText);
+					istringstream iss(Text);
 					while (getline(iss, token, ','))
 					{
 						// Count the number of columns
 						maxColumn = atoi(token.c_str());
 					}
-					if (maxColumn != NoofTiles_Width)
+					if (maxColumn != m_iNoofTiles_Width)
 						return false;
 				}
 				else
 				{
-					int theColumnCounter = 0;
+					int ColumnCounter = 0;
 
 					string token;
-					istringstream iss(aLineOfText);
-					while (getline(iss, token, ',') && (theColumnCounter<NoofTiles_Width))
+					istringstream iss(Text);
+					while (getline(iss, token, ',') && (ColumnCounter< m_iNoofTiles_Width))
 					{
-						Map[height][theColumnCounter++] = atoi(token.c_str());
+						Map[height][ColumnCounter++] = atoi(token.c_str());
 					}
 				}
 			}
