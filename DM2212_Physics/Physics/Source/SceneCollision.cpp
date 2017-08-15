@@ -15,6 +15,12 @@ void SceneCollision::Init()
 {
 	SceneBase::Init();
 
+	//Map reading
+	map = new FileIO();
+	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 32, Application::GetWindowHeight(), Application::GetWindowWidth());
+	map->Read("Maps//MapDesignL1.csv");
+	RenderMap();
+
 	//Physics code here
 	m_speed = 1.f;
 	
@@ -26,43 +32,6 @@ void SceneCollision::Init()
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
-
-	Vector3 centre(50.f, 50.f, 0.f);
-	for (int i = 0; i < 8; i++)
-	{
-		GameObject *go = FetchGO();
-		go->type = GameObject::GO_WALL;
-		go->dir.Set(cos(Math::DegreeToRadian(i * 45.f)), sin(Math::DegreeToRadian(i * 45.f)), 0.f);
-		go->pos = centre + go->dir * 40.f;
-		go->scale.Set(4.f, 40.f, 1.f);
-	}
-	GameObject *go = FetchGO();
-	go->type = GameObject::GO_WALL;
-	go->dir.Set(0.f, 1.f, 0.f);
-	go->pos = centre;
-	go->scale.Set(4.f, 40.f, 1.f);
-	
-	go = FetchGO();
-	go->type = GameObject::GO_PILLAR;
-	go->pos = centre + Vector3(20.f, 0.f, 0.f);
-	go->scale.Set(2.f, 2.f, 1.f);
-	go = FetchGO();
-	go->type = GameObject::GO_PILLAR;
-	go->pos = centre + Vector3(-20.f, 0.f, 0.f);
-	go->scale.Set(2.f, 2.f, 1.f);
-
-	//Sprite animation ^-^
-	go = FetchGO();
-	go->type = GameObject::GO_TEST_ANIMATION;
-	go->scale.Set(1.f, 1.f, 1.f);
-	go->pos = centre;
-
-	//Test Block spawn
-	go = FetchGO();
-	go->type = GameObject::GO_BLOCK;
-	go->pos = centre + Vector3(-20.f, 20.f, 0.f);
-	go->scale.Set(2.f, 2.f, 1.f);
-	go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 }
 
 GameObject* SceneCollision::FetchGO()
@@ -327,6 +296,61 @@ void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
 	}	
 }
 
+void SceneCollision::RenderMap()
+{
+	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	{
+		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+		{
+			if (map->Map[i][k] == 3)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 4.5f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
+			}
+			else if (map->Map[i][k] == 2)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 4.5f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
+			}
+			else if (map->Map[i][k] == 1)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 4.5f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+			}
+			else if (map->Map[i][k] == 4)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 4.5f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
+			}
+		}
+	}
+
+	//For debug
+	/*
+	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	{
+		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+		{
+			std::cout << map->Map[i][k];
+		}
+
+		std::cout << std::endl;
+	}
+	*/
+}
+
 bool SceneCollision::CheckCollision(GameObject *go, GameObject *go2, float dt)
 {
 	switch (go2->type)
@@ -437,7 +461,7 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(BlockList[go->Btype], false);
 		modelStack.PopMatrix();
@@ -483,30 +507,30 @@ void SceneCollision::Render()
 
 	//On screen text
 	std::ostringstream ss;
-	ss << "Time Estimated: " << m_timeEstimated1;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 18);
+	//ss << "Time Estimated: " << m_timeEstimated1;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 18);
 
-	ss.str(std::string());
-	ss.precision(5);
-	ss << "Time Taken: " << m_timeTaken1;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 15);
+	//ss.str(std::string());
+	//ss.precision(5);
+	//ss << "Time Taken: " << m_timeTaken1;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 15);
 
-	ss.str(std::string());
-	ss.precision(5);
-	ss << "E1: " << initialKE;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 12);
-	
-	ss.str(std::string());
-	ss.precision(5);
-	ss << "E2: " << finalKE;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 9);
+	//ss.str(std::string());
+	//ss.precision(5);
+	//ss << "E1: " << initialKE;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 12);
+	//
+	//ss.str(std::string());
+	//ss.precision(5);
+	//ss << "E2: " << finalKE;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 9);
 
-	//Exercise 3: render initial and final kinetic energy
-	
-	ss.str(std::string());
-	ss.precision(3);
-	ss << "Speed: " << m_speed;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
+	////Exercise 3: render initial and final kinetic energy
+	//
+	//ss.str(std::string());
+	//ss.precision(3);
+	//ss << "Speed: " << m_speed;
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 	
 	ss.str(std::string());
 	ss.precision(5);

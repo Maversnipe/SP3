@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include <vector>
 #include "SceneBase.h"
+#include "FileIO.h"
 
 class SceneCollision : public SceneBase
 {
@@ -29,6 +30,8 @@ public:
 	float CheckCollision2(GameObject *go, GameObject *go2);
 	void CollisionResponse(GameObject *go, GameObject *go2);
 
+	void RenderMap();
+
 protected:
 
 	//Physics
@@ -47,6 +50,9 @@ protected:
 	Vector3 u1, u2, v1, v2;
 	Vector3 initialMomentum, finalMomentum;
 	float initialKE, finalKE;
+
+	//Map
+	FileIO* map;
 };
 
 #endif

@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\FileIO.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Blocks.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\FileIO.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Blocks.h" />
