@@ -21,6 +21,10 @@ void SceneCollision::Init()
 	map->Read("Maps//MapDesignL1.csv");
 	RenderMap();
 
+	//Player
+	player = PlayerInfo::GetInstance();
+	player->Init();
+
 	//Physics code here
 	m_speed = 1.f;
 	
@@ -60,6 +64,7 @@ GameObject* SceneCollision::FetchGO()
 void SceneCollision::Update(double dt)
 {
 	SceneBase::Update(dt);
+	player->Update(dt);//updates player and tools
 	
 	if(Application::IsKeyPressed('9'))
 	{
@@ -81,13 +86,7 @@ void SceneCollision::Update(double dt)
 		bSpaceState = false;
 		std::cout << "SPACE BAR UP" << std::endl;
 
-		//spawn small GO_BALL
-		GameObject *go = FetchGO();
-		go->type = GameObject::GO_BALL;
-		go->pos.Set(m_worldWidth * 0.9f, 10.f);
-		go->vel.Set(0.f, 10.f, 0.f);
-		go->scale.Set(5.f, 5.f, 5.f);
-		go->mass = (go->scale.x * go->scale.y * go->scale.z) / 8.f;
+		player->UseCurrentTool();
 	}
 
 	//Mouse Section

@@ -5,6 +5,7 @@
 #include <vector>
 #include "SceneBase.h"
 #include "FileIO.h"
+#include "PlayerInfo.h"
 
 class SceneCollision : public SceneBase
 {
@@ -53,6 +54,9 @@ protected:
 
 	//Map
 	FileIO* map;
+
+	//player
+	PlayerInfo* player;
 };
 
 #endif

@@ -70,7 +70,9 @@
     <ClCompile Include="Source\ToolsInfo.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerInfo.cpp" />
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>PlayerInfo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Blocks.h">
@@ -151,7 +153,9 @@
     <ClInclude Include="Source\ToolsInfo.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerInfo.h" />
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>PlayerInfo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -174,6 +178,9 @@
     </Filter>
     <Filter Include="GameObjects\Tools">
       <UniqueIdentifier>{39a13c5d-6b10-4c6d-8970-ac13df62fdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerInfo">
+      <UniqueIdentifier>{098b7017-76dc-4629-8fd5-1037f46d33fa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

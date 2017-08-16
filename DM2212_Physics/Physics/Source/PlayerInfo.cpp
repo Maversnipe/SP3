@@ -1,6 +1,8 @@
 #include "PlayerInfo.h"
 #include "PickaxeTool.h"
 
+PlayerInfo *PlayerInfo::instance = 0;
+
 PlayerInfo::PlayerInfo()
 	:i_ActiveTool(0)
 	, i_Money(0)
@@ -20,6 +22,12 @@ void PlayerInfo::Init()
 
 }
 
-void PlayerInfo::Update()
+void PlayerInfo::Update(double dt)
 {
+	ToolManager[i_ActiveTool]->Update(dt);
+}
+
+void PlayerInfo::UseCurrentTool()
+{
+	ToolManager[i_ActiveTool]->UseTool();
 }

@@ -30,7 +30,8 @@ public:
 
 	void Init();
 
-	void Update();//use weapons in here
+	void Update(double dt);//use weapons in here
+	void UseCurrentTool();
 
 private:
 	int i_Money;
