@@ -260,6 +260,8 @@ void SceneCollision::Update(double dt)
 			}
 		}
 	}
+
+	camera.Update(dt);
 }
 
 void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
