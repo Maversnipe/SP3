@@ -86,7 +86,7 @@ void SceneCollision::Update(double dt)
 		bSpaceState = false;
 		std::cout << "SPACE BAR UP" << std::endl;
 
-		player->UseCurrentTool();
+		player->UseCurrentTool(m_goList);
 	}
 
 	//Mouse Section

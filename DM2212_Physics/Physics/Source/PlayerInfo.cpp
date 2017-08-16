@@ -27,7 +27,7 @@ void PlayerInfo::Update(double dt)
 	ToolManager[i_ActiveTool]->Update(dt);
 }
 
-void PlayerInfo::UseCurrentTool()
+void PlayerInfo::UseCurrentTool(vector<GameObject*> goList)
 {
-	ToolManager[i_ActiveTool]->UseTool();
+	ToolManager[i_ActiveTool]->UseTool(goList);
 }

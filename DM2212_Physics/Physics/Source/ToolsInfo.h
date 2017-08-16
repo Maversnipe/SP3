@@ -1,7 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Vector3.h"
-
+#include <vector>
+using std::vector;
 class ToolsInfo : public GameObject
 {
 public:
@@ -17,10 +18,9 @@ public:
 	virtual void SetPos(const Vector3 in_pos);
 	virtual Vector3 GetPos() const;
 
-	virtual void UseTool();//stuff that it dos
+	virtual void UseTool(vector<GameObject*> goList);//stuff that it dos
 
 protected:
 	int i_Price;
-	Vector3 v3_Position;
 
 };

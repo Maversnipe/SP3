@@ -28,14 +28,14 @@ int ToolsInfo::GetPrice() const
 
 void ToolsInfo::SetPos(const Vector3 in_pos)
 {
-	v3_Position = in_pos;
+	pos = in_pos;
 }
 
 Vector3 ToolsInfo::GetPos() const
 {
-	return v3_Position;
+	return pos;
 }
 
-void ToolsInfo::UseTool()
+void ToolsInfo::UseTool(vector<GameObject*> goList)
 {
 }

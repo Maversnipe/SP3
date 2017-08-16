@@ -10,7 +10,7 @@ public:
 
 	void Init();//set default data
 	void Update(double dt);//upadate data
-	void UseTool();
+	void UseTool(vector<GameObject*> goList);
 private:
 
 };

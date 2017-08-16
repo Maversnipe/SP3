@@ -1,6 +1,10 @@
 #pragma once
 #include <iostream>
 #include "ToolsInfo.h"
+#include "GameObject.h"
+#include <vector>
+
+using std::vector;
 class PlayerInfo
 {
 protected:
@@ -31,7 +35,7 @@ public:
 	void Init();
 
 	void Update(double dt);//use weapons in here
-	void UseCurrentTool();
+	void UseCurrentTool(vector<GameObject*> goList);
 
 private:
 	int i_Money;
