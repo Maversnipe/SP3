@@ -46,11 +46,25 @@ struct GameObject
 	Vector3 vel;
 	Vector3 scale;
 	Vector3 dir;
+	float restitution;
 	float momentOfInertia;
+
 	float angularVelocity;
+	Vector3 torque;
+	Vector3 force;
+	Vector3 accel;
+
 	bool active;
+
 	float mass;
+	float invmass;
+
 	AABB aabb;
+
+	bool isonAir;
+	bool iscolliding;
+
+	float colltime;
 
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btyp = GO_GRASS);
 	~GameObject();

@@ -7,11 +7,6 @@
 class AABB
 {
 public:
-	bool AABBvsAABB(AABB other);
-
-	//Circle
-	bool CirclevsCircle(AABB other);
-
 	//Set
 	void SetRadius(float r) { radius = r; };
 	void SetAABB(Vector3 pos, Vector3 size);
@@ -19,7 +14,9 @@ public:
 	//Getters
 	Vector3 GetMaxAABB() { return max; };
 	Vector3 GetMinAABB() { return min; };
+	Vector3 GetPos() { return position;};
 	float GetRadius() { return radius; };
+	
 
 protected:
 	Vector3 min;
@@ -28,6 +25,7 @@ protected:
 	//Circle
 	float radius;
 	Vector3 position;
+
 };
 
 #endif // !COLLISION_H

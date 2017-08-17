@@ -7,14 +7,7 @@
 #include "FileIO.h"
 #include "PlayerInfo.h"
 #include "Blocks.h"
-
-struct Manifold
-{
-	GameObject* A;
-	GameObject* B;
-	float penetration;
-	Vector3 normal;
-};
+#include "CollisionManager.h"
 
 class SceneCollision : public SceneBase
 {
@@ -35,23 +28,19 @@ public:
 	void RenderGO(GameObject *go);
 	GameObject* FetchGO();
 
+	//Collision check
 	bool CheckCollision(GameObject *go1, GameObject *go2, float dt);
 	float CheckCollision2(GameObject *go, GameObject *go2);
 	void CollisionResponse(GameObject *go, GameObject *go2);
 
-	//Collision
+	//Collision Manager
 	Manifold *m = new Manifold;
-
-	//Collision checks
-	bool CirclevsCircle(Manifold *m);
-	bool AABBvsAABB(Manifold *m);
-	bool AABBvsCircle(Manifold *m);
+	CollisionManager *cm = new CollisionManager;
 	
 	//Mapping
 	void RenderMap();
 
 protected:
-
 	//Physics
 	std::vector<GameObject *> m_goList;
 	float m_speed;
@@ -64,7 +53,7 @@ protected:
 	bool m_timerStarted;
 
 	//"Gravity"
-
+	Vector3 m_vec3Gravity;
 
 	//Auditing
 	float m1, m2;

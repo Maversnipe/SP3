@@ -18,7 +18,7 @@ void SceneCollision::Init()
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 39, Application::GetWindowHeight(), Application::GetWindowWidth());
-    map->Read("Maps//MapDesignL1.csv");
+    map->Read("Maps//test.csv");
     RenderMap();
 
     //Player
@@ -36,6 +36,10 @@ void SceneCollision::Init()
 
     initialKE = 0.0f;
     finalKE = 0.0f;
+
+	m_vec3Gravity.Set(0, -9.8, 0);
+	
+	cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 }
 
 GameObject* SceneCollision::FetchGO()
@@ -149,7 +153,7 @@ void SceneCollision::Update(double dt)
         m_ghost->active = false;
         float sc = 3.f;
         go->scale.Set(sc, sc, sc);
-        go->mass = (sc * sc * sc);
+        go->mass = 3.f;
 
         m_timeEstimated1 = 10000.f;
         m_timeTaken1 = 0.f;
@@ -174,226 +178,8 @@ void SceneCollision::Update(double dt)
         m_timeTaken1 += dt;
     
     dt *= m_speed;
-
-    for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-    {
-        GameObject *go = (GameObject *)*it;
-        
-        //Set AABBs
-        go->aabb.SetAABB(go->pos, go->scale);
-
-		//"Gravity"
-		if(go->active)
-			//go->pos += go->vel * static_cast<float>(dt);
-
-        if (go->active && go->type == GameObject::GO_BALL)
-        {
-            go->pos += go->vel * static_cast<float>(dt);
-
-            //Exercise 2a: Rebound game object at screen edges
-            // Rebound on X
-            if (go->pos.x < 0 + go->scale.x && go->vel.x < 0)
-                go->vel.x = -go->vel.x;
-            else if (go->pos.x > m_worldWidth - go->scale.x && go->vel.x > 0)
-                go->vel.x = -go->vel.x;
-            // Rebound on Y
-            if (go->pos.y < 0 + go->scale.y && go->vel.y < 0)
-                go->vel.y = -go->vel.y;
-            else if (go->pos.y > m_worldHeight - go->scale.y && go->vel.y > 0)
-                go->vel.y = -go->vel.y;
-            //Exercise 2b: Unspawn if it really leave the screen
-            if (go->pos.x > m_worldWidth || go->pos.x < 0 || go->pos.y > m_worldHeight || go->pos.y < 0)
-            {
-                go->active = false;
-                --m_objectCount;
-                continue;
-            }
-        }
-
-        for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != m_goList.end(); ++it2)
-        {
-            GameObject *go2 = (GameObject *)(*it2);
-            
-            if (!go2->active)
-                continue;
-            if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
-                continue;
-
-            GameObject *goA, *goB;
-
-            if (go->type == GameObject::GO_BALL)
-            {
-                goA = go;
-                goB = go2;
-            }
-            else
-            {
-                goA = go2;
-                goB = go;
-            }
-
-
-            if (CheckCollision(goA, goB, dt))
-            {
-                m_timerStarted = false;
-
-                //m1 = goA->mass;
-                //m2 = goB->mass;
-                //u1 = goA->vel;
-                //u2 = goB->vel;
-
-                CollisionResponse(goA, goB);
-
-                //v1 = goA->vel;
-                //v2 = goB->vel;
-
-                //Exercise 3: audit kinetic energy
-            }
-        }
-    }
-
+	cm->Check(m_goList, dt);
     camera.Update(dt);
-}
-
-void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
-{
-    switch (go2->type)
-    {
-    case GameObject::GO_BALL:
-    {
-        Vector3 u1 = go->vel;
-        Vector3 u2 = go2->vel;
-        Vector3 N = (go2->pos - go->pos).Normalize();
-        Vector3 u1N = u1.Dot(N) * N;
-        Vector3 u2N = u2.Dot(N) * N;
-        go->vel = u1 + 2.f * m2 / (m1 + m2) * (u2N - u1N);
-        go2->vel = u2 + 2.f * m1 / (m1 + m2) * (u1N - u2N);
-
-        break;
-    }
-    case GameObject::GO_WALL:
-    {
-        Vector3 vel = go->vel;
-        Vector3 N = go2->dir;
-        go->vel = vel - (2.f * vel.Dot(N)) * N;
-        break;
-    }
-    case GameObject::GO_PILLAR:
-    {
-        Vector3 vel = go->vel;
-        Vector3 N = (go2->pos - go->pos).Normalize();
-        go->vel = vel - (2.f * vel.Dot(N)) * N;
-        break;
-    }
-    case GameObject::GO_BLOCK:
-    {
-        Vector3 vel = go->vel;
-        Vector3 N = m->normal.Normalized();
-        go->vel = vel - (2.f * vel.Dot(N)) * N;
-        
-  //      Vector3 rv = go2->vel - go->vel;
-
-  //      float velAlongNormal = rv.Dot(m->normal.Normalized());
-  //      
-  //      if (velAlongNormal > 0)
-  //      	return;
-
-  //      //Calculate magnitude/bounceness
-  //      //float e = min(go)
-
-  //      float j = -(1) * velAlongNormal;
-  //      j /= 1 / go->mass + 1 / go2->mass;
-  //      
-  //      Vector3 Impulse = m->normal.Normalized() * j;
-  //      go->vel -= 1/go->mass * Impulse;
-		////go2->vel += 1 / go2->mass * Impulse;
-
-		//Vector3 vel = go2->vel;
-		//Vector3 N = (go->pos - go2->pos).Normalize();
-		//go2->vel = vel - (2.f * vel.Dot(N)) * N;
-
-
-        
-        break; 
-    }
-    default:
-        break;
-    }	
-}
-
-bool SceneCollision::AABBvsAABB(Manifold * m)
-{
-    if (m->A->aabb.GetMaxAABB().x < m->B->aabb.GetMinAABB().x || m->A->aabb.GetMinAABB().x > m->B->aabb.GetMaxAABB().x)
-        return false;
-    if (m->A->aabb.GetMaxAABB().y < m->B->aabb.GetMinAABB().y || m->A->aabb.GetMinAABB().y > m->B->aabb.GetMaxAABB().y)
-        return false;
-
-    return true;
-}
-
-bool SceneCollision::AABBvsCircle(Manifold * m)
-{
-    GameObject*A = m->A;
-    GameObject*B = m->B;
-
-    //Vec from A to B
-    Vector3 n = B->pos - A->pos;
-
-    //Closest pt on A to Center of B
-    Vector3 closest = n;
-
-    //Calculate half extennts along each axis
-    float x_extent = (A->aabb.GetMaxAABB().x - A->aabb.GetMinAABB().x) / 2;
-    float y_extent = (A->aabb.GetMaxAABB().y - A->aabb.GetMinAABB().y) / 2;
-
-    //Clamp point
-    closest.x = Math::Clamp(closest.x, -x_extent, x_extent);
-    closest.y = Math::Clamp(closest.y, -y_extent, y_extent);
-    
-    bool inside = false;
-
-    if (n == closest)
-    {
-        inside = true;
-
-
-        if (abs(n.x) > abs(n.y))
-        {
-            if (closest.x > 0)
-                closest.x = x_extent;
-            else
-                closest.x = -x_extent;
-        }
-        else
-        {
-            if (closest.y > 0)
-                closest.y = y_extent;
-            else
-                closest.y = -y_extent;
-        }
-    }
-        Vector3 normal = n - closest;
-        float d = normal.LengthSquared();
-        B->aabb.SetRadius(B->scale.x);
-        float r = B->aabb.GetRadius();
-
-        if (d > r * r && !inside)
-            return false;
-
-        d = sqrt(d);
-
-        if (inside)
-        {
-            m->normal = -n;
-            m->penetration = r - d;
-        }
-        else
-        {
-            m->normal = n;
-            m->penetration = r - d;
-        }
-
-    return true;
 }
 
 void SceneCollision::RenderMap()
@@ -408,7 +194,7 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.5f, 4.5f, 1.f);
-				go->vel.Set(0, -9.8, 0);
+				go->vel.Set(5, 9.8, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
             }
@@ -418,6 +204,8 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.f, 4.5f, 1.f);
+				go->vel.Set(0, 0, 0);
+				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
             }
             else if (map->Map[i][k] == 1)
@@ -426,6 +214,8 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.5f, 4.5f, 1.f);
+				go->vel.Set(0, 0, 0);
+				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
             }
             else if (map->Map[i][k] == 4)
@@ -434,6 +224,8 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.5f, 4.5f, 1.f);
+				go->vel.Set(0, 0, 0);
+				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
             }
 			else if (map->Map[i][k] == 5)
@@ -442,6 +234,8 @@ void SceneCollision::RenderMap()
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
 				go->scale.Set(4.5f, 4.5f, 1.f);
+				go->vel.Set(-5, 9.8, 0);
+				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
 			}
             else if (map->Map[i][k] == 10)
@@ -450,6 +244,8 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_WALL;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.f, 4.5f, 1.f);
+				go->vel.Set(0, 0, 0);
+				go->mass = 1.f;
             }
         }
     }
@@ -468,97 +264,6 @@ void SceneCollision::RenderMap()
     */
 }
 
-bool SceneCollision::CheckCollision(GameObject *go, GameObject *go2, float dt)
-{
-    switch (go2->type)
-    {
-    case GameObject::GO_BALL:
-    {
-        Vector3 p1 = go->pos;
-        Vector3 p2 = go2->pos;
-        Vector3 relDisplacement = p1 - p2;
-        Vector3 u1 = go->vel;
-        Vector3 u2 = go2->vel;
-        Vector3 relVel = u1 - u2;
-        float r1 = go->scale.x;
-        float r2 = go2->scale.x;
-
-        return relDisplacement.LengthSquared() < (r1 + r2) * (r1 * r2) &&
-            relVel.Dot(relDisplacement) < 0.f;
-    }
-    case GameObject::GO_WALL:
-    {
-        Vector3 w0 = go2->pos;
-        Vector3 b1 = go->pos;
-        Vector3 N = go2->dir;
-        Vector3 NP = N.Cross(Vector3(0, 0, 1));
-        float l = go2->scale.y;
-        float r = go->scale.x;
-        float h = go2->scale.x;
-
-        return (abs((w0 - b1).Dot(N)) < r + h * 0.5) &&
-            (abs((w0 - b1).Dot(NP)) < r + l * 0.5);
-    }
-    case GameObject::GO_PILLAR:
-    {
-        Vector3 p1 = go->pos;
-        Vector3 p2 = go2->pos;
-        float r1 = go->scale.x;
-        float r2 = go2->scale.x;
-
-        return ((p2 - p1).LengthSquared() < ((r1 + r2) * (r1 * r2))) &&
-            ((p2 - p1).LengthSquared() > 0.f) &&
-            ((p2 - p1).Dot(go->vel) > 0.f);
-    }
-    case GameObject::GO_BLOCK:
-    {
-        /*Block* go3 = static_cast <Block*>(go2);
-        
-        
-        Vector3 w0 = go2->pos;
-        Vector3 b1 = go->pos;
-        Vector3 N = go2->dir;
-        go3->setdir(Vector3(1, 0, 0));
-        Vector3 N1 = go3->getdir();
-        Vector3 NP = N.Cross(Vector3(0, 0, 1));
-        Vector3 NP1 = N1.Cross(Vector3(0, 0, 1));
-        float r = go->scale.x;
-        float h = go2->scale.x;
-        float l = go2->scale.y;
-        float h1 = go->scale.y;
-
-        bool check = false;
-
-        if ((abs((w0 - b1).Dot(N)) < r + h * 0.5) &&
-            (abs((w0 - b1).Dot(NP)) < r + l * 0.5))
-        {
-            go2->dir = Vector3(0, 1, 0);
-            check = true;
-            return true;
-        }
-
-        if (((abs((w0 - b1).Dot(N1)) < r + h * 0.5) &&
-            (abs((w0 - b1).Dot(NP1)) < r + l * 0.5)))
-        {
-            go2->dir = go3->getdir();
-            check = true;
-            return true;
-        }
-        
-        
-        return check;*/
-        //Manifold *m = new Manifold;
-        m->A = go2;
-        m->B = go;
-        
-
-        return AABBvsCircle(m);
-        //return AABBvsAABB(m);
-    }
-    default:
-        break;
-    }
-}
 
 float SceneCollision::CheckCollision2(GameObject *go, GameObject *go2)
 {
