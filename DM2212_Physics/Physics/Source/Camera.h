@@ -36,6 +36,7 @@ private:
 	Vector3 defaultPos; // Original position of camera
 	Vector3 defaultTarget; // Original target of camera
 	Vector3 defaultUp; // Original up of camera
+	Vector3 firstPos; // Position of mouse when it is first clicked
 
 	float m_fOffset_y; // How much the camera position is offset by in Y axis
  	float m_fOffset_x; // How much the camera position is offset by in X axis

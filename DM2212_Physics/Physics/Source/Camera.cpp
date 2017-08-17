@@ -17,9 +17,9 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->target = target;
 	this->up = up;
 	this->defaultPos = pos;
-	this->minBoundary.Set(-100.f, -100.f, -100.f); // Setting of Camera minimum X and Y
-	this->maxBoundary.Set(100.f, 100.f, 100.f); // Setting of Camera maximum X and Y
-	m_eMoveType = MOVE_WITH_MOUSE;
+	this->minBoundary.Set(-50.f, -50.f, -50.f); // Setting of Camera minimum X and Y
+	this->maxBoundary.Set(50.f, 50.f, 50.f); // Setting of Camera maximum X and Y
+	m_eMoveType = CLICK_N_DRAG;
 }
 
 void Camera::Reset()
@@ -103,34 +103,65 @@ void Camera::M_CameraMovement(double dt)
 
 	if (m_eMoveType == CLICK_N_DRAG)
 	{
+		static bool bLButtonState = false;
 		if (Application::IsMousePressed(0))
 		{
+			if (!bLButtonState)
+			{
+				bLButtonState = true;
+				firstPos.Set(posX + m_fOffset_x, posY + m_fOffset_y, defaultPos.z);
+			}
+			else
+			{
+				m_fOffset_x = -(posX - firstPos.x); // X axis movement
+				if (defaultPos.x + m_fOffset_x > maxBoundary.x)
+				{
+					m_fOffset_x = (maxBoundary.x - defaultPos.x);
+				}
+				else if (defaultPos.x + m_fOffset_x < minBoundary.x)
+				{
+					m_fOffset_x = -(defaultPos.x - minBoundary.x);
+				}
 
+				m_fOffset_y = -(posY - firstPos.y); // Y axis movement
+				if (defaultPos.y + m_fOffset_y > maxBoundary.y)
+				{
+					m_fOffset_y = (maxBoundary.y - defaultPos.y);
+				}
+				else if (defaultPos.y + m_fOffset_y < minBoundary.y)
+				{
+					m_fOffset_y = -(defaultPos.y - minBoundary.y);
+				}
+			}
+		}
+		else if (bLButtonState && !Application::IsMousePressed(0))
+		{
+			bLButtonState = false;
 		}
 	}
 	else if (m_eMoveType == MOVE_WITH_MOUSE)
-	{
+	{ // Window move with mouse
 		if (posX > m_worldWidth * 0.75f)
 		{
 			float speed = (posX - m_worldWidth * 0.75f) / (m_worldWidth * 0.25f);
-			if (position.x + m_fOffset_x < maxBoundary.x)
+			if (defaultPos.x + m_fOffset_x < maxBoundary.x)
 			{
 				m_fOffset_x += 50.f * (float)dt * speed;
-				if (position.x + m_fOffset_x > maxBoundary.x)
+				if (defaultPos.x + m_fOffset_x > maxBoundary.x)
 				{
-					m_fOffset_x = maxBoundary.x - position.x;
+					m_fOffset_x = maxBoundary.x - defaultPos.x;
 				}
 			}
 		}
 		else if (posX < m_worldWidth * 0.25f)
 		{
 			float speed = ((m_worldWidth * 0.25f) - posX) / (m_worldWidth * 0.25f);
-			if (position.x + m_fOffset_x > minBoundary.x)
+			if (defaultPos.x + m_fOffset_x > minBoundary.x)
 			{
 				m_fOffset_x -= 50.f * (float)dt * speed;
-				if (position.x + m_fOffset_x < minBoundary.x)
+				if (defaultPos.x + m_fOffset_x < minBoundary.x)
 				{
-					m_fOffset_x = position.x - minBoundary.x;
+					m_fOffset_x = -(defaultPos.x - minBoundary.x);
 				}
 			}
 		}
@@ -138,24 +169,24 @@ void Camera::M_CameraMovement(double dt)
 		if (posY > m_worldHeight * 0.75f)
 		{
 			float speed = (posY - m_worldHeight * 0.75f) / (m_worldHeight * 0.25f);
-			if (position.y + m_fOffset_y < maxBoundary.y)
+			if (defaultPos.y + m_fOffset_y < maxBoundary.y)
 			{
 				m_fOffset_y += 50.f * (float)dt * speed;
-				if (position.y + m_fOffset_y > maxBoundary.y)
+				if (defaultPos.y + m_fOffset_y > maxBoundary.y)
 				{
-					m_fOffset_y = maxBoundary.y - position.y;
+					m_fOffset_y = maxBoundary.y - defaultPos.y;
 				}
 			}
 		}
 		else if (posY < m_worldHeight * 0.25f)
 		{
 			float speed = ((m_worldHeight * 0.25f) - posY) / (m_worldHeight * 0.25f);
-			if (position.y + m_fOffset_y > minBoundary.y)
+			if (defaultPos.y + m_fOffset_y > minBoundary.y)
 			{
 				m_fOffset_y -= 50.f * (float)dt * speed;
-				if (position.y + m_fOffset_y < minBoundary.y)
+				if (defaultPos.y + m_fOffset_y < minBoundary.y)
 				{
-					m_fOffset_y = position.y - minBoundary.y;
+					m_fOffset_y = -(defaultPos.y - minBoundary.y);
 				}
 			}
 		}
