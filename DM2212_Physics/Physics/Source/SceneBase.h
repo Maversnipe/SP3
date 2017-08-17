@@ -62,6 +62,7 @@ public:
 		GEO_GLASS,
 		GEO_WOOD,
 		GEO_METAL,
+		GEO_BRICK,
 		NUM_BLOCKS,
 	};
 

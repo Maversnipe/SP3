@@ -17,8 +17,8 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 32, Application::GetWindowHeight(), Application::GetWindowWidth());
-    map->Read("Maps//test.csv");
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 39, Application::GetWindowHeight(), Application::GetWindowWidth());
+    map->Read("Maps//MapDesignL1.csv");
     RenderMap();
 
     //Player
@@ -455,6 +455,14 @@ void SceneCollision::RenderMap()
                 go->scale.Set(4.5f, 4.5f, 1.f);
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
             }
+			else if (map->Map[i][k] == 5)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 1.f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+			}
             else if (map->Map[i][k] == 10)
             {
                 GameObject *go = FetchGO();
