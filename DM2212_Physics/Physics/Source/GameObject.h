@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "Vector3.h"
+#include "Collision.h"
 
 struct GameObject
 {
@@ -48,6 +49,7 @@ struct GameObject
 	float angularVelocity;
 	bool active;
 	float mass;
+	AABB aabb;
 
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btyp = GO_GRASS);
 	~GameObject();
