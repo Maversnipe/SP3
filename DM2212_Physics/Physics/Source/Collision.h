@@ -12,9 +12,14 @@ public:
 	//Circle
 	bool CirclevsCircle(AABB other);
 
+	//Set
+	void SetRadius(float r) { radius = r; };
+	void SetAABB(Vector3 pos, Vector3 size);
+
 	//Getters
 	Vector3 GetMaxAABB() { return max; };
 	Vector3 GetMinAABB() { return min; };
+	float GetRadius() { return radius; };
 
 protected:
 	Vector3 min;

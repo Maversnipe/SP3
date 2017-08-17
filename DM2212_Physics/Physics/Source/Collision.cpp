@@ -16,3 +16,9 @@ bool AABB::CirclevsCircle(AABB other)
 	r *= r;
 	return r < pow((position.x + other.position.x), 2) + pow((position.y + other.position.y), 2);
 }
+
+void AABB::SetAABB(Vector3 pos, Vector3 size)
+{
+	max = pos + size * (0.5, 0.5, 0.5);
+	min = pos - size * (0.5, 0.5, 0.5);
+}

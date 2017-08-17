@@ -18,7 +18,7 @@ void SceneCollision::Init()
 	//Map reading
 	map = new FileIO();
 	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 32, Application::GetWindowHeight(), Application::GetWindowWidth());
-	map->Read("Maps//MapDesignL1.csv");
+	map->Read("Maps//test.csv");
 	RenderMap();
 
 	//Player
@@ -32,7 +32,7 @@ void SceneCollision::Init()
 
 	m_objectCount = 0;
 
-	m_ghost = new GameObject(GameObject::GO_BALL);
+	m_ghost = new GameObject(GameObject::GO_WALL);
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
@@ -197,6 +197,10 @@ void SceneCollision::Update(double dt)
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{
 		GameObject *go = (GameObject *)*it;
+		
+		//Set AABBs
+		go->aabb.SetAABB(go->pos, go->scale);
+
 		if (go->active && go->type == GameObject::GO_BALL)
 		{
 			go->pos += go->vel * static_cast<float>(dt);
@@ -262,6 +266,8 @@ void SceneCollision::Update(double dt)
 			}
 		}
 	}
+
+	camera.Update(dt);
 }
 
 void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
@@ -296,30 +302,43 @@ void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		/*Vector3 vel = go->vel;
-		Vector3 N = go2->dir;
-		go->vel = vel - (2.f * vel.Dot(N)) * N;*/
-		Vector3 rv = go2->vel - go->vel;
-
-		float velAlongNormal = rv.Dot(go2->dir);
-		if (velAlongNormal > 0)
-			return;
-
-		//Calculate magnitude/bounceness
-		//float e = min(go)
-
-		float j = -(1) * velAlongNormal;
-		j /= 1 / go->mass + 1 / go2->mass;
+		Vector3 vel = go->vel;
+		Vector3 N = m->normal.Normalized();
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
 		
-		Vector3 Impulse = j * go2->dir;
-		go->vel -= 1 / go->mass * Impulse;
-		go2->vel -= 1 / go2->mass * Impulse;
+		//go2->active = false;
+		//Vector3 rv = go2->vel - go->vel;
+
+		//float velAlongNormal = rv.Dot(go2->dir);
+		//
+		//if (velAlongNormal > 0)
+		//	return;
+
+		////Calculate magnitude/bounceness
+		////float e = min(go)
+
+		//float j = -(1) * velAlongNormal;
+		//j /= 1 / go->mass + 1 / go2->mass;
+		//
+		//Vector3 Impulse = go2->dir * j;
+		//go->vel -= 1/go->mass * Impulse;
+		//go2->vel -= 1 / go2->mass * Impulse;
 		
 		break; 
 	}
 	default:
 		break;
 	}	
+}
+
+bool SceneCollision::AABBvsAABB(Manifold * m)
+{
+	if (m->A->aabb.GetMaxAABB().x < m->B->aabb.GetMinAABB().x || m->A->aabb.GetMinAABB().x > m->B->aabb.GetMaxAABB().x)
+		return false;
+	if (m->A->aabb.GetMaxAABB().y < m->B->aabb.GetMinAABB().y || m->A->aabb.GetMinAABB().y > m->B->aabb.GetMaxAABB().y)
+		return false;
+
+	return true;
 }
 
 bool SceneCollision::AABBvsCircle(Manifold * m)
@@ -334,10 +353,57 @@ bool SceneCollision::AABBvsCircle(Manifold * m)
 	Vector3 closest = n;
 
 	//Calculate half extennts along each axis
-	float x_extent = (A->aabb)
-	float y_extent =
+	float x_extent = (A->aabb.GetMaxAABB().x - A->aabb.GetMinAABB().x) / 2;
+	float y_extent = (A->aabb.GetMaxAABB().y - A->aabb.GetMinAABB().y) / 2;
 
-	return false;
+	//Clamp point
+	closest.x = Math::Clamp(closest.x, -x_extent, x_extent);
+	closest.y = Math::Clamp(closest.y, -y_extent, y_extent);
+	
+	bool inside = false;
+
+	if (n == closest)
+	{
+		inside = true;
+
+
+		if (abs(n.x) > abs(n.y))
+		{
+			if (closest.x > 0)
+				closest.x = x_extent;
+			else
+				closest.x = -x_extent;
+		}
+		else
+		{
+			if (closest.y > 0)
+				closest.y = y_extent;
+			else
+				closest.y = -y_extent;
+		}
+	}
+		Vector3 normal = n - closest;
+		float d = normal.LengthSquared();
+		B->aabb.SetRadius(B->scale.x);
+		float r = B->aabb.GetRadius();
+
+		if (d > r * r && !inside)
+			return false;
+
+		d = sqrt(d);
+
+		if (inside)
+		{
+			m->normal = -n;
+			m->penetration = r - d;
+		}
+		else
+		{
+			m->normal = n;
+			m->penetration = r - d;
+		}
+
+	return true;
 }
 
 void SceneCollision::RenderMap()
@@ -481,8 +547,13 @@ bool SceneCollision::CheckCollision(GameObject *go, GameObject *go2, float dt)
 		
 		
 		return check;*/
+		//Manifold *m = new Manifold;
+		m->A = go2;
+		m->B = go;
+		
 
-		return false;
+		return AABBvsCircle(m);
+		//return AABBvsAABB(m);
 	}
 	default:
 		break;

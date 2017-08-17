@@ -40,6 +40,9 @@ public:
 	float CheckCollision2(GameObject *go, GameObject *go2);
 	void CollisionResponse(GameObject *go, GameObject *go2);
 
+	//Collision
+	Manifold *m = new Manifold;
+
 	//Responses
 	bool CirclevsCircle(Manifold *m);
 	bool AABBvsAABB(Manifold *m);
