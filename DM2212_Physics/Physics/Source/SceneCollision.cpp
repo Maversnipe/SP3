@@ -63,8 +63,17 @@ GameObject* SceneCollision::FetchGO()
 
 void SceneCollision::Update(double dt)
 {
+	double x, y;
+	Application::GetCursorPos(&x, &y);
+	int w = Application::GetWindowWidth();
+	int h = Application::GetWindowHeight();
+	float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+	float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+
+	Vector3 mousepos(posX, posY, 0);
+
     SceneBase::Update(dt);
-    player->Update(dt);//updates player and tools
+    player->Update(dt, mousepos);//updates player and tools
     
     if(Application::IsKeyPressed('9'))
     {
@@ -96,13 +105,6 @@ void SceneCollision::Update(double dt)
         bLButtonState = true;
         std::cout << "LBUTTON DOWN" << std::endl;
         
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         float sc = 2;
         m_ghost->scale.Set(sc, sc, sc);
@@ -115,12 +117,6 @@ void SceneCollision::Update(double dt)
         //spawn small GO_BALL
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
@@ -136,13 +132,6 @@ void SceneCollision::Update(double dt)
         bRButtonState = true;
         std::cout << "RBUTTON DOWN" << std::endl;
 
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         m_ghost->active = true;
         float sc = 3;
@@ -152,14 +141,6 @@ void SceneCollision::Update(double dt)
     {
         bRButtonState = false;
         std::cout << "RBUTTON UP" << std::endl;
-
-        //spawn large GO_BALL
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;

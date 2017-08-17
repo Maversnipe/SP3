@@ -34,7 +34,7 @@ public:
 
 	void Init();
 
-	void Update(double dt);//use weapons in here
+	void Update(double dt,Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<GameObject*> goList);
 
 	int GetActiveToolIndex()const;

@@ -24,7 +24,7 @@ void PlayerInfo::Init()
 
 }
 
-void PlayerInfo::Update(double dt)
+void PlayerInfo::Update(double dt, Vector3 mousepos)
 {
 	//switch tools
 	{
@@ -46,7 +46,7 @@ void PlayerInfo::Update(double dt)
 	}
 }
 
-	ToolManager[i_ActiveTool]->Update(dt);
+	ToolManager[i_ActiveTool]->Update(dt, mousepos);
 }
 
 void PlayerInfo::UseCurrentTool(vector<GameObject*> goList)

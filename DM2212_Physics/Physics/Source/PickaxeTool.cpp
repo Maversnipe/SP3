@@ -20,17 +20,9 @@ void PickaxeTool::Init()
 	pos.Set(0, 0, 0);
 }
 
-void PickaxeTool::Update(double dt)
+void PickaxeTool::Update(double dt, Vector3 mousepos)
 {
-	float m_worldHeight = 100.f;
-	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-	double x, y;
-	Application::GetCursorPos(&x, &y);
-	int w = Application::GetWindowWidth();
-	int h = Application::GetWindowHeight();
-	float posX = static_cast<float>(x) / w * m_worldWidth;
-	float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-	pos.Set(posX, posY, 0);//update to mouse pos
+	pos = mousepos;//update to mouse pos
 }
 
 void PickaxeTool::UseTool(vector<GameObject*> goList)

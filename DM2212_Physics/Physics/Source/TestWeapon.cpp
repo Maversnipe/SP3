@@ -20,7 +20,7 @@ void TestWeapon::Init()
 	pos.Set(0, 0, 0);
 }
 
-void TestWeapon::Update(double dt)
+void TestWeapon::Update(double dt, Vector3 mousepos)
 {
 	float m_worldHeight = 100.f;
 	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();

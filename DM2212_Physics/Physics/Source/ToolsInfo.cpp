@@ -12,7 +12,7 @@ void ToolsInfo::Init()
 {
 }
 
-void ToolsInfo::Update(double dt)
+void ToolsInfo::Update(double dt, Vector3 mousepos)
 {
 }
 
