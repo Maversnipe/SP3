@@ -73,6 +73,9 @@
     <ClCompile Include="Source\PlayerInfo.cpp">
       <Filter>PlayerInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Blocks.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="Source\PlayerInfo.h">
       <Filter>PlayerInfo</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -181,6 +187,9 @@
     </Filter>
     <Filter Include="PlayerInfo">
       <UniqueIdentifier>{098b7017-76dc-4629-8fd5-1037f46d33fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cf086d67-8eb0-42f0-811f-83b57047cdb3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -6,6 +6,15 @@
 #include "SceneBase.h"
 #include "FileIO.h"
 #include "PlayerInfo.h"
+#include "Blocks.h"
+
+struct Manifold
+{
+	GameObject* A;
+	GameObject* B;
+	float penetration;
+	Vector3 normal;
+};
 
 class SceneCollision : public SceneBase
 {
@@ -31,6 +40,12 @@ public:
 	float CheckCollision2(GameObject *go, GameObject *go2);
 	void CollisionResponse(GameObject *go, GameObject *go2);
 
+	//Responses
+	bool CirclevsCircle(Manifold *m);
+	bool AABBvsAABB(Manifold *m);
+	bool AABBvsCircle(Manifold *m);
+	
+	//Mapping
 	void RenderMap();
 
 protected:
