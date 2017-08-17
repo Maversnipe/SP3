@@ -43,7 +43,7 @@ public:
 	//Collision
 	Manifold *m = new Manifold;
 
-	//Responses
+	//Collision checks
 	bool CirclevsCircle(Manifold *m);
 	bool AABBvsAABB(Manifold *m);
 	bool AABBvsCircle(Manifold *m);
@@ -63,6 +63,9 @@ protected:
 	float m_timeEstimated1;
 	float m_timeTaken1;
 	bool m_timerStarted;
+
+	//"Gravity"
+
 
 	//Auditing
 	float m1, m2;
