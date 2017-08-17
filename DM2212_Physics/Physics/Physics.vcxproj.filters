@@ -73,6 +73,7 @@
     <ClCompile Include="Source\PlayerInfo.cpp">
       <Filter>PlayerInfo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Blocks.h">
@@ -156,6 +157,7 @@
     <ClInclude Include="Source\PlayerInfo.h">
       <Filter>PlayerInfo</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

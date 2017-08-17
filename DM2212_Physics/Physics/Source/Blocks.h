@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-class Block : GameObject
+class Block : public GameObject
 {
 public:
 	Block();
@@ -16,6 +16,7 @@ public:
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
 	bool Isdestroyed() { if (m_iHealth < 0) return true; else return false; };	//Get active or not
+	void getDamaged(int damage);//damage block
 
 protected:
 	int m_iType;			//Type of blocks(0. Grass, 1. Glass, 2. Wood, 3. Metal)

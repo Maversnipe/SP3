@@ -1,4 +1,5 @@
 #include "PickaxeTool.h"
+#include "Blocks.h"
 #include <iostream>
 using std::cout;
 using std::endl;
@@ -37,9 +38,11 @@ void PickaxeTool::UseTool(vector<GameObject*> goList)
 	cout << "Paxe used at: "<< pos << endl;
 	for (unsigned i = 0; i < goList.size(); ++i)
 	{
-		if ((goList[i]->pos - pos).LengthSquared() <= goList[i]->scale.x * goList[i]->scale.x && goList[i]->active && goList[i]->type == GameObject::GO_BLOCK)
+		Block* b = static_cast<Block*>(goList[i]);
+
+		if ((goList[i]->pos - pos).LengthSquared() < goList[i]->scale.x * goList[i]->scale.y && goList[i]->active && goList[i]->type == GameObject::GO_BLOCK)
 		{
-			goList[i]->active = false;//if pickaxe hits a grass, i cant access the brick to minus health
+			b->getDamaged(1);//if pickaxe hits a grass, i cant access the brick to minus health
 		}
 	}
 }
