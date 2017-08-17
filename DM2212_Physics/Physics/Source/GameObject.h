@@ -35,6 +35,7 @@ struct GameObject
 		GO_GLASS,
 		GO_WOOD,
 		GO_METAL,
+		GO_BRICK,
 		GO_BTYPTOTAL,
 	};
 

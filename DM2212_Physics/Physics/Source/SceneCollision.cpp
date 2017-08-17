@@ -17,7 +17,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 32, Application::GetWindowHeight(), Application::GetWindowWidth());
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 39, Application::GetWindowHeight(), Application::GetWindowWidth());
     map->Read("Maps//MapDesignL1.csv");
     RenderMap();
 
@@ -63,8 +63,17 @@ GameObject* SceneCollision::FetchGO()
 
 void SceneCollision::Update(double dt)
 {
+	double x, y;
+	Application::GetCursorPos(&x, &y);
+	int w = Application::GetWindowWidth();
+	int h = Application::GetWindowHeight();
+	float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+	float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+
+	Vector3 mousepos(posX, posY, 0);
+
     SceneBase::Update(dt);
-    player->Update(dt);//updates player and tools
+    player->Update(dt, mousepos);//updates player and tools
     
     if(Application::IsKeyPressed('9'))
     {
@@ -136,13 +145,6 @@ void SceneCollision::Update(double dt)
         bRButtonState = true;
         std::cout << "RBUTTON DOWN" << std::endl;
 
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         m_ghost->active = true;
         float sc = 3;
@@ -152,14 +154,6 @@ void SceneCollision::Update(double dt)
     {
         bRButtonState = false;
         std::cout << "RBUTTON UP" << std::endl;
-
-        //spawn large GO_BALL
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
@@ -455,6 +449,14 @@ void SceneCollision::RenderMap()
                 go->scale.Set(4.5f, 4.5f, 1.f);
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
             }
+			else if (map->Map[i][k] == 5)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_BLOCK;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.5f, 4.5f, 1.f);
+				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+			}
             else if (map->Map[i][k] == 10)
             {
                 GameObject *go = FetchGO();

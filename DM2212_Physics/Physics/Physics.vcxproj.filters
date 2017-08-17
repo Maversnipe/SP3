@@ -1,22 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Blocks.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GlassBlock.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GrassBlock.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MetalBlock.cpp">
-      <Filter>GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\WoodBlock.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\FileIO.cpp">
@@ -76,27 +61,33 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Blocks.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GrassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MetalBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WoodBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BrickBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
     <ClCompile Include="Source\TestWeapon.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>SoundEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Blocks.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GlassBlock.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GrassBlock.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MetalBlock.h">
-      <Filter>GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\WoodBlock.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\FileIO.h">
@@ -165,8 +156,29 @@
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Blocks.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MetalBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WoodBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BrickBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
     <ClInclude Include="Source\TestWeapon.h">
       <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>SoundEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +208,12 @@
     </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{cf086d67-8eb0-42f0-811f-83b57047cdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Blocks">
+      <UniqueIdentifier>{d8bf885d-8021-42f4-899b-b656be4f1900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundEngine">
+      <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

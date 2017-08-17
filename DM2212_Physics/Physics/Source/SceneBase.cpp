@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+#include "SoundEngine.h"
 
 #include <sstream>
 
@@ -127,7 +128,11 @@ void SceneBase::Init()
 	BlockList[GEO_GLASS] = MeshBuilder::GenerateCube("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
 	BlockList[GEO_WOOD] = MeshBuilder::GenerateCube("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
 	BlockList[GEO_METAL] = MeshBuilder::GenerateCube("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
+	BlockList[GEO_BRICK] = MeshBuilder::GenerateCube("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
 
+	//Load sound (test)
+	CSoundEngine::GetInstance()->Init();
+	CSoundEngine::GetInstance()->AddSound("test", "Sound//test.mp3");
 
 	bLightEnabled = false;
 }
@@ -155,6 +160,7 @@ void SceneBase::Update(double dt)
 	}
 
 	fps = (float)(1.f / dt);
+	//CSoundEngine::GetInstance()->PlayASound("test");
 }
 
 void SceneBase::RenderText(Mesh* mesh, std::string text, Color color)

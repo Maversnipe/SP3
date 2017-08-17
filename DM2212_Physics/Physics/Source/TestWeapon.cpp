@@ -8,6 +8,7 @@ TestWeapon::TestWeapon()
 {
 	i_Price = 10;
 	pos.Set(0, 0, 0);
+	isSet = false;
 }
 
 TestWeapon::~TestWeapon()
@@ -16,34 +17,39 @@ TestWeapon::~TestWeapon()
 
 void TestWeapon::Init()
 {
-	i_Price = 10;
-	pos.Set(0, 0, 0);
 }
 
-void TestWeapon::Update(double dt)
+void TestWeapon::Update(double dt, Vector3 mousepos)
 {
-	float m_worldHeight = 100.f;
-	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-	double x, y;
-	Application::GetCursorPos(&x, &y);
-	int w = Application::GetWindowWidth();
-	int h = Application::GetWindowHeight();
-	float posX = static_cast<float>(x) / w * m_worldWidth;
-	float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-	pos.Set(posX, posY, 0);//update to mouse pos
+	if (!isSet)
+	{
+		pos = mousepos;//update to mouse pos
+	}
+	else
+	{
+		if(mousepos != pos)
+		dir = (mousepos - pos).Normalized();
+	}
+
 }
 
 void TestWeapon::UseTool(vector<GameObject*> goList)
 {
-	cout << "TestTool used at: " << pos << endl;
-	for (unsigned i = 0; i < goList.size(); ++i)
+	if (!isSet)
 	{
-		Block* b = static_cast<Block*>(goList[i]);
-
-		if ((goList[i]->pos - pos).LengthSquared() < goList[i]->scale.x * goList[i]->scale.y && goList[i]->active && goList[i]->type == GameObject::GO_BLOCK)
-		{
-			b->getDamaged(1);//if pickaxe hits a grass, i cant access the brick to minus health
-		}
+		isSet = true;
+		cout << "TestTool Set at: " << pos << endl;
 	}
-
+	else
+	{
+		//is there a way to use FetchGO here?
+		GameObject *go = FetchGO(goList);
+		
+		go->type = GameObject::GO_BALL;//to be changed
+		go->pos = pos;
+		go->vel = dir * 50;
+		go->scale.Set(2, 2, 2);
+				
+		isSet = false;
+	}
 }

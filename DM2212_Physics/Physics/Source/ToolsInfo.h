@@ -10,7 +10,7 @@ public:
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data
-	virtual void Update(double dt);//upadate data
+	virtual void Update(double dt,Vector3 mousepos);//upadate data
 
 	virtual void SetPrice(const int in_price);
 	virtual int GetPrice() const;
@@ -19,6 +19,7 @@ public:
 	virtual Vector3 GetPos() const;
 
 	virtual void UseTool(vector<GameObject*> goList);//stuff that it dos
+	virtual GameObject* FetchGO(vector<GameObject*> goList);
 
 protected:
 	int i_Price;
