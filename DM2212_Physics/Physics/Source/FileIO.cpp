@@ -69,6 +69,7 @@ bool FileIO::Read(const string mapName)
 						// Count the number of columns
 						maxColumn = atoi(token.c_str());
 					}
+
 					if (maxColumn != m_iNoofTiles_Width)
 						return false;
 				}
