@@ -37,6 +37,9 @@ public:
 	void Update(double dt);//use weapons in here
 	void UseCurrentTool(vector<GameObject*> goList);
 
+	int GetActiveToolIndex()const;
+	void SetActiveToolIndex(int ToolIndex);
+
 private:
 	int i_Money;
 	int i_Score;

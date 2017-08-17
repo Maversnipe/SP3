@@ -76,6 +76,9 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Blocks.h">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

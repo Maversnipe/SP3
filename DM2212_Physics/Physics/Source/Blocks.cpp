@@ -21,3 +21,13 @@ Block::Block(int Type, int health, bool Destructable)
 Block::~Block()
 {
 }
+
+void Block::getDamaged(int damage)
+{
+	 m_iHealth -= damage;
+	 std::cout << getHealth() << std::endl;
+	 if (Isdestroyed())
+	 {
+		 active = false;
+	 }
+}
