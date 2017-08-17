@@ -33,7 +33,6 @@ public:
 	virtual void Exit();
 
 	void RenderGO(GameObject *go);
-
 	GameObject* FetchGO();
 
 	bool CheckCollision(GameObject *go1, GameObject *go2, float dt);

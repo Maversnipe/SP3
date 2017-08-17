@@ -63,207 +63,6 @@ GameObject* SceneCollision::FetchGO()
 
 void SceneCollision::Update(double dt)
 {
-<<<<<<< HEAD
-	SceneBase::Update(dt);
-	player->Update(dt);//updates player and tools
-	
-	if(Application::IsKeyPressed('9'))
-	{
-		m_speed = Math::Max(0.f, m_speed - 0.1f);
-	}
-	if(Application::IsKeyPressed('0'))
-	{
-		m_speed += 0.1f;
-	}
-
-	static bool bSpaceState = false;
-	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = true;
-		std::cout << "SPACE BAR DOWN" << std::endl;
-	}
-	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
-
-		player->UseCurrentTool(m_goList);
-	}
-
-	//Mouse Section
-	//static bool bLButtonState = false;
-	//if(!bLButtonState && Application::IsMousePressed(0))
-	//{
-	//	bLButtonState = true;
-	//	std::cout << "LBUTTON DOWN" << std::endl;
-	//	
-	//	double x, y;
-	//	Application::GetCursorPos(&x, &y);
-	//	int w = Application::GetWindowWidth();
-	//	int h = Application::GetWindowHeight();
-	//	float posX = static_cast<float>(x) / w * m_worldWidth;
-	//	float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-
-	//	m_ghost->pos.Set(posX, posY, 0); //IMPT
-	//	float sc = 2;
-	//	m_ghost->scale.Set(sc, sc, sc);
-	//}
-	//else if(bLButtonState && !Application::IsMousePressed(0))
-	//{
-	//	bLButtonState = false;
-	//	std::cout << "LBUTTON UP" << std::endl;
-
-	//	//spawn small GO_BALL
-	//	GameObject *go = FetchGO();
-	//	go->type = GameObject::GO_BALL;
-	//	double x, y;
-	//	Application::GetCursorPos(&x, &y);
-	//	int w = Application::GetWindowWidth();
-	//	int h = Application::GetWindowHeight();
-	//	float posX = static_cast<float>(x) / w * m_worldWidth;
-	//	float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-
-	//	go->pos = m_ghost->pos;
-	//	go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-	//	m_ghost->active = false;
-	//	float sc = go->vel.Length();
-	//	sc = Math::Clamp(sc, 2.f, 10.f);
-	//	go->scale.Set(sc, sc, sc);
-	//	go->mass = (sc * sc * sc) / 8.f;
-	//}
-	static bool bRButtonState = false;
-	if(!bRButtonState && Application::IsMousePressed(1))
-	{
-		bRButtonState = true;
-		std::cout << "RBUTTON DOWN" << std::endl;
-
-		double x, y;
-		Application::GetCursorPos(&x, &y);
-		int w = Application::GetWindowWidth();
-		int h = Application::GetWindowHeight();
-		float posX = static_cast<float>(x) / w * m_worldWidth;
-		float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-
-		m_ghost->pos.Set(posX, posY, 0); //IMPT
-		m_ghost->active = true;
-		float sc = 3;
-		m_ghost->scale.Set(sc, sc, sc);
-	}
-	else if(bRButtonState && !Application::IsMousePressed(1))
-	{
-		bRButtonState = false;
-		std::cout << "RBUTTON UP" << std::endl;
-
-		//spawn large GO_BALL
-		double x, y;
-		Application::GetCursorPos(&x, &y);
-		int w = Application::GetWindowWidth();
-		int h = Application::GetWindowHeight();
-		float posX = static_cast<float>(x) / w * m_worldWidth;
-		float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
-
-		GameObject *go = FetchGO();
-		go->type = GameObject::GO_BALL;
-		go->pos = m_ghost->pos;
-		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-		m_ghost->active = false;
-		float sc = 3.f;
-		go->scale.Set(sc, sc, sc);
-		go->mass = (sc * sc * sc) / 8.f;
-
-		m_timeEstimated1 = 10000.f;
-		m_timeTaken1 = 0.f;
-		m_timerStarted = true;
-
-		for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-		{
-			GameObject *go2 = (GameObject *)*it;
-			if (go2->active && go != go2)
-			{
-				float time = CheckCollision2(go, go2);
-				if (time > 0.f && time < m_timeEstimated1)
-				{
-					m_timeEstimated1 = time;
-				}
-			}
-		}
-	}
-
-	//Physics Simulation Section
-	if (m_timerStarted)
-		m_timeTaken1 += dt;
-
-	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-	{
-		GameObject *go = (GameObject *)*it;
-		if (go->active && go->type == GameObject::GO_BALL)
-		{
-			go->pos += go->vel * static_cast<float>(dt);
-
-			//Exercise 2a: Rebound game object at screen edges
-			// Rebound on X
-			if (go->pos.x < 0 + go->scale.x && go->vel.x < 0)
-				go->vel.x = -go->vel.x;
-			else if (go->pos.x > m_worldWidth - go->scale.x && go->vel.x > 0)
-				go->vel.x = -go->vel.x;
-			// Rebound on Y
-			if (go->pos.y < 0 + go->scale.y && go->vel.y < 0)
-				go->vel.y = -go->vel.y;
-			else if (go->pos.y > m_worldHeight - go->scale.y && go->vel.y > 0)
-				go->vel.y = -go->vel.y;
-			//Exercise 2b: Unspawn if it really leave the screen
-			if (go->pos.x > m_worldWidth || go->pos.x < 0 || go->pos.y > m_worldHeight || go->pos.y < 0)
-			{
-				go->active = false;
-				--m_objectCount;
-				continue;
-			}
-		}
-
-		for (std::vector<GameObject *>::iterator it2 = m_goList.begin(); it2 != it; ++it2)
-		{
-			GameObject *go2 = (GameObject *)(*it2);
-			if (!go2->active)
-				continue;
-			if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
-				continue;
-
-			GameObject *goA, *goB;
-
-			if (go->type == GameObject::GO_BALL)
-			{
-				goA = go;
-				goB = go2;
-			}
-			else
-			{
-				goA = go2;
-				goB = go;
-			}
-
-
-			if (CheckCollision(goA, goB, dt))
-			{
-				m_timerStarted = false;
-
-				m1 = goA->mass;
-				m2 = goB->mass;
-				u1 = goA->vel;
-				u2 = goB->vel;
-
-				CollisionResponse(goA, goB);
-
-				v1 = goA->vel;
-				v2 = goB->vel;
-
-				break;
-				//Exercise 3: audit kinetic energy
-			}
-		}
-	}
-
-	camera.Update(dt);
-=======
     SceneBase::Update(dt);
     player->Update(dt);//updates player and tools
     
@@ -301,8 +100,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         float sc = 2;
@@ -320,8 +119,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
@@ -341,8 +140,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         m_ghost->active = true;
@@ -359,8 +158,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
@@ -473,7 +272,6 @@ void SceneCollision::Update(double dt)
     }
 
     camera.Update(dt);
->>>>>>> 8bd16fd0da1085d368aed16d48a7e9632c69987b
 }
 
 void SceneCollision::CollisionResponse(GameObject *go, GameObject *go2)
