@@ -100,8 +100,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         float sc = 2;
@@ -119,8 +119,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
@@ -140,8 +140,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         m_ghost->pos.Set(posX, posY, 0); //IMPT
         m_ghost->active = true;
@@ -158,8 +158,8 @@ void SceneCollision::Update(double dt)
         Application::GetCursorPos(&x, &y);
         int w = Application::GetWindowWidth();
         int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth;
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight;
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;

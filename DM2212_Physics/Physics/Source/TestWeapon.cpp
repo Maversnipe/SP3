@@ -1,26 +1,26 @@
-#include "PickaxeTool.h"
+#include "TestWeapon.h"
 #include "Blocks.h"
 #include <iostream>
 using std::cout;
 using std::endl;
 
-PickaxeTool::PickaxeTool()
+TestWeapon::TestWeapon()
 {
-	i_Price = 0;
+	i_Price = 10;
 	pos.Set(0, 0, 0);
 }
 
-PickaxeTool::~PickaxeTool()
+TestWeapon::~TestWeapon()
 {
 }
 
-void PickaxeTool::Init()
+void TestWeapon::Init()
 {
-	i_Price = 0;
+	i_Price = 10;
 	pos.Set(0, 0, 0);
 }
 
-void PickaxeTool::Update(double dt)
+void TestWeapon::Update(double dt)
 {
 	float m_worldHeight = 100.f;
 	float m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
@@ -33,9 +33,9 @@ void PickaxeTool::Update(double dt)
 	pos.Set(posX, posY, 0);//update to mouse pos
 }
 
-void PickaxeTool::UseTool(vector<GameObject*> goList)
+void TestWeapon::UseTool(vector<GameObject*> goList)
 {
-	cout << "Paxe used at: "<< pos << endl;
+	cout << "TestTool used at: " << pos << endl;
 	for (unsigned i = 0; i < goList.size(); ++i)
 	{
 		Block* b = static_cast<Block*>(goList[i]);
@@ -45,4 +45,5 @@ void PickaxeTool::UseTool(vector<GameObject*> goList)
 			b->getDamaged(1);//if pickaxe hits a grass, i cant access the brick to minus health
 		}
 	}
+
 }

@@ -18,6 +18,7 @@ public:
 	Vector3 getdir() { return m_vec3dir2; };
 	void setdir(Vector3 vec) { m_vec3dir2 = vec; };
 	bool Isdestroyed() { if (m_iHealth < 0) return true; else return false; };	//Get active or not
+	void getDamaged(int damage);//damage block
 
 protected:
 	int m_iType;			//Type of blocks(0. Grass, 1. Glass, 2. Wood, 3. Metal)

@@ -61,6 +61,7 @@
     <ClCompile Include="Source\Collision.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Source\Blocks.cpp">
       <Filter>GameObjects\Blocks</Filter>
     </ClCompile>
@@ -78,6 +79,10 @@
     </ClCompile>
     <ClCompile Include="Source\BrickBlock.cpp">
       <Filter>GameObjects\Blocks</Filter>
+=======
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+>>>>>>> f2892a4403fe48864bfa3f8813193ceee8ad9abb
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +155,7 @@
     <ClInclude Include="Source\Collision.h">
       <Filter>Physics</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Source\Blocks.h">
       <Filter>GameObjects\Blocks</Filter>
     </ClInclude>
@@ -167,6 +173,10 @@
     </ClInclude>
     <ClInclude Include="Source\BrickBlock.h">
       <Filter>GameObjects\Blocks</Filter>
+=======
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
+>>>>>>> f2892a4403fe48864bfa3f8813193ceee8ad9abb
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

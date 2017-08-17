@@ -16,11 +16,29 @@ public:
 	virtual void Reset();
 	virtual void Update(double dt);
 
-	void CameraMovement(double dt);
+	void K_CameraMovement(double dt); // Camera Movements for keyboard
+	void M_CameraMovement(double dt); // Camera Movements for mouse
+
+	float GetOffset_x() { return m_fOffset_x; }
+	float GetOffset_y() { return m_fOffset_y; }
+
+	enum MoveType
+	{
+		CLICK_N_DRAG = 0,
+		MOVE_WITH_MOUSE,
+		KEYBOARD,
+	};
+	MoveType m_eMoveType;
 
 private:
-	Vector3 minBoundary;
-	Vector3 maxBoundary;
+	Vector3 minBoundary; // Minimum X and Y that the camera can go to
+	Vector3 maxBoundary; // Maximum X and Y that the camera can go to
+	Vector3 defaultPos; // Original position of camera
+	Vector3 defaultTarget; // Original target of camera
+	Vector3 defaultUp; // Original up of camera
+
+	float m_fOffset_y; // How much the camera position is offset by in Y axis
+ 	float m_fOffset_x; // How much the camera position is offset by in X axis
 };
 
 #endif
