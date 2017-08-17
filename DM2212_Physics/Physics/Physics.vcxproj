@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Collision.cpp" />
     <ClCompile Include="Source\FileIO.cpp" />
     <ClCompile Include="Source\PickaxeTool.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Collision.h" />
     <ClInclude Include="Source\FileIO.h" />
     <ClInclude Include="Source\PickaxeTool.h" />
     <ClInclude Include="Source\PlayerInfo.h" />

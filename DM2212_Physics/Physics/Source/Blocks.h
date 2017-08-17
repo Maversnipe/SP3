@@ -15,6 +15,8 @@ public:
 
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
+	Vector3 getdir() { return m_vec3dir2; };
+	void setdir(Vector3 vec) { m_vec3dir2 = vec; };
 	bool Isdestroyed() { if (m_iHealth < 0) return true; else return false; };	//Get active or not
 	void getDamaged(int damage);//damage block
 
@@ -24,6 +26,7 @@ protected:
 	bool m_bDestructable;	//can/cannot be destroyed
 	bool m_bIsdestroyed;	//Is destroyed or not
 	bool m_bIsdamaged;		//Is damaged or not
+	Vector3 m_vec3dir2;
 
 };
 
