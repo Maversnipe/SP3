@@ -160,7 +160,7 @@ void SceneBase::Update(double dt)
 	}
 
 	fps = (float)(1.f / dt);
-
+	//CSoundEngine::GetInstance()->PlayASound("test");
 }
 
 void SceneBase::RenderText(Mesh* mesh, std::string text, Color color)

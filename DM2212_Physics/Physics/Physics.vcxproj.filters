@@ -82,6 +82,9 @@
     <ClCompile Include="Source\TestWeapon.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>SoundEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -174,6 +177,9 @@
     <ClInclude Include="Source\TestWeapon.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>SoundEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -205,6 +211,9 @@
     </Filter>
     <Filter Include="GameObjects\Blocks">
       <UniqueIdentifier>{d8bf885d-8021-42f4-899b-b656be4f1900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundEngine">
+      <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
