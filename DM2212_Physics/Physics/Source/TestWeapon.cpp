@@ -43,19 +43,13 @@ void TestWeapon::UseTool(vector<GameObject*> goList)
 	else
 	{
 		//is there a way to use FetchGO here?
-		for (std::vector<GameObject *>::iterator it = goList.begin(); it != goList.end(); ++it)
-		{
-			GameObject *go = (GameObject *)*it;
-			if (!go->active)
-			{
-				go->active = true;
-				go->type = GameObject::GO_BALL;//to be changed
-				go->pos = pos;
-				go->vel = dir * 50;
-				go->scale.Set(2, 2, 2);
-				break;
-			}
-		}
+		GameObject *go = FetchGO(goList);
+		
+		go->type = GameObject::GO_BALL;//to be changed
+		go->pos = pos;
+		go->vel = dir * 50;
+		go->scale.Set(2, 2, 2);
+				
 		isSet = false;
 	}
 }

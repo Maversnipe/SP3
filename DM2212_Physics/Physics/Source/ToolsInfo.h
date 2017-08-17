@@ -19,6 +19,7 @@ public:
 	virtual Vector3 GetPos() const;
 
 	virtual void UseTool(vector<GameObject*> goList);//stuff that it dos
+	virtual GameObject* FetchGO(vector<GameObject*> goList);
 
 protected:
 	int i_Price;
