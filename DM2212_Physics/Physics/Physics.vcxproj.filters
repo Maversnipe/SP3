@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -85,6 +84,10 @@
     </ClCompile>
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -180,6 +183,10 @@
     </ClInclude>
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\CannonTool.h">
+      <Filter>GameObjects\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
