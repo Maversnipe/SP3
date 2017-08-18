@@ -36,8 +36,9 @@ Vector3 ToolsInfo::GetPos() const
 	return pos;
 }
 
-void ToolsInfo::UseTool(vector<GameObject*> goList)
+bool ToolsInfo::UseTool(vector<GameObject*> goList)
 {
+	return false;
 }
 
 GameObject* ToolsInfo::FetchGO(vector<GameObject*> goList)

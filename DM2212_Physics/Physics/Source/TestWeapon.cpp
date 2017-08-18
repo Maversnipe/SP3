@@ -17,6 +17,9 @@ TestWeapon::~TestWeapon()
 
 void TestWeapon::Init()
 {
+	i_Price = 10;
+	pos.Set(0, 0, 0);
+	isSet = false;
 }
 
 void TestWeapon::Update(double dt, Vector3 mousepos)
@@ -33,12 +36,13 @@ void TestWeapon::Update(double dt, Vector3 mousepos)
 
 }
 
-void TestWeapon::UseTool(vector<GameObject*> goList)
+bool TestWeapon::UseTool(vector<GameObject*> goList)
 {
 	if (!isSet)
 	{
 		isSet = true;
 		cout << "TestTool Set at: " << pos << endl;
+		return false;
 	}
 	else
 	{
@@ -51,5 +55,6 @@ void TestWeapon::UseTool(vector<GameObject*> goList)
 		go->scale.Set(2, 2, 2);
 				
 		isSet = false;
+		return true;
 	}
 }
