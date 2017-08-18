@@ -11,7 +11,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
 	angularVelocity(0.0f),
 	isonAir(true),
 	iscolliding(false),
-	colltime(1.0f)
+	rotation(0.0f)
 {
 	if (typeValue == GO_BLOCK)
 		Btype = Btyp;

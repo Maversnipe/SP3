@@ -50,10 +50,13 @@ struct GameObject
 	float momentOfInertia;
 
 	float angularVelocity;
-	Vector3 torque;
-	Vector3 force;
+
 	Vector3 accel;
 
+	float rotation;
+	Vector3 torque;
+	Vector3 force;
+	
 	bool active;
 
 	float mass;
@@ -63,8 +66,6 @@ struct GameObject
 
 	bool isonAir;
 	bool iscolliding;
-
-	float colltime;
 
 	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btyp = GO_GRASS);
 	~GameObject();

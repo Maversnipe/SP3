@@ -14,7 +14,6 @@ struct Manifold
 	GameObject* B;
 	float penetration;
 	Vector3 normal;
-	Vector3 outvel;
 };
 
 class CollisionManager
@@ -23,8 +22,11 @@ public:
 	void SetWorldSize(int height, int width);
 
 	void Check(std::vector<GameObject *> &Objs, double dt);
+	//Circular to other obj
 	bool CheckCollisionC(GameObject *go1, GameObject *go2, float dt);
+	//Box to other obj
 	bool CheckCollisionB(GameObject *go1, GameObject *go2, float dt);
+	/*Same same but different*/
 	void CollisionResponseC(GameObject *go, GameObject *go2, float dt);
 	void CollisionResponseB(GameObject *go, GameObject *go2);
 

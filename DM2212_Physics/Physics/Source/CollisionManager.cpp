@@ -324,8 +324,12 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, flo
 		ratio = go2->mass / masstotal;
 		go2->vel += ratio * Impulse;
 
+
 		PositionalCorrection(go, go2);
 
+		Vector3 rotation = 10 * m->normal + go2->vel;
+		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
+ 
 		break;
 	}
 	default:
@@ -522,7 +526,7 @@ bool CollisionManager::AABBvsCircle(Manifold * m)
 	{
 		inside = true;
 
-
+		//Using SAT
 		if (abs(n.x) > abs(n.y))
 		{
 			if (closest.x > 0)
@@ -538,15 +542,15 @@ bool CollisionManager::AABBvsCircle(Manifold * m)
 				closest.y = -y_extent;
 		}
 	}
+
 	Vector3 normal = n - closest;
-	float d = normal.LengthSquared();
+	float d = normal.Length();
 	B->aabb.SetRadius(B->scale.x);
 	float r = B->aabb.GetRadius();
 
-	if (d > r * r && !inside)
+	//the d is not inside
+	if (d > r && !inside)
 		return false;
-
-	d = sqrt(d);
 
 	if (inside)
 	{
@@ -558,6 +562,5 @@ bool CollisionManager::AABBvsCircle(Manifold * m)
 		m->normal = n;
 		m->penetration = r - d;
 	}
-
 	return true;
 }

@@ -194,7 +194,7 @@ void SceneCollision::RenderMap()
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
                 go->scale.Set(4.5f, 4.5f, 1.f);
-				go->vel.Set(5, 9.8, 0);
+				go->vel.Set(3, 9.8, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
             }
@@ -327,7 +327,7 @@ void SceneCollision::RenderGO(GameObject *go)
     case GameObject::GO_BLOCK:
         modelStack.PushMatrix();
         modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
-        modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
+        modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
         modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
         RenderMesh(BlockList[go->Btype], false);
         modelStack.PopMatrix();
