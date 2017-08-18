@@ -30,8 +30,30 @@ void TestWeapon::Update(double dt, Vector3 mousepos)
 	}
 	else
 	{
-		if(mousepos != pos)
-		dir = (mousepos - pos).Normalized();
+		if (mousepos != pos)
+		{
+			dir = (mousepos - pos).Normalized();
+			cout << Math::RadianToDegree(atan2(dir.x, dir.y)) << " : ";
+			int i_dir = Math::RadianToDegree(atan2(dir.x, dir.y));
+			if (i_dir > -90 - 45 && i_dir <= -90 + 45)
+			{
+				dir.Set(-1, 0, 0);
+			}
+			else if (i_dir > -45 && i_dir <= +45)
+			{
+				dir.Set(0, 1, 0);
+			}
+			else if (i_dir > 90 - 45 && i_dir <= 90 + 45)
+			{
+				dir.Set(1, 0, 0);
+			}
+			else
+			{
+				dir.Set(0, -1, 0);
+			}
+			cout << Math::RadianToDegree(atan2(dir.x, dir.y)) << endl;
+
+		}
 	}
 
 }
