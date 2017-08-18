@@ -3,8 +3,8 @@
 GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
 	: type(typeValue),
 	scale(1, 1, 1),
-	dir(0, 1, 0),
 	restitution(1),
+	dir(1, 0, 0),
 	active(false),
 	mass(1.f),
 	momentOfInertia(mass * (scale.x * 0.5) * (scale.x * 0.5)),

@@ -1,66 +1,220 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\BrickBlock.cpp" />
-    <ClCompile Include="Source\Collision.cpp" />
-    <ClCompile Include="Source\FileIO.cpp" />
-    <ClCompile Include="Source\PickaxeTool.cpp" />
-    <ClCompile Include="Source\PlayerInfo.cpp" />
-    <ClCompile Include="Source\SpriteAnimation.cpp" />
-    <ClCompile Include="Source\Application.cpp" />
-    <ClCompile Include="Source\Blocks.cpp" />
-    <ClCompile Include="Source\Camera.cpp" />
-    <ClCompile Include="Source\GameObject.cpp" />
-    <ClCompile Include="Source\GlassBlock.cpp" />
-    <ClCompile Include="Source\GrassBlock.cpp" />
-    <ClCompile Include="Source\LoadOBJ.cpp" />
-    <ClCompile Include="Source\LoadTGA.cpp" />
-    <ClCompile Include="Source\main.cpp" />
-    <ClCompile Include="Source\Mesh.cpp" />
-    <ClCompile Include="Source\MeshBuilder.cpp" />
-    <ClCompile Include="Source\MetalBlock.cpp" />
-    <ClCompile Include="Source\SceneAsteroid.cpp" />
-    <ClCompile Include="Source\SceneBase.cpp" />
-    <ClCompile Include="Source\SceneCollision.cpp" />
-    <ClCompile Include="Source\SceneKinematics.cpp" />
-    <ClCompile Include="Source\shader.cpp" />
-    <ClCompile Include="Source\TestWeapon.cpp" />
-    <ClCompile Include="Source\ToolsInfo.cpp" />
-    <ClCompile Include="Source\Utility.cpp" />
-    <ClCompile Include="Source\WoodBlock.cpp" />
-    <ClCompile Include="Source\CollisionManager.cpp" />
+
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FileIO.cpp">
+      <Filter>Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneAsteroid.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneBase.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneCollision.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneKinematics.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadOBJ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpriteAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PickaxeTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolsInfo.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>PlayerInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collision.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Blocks.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GrassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MetalBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WoodBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BrickBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>SoundEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\BrickBlock.h" />
-    <ClInclude Include="Source\Collision.h" />
-    <ClInclude Include="Source\FileIO.h" />
-    <ClInclude Include="Source\PickaxeTool.h" />
-    <ClInclude Include="Source\PlayerInfo.h" />
-    <ClInclude Include="Source\SpriteAnimation.h" />
-    <ClInclude Include="Source\Application.h" />
-    <ClInclude Include="Source\Blocks.h" />
-    <ClInclude Include="Source\Camera.h" />
-    <ClInclude Include="Source\GameObject.h" />
-    <ClInclude Include="Source\GlassBlock.h" />
-    <ClInclude Include="Source\GrassBlock.h" />
-    <ClInclude Include="Source\Light.h" />
-    <ClInclude Include="Source\LoadOBJ.h" />
-    <ClInclude Include="Source\LoadTGA.h" />
-    <ClInclude Include="Source\Material.h" />
-    <ClInclude Include="Source\Mesh.h" />
-    <ClInclude Include="Source\MeshBuilder.h" />
-    <ClInclude Include="Source\MetalBlock.h" />
-    <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\SceneAsteroid.h" />
-    <ClInclude Include="Source\SceneBase.h" />
-    <ClInclude Include="Source\SceneCollision.h" />
-    <ClInclude Include="Source\SceneKinematics.h" />
-    <ClInclude Include="Source\shader.hpp" />
-    <ClInclude Include="Source\TestWeapon.h" />
-    <ClInclude Include="Source\ToolsInfo.h" />
-    <ClInclude Include="Source\Utility.h" />
-    <ClInclude Include="Source\Vertex.h" />
-    <ClInclude Include="Source\WoodBlock.h" />
-    <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FileIO.h">
+      <Filter>Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneAsteroid.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneBase.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneCollision.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneKinematics.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadOBJ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PickaxeTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolsInfo.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>PlayerInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collision.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Blocks.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MetalBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WoodBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BrickBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>SoundEngine</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{73d941b9-f6dc-4318-8f18-1dc2f164ddb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reader">
+      <UniqueIdentifier>{62ba502d-2b68-4097-ace5-20cf6b6cdebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{3e6f51b1-9966-4462-af0c-c3a3b26a3a41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c36afc04-3fee-4183-b661-3be8f6b8a354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{abbabb67-36f6-490d-aee3-358b6f84cd97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9d55e25b-ed1f-4460-99fd-e02406b7436f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Tools">
+      <UniqueIdentifier>{39a13c5d-6b10-4c6d-8970-ac13df62fdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerInfo">
+      <UniqueIdentifier>{098b7017-76dc-4629-8fd5-1037f46d33fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cf086d67-8eb0-42f0-811f-83b57047cdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Blocks">
+      <UniqueIdentifier>{d8bf885d-8021-42f4-899b-b656be4f1900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundEngine">
+      <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

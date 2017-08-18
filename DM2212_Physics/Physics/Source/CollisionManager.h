@@ -19,22 +19,25 @@ struct Manifold
 class CollisionManager
 {
 public:
+	//Init
 	void SetWorldSize(int height, int width);
 
+	//"Update"
 	void Check(std::vector<GameObject *> &Objs, double dt);
 	//Circular to other obj
 	bool CheckCollisionC(GameObject *go1, GameObject *go2, float dt);
 	//Box to other obj
 	bool CheckCollisionB(GameObject *go1, GameObject *go2, float dt);
-	/*Same same but different*/
+	//Circular to other obj
 	void CollisionResponseC(GameObject *go, GameObject *go2, float dt);
+	//Box to other obj
 	void CollisionResponseB(GameObject *go, GameObject *go2);
 
+	//Prevent Overlaps
 	void PositionalCorrection(GameObject *go, GameObject *go2);
 private:
 	//Collision checks Methods
 	bool AABBvsAABB(Manifold* m);
-	bool SweepAABBs(Manifold* m);
 
 	bool CirclevsCircle(Manifold* m);
 

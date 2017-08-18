@@ -489,11 +489,6 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 	return false;
 }
 
-bool CollisionManager::SweepAABBs(Manifold * m)
-{
-	return false;
-}
-
 bool CollisionManager::CirclevsCircle(Manifold * m)
 {
 	Vector3 r = m->A->aabb.GetPos() - m->B->aabb.GetPos();

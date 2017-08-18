@@ -36,6 +36,28 @@ Vector3 ToolsInfo::GetPos() const
 	return pos;
 }
 
-void ToolsInfo::UseTool(vector<GameObject*> goList)
+bool ToolsInfo::UseTool(vector<GameObject*> goList)
 {
+	return false;
+}
+
+GameObject* ToolsInfo::FetchGO(vector<GameObject*> goList)
+{
+	for (std::vector<GameObject *>::iterator it = goList.begin(); it != goList.end(); ++it)
+	{
+		GameObject *go = (GameObject *)*it;
+		if (!go->active)
+		{
+			go->active = true;
+			return go;
+		}
+	}
+	for (unsigned i = 0; i < 10; ++i)
+	{
+		GameObject *go = new GameObject(GameObject::GO_BALL);
+		goList.push_back(go);
+	}
+	GameObject *go = goList.back();
+	go->active = true;
+	return go;
 }

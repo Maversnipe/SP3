@@ -6,6 +6,7 @@
 #include "Application.h"
 #include "Utility.h"
 #include "LoadTGA.h"
+#include "SoundEngine.h"
 
 #include <sstream>
 
@@ -123,11 +124,25 @@ void SceneBase::Init()
 	}
 
 	//Game (Load Block Textures Here)
-	BlockList[GEO_GRASS] = MeshBuilder::GenerateCube("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
-	BlockList[GEO_GLASS] = MeshBuilder::GenerateCube("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
-	BlockList[GEO_WOOD] = MeshBuilder::GenerateCube("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
-	BlockList[GEO_METAL] = MeshBuilder::GenerateCube("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
-	BlockList[GEO_BRICK] = MeshBuilder::GenerateCube("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
+	BlockList[GEO_GRASS] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
+	BlockList[GEO_GRASS]->textureID = LoadTGA("Image//blocks//ground//dirt.tga");
+
+	BlockList[GEO_GLASS] = MeshBuilder::GenerateQuad("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
+	BlockList[GEO_GLASS]->textureID = LoadTGA("Image//blocks//glass//glass_fullhealth.tga");
+
+	BlockList[GEO_WOOD] = MeshBuilder::GenerateQuad("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
+	BlockList[GEO_WOOD]->textureID = LoadTGA("Image//blocks//wood//wood_fullhealth.tga");
+
+	BlockList[GEO_METAL] = MeshBuilder::GenerateQuad("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
+	BlockList[GEO_METAL]->textureID = LoadTGA("Image//blocks//metal//metal.tga");
+
+	BlockList[GEO_BRICK] = MeshBuilder::GenerateQuad("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
+	BlockList[GEO_BRICK]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
+
+
+	//Load sound (test)
+	CSoundEngine::GetInstance()->Init();
+	CSoundEngine::GetInstance()->AddSound("test", "Sound//Napalm.wav");
 
 	bLightEnabled = false;
 }
@@ -155,6 +170,7 @@ void SceneBase::Update(double dt)
 	}
 
 	fps = (float)(1.f / dt);
+	//CSoundEngine::GetInstance()->PlayASound("test"); //test sound
 }
 
 void SceneBase::RenderText(Mesh* mesh, std::string text, Color color)
