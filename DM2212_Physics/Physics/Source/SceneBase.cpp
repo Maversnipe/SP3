@@ -297,11 +297,11 @@ void SceneBase::Exit()
 	}
 
 	//Clean Blocks
-	for (int i = 0; i < NUM_BLOCKS; ++i)
+	/*for (int i = 0; i < NUM_BLOCKS; ++i)
 	{
 		if (BlockList[i])
 			delete BlockList[i];
-	}
+	}*/
 
 	glDeleteProgram(m_programID);
 	glDeleteVertexArrays(1, &m_vertexArrayID);

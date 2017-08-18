@@ -17,8 +17,10 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->target = target;
 	this->up = up;
 	this->defaultPos = pos;
-	this->minBoundary.Set(-50.f, -50.f, -50.f); // Setting of Camera minimum X and Y
-	this->maxBoundary.Set(50.f, 50.f, 50.f); // Setting of Camera maximum X and Y
+	//this->minBoundary.Set(-50.f, -50.f, -50.f); // Setting of Camera minimum X and Y
+	//this->maxBoundary.Set(50.f, 50.f, 50.f); // Setting of Camera maximum X and Y
+	this->minBoundary.Set(-1920.f, -600.f, -50.f); // Setting of Camera minimum X and Y
+	this->maxBoundary.Set(1920.f, 600.f, 50.f); // Setting of Camera maximum X and Y
 	m_eMoveType = CLICK_N_DRAG;
 }
 
@@ -130,6 +132,7 @@ void Camera::M_CameraMovement(double dt)
 				}
 				else if (defaultPos.y + m_fOffset_y < minBoundary.y)
 				{
+					std::cout << "MIN REACHED" << std::endl;
 					m_fOffset_y = -(defaultPos.y - minBoundary.y);
 				}
 			}

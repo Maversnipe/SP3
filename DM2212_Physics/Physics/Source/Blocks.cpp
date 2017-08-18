@@ -6,7 +6,7 @@ Block::Block()
 	m_bIsdestroyed(false),
 	m_bDestructable(false),
 	m_bIsdamaged(false),
-	m_vec3dir2(Vector3(1, 0, 0))
+	m_vec3dir2(Vector3(0, 1, 0))
 {
 
 }
