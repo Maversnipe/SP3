@@ -9,8 +9,8 @@ void CollisionManager::SetWorldSize(int height, int width)
 
 void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 {
-	std::cout << colltimecheck << std::endl;
-	colltimecheck += dt;
+	//std::cout << colltimecheck << std::endl;
+	//colltimecheck += dt;
 
 	for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
 	{
@@ -25,6 +25,7 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 		//Blocks
 		if (go->active && go->type == GameObject::GO_BLOCK)
 		{
+
 			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
 			{
 				go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
@@ -61,7 +62,7 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 					continue;
 				if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
 					continue;
-
+				
 				if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
 					continue;
 
@@ -113,8 +114,6 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 		{
 			GameObject *go2 = (GameObject *)(*it2);
 
-			if ((go->pos - go2->pos).LengthSquared() < 30.f * 30.f)
-				continue;
 			if (!go2->active)
 				continue;
 			if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
@@ -345,6 +344,7 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, flo
 		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
 		
 		go2->iscolliding = true;
+
 		break;
 	}
 	default:
@@ -423,6 +423,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		PositionalCorrection(go, go2);
 		go->iscolliding = true;
 		go2->iscolliding = true;
+
 		break;
 	}
 	default:

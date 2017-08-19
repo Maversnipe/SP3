@@ -2,6 +2,8 @@
 #define COLLISION_MANAGER_H
 
 #include "GameObject.h"
+#include "Blocks.h"
+#include "GrassBlock.h"
 #include "Collision.h"
 #include "Vector3.h"
 #include <vector>

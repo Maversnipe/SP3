@@ -2,8 +2,9 @@
 #define GLASSBLOCK_H
 
 #include "Blocks.h"
+#include "GameObject.h"
 
-class Glassblock : public Block
+class Glassblock : public Block , public GameObject
 {
 public:
 	Glassblock();
