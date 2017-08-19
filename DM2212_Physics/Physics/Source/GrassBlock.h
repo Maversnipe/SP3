@@ -8,6 +8,8 @@ class Grassblock : public Block
 public:
 	Grassblock();
 	~Grassblock();
+
+	void Update(GameObject* go, double dt);
 	
 };
 

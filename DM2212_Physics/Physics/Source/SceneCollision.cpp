@@ -17,7 +17,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 39, Application::GetWindowHeight(), Application::GetWindowWidth());
+    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
     map->Read("Maps//test.csv");
     RenderMap();
 
@@ -206,8 +206,8 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
-				go->vel.Set(3, 9.8, 0);
+                go->scale.Set(4.f, 4.f, 1.f);
+				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
             }
@@ -216,7 +216,7 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
@@ -226,7 +226,7 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
@@ -236,7 +236,7 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
@@ -246,7 +246,7 @@ void SceneCollision::RenderMap()
 				GameObject *go = FetchGO();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(-5, 9.8, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
@@ -256,7 +256,7 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_WALL;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
             }
@@ -378,7 +378,8 @@ void SceneCollision::Render()
         GameObject *go = (GameObject *)*it;
         if(go->active)
         {
-            RenderGO(go);
+			if(go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
+				RenderGO(go);
         }
     }
     if(m_ghost->active)

@@ -29,12 +29,9 @@ public:
 	GameObject* FetchGO();
 
 	//Collision check
-	bool CheckCollision(GameObject *go1, GameObject *go2, float dt);
 	float CheckCollision2(GameObject *go, GameObject *go2);
-	void CollisionResponse(GameObject *go, GameObject *go2);
 
 	//Collision Manager
-	Manifold *m = new Manifold;
 	CollisionManager *cm = new CollisionManager;
 	
 	//Mapping
