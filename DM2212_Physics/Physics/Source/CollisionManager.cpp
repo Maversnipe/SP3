@@ -15,7 +15,8 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 	for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
 	{
 		GameObject *go = (GameObject *)*it;
-		
+		GameObject *got = (GameObject*)*it + 1;
+
 		if (go->mass == 0)
 			go->invmass = 0;
 		else
@@ -24,13 +25,20 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 		//Blocks
 		if (go->active && go->type == GameObject::GO_BLOCK)
 		{
-			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_METAL)
+			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
+			{
 				go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
+			}
 			else
 				go->pos += go->vel* static_cast<float>(dt);
 
-			if (go->vel.y != 0)
+
+
+			if (go->vel.y != 0 || go->vel.x != 0)
 				go->isonAir = true;
+			else
+				go->isonAir = false;
+
 
 			//X
 			if (go->pos.x < 0 + go->scale.x && go->vel.x < 0 || go->pos.x > m_iworld_width - go->scale.x && go->vel.x > 0)
@@ -53,6 +61,10 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 					continue;
 				if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
 					continue;
+
+				if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
+					continue;
+
 				GameObject *goA, *goB;
 
 				if (go->type == GameObject::GO_BLOCK)
@@ -101,6 +113,8 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 		{
 			GameObject *go2 = (GameObject *)(*it2);
 
+			if ((go->pos - go2->pos).LengthSquared() < 30.f * 30.f)
+				continue;
 			if (!go2->active)
 				continue;
 			if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
@@ -329,7 +343,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, flo
 
 		Vector3 rotation = 10 * m->normal + go2->vel;
 		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
- 
+		
+		go2->iscolliding = true;
 		break;
 	}
 	default:

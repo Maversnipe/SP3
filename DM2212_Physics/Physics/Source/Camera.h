@@ -27,8 +27,10 @@ public:
 		CLICK_N_DRAG = 0,
 		MOVE_WITH_MOUSE,
 		KEYBOARD,
+		MOVE_TYPE_TOTAL,
 	};
-	MoveType m_eMoveType;
+	MoveType m_eMoveType; // Which type of movement to use
+	void SetMoveType(MoveType _input) { m_eMoveType = _input; }
 
 private:
 	Vector3 minBoundary; // Minimum X and Y that the camera can go to

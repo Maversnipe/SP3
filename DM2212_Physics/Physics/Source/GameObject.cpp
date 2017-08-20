@@ -9,7 +9,7 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
 	mass(1.f),
 	momentOfInertia(mass * (scale.x * 0.5) * (scale.x * 0.5)),
 	angularVelocity(0.0f),
-	isonAir(true),
+	isonAir(false),
 	iscolliding(false),
 	rotation(0.0f)
 {
