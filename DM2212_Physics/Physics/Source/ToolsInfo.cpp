@@ -36,12 +36,12 @@ Vector3 ToolsInfo::GetPos() const
 	return pos;
 }
 
-bool ToolsInfo::UseTool(vector<GameObject*> goList)
+bool ToolsInfo::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
 	return false;
 }
 
-GameObject* ToolsInfo::FetchGO(vector<GameObject*> goList)
+GameObject* ToolsInfo::FetchGO(vector<GameObject*>& goList)
 {
 	for (std::vector<GameObject *>::iterator it = goList.begin(); it != goList.end(); ++it)
 	{

@@ -82,6 +82,10 @@
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -183,6 +187,10 @@
     </ClInclude>
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h" />
+    <ClInclude Include="Source\CannonTool.h">
+      <Filter>GameObjects\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\AABB.h">
       <Filter>Physics</Filter>

@@ -2,11 +2,11 @@
 #include "ToolsInfo.h"
 #include "Application.h"
 
-class TestWeapon :public ToolsInfo
+class CannonTool :public ToolsInfo
 {
 public:
-	TestWeapon();
-	~TestWeapon();
+	CannonTool();
+	~CannonTool();
 
 	void Init();//set default data
 	void Update(double dt, Vector3 mousepos);//upadate data

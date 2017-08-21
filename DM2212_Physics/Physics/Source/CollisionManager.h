@@ -38,18 +38,18 @@ public:
 	//Prevent Overlaps
 	void PositionalCorrection(GameObject *go, GameObject *go2);
 
+	~CollisionManager();
+
+private:
+	CollisionManager();
+	static CollisionManager* cm;
+
 	//Collision checks Methods
 	bool AABBvsAABB(Manifold* m);
 
 	bool CirclevsCircle(Manifold* m);
 
 	bool AABBvsCircle(Manifold* m);
-
-	~CollisionManager();
-
-private:
-	CollisionManager();
-	static CollisionManager* cm;
 
 protected:
 	//Playable Area

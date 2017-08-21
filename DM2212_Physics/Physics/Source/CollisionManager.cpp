@@ -359,9 +359,13 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		/*Vector3 vel = go->vel;
-		Vector3 N = m->normal.Normalized();
-		go->vel = vel - (2.f * vel.Dot(N)) * N;*/
+		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		{
+			Vector3 vel = go->vel;
+			Vector3 N = m->normal.Normalized();
+			go->vel = vel - (2.f * vel.Dot(N)) * N;
+			break;
+		}
 
 		Vector3 rv = go2->vel - go->vel;
 
@@ -381,8 +385,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		j /= 1 / go->mass + 1 / go2->mass;
 
 		Vector3 Impulse = j * m->normal.Normalized();
-		go->vel += 1/go->mass * Impulse;
-		go2->vel -= 1 / go2->mass * Impulse;
+		/*go->vel += 1/go->mass * Impulse;
+		go2->vel -= 1 / go2->mass * Impulse;*/
 
 		float masstotal = go->mass + go2->mass;
 
@@ -421,10 +425,13 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		Vector3 u1N = u1.Dot(N) * N;
 		Vector3 u2N = u2.Dot(N) * N;
 		go->vel = u1 + 2.f * (u2N - u1N);
-		go2->vel = u2 + 2.f * (u1N - u2N);
+
+		if(go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+			go2->vel = u2 + 2.f * (u1N - u2N);
+		
 		PositionalCorrection(go, go2);
 
-		go->torque += m->normal.Cross(Vector3(0, 10, 0));
+		go->torque += m->normal.Cross(Vector3(0, 5, 0));
 
 		go->iscolliding = true;
 		go2->iscolliding = true;
@@ -452,15 +459,22 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		/*Vector3 vel = go->vel;
-		Vector3 N = m->normal.Normalized();
-		go->vel = vel - (2.f * vel.Dot(N)) * N;*/
+		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		{
+			/*Vector3 vel = go->vel;
+			Vector3 N = m->normal.Normalized();
+			go->vel = vel - (2.f * vel.Dot(N)) * N;
+			break;*/
+		}
+
 		Vector3 rv = go2->vel - go->vel;
 
-		float velAlongNormal = rv.Dot(m->normal.Normalized());
+		float velAlongNormal = 0;
+		if (m->normal != Vector3(0, 0, 0))
+			velAlongNormal = rv.Dot(m->normal.Normalized());
 
-		if (velAlongNormal > 0)
-			return;
+		/*if (velAlongNormal > 0)
+			return;*/
 
 		//Calculate magnitude/bounciness
 		float e = std::min(go->restitution, go2->restitution);
@@ -480,7 +494,11 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		ratio = go2->mass / masstotal;
 		go2->vel += ratio * Impulse;
 
-		PositionalCorrection(go, go2);
+		//PositionalCorrection(go, go2);
+		
+		go2->torque += m->normal.Cross(Vector3(0, 10, 0));
+		go->torque += m->normal.Cross(Vector3(0, 10, 0));
+
 		go->iscolliding = true;
 		go2->iscolliding = true;
 

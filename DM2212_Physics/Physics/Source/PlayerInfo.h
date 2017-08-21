@@ -35,7 +35,7 @@ public:
 	void Init();
 
 	void Update(double dt,Vector3 mousepos);//use weapons in here
-	void UseCurrentTool(vector<GameObject*> goList);
+	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
 
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
@@ -45,7 +45,7 @@ private:
 	int i_Score;
 
 	//tool stuff
-	const int i_NumTools = 2;
+	const int i_NumTools = 3;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
 	

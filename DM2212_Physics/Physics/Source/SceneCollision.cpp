@@ -147,7 +147,7 @@ void SceneCollision::Update(double dt)
         bSpaceState = false;
         std::cout << "SPACE BAR UP" << std::endl;
 
-        player->UseCurrentTool(m_goList);
+        player->UseCurrentTool(m_vBlocks, m_goList);
     }
 
     //Mouse Section
@@ -209,6 +209,7 @@ void SceneCollision::Update(double dt)
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
+		go->tooltype = GameObject::TOOL_TYPE::CANNONBALL;
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
         m_ghost->active = false;
@@ -376,12 +377,12 @@ void SceneCollision::UpdateObjects(double dt)
 	for (auto &i : m_goList)
 	{
 		//i->Update(dt);
-
-		Cannonball* a = static_cast<Cannonball*>(i);
-		if ( a != NULL)
+		if (i->tooltype == GameObject::TOOL_TYPE::CANNONBALL)
 		{
-			a->Update(m_goList, m_vBlocks, dt);
+			Cannonball* cannonball = static_cast<Cannonball*>(i);
+			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
+
 	}
 }
 
@@ -589,7 +590,8 @@ void SceneCollision::Render()
     
     ss.str(std::string());
     ss.precision(5);
-    ss << "FPS: " << CMinimap::GetInstance()->getPosition();
+	ss << "FPS: " << fps;
+   // ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
     RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
     
     RenderTextOnScreen(meshList[GEO_TEXT], "Collision", Color(0, 1, 0), 3, 0, 0);
