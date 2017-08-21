@@ -35,7 +35,7 @@ public:
 	void Init();
 
 	void Update(double dt,Vector3 mousepos);//use weapons in here
-	void UseCurrentTool(vector<GameObject*> goList);
+	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
 
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);

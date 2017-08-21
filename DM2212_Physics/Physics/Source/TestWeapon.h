@@ -10,7 +10,7 @@ public:
 
 	void Init();//set default data
 	void Update(double dt, Vector3 mousepos);//upadate data
-	bool UseTool(vector<GameObject*> goList);
+	bool UseTool(vector<Block*> blockList, vector<GameObject*> &goList);
 private:
 	bool isSet;
 };

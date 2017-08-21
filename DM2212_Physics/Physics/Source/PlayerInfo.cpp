@@ -50,11 +50,11 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 	ToolManager[i_ActiveTool]->Update(dt, mousepos);
 }
 
-void PlayerInfo::UseCurrentTool(vector<GameObject*> goList)
+void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
 	if (ToolManager[i_ActiveTool]->GetPrice() < i_Money)
 	{
-		if(ToolManager[i_ActiveTool]->UseTool(goList))
+		if(ToolManager[i_ActiveTool]->UseTool(blockList, goList))
 			i_Money -= ToolManager[i_ActiveTool]->GetPrice();
 
 		std::cout << i_Money << std::endl;

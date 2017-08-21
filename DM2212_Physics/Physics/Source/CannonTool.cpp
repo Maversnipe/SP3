@@ -36,23 +36,24 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 
 }
 
-bool CannonTool::UseTool(vector<GameObject*> goList)
+bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 {
 	if (!isSet)
 	{
 		isSet = true;
-		cout << "TestTool Set at: " << pos << endl;
+		cout << "Cannon Set at: " << pos << endl;
 		return false;
 	}
 	else
 	{
-		//is there a way to use FetchGO here?
 		GameObject *go = FetchGO(goList);
 
-		go->type = GameObject::GO_BALL;//to be changed
+		go->type = GameObject::GO_BALL;
+		go->tooltype = TOOL_TYPE::CANNONBALL;
 		go->pos = pos;
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
+		go->aabb.SetAABB(go->pos, go->scale);
 
 		isSet = false;
 		return true;
