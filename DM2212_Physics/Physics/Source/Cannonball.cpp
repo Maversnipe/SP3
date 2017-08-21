@@ -29,7 +29,7 @@ bool Cannonball::checkCollision(std::vector<GameObject*>& Objs, std::vector<Bloc
 
 	for (auto &i : Objs)
 	{
-		if (i == this)
+		if (i == this || !i->active)
 			continue;
 
 		check = CollisionManager::getCManager()->CheckCollisionC(this, i);

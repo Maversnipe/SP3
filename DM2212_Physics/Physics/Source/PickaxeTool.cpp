@@ -25,16 +25,14 @@ void PickaxeTool::Update(double dt, Vector3 mousepos)
 	pos = mousepos;//update to mouse pos
 }
 
-bool PickaxeTool::UseTool(vector<GameObject*> goList)
+bool PickaxeTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
 	cout << "Paxe used at: "<< pos << endl;
-	for (unsigned i = 0; i < goList.size(); ++i)
+	for (unsigned i = 0; i < blockList.size(); ++i)
 	{
-		Block* b = static_cast<Block*>(goList[i]);
-
-		if ((goList[i]->pos - pos).LengthSquared() < goList[i]->scale.x * goList[i]->scale.x && goList[i]->active && goList[i]->type == GameObject::GO_BLOCK)
+		if ((blockList[i]->pos - pos).LengthSquared() < blockList[i]->scale.x * blockList[i]->scale.x && blockList[i]->active)
 		{
-			b->getDamaged(1);//if pickaxe hits a grass, i cant access the brick to minus health
+			blockList[i]->getDamaged(1);
 		}
 	}
 	return true;
