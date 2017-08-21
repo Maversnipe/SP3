@@ -10,6 +10,7 @@ public:
 	~Woodblock();
 
 	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void BurnUpdate();
 
 protected:
 	bool m_bBurning;

@@ -14,6 +14,7 @@
 #include "BrickBlock.h"
 #include "Cannonball.h"
 #include "CollisionManager.h"
+#include "minimap.h"
 
 class SceneCollision : public SceneBase
 {
@@ -66,6 +67,9 @@ protected:
 
 	//"Gravity"
 	Vector3 m_vec3Gravity;
+
+	//Minimap
+	Vector3 minimapvector;
 
 	//Auditing
 	float m1, m2;

@@ -33,15 +33,20 @@ public:
 	void SetMoveType(MoveType _input) { m_eMoveType = _input; }
 
 private:
-	Vector3 minBoundary; // Minimum X and Y that the camera can go to
-	Vector3 maxBoundary; // Maximum X and Y that the camera can go to
+	// Default values
 	Vector3 defaultPos; // Original position of camera
 	Vector3 defaultTarget; // Original target of camera
 	Vector3 defaultUp; // Original up of camera
+	
+	// Mouse Movement
+	Vector3 minBoundary; // Minimum X and Y that the camera can go to
+	Vector3 maxBoundary; // Maximum X and Y that the camera can go to
+	float m_fOffset_y; // How much the camera position is offset by in Y axis
+	float m_fOffset_x; // How much the camera position is offset by in X axis
+
+	// For MOVE_WITH_MOUSE MoveType
 	Vector3 firstPos; // Position of mouse when it is first clicked
 
-	float m_fOffset_y; // How much the camera position is offset by in Y axis
- 	float m_fOffset_x; // How much the camera position is offset by in X axis
 };
 
 #endif
