@@ -40,6 +40,8 @@ void SceneCollision::Init()
 
 	m_vec3Gravity.Set(0, -9.8, 0);
 	
+	//cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
+
 	CollisionManager::getCManager()->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 }
 
@@ -216,6 +218,7 @@ void SceneCollision::Update(double dt)
 	UpdateObjects(dt);
 	UpdateBlocks(dt);
     camera.Update(dt);
+
 }
 
 void SceneCollision::RenderMap()
@@ -301,6 +304,40 @@ void SceneCollision::RenderMap()
         std::cout << std::endl;
     }
     */
+}
+
+void SceneCollision::RenderMinimap()
+{
+
+	// Push the current transformation into the modelStack
+	modelStack.PushMatrix();
+
+	// Translate the current transformation (from minimap.cpp)
+	modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
+	// Scale the current transformation (from minimap.cpp)
+	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
+
+	// Push the current transformation into the modelStack
+	modelStack.PushMatrix();
+	if (CMinimap::GetInstance()->m_cMinimap_Background)
+	{
+		modelStack.PushMatrix();
+		RenderMesh(Maplist[GEO_MAPBG], false);
+		modelStack.PopMatrix();
+	}
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+	if (CMinimap::GetInstance()->m_cMinimap_Border)
+	{
+		modelStack.PushMatrix();
+		modelStack.Scale(1.02, 1.02, 1.02);
+		RenderMesh(Maplist[GEO_MAPBORDER], false);
+		modelStack.PopMatrix();
+	}
+	modelStack.PopMatrix();
+
+	modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -465,9 +502,13 @@ void SceneCollision::Render()
     // Model matrix : an identity matrix (model will be at the origin)
     modelStack.LoadIdentity();
     
+	RenderMinimap(); //test
+
+
     RenderMesh(meshList[GEO_AXES], false);
 
-    for(std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
+    
+	for(std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
     {
         GameObject *go = (GameObject *)*it;
         if(go->active)

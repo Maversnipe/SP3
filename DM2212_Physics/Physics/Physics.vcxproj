@@ -153,6 +153,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\CannonTool.cpp" />
+    <ClCompile Include="Source\minimap.cpp" />
     <ClCompile Include="Source\Cannonball.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\BrickBlock.cpp" />
@@ -186,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CannonTool.h" />
+    <ClInclude Include="Source\minimap.h" />
     <ClInclude Include="Source\Cannonball.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\BrickBlock.h" />

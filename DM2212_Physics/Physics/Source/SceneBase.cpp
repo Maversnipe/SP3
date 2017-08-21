@@ -139,6 +139,13 @@ void SceneBase::Init()
 	BlockList[GEO_BRICK] = MeshBuilder::GenerateQuad("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
 	BlockList[GEO_BRICK]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
 
+	//minimap
+	Maplist[GEO_MAPBG] = MeshBuilder::GenerateQuad("mapbg", Color(1.f, 0.f, 0.f), 1.f);
+	Maplist[GEO_MAPBG]->textureID = LoadTGA("Image//Background//evening.tga");
+	CMinimap::GetInstance()->SetBackground(Maplist[GEO_MAPBG]);
+	Maplist[GEO_MAPBORDER] = MeshBuilder::GenerateQuad("mapborder", Color(1.f, 1.f, 1.f), 1.f);
+	CMinimap::GetInstance()->SetBorder(Maplist[GEO_MAPBORDER]);
+
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();

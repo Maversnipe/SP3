@@ -95,6 +95,7 @@
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
+    <ClCompile Include="Source\minimap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -200,6 +201,7 @@
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\minimap.h"/>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
