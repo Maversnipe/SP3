@@ -153,9 +153,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\CannonTool.cpp" />
+    <ClCompile Include="Source\Cannonball.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\BrickBlock.cpp" />
-    <ClCompile Include="Source\Collision.cpp" />
+    <ClCompile Include="Source\AABB.cpp" />
     <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\FileIO.cpp" />
     <ClCompile Include="Source\PickaxeTool.cpp" />
@@ -185,9 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CannonTool.h" />
+    <ClInclude Include="Source\Cannonball.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\BrickBlock.h" />
-    <ClInclude Include="Source\Collision.h" />
+    <ClInclude Include="Source\AABB.h" />
     <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\FileIO.h" />
     <ClInclude Include="Source\PickaxeTool.h" />

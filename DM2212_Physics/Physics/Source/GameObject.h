@@ -2,10 +2,11 @@
 #define GAME_OBJECT_H
 
 #include "Vector3.h"
-#include "Collision.h"
+#include "AABB.h"
 
-struct GameObject
+class GameObject
 {
+public:
 	enum GAMEOBJECT_TYPE
 	{
 		GO_NONE = 0,
@@ -33,16 +34,18 @@ struct GameObject
 	{
 		GO_GRASS,
 		GO_GLASS,
-		GO_GLASSDAM,
+		//GO_GLASSDAM,
 		GO_WOOD,
-		GO_WOODDAM,
-		GO_WOODBROKEN,
+		//GO_WOODDAM,
+		//GO_WOODBROKEN,
 		GO_METAL,
 		GO_BRICK,
-		GO_BRICKDAM,
-		GO_BRICKBROKEN,
+		//GO_BRICKDAM,
+		//GO_BRICKBROKEN,
 		GO_BTYPTOTAL,
 	};
+
+	virtual void Update(double dt) {};
 
 	BLOCK_TYPE Btype;
 
@@ -57,7 +60,7 @@ struct GameObject
 	float angularVelocity;
 
 	Vector3 accel;
-
+	
 	float rotation;
 	Vector3 torque;
 	Vector3 force;

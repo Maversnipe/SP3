@@ -6,11 +6,21 @@ using std::vector;
 class ToolsInfo : public GameObject
 {
 public:
+	enum TOOL_TYPE
+	{
+		PICKAXE = 0,
+		CANNON,
+		DRILL,
+		CANNONBALL,
+		TOTAL,
+	};
+
 	ToolsInfo();
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data
 	virtual void Update(double dt,Vector3 mousepos);//upadate data
+	virtual void RenderTools();
 
 	virtual void SetPrice(const int in_price);
 	virtual int GetPrice() const;
@@ -23,5 +33,6 @@ public:
 
 protected:
 	int i_Price;
+	TOOL_TYPE tooltype; 
 
 };

@@ -2,12 +2,12 @@
 #define COLLISION_MANAGER_H
 
 #include "GameObject.h"
-#include "Collision.h"
 #include "Vector3.h"
 #include <vector>
 #include <iostream>
 #include <algorithm>
 
+//Organiser
 struct Manifold
 {
 	GameObject* A;
@@ -19,23 +19,25 @@ struct Manifold
 class CollisionManager
 {
 public:
+	static CollisionManager* getCManager();
 	//Init
 	void SetWorldSize(int height, int width);
 
 	//"Update"
-	void Check(std::vector<GameObject *> &Objs, double dt);
+	//void Check(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks, double dt);
+	
 	//Circular to other obj
-	bool CheckCollisionC(GameObject *go1, GameObject *go2, float dt);
+	bool CheckCollisionC(GameObject *go1, GameObject *go2);
 	//Box to other obj
-	bool CheckCollisionB(GameObject *go1, GameObject *go2, float dt);
+	bool CheckCollisionB(GameObject *go1, GameObject *go2);
 	//Circular to other obj
-	void CollisionResponseC(GameObject *go, GameObject *go2, float dt);
+	void CollisionResponseC(GameObject *go, GameObject *go2);
 	//Box to other obj
 	void CollisionResponseB(GameObject *go, GameObject *go2);
 
 	//Prevent Overlaps
 	void PositionalCorrection(GameObject *go, GameObject *go2);
-private:
+
 	//Collision checks Methods
 	bool AABBvsAABB(Manifold* m);
 
@@ -43,11 +45,20 @@ private:
 
 	bool AABBvsCircle(Manifold* m);
 
+	~CollisionManager();
+
+private:
+	CollisionManager();
+	static CollisionManager* cm;
+
 protected:
+	//Playable Area
 	int m_iworld_height;
 	int m_iworld_width;
+
 	Manifold *m = new Manifold;
-	float colltimecheck=0;
+
+	float colltimecheck = 0;
 
 	//"Gravity"
 	Vector3 m_vec3Gravity = Vector3(0, -9.8, 0);

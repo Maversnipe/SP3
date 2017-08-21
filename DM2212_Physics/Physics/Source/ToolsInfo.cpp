@@ -16,6 +16,10 @@ void ToolsInfo::Update(double dt, Vector3 mousepos)
 {
 }
 
+void ToolsInfo::RenderTools()
+{
+}
+
 void ToolsInfo::SetPrice(const int in_price)
 {
 	i_Price = in_price;
