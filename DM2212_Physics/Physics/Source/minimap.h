@@ -10,10 +10,10 @@ public:
 	CMinimap(void);
 	virtual ~CMinimap(void);
 
+	void Init(float x, float y);//Initialise the class instance
+
 	Mesh* m_cMinimap_Background;
 	Mesh* m_cMinimap_Border;
-
-	bool Init(void); //Initialise the class instance
 
 	bool SetBackground(Mesh* aBackground); //Set BG mesh to this class
 	Mesh* GetBackground(void) const; //Get BG mesh to this class
@@ -23,9 +23,6 @@ public:
 
 	Vector3 getPosition();
 	Vector3 getScale();
-	//make a render manager
-
-
 
 protected:
 	//set position and scale

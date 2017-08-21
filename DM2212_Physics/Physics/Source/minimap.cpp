@@ -1,11 +1,11 @@
 #include "minimap.h"
+#include "Application.h"
 
 
 CMinimap::CMinimap(void)
 	: m_cMinimap_Background(NULL)
 	, m_cMinimap_Border(NULL)
 {
-	Init();
 }
 
 CMinimap::~CMinimap(void)	
@@ -22,11 +22,11 @@ CMinimap::~CMinimap(void)
 	}
 }
 
-bool CMinimap::Init(void)
+void CMinimap::Init(float x, float y)
 {
-	position.Set(0.f, 0.f, 0.f);
+	position.Set(x, y, 0.f);
 	scale.Set(30.0f, 20.0f, 1.f);
-	return true;
+	//return true;
 }
 
 // Set the background mesh to this class

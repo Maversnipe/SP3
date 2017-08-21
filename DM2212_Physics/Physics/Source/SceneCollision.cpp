@@ -15,6 +15,9 @@ void SceneCollision::Init()
 {
     SceneBase::Init();
 
+	//RenderMinimap(); //test
+
+
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
@@ -40,9 +43,11 @@ void SceneCollision::Init()
 
 	m_vec3Gravity.Set(0, -9.8, 0);
 	
+	//CMinimap::Init
 	//cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 
 	CollisionManager::getCManager()->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
+	//CMinimap:: GetInstance()-> Init(Application::GetWindowWidth() / 8, Application::GetWindowHeight()/8);
 }
 
 GameObject* SceneCollision::FetchGO()
@@ -88,18 +93,40 @@ Block* SceneCollision::FetchGo1()
 
 void SceneCollision::Update(double dt)
 {
+
 	double x, y;
 	Application::GetCursorPos(&x, &y);
 	int w = Application::GetWindowWidth();
 	int h = Application::GetWindowHeight();
 	float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
 	float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
+	static bool isFullScreen = false;
+	int offsetWindowX = Application::GetWindowWidth() / 8;
+	int offsetWindowY = Application::GetWindowHeight() / 8;
+	int offsetX = 90;
 	Vector3 mousepos(posX, posY, 0);
 
-    SceneBase::Update(dt);
-    player->Update(dt, mousepos);//updates player and tools
-    
+	SceneBase::Update(dt);
+	player->Update(dt, mousepos);//updates player and tools
+
+	//fullscreen and default screensize for minimap position
+	if(Application::GetWindowWidth() / 8 != 120)
+	{ 
+		isFullScreen = true;
+	}
+	else
+	{
+		isFullScreen = false;
+	}
+	if (!isFullScreen)
+	{
+		CMinimap::GetInstance()->Init(offsetWindowX , 75);
+	}
+	else
+	{ 
+		CMinimap::GetInstance()->Init(offsetWindowX - offsetX, 75);
+	}
+
     if(Application::IsKeyPressed('9'))
     {
         m_speed = Math::Max(0.f, m_speed - 0.1f);
@@ -310,32 +337,37 @@ void SceneCollision::RenderMinimap()
 
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-
-	// Translate the current transformation (from minimap.cpp)
-	modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
-	// Scale the current transformation (from minimap.cpp)
-	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
+	
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
 
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-	if (CMinimap::GetInstance()->m_cMinimap_Background)
-	{
-		modelStack.PushMatrix();
-		RenderMesh(Maplist[GEO_MAPBG], false);
-		modelStack.PopMatrix();
-	}
-	modelStack.PopMatrix();
+		// Translate the current transformation (from minimap.cpp)
+		modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
+		//modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
+		// Scale the current transformation (from minimap.cpp)
+		modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
 
-	modelStack.PushMatrix();
-	if (CMinimap::GetInstance()->m_cMinimap_Border)
-	{
 		modelStack.PushMatrix();
-		modelStack.Scale(1.02, 1.02, 1.02);
-		RenderMesh(Maplist[GEO_MAPBORDER], false);
+		if (CMinimap::GetInstance()->m_cMinimap_Background)
+		{
+			modelStack.PushMatrix();
+			RenderMesh(Maplist[GEO_MAPBG], false);
+			modelStack.PopMatrix();
+		}
 		modelStack.PopMatrix();
-	}
-	modelStack.PopMatrix();
+		
+		modelStack.PushMatrix();
+		if (CMinimap::GetInstance()->m_cMinimap_Border)
+		{
+			modelStack.PushMatrix();
+			modelStack.Scale(1.02, 1.02, 1.02);
+			RenderMesh(Maplist[GEO_MAPBORDER], false);
+			modelStack.PopMatrix();
+		}
+		modelStack.PopMatrix();
 
+	modelStack.PopMatrix();
 	modelStack.PopMatrix();
 }
 
@@ -503,7 +535,6 @@ void SceneCollision::Render()
     
 	RenderMinimap(); //test
 
-
     RenderMesh(meshList[GEO_AXES], false);
 
     
@@ -558,10 +589,13 @@ void SceneCollision::Render()
     
     ss.str(std::string());
     ss.precision(5);
-    ss << "FPS: " << fps;
+    ss << "FPS: " << CMinimap::GetInstance()->getPosition();
     RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
     
     RenderTextOnScreen(meshList[GEO_TEXT], "Collision", Color(0, 1, 0), 3, 0, 0);
+
+	//RenderMinimap(); //test
+
 }
 
 void SceneCollision::Exit()
