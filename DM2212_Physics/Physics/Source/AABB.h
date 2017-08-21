@@ -1,5 +1,5 @@
-#ifndef COLLISION_H
-#define COLLISION_H
+#ifndef AABB_H
+#define AABB_H
 
 #include "Vector3.h"
 #include <vector>
@@ -28,4 +28,4 @@ protected:
 
 };
 
-#endif // !COLLISION_H
+#endif // !AABB_H

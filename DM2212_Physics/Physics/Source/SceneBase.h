@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "GameObject.h"
 #include "SpriteAnimation.h"
+#include "minimap.h"
 #include <vector>
 
 class SceneBase : public Scene
@@ -55,14 +56,26 @@ public:
 		NUM_GEOMETRY,
 	};
 
+	enum MAP_TYPE
+	{
+		GEO_MAPBG,
+		GEO_MAPBORDER,
+		NUM_MAP,
+	};
+
 	enum BLOCK_TYPE
 	{
 		//Blocks
 		GEO_GRASS=0,
 		GEO_GLASS,
+		//GEO_GLASSDAM,
 		GEO_WOOD,
+		//GEO_WOODDAM,
+		//GEO_WOODBROKEN,
 		GEO_METAL,
 		GEO_BRICK,
+		//GEO_BRICKDAM,
+		//GEO_BRICKBROKEN,
 		NUM_BLOCKS,
 	};
 
@@ -86,6 +99,8 @@ protected:
 	Mesh* meshList[NUM_GEOMETRY];
 	//Block list
 	Mesh* BlockList[NUM_BLOCKS];
+	//Maplist
+	Mesh* Maplist[NUM_MAP];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 

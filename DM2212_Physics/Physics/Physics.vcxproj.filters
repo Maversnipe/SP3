@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-
     <ClCompile Include="Source\GameObject.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
@@ -59,9 +58,6 @@
     <ClCompile Include="Source\PlayerInfo.cpp">
       <Filter>PlayerInfo</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Collision.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Blocks.cpp">
       <Filter>GameObjects\Blocks</Filter>
     </ClCompile>
@@ -86,6 +82,16 @@
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AABB.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cannonball.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\minimap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -154,9 +160,6 @@
     <ClInclude Include="Source\PlayerInfo.h">
       <Filter>PlayerInfo</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Collision.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Blocks.h">
       <Filter>GameObjects\Blocks</Filter>
     </ClInclude>
@@ -181,6 +184,16 @@
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AABB.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannonball.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\minimap.h"/>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

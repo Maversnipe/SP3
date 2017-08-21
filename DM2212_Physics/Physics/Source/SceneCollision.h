@@ -7,6 +7,12 @@
 #include "FileIO.h"
 #include "PlayerInfo.h"
 #include "Blocks.h"
+#include "GrassBlock.h"
+#include "GlassBlock.h"
+#include "WoodBlock.h"
+#include "MetalBlock.h"
+#include "BrickBlock.h"
+#include "Cannonball.h"
 #include "CollisionManager.h"
 
 class SceneCollision : public SceneBase
@@ -26,16 +32,12 @@ public:
 	virtual void Exit();
 
 	void RenderGO(GameObject *go);
+	
 	GameObject* FetchGO();
+	Block* FetchGo1();
 
 	//Collision check
-	bool CheckCollision(GameObject *go1, GameObject *go2, float dt);
 	float CheckCollision2(GameObject *go, GameObject *go2);
-	void CollisionResponse(GameObject *go, GameObject *go2);
-
-	//Collision Manager
-	Manifold *m = new Manifold;
-	CollisionManager *cm = new CollisionManager;
 	
 	//Mapping
 	void RenderMap();
@@ -45,15 +47,22 @@ public:
 
 protected:
 	//Physics
-	std::vector<GameObject *> m_goList;
 	float m_speed;
 	float m_worldWidth;
 	float m_worldHeight;
-	GameObject *m_ghost;
 	int m_objectCount;
 	float m_timeEstimated1;
 	float m_timeTaken1;
 	bool m_timerStarted;
+
+	//Objects
+	GameObject *m_ghost;
+	std::vector<GameObject *> m_goList;
+	void UpdateObjects(double dt);
+
+	std::vector<Block *> m_vBlocks;
+	Block *m_Block;
+	void UpdateBlocks(double dt);
 
 	//"Gravity"
 	Vector3 m_vec3Gravity;

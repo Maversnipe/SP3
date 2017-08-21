@@ -8,7 +8,7 @@ CMinimap::CMinimap(void)
 	Init();
 }
 
-CMinimap::~CMinimap(void)
+CMinimap::~CMinimap(void)	
 {
 	if (m_cMinimap_Background)
 	{

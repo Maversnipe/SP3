@@ -1,5 +1,17 @@
 #include "CollisionManager.h"
 
+CollisionManager* CollisionManager::cm;
+
+CollisionManager * CollisionManager::getCManager()
+{
+	if (!cm)
+	{
+		cm = new CollisionManager;
+	}
+
+	return cm;
+}
+
 void CollisionManager::SetWorldSize(int height, int width)
 {
 	m_iworld_height = height;
@@ -7,71 +19,19 @@ void CollisionManager::SetWorldSize(int height, int width)
 	colltimecheck = 0;
 }
 
-void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
+/*void CollisionManager::Check(std::vector<GameObject*> &Objs, std::vector<Block *> &Blks, double dt)
 {
-	std::cout << colltimecheck << std::endl;
-	colltimecheck += dt;
+	//std::cout << colltimecheck << std::endl;
+	//colltimecheck += dt;
 
-	for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
+	/*for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
 	{
 		GameObject *go = (GameObject *)*it;
-		
+
 		if (go->mass == 0)
 			go->invmass = 0;
 		else
 			go->invmass = 1 / go->mass;
-
-		//Blocks
-		if (go->active && go->type == GameObject::GO_BLOCK)
-		{
-			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_METAL)
-				go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
-			else
-				go->pos += go->vel* static_cast<float>(dt);
-
-			if (go->vel.y != 0)
-				go->isonAir = true;
-
-			//X
-			if (go->pos.x < 0 + go->scale.x && go->vel.x < 0 || go->pos.x > m_iworld_width - go->scale.x && go->vel.x > 0)
-			{
-				go->vel.x = 0;
-			}
-			//Y
-			if (go->isonAir && go->pos.y < 0 + go->scale.y && go->vel.y < 0 || go->pos.y > m_iworld_height - go->scale.y && go->vel.y > 0)
-			{
-				go->vel.SetZero();
-				go->isonAir = false;
-				go->iscolliding = true;
-			}
-
-			for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != Objs.end(); ++it2)
-			{
-				GameObject *go2 = (GameObject *)(*it2);
-
-				if (!go2->active)
-					continue;
-				if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
-					continue;
-				GameObject *goA, *goB;
-
-				if (go->type == GameObject::GO_BLOCK)
-				{
-					goA = go;
-					goB = go2;
-				}
-				else
-				{
-					goA = go2;
-					goB = go;
-				}
-
-				if (CheckCollisionB(goA, goB, dt))
-				{
-					CollisionResponseB(goA, goB);
-				}
-			}
-		}
 
 		if (go->active && go->type == GameObject::GO_BALL)
 		{
@@ -128,9 +88,114 @@ void CollisionManager::Check(std::vector<GameObject*> &Objs, double dt)
 		//Set AABBs
 		go->aabb.SetAABB(go->pos, go->scale);
 	}
-}
 
-bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2, float dt)
+	for (std::vector<Block *>::iterator it = Blks.begin(); it != Blks.end(); ++it)
+	{
+		Block *go = (Block *)*it;
+
+		if (go->mass == 0)
+			go->invmass = 0;
+		else
+			go->invmass = 1 / go->mass;
+
+		//Blocks
+		if (go->active && go->type == GameObject::GO_BLOCK)
+		{
+
+			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
+			{
+				go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
+			}
+			else
+				go->pos += go->vel* static_cast<float>(dt);
+
+
+
+			if (go->vel.y != 0 || go->vel.x != 0)
+				go->isonAir = true;
+			else
+				go->isonAir = false;
+
+
+			//X
+			if (go->pos.x < 0 + go->scale.x && go->vel.x < 0 || go->pos.x > m_iworld_width - go->scale.x && go->vel.x > 0)
+			{
+				go->vel.x = 0;
+			}
+			//Y
+			if (go->isonAir && go->pos.y < 0 + go->scale.y && go->vel.y < 0 || go->pos.y > m_iworld_height - go->scale.y && go->vel.y > 0)
+			{
+				go->vel.SetZero();
+				go->isonAir = false;
+				go->iscolliding = true;
+			}
+
+			for (std::vector<Block *>::iterator it2 = it + 1; it2 != Blks.end(); ++it2)
+			{
+				Block *go2 = (Block *)(*it2);
+
+				if (!go2->active)
+					continue;
+				if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
+					continue;
+
+				if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
+					continue;
+
+				Block *goA, *goB;
+
+				if (go->type == GameObject::GO_BLOCK)
+				{
+					goA = go;
+					goB = go2;
+				}
+				else
+				{
+					goA = go2;
+					goB = go;
+				}
+
+				if (CheckCollisionB(goA, goB, dt))
+				{
+					CollisionResponseB(goA, goB);
+				}
+			}
+		}
+
+		for (std::vector<GameObject *>::iterator it2 = Objs.begin(); it2 != Objs.end(); ++it2)
+		{
+			GameObject *go2 = (GameObject *)(*it2);
+
+			if (!go2->active)
+				continue;
+			if (go2->type != GameObject::GO_BALL)
+				continue;
+
+			GameObject *goA, *goB;
+
+			if (go2->type == GameObject::GO_BALL)
+			{
+				goA = go2;
+				goB = go;
+			}
+			else
+			{
+				goA = go;
+				goB = go2;
+			}
+
+
+			if (CheckCollisionC(goA, goB, dt))
+			{
+				CollisionResponseC(goA, goB, dt);
+			}
+		}
+		//Set AABBs
+		go->aabb.SetAABB(go->pos, go->scale);
+	}
+}*/
+
+bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
 {
 	switch (go2->type)
 	{
@@ -167,7 +232,6 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2, float
 	case GameObject::GO_BLOCK:
 	{
 		/*Block* go3 = static_cast <Block*>(go2);
-
 
 		Vector3 w0 = go2->pos;
 		Vector3 b1 = go->pos;
@@ -214,7 +278,7 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2, float
 	return false;
 }
 
-bool CollisionManager::CheckCollisionB(GameObject * go1, GameObject * go2, float dt)
+bool CollisionManager::CheckCollisionB(GameObject * go1, GameObject * go2)
 {
 	switch (go2->type)
 	{
@@ -255,7 +319,7 @@ bool CollisionManager::CheckCollisionB(GameObject * go1, GameObject * go2, float
 	return false;
 }
 
-void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, float dt)
+void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 {
 	switch (go2->type)
 	{
@@ -301,10 +365,14 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, flo
 
 		Vector3 rv = go2->vel - go->vel;
 
-		float velAlongNormal = rv.Dot(m->normal.Normalized());
+		float velAlongNormal = 0;
+		if(m->normal != Vector3(0, 0, 0))
+			velAlongNormal = rv.Dot(m->normal.Normalized());
 
-		if (velAlongNormal > 0)
-			return;
+		//std::cout << " Type: " << typeid(go2).name() << std::endl;
+
+		/*if (velAlongNormal > 0)
+			return;*/
 
 		//Calculate magnitude/bounciness
 		float e = std::min(go->restitution, go2->restitution);
@@ -329,7 +397,11 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2, flo
 
 		Vector3 rotation = 10 * m->normal + go2->vel;
 		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
- 
+		
+		go2->torque += m->normal.Cross(Vector3(0, 5, 0));
+
+		go2->iscolliding = true;
+
 		break;
 	}
 	default:
@@ -351,6 +423,9 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
 		PositionalCorrection(go, go2);
+
+		go->torque += m->normal.Cross(Vector3(0, 10, 0));
+
 		go->iscolliding = true;
 		go2->iscolliding = true;
 		break;
@@ -408,6 +483,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		PositionalCorrection(go, go2);
 		go->iscolliding = true;
 		go2->iscolliding = true;
+
 		break;
 	}
 	default:
@@ -421,6 +497,14 @@ void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
 	Vector3 correction = (m->penetration / (go->invmass + go2->invmass)) * percent * m->normal;
 	go->pos -= go->invmass * correction;
 	go2->pos += go2->invmass * correction;
+}
+
+CollisionManager::~CollisionManager()
+{
+}
+
+CollisionManager::CollisionManager()
+{
 }
 
 bool CollisionManager::AABBvsAABB(Manifold * m)

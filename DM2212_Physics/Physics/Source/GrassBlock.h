@@ -8,6 +8,8 @@ class Grassblock : public Block
 public:
 	Grassblock();
 	~Grassblock();
+
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 	
 };
 

@@ -17,7 +17,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 24, 39, Application::GetWindowHeight(), Application::GetWindowWidth());
+    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
     map->Read("Maps//test.csv");
     RenderMap();
 
@@ -33,14 +33,16 @@ void SceneCollision::Init()
     m_objectCount = 0;
 
     m_ghost = new GameObject(GameObject::GO_WALL);
+	m_Block = new Block();
 
     initialKE = 0.0f;
     finalKE = 0.0f;
 
 	m_vec3Gravity.Set(0, -9.8, 0);
 	
-	cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
+	//cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 
+	CollisionManager::getCManager()->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 }
 
 GameObject* SceneCollision::FetchGO()
@@ -55,15 +57,33 @@ GameObject* SceneCollision::FetchGO()
             return go;
         }
     }
-    for(unsigned i = 0; i < 10; ++i)
-    {
-        GameObject *go = new GameObject(GameObject::GO_BALL);
-        m_goList.push_back(go);
-    }
-    GameObject *go = m_goList.back();
+
+    GameObject *go = new GameObject(GameObject::GO_BALL);
+    m_goList.push_back(go);
+
+   
     go->active = true;
     ++m_objectCount;
     return go;
+}
+
+Block* SceneCollision::FetchGo1()
+{
+	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
+	{
+		Block *go = (Block *)*it;
+		if (!go->active)
+		{
+			go->active = true;
+			return go;
+		}
+	}
+
+	Block *go = new Block(0, 1, true);
+	m_vBlocks.push_back(go);
+
+	go->active = true;
+	return go;
 }
 
 void SceneCollision::Update(double dt)
@@ -168,8 +188,9 @@ void SceneCollision::Update(double dt)
         float sc = 3.f;
         go->scale.Set(sc, sc, sc);
         go->mass = 3.f;
+		go->aabb.SetAABB(go->pos, go->scale);
 
-        m_timeEstimated1 = 10000.f;
+       /* m_timeEstimated1 = 10000.f;
         m_timeTaken1 = 0.f;
         m_timerStarted = true;
 
@@ -184,7 +205,7 @@ void SceneCollision::Update(double dt)
                     m_timeEstimated1 = time;
                 }
             }
-        }
+        }*/
     }
 
     //Physics Simulation Section
@@ -192,7 +213,9 @@ void SceneCollision::Update(double dt)
         m_timeTaken1 += dt;
     
     dt *= m_speed;
-	cm->Check(m_goList, dt);
+
+	UpdateObjects(dt);
+	UpdateBlocks(dt);
     camera.Update(dt);
 
 }
@@ -205,50 +228,53 @@ void SceneCollision::RenderMap()
         {
             if (map->Map[i][k] == 3)
             {
-                GameObject *go = FetchGO();
+                Block *go = FetchGo1();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
-				go->vel.Set(3, 9.8, 0);
+                go->scale.Set(4.f, 4.f, 1.f);
+				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
-            }
+				go->aabb.SetAABB(go->pos, go->scale);
+				
+			}
             else if (map->Map[i][k] == 2)
             {
-                GameObject *go = FetchGO();
+				Block *go = FetchGo1();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
-            }
+				go->aabb.SetAABB(go->pos, go->scale);
+			}
             else if (map->Map[i][k] == 1)
             {
-                GameObject *go = FetchGO();
+				Block *go = FetchGo1();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
             }
             else if (map->Map[i][k] == 4)
             {
-                GameObject *go = FetchGO();
+				Block *go = FetchGo1();
                 go->type = GameObject::GO_BLOCK;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
             }
 			else if (map->Map[i][k] == 5)
 			{
-				GameObject *go = FetchGO();
+				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.5f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(-5, 9.8, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
@@ -258,7 +284,7 @@ void SceneCollision::RenderMap()
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_WALL;
                 go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-                go->scale.Set(4.f, 4.5f, 1.f);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
             }
@@ -313,6 +339,73 @@ void SceneCollision::RenderMinimap()
 	modelStack.PopMatrix();
 }
 
+void SceneCollision::UpdateObjects(double dt)
+{
+	for (auto &i : m_goList)
+	{
+		//i->Update(dt);
+
+		Cannonball* a = static_cast<Cannonball*>(i);
+		if ( a != NULL)
+		{
+			a->Update(m_goList, m_vBlocks, dt);
+		}
+	}
+}
+
+void SceneCollision::UpdateBlocks(double dt)
+{
+	for (auto &i : m_vBlocks)
+	{
+		//i->Update(m_goList, m_vBlocks, dt);
+
+		if (i->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		{
+			Grassblock* b = static_cast<Grassblock*>(i);
+
+			if (b != NULL)
+			{
+				b->Update(m_goList, m_vBlocks, dt);
+			}
+		}
+		else if (i->Btype == GameObject::BLOCK_TYPE::GO_GLASS)
+		{
+			Glassblock* b = static_cast<Glassblock*>(i);
+
+			if (b != NULL)
+			{
+				b->Update(m_goList, m_vBlocks, dt);
+			}
+		}
+		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
+		{
+			Woodblock* b = static_cast<Woodblock*>(i);
+
+			if (b != NULL)
+			{
+				b->Update(m_goList, m_vBlocks, dt);
+			}
+		}
+		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
+		{
+			Metalblock* b = static_cast<Metalblock*>(i);
+
+			if (b != NULL)
+			{
+				b->Update(m_goList, m_vBlocks, dt);
+			}
+		}
+		else if(i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
+		{
+			Brickblock* b = static_cast<Brickblock*>(i);
+
+			if (b != NULL)
+			{
+				b->Update(m_goList, m_vBlocks, dt);
+			}
+		}
+	}
+}
 
 float SceneCollision::CheckCollision2(GameObject *go, GameObject *go2)
 {
@@ -376,7 +469,8 @@ void SceneCollision::RenderGO(GameObject *go)
     case GameObject::GO_BLOCK:
         modelStack.PushMatrix();
         modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
-        modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
+        //modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
         modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
         RenderMesh(BlockList[go->Btype], false);
         modelStack.PopMatrix();
@@ -418,9 +512,20 @@ void SceneCollision::Render()
         GameObject *go = (GameObject *)*it;
         if(go->active)
         {
-            RenderGO(go);
+			if(go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
+				RenderGO(go);
         }
     }
+	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
+	{
+		Block *go = (Block *)*it;
+		if (go->active)
+		{
+			if (go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
+				RenderGO(go);
+		}
+	}
+
     if(m_ghost->active)
         RenderGO(m_ghost);
 
@@ -463,7 +568,7 @@ void SceneCollision::Exit()
 {
     SceneBase::Exit();
     //Cleanup GameObjects
-    while(m_goList.size() > 0)
+   /* while(m_goList.size() > 0)
     {
         GameObject *go = m_goList.back();
         delete go;
@@ -473,5 +578,5 @@ void SceneCollision::Exit()
     {
         delete m_ghost;
         m_ghost = NULL;
-    }
+    }*/
 }
