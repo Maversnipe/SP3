@@ -12,7 +12,8 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
 	isonAir(false),
 	iscolliding(false),
 	rotation(0.0f),
-	torque(0, 0, 0)
+	torque(0, 0, 0),
+	tooltype(TOOL_TYPE::NONE)
 {
 	if (typeValue == GO_BLOCK)
 		Btype = Btyp;

@@ -45,10 +45,20 @@ public:
 		GO_BTYPTOTAL,
 	};
 
+	enum TOOL_TYPE
+	{
+		NONE = 0,
+		PICKAXE,
+		CANNON,
+		DRILL,
+		CANNONBALL,
+		TOTAL,
+	};
+
 	virtual void Update(double dt) {};
 
 	BLOCK_TYPE Btype;
-
+	TOOL_TYPE tooltype;
 	GAMEOBJECT_TYPE type;
 	Vector3 pos;
 	Vector3 vel;

@@ -30,13 +30,33 @@ void TestWeapon::Update(double dt, Vector3 mousepos)
 	}
 	else
 	{
-		if(mousepos != pos)
-		dir = (mousepos - pos).Normalized();
+		if (mousepos != pos)
+		{
+			dir = (mousepos - pos).Normalized();
+			int i_dir = Math::RadianToDegree(atan2(dir.x, dir.y));
+			if (i_dir > -90 - 45 && i_dir <= -90 + 45)
+			{
+				dir.Set(-1, 0, 0);
+			}
+			else if (i_dir > -45 && i_dir <= +45)
+			{
+				dir.Set(0, 1, 0);
+			}
+			else if (i_dir > 90 - 45 && i_dir <= 90 + 45)
+			{
+				dir.Set(1, 0, 0);
+			}
+			else
+			{
+				dir.Set(0, -1, 0);
+			}
+
+		}
 	}
 
 }
 
-bool TestWeapon::UseTool(vector<GameObject*> goList)
+bool TestWeapon::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
 	if (!isSet)
 	{
@@ -53,7 +73,6 @@ bool TestWeapon::UseTool(vector<GameObject*> goList)
 		go->pos = pos;
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
-				
 		isSet = false;
 		return true;
 	}
