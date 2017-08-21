@@ -9,6 +9,8 @@ TestWeapon::TestWeapon()
 	i_Price = 10;
 	pos.Set(0, 0, 0);
 	isSet = false;
+	tooltype = TOOL_TYPE::DRILL;
+
 }
 
 TestWeapon::~TestWeapon()

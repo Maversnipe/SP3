@@ -40,6 +40,8 @@ public:
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
 
+	ToolsInfo* GetActiveTool();
+
 private:
 	int i_Money;
 	int i_Score;

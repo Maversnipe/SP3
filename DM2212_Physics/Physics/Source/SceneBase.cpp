@@ -124,20 +124,34 @@ void SceneBase::Init()
 	}
 
 	//Game (Load Block Textures Here)
-	BlockList[GEO_GRASS] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
-	BlockList[GEO_GRASS]->textureID = LoadTGA("Image//blocks//ground//dirt.tga");
+	{
+		BlockList[GEO_GRASS] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
+		BlockList[GEO_GRASS]->textureID = LoadTGA("Image//blocks//ground//dirt.tga");
 
-	BlockList[GEO_GLASS] = MeshBuilder::GenerateQuad("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
-	BlockList[GEO_GLASS]->textureID = LoadTGA("Image//blocks//glass//glass_fullhealth.tga");
+		BlockList[GEO_GLASS] = MeshBuilder::GenerateQuad("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_GLASS]->textureID = LoadTGA("Image//blocks//glass//glass_fullhealth.tga");
 
-	BlockList[GEO_WOOD] = MeshBuilder::GenerateQuad("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
-	BlockList[GEO_WOOD]->textureID = LoadTGA("Image//blocks//wood//wood_fullhealth.tga");
+		BlockList[GEO_WOOD] = MeshBuilder::GenerateQuad("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
+		BlockList[GEO_WOOD]->textureID = LoadTGA("Image//blocks//wood//wood_fullhealth.tga");
 
-	BlockList[GEO_METAL] = MeshBuilder::GenerateQuad("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
-	BlockList[GEO_METAL]->textureID = LoadTGA("Image//blocks//metal//metal.tga");
+		BlockList[GEO_METAL] = MeshBuilder::GenerateQuad("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
+		BlockList[GEO_METAL]->textureID = LoadTGA("Image//blocks//metal//metal.tga");
 
-	BlockList[GEO_BRICK] = MeshBuilder::GenerateQuad("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
-	BlockList[GEO_BRICK]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
+		BlockList[GEO_BRICK] = MeshBuilder::GenerateQuad("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_BRICK]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
+	}
+
+	//tools
+	{
+		ToolList[GEO_PICKAXE] = MeshBuilder::GenerateQuad("Pickaxe", Color(1, 1, 1), 1);
+		//ToolList[GEO_PICKAXE]->textureID = LoadTGA("");
+		ToolList[GEO_CANNON] = MeshBuilder::GenerateQuad("Cannon", Color(1, 1, 1), 1);
+		//ToolList[GEO_CANNON]->textureID = LoadTGA("");
+		ToolList[GEO_DRILL] = MeshBuilder::GenerateQuad("Drill", Color(1, 1, 1), 1);
+		//ToolList[GEO_DRILL]->textureID = LoadTGA("");
+		//ToolList[GEO_CANNON] = MeshBuilder::GenerateQuad("Cannon", Color(1, 1, 1), 1);
+		//ToolList[GEO_CANNON]->textureID = LoadTGA("");
+	}
 
 	//minimap
 	Maplist[GEO_MAPBG] = MeshBuilder::GenerateQuad("mapbg", Color(1.f, 0.f, 0.f), 1.f);

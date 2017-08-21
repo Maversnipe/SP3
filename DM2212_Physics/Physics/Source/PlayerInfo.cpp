@@ -62,7 +62,6 @@ void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &g
 	else
 	{
 		std::cout << "NO MONEY" << std::endl;
-
 	}
 }
 
@@ -79,4 +78,9 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 	if (i_ActiveTool == -1)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
+}
+
+ToolsInfo* PlayerInfo::GetActiveTool()
+{
+	return ToolManager[i_ActiveTool];
 }
