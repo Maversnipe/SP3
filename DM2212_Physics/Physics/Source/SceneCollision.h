@@ -40,6 +40,9 @@ public:
 	//Mapping
 	void RenderMap();
 
+	//render minimap
+	void RenderMinimap();
+
 protected:
 	//Physics
 	std::vector<GameObject *> m_goList;
