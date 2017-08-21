@@ -42,6 +42,9 @@ public:
 	//Mapping
 	void RenderMap();
 
+	//render minimap
+	void RenderMinimap();
+
 protected:
 	//Physics
 	float m_speed;
