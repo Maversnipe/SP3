@@ -4,12 +4,13 @@
 #include "Blocks.h"
 #include "GameObject.h"
 
-class Glassblock : public Block , public GameObject
+class Glassblock : public Block
 {
 public:
 	Glassblock();
 	~Glassblock();
 
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 };
 
 #endif //!GLASSBLOCK

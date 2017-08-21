@@ -2,16 +2,19 @@
 #define BLOCKS_H
 
 #include "GameObject.h"
+#include "CollisionManager.h"
 
 class Block : public GameObject
 {
 public:
 	Block();
 	Block(int Type, int health, bool Destructable);								//Set Blocks
-	~Block();
+	virtual ~Block();
 
-	virtual void Init() = 0;
-	virtual void Update(double dt) = 0;
+	//virtual void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt) {}
+
+	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
+	void Response();
 
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
@@ -28,6 +31,7 @@ protected:
 	bool m_bIsdamaged;		//Is damaged or not
 	Vector3 m_vec3dir2;
 
+	GameObject* affected;
 };
 
 #endif // !BLOCKS_H

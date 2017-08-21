@@ -9,7 +9,7 @@ public:
 	Grassblock();
 	~Grassblock();
 
-	void Update(GameObject* go, double dt);
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 	
 };
 

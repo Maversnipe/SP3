@@ -9,6 +9,7 @@ public:
 	Metalblock();
 	~Metalblock();
 
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 };
 
 #endif //!METALBLOCK

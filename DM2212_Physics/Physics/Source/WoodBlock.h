@@ -9,6 +9,8 @@ public:
 	Woodblock();
 	~Woodblock();
 
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+
 protected:
 	bool m_bBurning;
 };
