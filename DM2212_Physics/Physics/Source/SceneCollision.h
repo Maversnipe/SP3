@@ -13,6 +13,7 @@
 #include "MetalBlock.h"
 #include "BrickBlock.h"
 #include "Cannonball.h"
+#include "DrillProj.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 

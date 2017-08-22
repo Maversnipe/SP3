@@ -68,13 +68,14 @@ bool TestWeapon::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 	}
 	else
 	{
-		//is there a way to use FetchGO here?
 		GameObject *go = FetchGO(goList);
-		
 		go->type = GameObject::GO_BALL;//to be changed
+		go->toolproj = TOOL_PROJ::DRILLPROJ;
 		go->pos = pos;
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
+		go->aabb.SetAABB(go->pos, go->scale);
+
 		isSet = false;
 		return true;
 	}

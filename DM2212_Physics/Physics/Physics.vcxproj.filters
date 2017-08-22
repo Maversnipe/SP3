@@ -89,13 +89,16 @@
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Cannonball.cpp">
-      <Filter>GameObjects\Blocks</Filter>
-    </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\minimap.cpp" />
+    <ClCompile Include="Source\Cannonball.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillProj.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -195,13 +198,16 @@
     <ClInclude Include="Source\AABB.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cannonball.h">
-      <Filter>GameObjects\Blocks</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\minimap.h"/>
+    <ClInclude Include="Source\minimap.h" />
+    <ClInclude Include="Source\Cannonball.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillProj.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -236,6 +242,9 @@
     </Filter>
     <Filter Include="SoundEngine">
       <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Tools\Projectiles">
+      <UniqueIdentifier>{01cb60f2-b0e9-43e5-b9e6-61d4d0fe3e05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

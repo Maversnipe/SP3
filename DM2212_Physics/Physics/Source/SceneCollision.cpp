@@ -382,6 +382,11 @@ void SceneCollision::UpdateObjects(double dt)
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
+		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		{
+			DrillProj* drillproj = static_cast<DrillProj*>(i);
+			drillproj->Update(m_goList, m_vBlocks, dt);
+		}
 
 	}
 }

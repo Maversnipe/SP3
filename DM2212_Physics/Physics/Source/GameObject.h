@@ -58,6 +58,7 @@ public:
 	{
 		NON_TOOLPROJ = 0,
 		CANNONBALL,
+		DRILLPROJ,
 		TOOLPROJ_TOTAL,
 	};
 
