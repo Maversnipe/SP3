@@ -210,7 +210,7 @@ void SceneCollision::Update(double dt)
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
-		go->tooltype = GameObject::TOOL_TYPE::CANNONBALL;
+		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
         m_ghost->active = false;
@@ -458,7 +458,7 @@ void SceneCollision::UpdateObjects(double dt)
 	for (auto &i : m_goList)
 	{
 		//i->Update(dt);
-		if (i->tooltype == GameObject::TOOL_TYPE::CANNONBALL)
+		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(m_goList, m_vBlocks, dt);

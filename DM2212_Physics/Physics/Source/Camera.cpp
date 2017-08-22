@@ -3,8 +3,9 @@
 #include "Mtx44.h"
 
 Camera::Camera()
+	: m_fOffset_x(0.f)
+	, m_fOffset_y(0.f)
 {
-	Reset();
 }
 
 Camera::~Camera()
@@ -17,9 +18,11 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->target = target;
 	this->up = up;
 	this->defaultPos = pos;
-	this->minBoundary.Set(-1920.f, -600.f, -1.f); // Setting of Camera minimum X and Y
-	this->maxBoundary.Set(1920.f, 600.f, 1.f); // Setting of Camera maximum X and Y
-	m_eMoveType = MOVE_WITH_MOUSE;
+	this->defaultTarget = target;
+	this->defaultUp = up;
+	this->minBoundary.Set(2.f, 6.f, -1.f); // Setting of Camera minimum X and Y
+	this->maxBoundary.Set(98.f, 58.f, 1.f); // Setting of Camera maximum X and Y
+	m_eMoveType = CLICK_N_DRAG;
 }
 
 void Camera::Reset()

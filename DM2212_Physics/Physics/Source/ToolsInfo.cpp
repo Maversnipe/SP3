@@ -2,6 +2,7 @@
 
 ToolsInfo::ToolsInfo()
 {
+	type = GO_TOOLS;
 }
 
 ToolsInfo::~ToolsInfo()

@@ -8,6 +8,7 @@ PickaxeTool::PickaxeTool()
 {
 	i_Price = 0;
 	pos.Set(0, 0, 0);
+	tooltype = TOOL_TYPE::PICKAXE;
 }
 
 PickaxeTool::~PickaxeTool()

@@ -79,6 +79,16 @@ public:
 		NUM_BLOCKS,
 	};
 
+	enum TOOL_TYPE
+	{
+		NONE = 0,
+		GEO_PICKAXE,
+		GEO_CANNON,
+		GEO_DRILL,
+		GEO_THUMPER,
+		NUM_TOOLS,
+	};
+
 public:
 	SceneBase();
 	~SceneBase();
@@ -99,6 +109,8 @@ protected:
 	Mesh* meshList[NUM_GEOMETRY];
 	//Block list
 	Mesh* BlockList[NUM_BLOCKS];
+	//Tool list
+	Mesh* ToolList[NUM_TOOLS];
 	//Maplist
 	Mesh* Maplist[NUM_MAP];
 	unsigned m_programID;

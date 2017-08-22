@@ -153,8 +153,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\CannonTool.cpp" />
+    <ClCompile Include="Source\DrillProj.cpp" />
+    <ClCompile Include="Source\DrillTool.cpp" />
     <ClCompile Include="Source\minimap.cpp" />
     <ClCompile Include="Source\Cannonball.cpp" />
+    <ClCompile Include="Source\SceneEditor.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\BrickBlock.cpp" />
     <ClCompile Include="Source\AABB.cpp" />
@@ -162,6 +165,8 @@
     <ClCompile Include="Source\FileIO.cpp" />
     <ClCompile Include="Source\PickaxeTool.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
+    <ClCompile Include="Source\SpatialPartitioning\Grid.cpp" />
+    <ClCompile Include="Source\SpatialPartitioning\Unit.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Blocks.cpp" />
@@ -181,14 +186,18 @@
     <ClCompile Include="Source\SceneKinematics.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\TestWeapon.cpp" />
+    <ClCompile Include="Source\ThumperTool.cpp" />
     <ClCompile Include="Source\ToolsInfo.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
     <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CannonTool.h" />
+    <ClInclude Include="Source\DrillTool.h" />
+    <ClInclude Include="Source\DrillProj.h" />
     <ClInclude Include="Source\minimap.h" />
     <ClInclude Include="Source\Cannonball.h" />
+    <ClInclude Include="Source\SceneEditor.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\BrickBlock.h" />
     <ClInclude Include="Source\AABB.h" />
@@ -196,6 +205,8 @@
     <ClInclude Include="Source\FileIO.h" />
     <ClInclude Include="Source\PickaxeTool.h" />
     <ClInclude Include="Source\PlayerInfo.h" />
+    <ClInclude Include="Source\SpatialPartitioning\Grid.h" />
+    <ClInclude Include="Source\SpatialPartitioning\Unit.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Blocks.h" />
@@ -217,6 +228,7 @@
     <ClInclude Include="Source\SceneKinematics.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\TestWeapon.h" />
+    <ClInclude Include="Source\ThumperTool.h" />
     <ClInclude Include="Source\ToolsInfo.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
