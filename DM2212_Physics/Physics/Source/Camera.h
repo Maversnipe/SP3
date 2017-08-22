@@ -19,8 +19,8 @@ public:
 	void K_CameraMovement(double dt); // Camera Movements for keyboard
 	void M_CameraMovement(double dt); // Camera Movements for mouse
 
-	float GetOffset_x() { return m_fOffset_x; }
-	float GetOffset_y() { return m_fOffset_y; }
+	float GetOffset_x() { return m_fOffset_x + 2.0f; }
+	float GetOffset_y() { return m_fOffset_y + 6.0f; }
 
 	enum MoveType
 	{
