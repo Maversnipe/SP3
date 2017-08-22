@@ -45,6 +45,7 @@ public:
 
 	//render minimap
 	void RenderMinimap();
+	void RenderMainMinimap();
 
 protected:
 	//Physics
