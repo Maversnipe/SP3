@@ -544,8 +544,9 @@ void SceneCollision::Render()
         GameObject *go = (GameObject *)*it;
         if(go->active)
         {
-			if(go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if(go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y >(camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
         }
     }
 	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
@@ -553,8 +554,10 @@ void SceneCollision::Render()
 		Block *go = (Block *)*it;
 		if (go->active)
 		{
-			if (go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if (go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y > (camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
+			
 		}
 	}
 

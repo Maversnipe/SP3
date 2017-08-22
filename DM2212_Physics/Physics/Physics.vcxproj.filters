@@ -96,6 +96,12 @@
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\minimap.cpp" />
+    <ClCompile Include="Source\SpatialPartitioning\Grid.cpp">
+      <Filter>Spatial Partitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpatialPartitioning\Unit.cpp">
+      <Filter>Spatial Partitioning</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -201,7 +207,13 @@
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\minimap.h"/>
+    <ClInclude Include="Source\minimap.h" />
+    <ClInclude Include="Source\SpatialPartitioning\Grid.h">
+      <Filter>Spatial Partitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpatialPartitioning\Unit.h">
+      <Filter>Spatial Partitioning</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -236,6 +248,9 @@
     </Filter>
     <Filter Include="SoundEngine">
       <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spatial Partitioning">
+      <UniqueIdentifier>{cc3a260d-7150-4781-8875-de86e6e04b49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
