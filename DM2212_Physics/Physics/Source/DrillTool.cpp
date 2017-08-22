@@ -19,8 +19,8 @@ DrillTool::~DrillTool()
 
 void DrillTool::Init()
 {
-	i_Price = 10;
-	pos.Set(0, 0, 0);
+	i_Price = 10;//set price
+	pos.Set(0, 0, 0);//default pos
 	isSet = false;
 }
 
@@ -32,7 +32,7 @@ void DrillTool::Update(double dt, Vector3 mousepos)
 	}
 	else
 	{
-		if (mousepos != pos)
+		if (mousepos != pos)//change dir with mouse
 		{
 			dir = (mousepos - pos).Normalized();
 			int i_dir = Math::RadianToDegree(atan2(dir.x, dir.y));
@@ -60,16 +60,16 @@ void DrillTool::Update(double dt, Vector3 mousepos)
 
 bool DrillTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
-	if (!isSet)
+	if (!isSet)//set drill launcher
 	{
 		isSet = true;
 		cout << "DrillTool Set at: " << pos << endl;
 		return false;
 	}
-	else
+	else//Fire drill
 	{
 		GameObject *go = FetchGO(goList);
-		go->type = GameObject::GO_BALL;//to be changed
+		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::DRILLPROJ;
 		go->pos = pos;
 		go->vel = dir * 50;
