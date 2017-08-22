@@ -14,6 +14,7 @@
 #include "SceneKinematics.h"
 #include "SceneAsteroid.h"
 #include "SceneBase.h"
+#include "SceneEditor.h"
 #include "SceneCollision.h"
 
 GLFWwindow* m_window;
@@ -127,6 +128,7 @@ void Application::Run()
 {
 	//Main Loop
 	Scene *scene = new SceneCollision();
+	//Scene *scene = new SceneEditor();
 	scene->Init();
 
 	m_timer.startTimer();    // Start timer to calculate how long it takes to render this frame
