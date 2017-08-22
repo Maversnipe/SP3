@@ -26,7 +26,7 @@ public:
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
 		GO_EXPLOSION,
-
+		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
 
@@ -48,18 +48,27 @@ public:
 
 	enum TOOL_TYPE
 	{
-		NONE = 0,
+		NON_TOOL = 0,
 		PICKAXE,
 		CANNON,
 		DRILL,
+		THUMPER,
+		TOOL_TOTAL,
+	};
+
+	enum TOOL_PROJ
+	{
+		NON_TOOLPROJ = 0,
 		CANNONBALL,
-		TOTAL,
+		DRILLPROJ,
+		TOOLPROJ_TOTAL,
 	};
 
 	virtual void Update(double dt) {};
 
 	BLOCK_TYPE Btype;
 	TOOL_TYPE tooltype;
+	TOOL_PROJ toolproj;
 	GAMEOBJECT_TYPE type;
 	Vector3 pos;
 	Vector3 vel;

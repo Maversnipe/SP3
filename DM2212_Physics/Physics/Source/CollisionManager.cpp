@@ -391,16 +391,17 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go->type != GameObject::GO_EXPLOSION)
 		{
 			Vector3 vel = go->vel;
 			Vector3 N = m->normal.Normalized();
 			go->vel = vel - (2.f * vel.Dot(N)) * N;
 			break;
 		}
+
 		if (go->type == GameObject::GO_EXPLOSION)
 		{
-			Vector3 rv = go2->vel;
+			Vector3 rv = go2->vel - go->vel;
 
 			float velAlongNormal = 0;
 			if (m->normal != Vector3(0, 0, 0))
@@ -420,9 +421,6 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 
 			ratio = go2->mass / masstotal;
 			go2->vel += ratio * Impulse;
-
-
-			PositionalCorrection(go, go2);
 
 			Vector3 rotation = 10 * m->normal + go2->vel;
 			go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
@@ -542,49 +540,59 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		switch (go->toolproj)
 		{
-			/*Vector3 vel = go->vel;
-			Vector3 N = m->normal.Normalized();
-			go->vel = vel - (2.f * vel.Dot(N)) * N;
-			break;*/
+		case GameObject::TOOL_PROJ::CANNONBALL:
+		{
+			if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+			{
+				/*Vector3 vel = go->vel;
+				Vector3 N = m->normal.Normalized();
+				go->vel = vel - (2.f * vel.Dot(N)) * N;
+				break;*/
+			}
+
+			Vector3 rv = go2->vel - go->vel;
+
+			float velAlongNormal = 0;
+			if (m->normal != Vector3(0, 0, 0))
+				velAlongNormal = rv.Dot(m->normal.Normalized());
+
+			/*if (velAlongNormal > 0)
+				return;*/
+
+				//Calculate magnitude/bounciness
+			float e = std::min(go->restitution, go2->restitution);
+
+			float j = -(1 + e) * velAlongNormal;
+			j /= 1 / go->mass + 1 / go2->mass;
+
+			Vector3 Impulse = j * m->normal.Normalized();
+			/*go->vel += 1/go->mass * Impulse;
+			go2->vel -= 1 / go2->mass * Impulse;*/
+
+			float masstotal = go->mass + go2->mass;
+
+			float ratio = go->mass / masstotal;
+			go->vel -= ratio * Impulse;
+
+			ratio = go2->mass / masstotal;
+			go2->vel += ratio * Impulse;
+
+			//PositionalCorrection(go, go2);
+
+			go2->torque += m->normal.Cross(Vector3(0, 10, 0));
+			go->torque += m->normal.Cross(Vector3(0, 10, 0));
+
+			go->iscolliding = true;
+			go2->iscolliding = true;
+			break;
 		}
-
-		Vector3 rv = go2->vel - go->vel;
-
-		float velAlongNormal = 0;
-		if (m->normal != Vector3(0, 0, 0))
-			velAlongNormal = rv.Dot(m->normal.Normalized());
-
-		/*if (velAlongNormal > 0)
-			return;*/
-
-		//Calculate magnitude/bounciness
-		float e = std::min(go->restitution, go2->restitution);
-
-		float j = -(1 + e) * velAlongNormal;
-		j /= 1 / go->mass + 1 / go2->mass;
-
-		Vector3 Impulse = j * m->normal.Normalized();
-		/*go->vel += 1/go->mass * Impulse;
-		go2->vel -= 1 / go2->mass * Impulse;*/
-
-		float masstotal = go->mass + go2->mass;
-
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
-
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
-
-		//PositionalCorrection(go, go2);
-		
-		go2->torque += m->normal.Cross(Vector3(0, 10, 0));
-		go->torque += m->normal.Cross(Vector3(0, 10, 0));
-
-		go->iscolliding = true;
-		go2->iscolliding = true;
-
+		case GameObject::TOOL_PROJ::DRILLPROJ:
+		{
+			break; 
+		}
+		}
 		break;
 	}
 	default:

@@ -1,10 +1,10 @@
-#include "TestWeapon.h"
+#include "DrillTool.h"
 #include "Blocks.h"
 #include <iostream>
 using std::cout;
 using std::endl;
 
-TestWeapon::TestWeapon()
+DrillTool::DrillTool()
 {
 	i_Price = 10;
 	pos.Set(0, 0, 0);
@@ -13,18 +13,18 @@ TestWeapon::TestWeapon()
 
 }
 
-TestWeapon::~TestWeapon()
+DrillTool::~DrillTool()
 {
 }
 
-void TestWeapon::Init()
+void DrillTool::Init()
 {
-	i_Price = 10;
-	pos.Set(0, 0, 0);
+	i_Price = 10;//set price
+	pos.Set(0, 0, 0);//default pos
 	isSet = false;
 }
 
-void TestWeapon::Update(double dt, Vector3 mousepos)
+void DrillTool::Update(double dt, Vector3 mousepos)
 {
 	if (!isSet)
 	{
@@ -32,7 +32,7 @@ void TestWeapon::Update(double dt, Vector3 mousepos)
 	}
 	else
 	{
-		if (mousepos != pos)
+		if (mousepos != pos)//change dir with mouse
 		{
 			dir = (mousepos - pos).Normalized();
 			int i_dir = Math::RadianToDegree(atan2(dir.x, dir.y));
@@ -58,18 +58,18 @@ void TestWeapon::Update(double dt, Vector3 mousepos)
 
 }
 
-bool TestWeapon::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
+bool DrillTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
-	if (!isSet)
+	if (!isSet)//set drill launcher
 	{
 		isSet = true;
-		cout << "TestTool Set at: " << pos << endl;
+		cout << "DrillTool Set at: " << pos << endl;
 		return false;
 	}
-	else
+	else//Fire drill
 	{
 		GameObject *go = FetchGO(goList);
-		go->type = GameObject::GO_BALL;//to be changed
+		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::DRILLPROJ;
 		go->pos = pos;
 		go->vel = dir * 50;

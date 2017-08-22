@@ -206,7 +206,7 @@ void SceneCollision::Update(double dt)
 
         GameObject *go = FetchGO();
         go->type = GameObject::GO_BALL;
-		go->tooltype = GameObject::TOOL_TYPE::CANNONBALL;
+		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
         go->pos = m_ghost->pos;
         go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
         m_ghost->active = false;
@@ -374,7 +374,7 @@ void SceneCollision::UpdateObjects(double dt)
 	for (auto &i : m_goList)
 	{
 		//i->Update(dt);
-		if (i->tooltype == GameObject::TOOL_TYPE::CANNONBALL)
+		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(m_goList, m_vBlocks, dt);
@@ -384,6 +384,11 @@ void SceneCollision::UpdateObjects(double dt)
 			Explosive* Ex = static_cast<Explosive*>(i);
 			Ex->Setexplosiontime(dt);
 			Ex->Update(m_goList, m_vBlocks, dt);
+		}
+		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		{
+			DrillProj* drillproj = static_cast<DrillProj*>(i);
+			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
 	}
 }
@@ -513,10 +518,19 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
+		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+		RenderMesh(meshList[GEO_BALL], false);
+		modelStack.PopMatrix();
+		break;
+
+	case GameObject::GO_TOOLS:
+		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(meshList[GEO_BALL], false);
+		RenderMesh(ToolList[go->tooltype], false);
 		modelStack.PopMatrix();
 		break;
     }
@@ -549,14 +563,16 @@ void SceneCollision::Render()
 
     RenderMesh(meshList[GEO_AXES], false);
 
-    
+	RenderGO(player->GetActiveTool());//render  player active tool
+
 	for(std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
     {
         GameObject *go = (GameObject *)*it;
         if(go->active)
         {
-			if(go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if(go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y >(camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
         }
     }
 	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
@@ -564,8 +580,10 @@ void SceneCollision::Render()
 		Block *go = (Block *)*it;
 		if (go->active)
 		{
-			if (go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if (go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y > (camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
+			
 		}
 	}
 

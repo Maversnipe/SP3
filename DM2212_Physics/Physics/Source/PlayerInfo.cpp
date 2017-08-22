@@ -1,6 +1,8 @@
 #include "PlayerInfo.h"
 #include "PickaxeTool.h"
 #include "CannonTool.h"
+#include "DrillTool.h"
+#include "ThumperTool.h"
 #include "TestWeapon.h"
 
 PlayerInfo *PlayerInfo::instance = 0;
@@ -21,7 +23,9 @@ void PlayerInfo::Init()
 	ToolManager = new ToolsInfo*[i_NumTools];
 	ToolManager[0] = new PickaxeTool();
 	ToolManager[1] = new CannonTool();
-	ToolManager[2] = new TestWeapon();
+	ToolManager[2] = new DrillTool();
+	ToolManager[3] = new ThumperTool();
+	ToolManager[4] = new TestWeapon();
 
 }
 
@@ -62,7 +66,6 @@ void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &g
 	else
 	{
 		std::cout << "NO MONEY" << std::endl;
-
 	}
 }
 
@@ -79,4 +82,9 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 	if (i_ActiveTool == -1)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
+}
+
+ToolsInfo* PlayerInfo::GetActiveTool()
+{
+	return ToolManager[i_ActiveTool];
 }
