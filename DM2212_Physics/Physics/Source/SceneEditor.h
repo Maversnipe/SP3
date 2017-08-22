@@ -1,5 +1,5 @@
-#ifndef SCENE_COLLISION_H
-#define SCENE_COLLISION_H
+#ifndef SCENE_EDITOR_H
+#define SCENE_EDITOR_H
 
 #include "GameObject.h"
 #include <vector>
@@ -13,12 +13,11 @@
 #include "MetalBlock.h"
 #include "BrickBlock.h"
 #include "Cannonball.h"
-#include "Explosive.h"
 #include "DrillProj.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 
-class SceneCollision : public SceneBase
+class SceneEditor : public SceneBase
 {
 	static const int MAX_SPEED = 10;
 	static const int BULLET_SPEED = 50;
@@ -26,8 +25,8 @@ class SceneCollision : public SceneBase
 	static const int MISSILE_POWER = 1;
 
 public:
-	SceneCollision();
-	~SceneCollision();
+	SceneEditor();
+	~SceneEditor();
 
 	virtual void Init();
 	virtual void Update(double dt);
@@ -35,19 +34,18 @@ public:
 	virtual void Exit();
 
 	void RenderGO(GameObject *go);
-	
+
 	GameObject* FetchGO();
 	Block* FetchGo1();
 
 	//Collision check
 	float CheckCollision2(GameObject *go, GameObject *go2);
-	
+
 	//Mapping
 	void RenderMap();
 
 	//render minimap
 	void RenderMinimap();
-	void RenderMainMinimap();
 
 protected:
 	//Physics
