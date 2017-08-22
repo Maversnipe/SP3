@@ -9,6 +9,8 @@ CannonTool::CannonTool()
 	i_Price = 10;
 	pos.Set(0, 0, 0);
 	isSet = false;
+	tooltype = TOOL_TYPE::CANNON;
+
 }
 
 CannonTool::~CannonTool()
@@ -49,7 +51,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 		GameObject *go = FetchGO(goList);
 
 		go->type = GameObject::GO_BALL;
-		go->tooltype = TOOL_TYPE::CANNONBALL;
+		go->toolproj = TOOL_PROJ::CANNONBALL;
 		go->pos = pos;
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);

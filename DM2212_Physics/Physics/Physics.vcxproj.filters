@@ -76,21 +76,12 @@
     <ClCompile Include="Source\BrickBlock.cpp">
       <Filter>GameObjects\Blocks</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TestWeapon.cpp">
-      <Filter>GameObjects\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp" />
-    <ClCompile Include="Source\CannonTool.cpp">
-      <Filter>GameObjects\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Cannonball.cpp">
-      <Filter>GameObjects\Blocks</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp">
       <Filter>Physics</Filter>
@@ -101,6 +92,24 @@
     </ClCompile>
     <ClCompile Include="Source\SpatialPartitioning\Unit.cpp">
       <Filter>Spatial Partitioning</Filter>
+	 </ClCompile>
+    <ClCompile Include="Source\Cannonball.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillProj.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ThumperTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +197,6 @@
     <ClInclude Include="Source\BrickBlock.h">
       <Filter>GameObjects\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TestWeapon.h">
-      <Filter>GameObjects\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
     </ClInclude>
@@ -201,9 +207,6 @@
     <ClInclude Include="Source\AABB.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Cannonball.h">
-      <Filter>GameObjects\Blocks</Filter>
-    </ClInclude>
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
@@ -213,6 +216,21 @@
     </ClInclude>
     <ClInclude Include="Source\SpatialPartitioning\Unit.h">
       <Filter>Spatial Partitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannonball.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillProj.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThumperTool.h">
+      <Filter>GameObjects\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +269,9 @@
     </Filter>
     <Filter Include="Spatial Partitioning">
       <UniqueIdentifier>{cc3a260d-7150-4781-8875-de86e6e04b49}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="GameObjects\Tools\Projectiles">
+      <UniqueIdentifier>{01cb60f2-b0e9-43e5-b9e6-61d4d0fe3e05}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
