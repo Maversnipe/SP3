@@ -76,16 +76,10 @@
     <ClCompile Include="Source\BrickBlock.cpp">
       <Filter>GameObjects\Blocks</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TestWeapon.cpp">
-      <Filter>GameObjects\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
     <ClCompile Include="Source\CollisionManager.cpp" />
-    <ClCompile Include="Source\CannonTool.cpp">
-      <Filter>GameObjects\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -98,6 +92,18 @@
     </ClCompile>
     <ClCompile Include="Source\DrillProj.cpp">
       <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ThumperTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,9 +191,6 @@
     <ClInclude Include="Source\BrickBlock.h">
       <Filter>GameObjects\Blocks</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TestWeapon.h">
-      <Filter>GameObjects\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
     </ClInclude>
@@ -207,6 +210,15 @@
     </ClInclude>
     <ClInclude Include="Source\DrillProj.h">
       <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThumperTool.h">
+      <Filter>GameObjects\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

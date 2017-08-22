@@ -47,7 +47,7 @@ private:
 	int i_Score;
 
 	//tool stuff
-	const int i_NumTools = 3;
+	const int i_NumTools = 5;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
 	

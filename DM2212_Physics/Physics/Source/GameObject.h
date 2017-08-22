@@ -51,6 +51,7 @@ public:
 		PICKAXE,
 		CANNON,
 		DRILL,
+		THUMPER,
 		TOOL_TOTAL,
 	};
 

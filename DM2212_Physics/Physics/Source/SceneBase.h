@@ -85,6 +85,7 @@ public:
 		GEO_PICKAXE,
 		GEO_CANNON,
 		GEO_DRILL,
+		GEO_THUMPER,
 		NUM_TOOLS,
 	};
 
