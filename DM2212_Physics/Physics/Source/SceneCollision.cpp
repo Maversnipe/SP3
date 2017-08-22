@@ -463,6 +463,11 @@ void SceneCollision::UpdateObjects(double dt)
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
+		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		{
+			DrillProj* drillproj = static_cast<DrillProj*>(i);
+			drillproj->Update(m_goList, m_vBlocks, dt);
+		}
 
 	}
 }
@@ -589,6 +594,15 @@ void SceneCollision::RenderGO(GameObject *go)
         RenderMesh(BlockList[go->Btype], false);
         modelStack.PopMatrix();
         break;
+
+	case GameObject::GO_TOOLS:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
+		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+		RenderMesh(ToolList[go->tooltype], false);
+		modelStack.PopMatrix();
+		break;
     }
 }
 
@@ -619,14 +633,16 @@ void SceneCollision::Render()
 
     RenderMesh(meshList[GEO_AXES], false);
 
-    
+	RenderGO(player->GetActiveTool());//render  player active tool
+
 	for(std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
     {
         GameObject *go = (GameObject *)*it;
         if(go->active)
         {
-			if(go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if(go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y >(camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
         }
     }
 	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
@@ -634,8 +650,10 @@ void SceneCollision::Render()
 		Block *go = (Block *)*it;
 		if (go->active)
 		{
-			if (go->pos.x > camera.position.x && go->pos.x < camera.position.x + Application::GetWindowWidth())
-				RenderGO(go);
+			if (go->pos.x > (camera.position.x - 2.f) && go->pos.x < camera.position.x + Application::GetWindowWidth()
+				&& go->pos.y > (camera.position.y - 2.f) && go->pos.y < camera.position.y + Application::GetWindowHeight())
+				RenderGO(go); // Only render if object is on screen
+			
 		}
 	}
 
