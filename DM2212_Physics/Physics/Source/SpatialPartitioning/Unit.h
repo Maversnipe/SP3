@@ -1,7 +1,7 @@
 #ifndef UNIT_H
 #define UNIT_H
-#include "Grid.h"
 #include "Vector3.h"
+class Grid;
 
 class Unit
 {
@@ -13,11 +13,11 @@ public:
 	void Move(Vector3 pos_);
 
 private:
-	//Vector3 pos;
-	//Grid* m_grid;
+	Vector3 pos;
+	Grid* m_grid;
 
-	//Unit* next_;
-	//Unit* next_;
+	Unit* next_;
+	Unit* prev_;
 };
 
 #endif
