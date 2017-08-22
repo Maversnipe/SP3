@@ -28,13 +28,13 @@ void ThumperTool::Update(double dt, Vector3 mousepos)
 
 bool ThumperTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
-	cout << "Paxe used at: " << pos << endl;
-	for (unsigned i = 0; i < blockList.size(); ++i)
-	{
-		if ((blockList[i]->pos - pos).LengthSquared() < blockList[i]->scale.x * blockList[i]->scale.x && blockList[i]->active)
-		{
-			blockList[i]->getDamaged(1);
-		}
-	}
+	cout << "Thumper used at: " << pos << endl;
+	//for (unsigned i = 0; i < blockList.size(); ++i)
+	//{
+	//	if ((blockList[i]->pos - pos).LengthSquared() < blockList[i]->scale.x * blockList[i]->scale.x && blockList[i]->active)
+	//	{
+	//		blockList[i]->getDamaged(1);
+	//	}
+	//}
 	return true;
 }
