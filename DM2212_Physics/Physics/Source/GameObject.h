@@ -25,6 +25,7 @@ public:
 		//sp3 ^-^
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
+		GO_EXPLOSION,
 
 		GO_TOTAL, //must be last
 	};

@@ -66,7 +66,6 @@ GameObject* SceneCollision::FetchGO()
     GameObject *go = new GameObject(GameObject::GO_BALL);
     m_goList.push_back(go);
 
-   
     go->active = true;
     ++m_objectCount;
     return go;
@@ -151,46 +150,44 @@ void SceneCollision::Update(double dt)
     }
 
     //Mouse Section
-    //static bool bLButtonState = false;
-    //if(!bLButtonState && Application::IsMousePressed(0))
-    //{
-    //    bLButtonState = true;
-    //    std::cout << "LBUTTON DOWN" << std::endl;
-    //    
-    //    double x, y;
-    //    Application::GetCursorPos(&x, &y);
-    //    int w = Application::GetWindowWidth();
-    //    int h = Application::GetWindowHeight();
-    //    float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-    //    float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+    static bool bLButtonState = false;
+    if(!bLButtonState && Application::IsMousePressed(0))
+    {
+        bLButtonState = true;
+        std::cout << "LBUTTON DOWN" << std::endl;
+        
+        double x, y;
+        Application::GetCursorPos(&x, &y);
+        int w = Application::GetWindowWidth();
+        int h = Application::GetWindowHeight();
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
-    //    m_ghost->pos.Set(posX, posY, 0); //IMPT
-    //    float sc = 2;
-    //    m_ghost->scale.Set(sc, sc, sc);
-    //}
-    //else if(bLButtonState && !Application::IsMousePressed(0))
-    //{
-    //    bLButtonState = false;
-    //    std::cout << "LBUTTON UP" << std::endl;
+        m_ghost->pos.Set(posX, posY, 0); //IMPT
+        float sc = 2;
+        m_ghost->scale.Set(sc, sc, sc);
+    }
+    else if(bLButtonState && !Application::IsMousePressed(0))
+    {
+        bLButtonState = false;
+        std::cout << "LBUTTON UP" << std::endl;
 
-    //    //spawn small GO_BALL
-    //    GameObject *go = FetchGO();
-    //    go->type = GameObject::GO_BALL;
-    //    double x, y;
-    //    Application::GetCursorPos(&x, &y);
-    //    int w = Application::GetWindowWidth();
-    //    int h = Application::GetWindowHeight();
-    //    float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-    //    float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+        //spawn small GO_BALL
+        GameObject *go = FetchGO();
+        go->type = GameObject::GO_EXPLOSION;
+        double x, y;
+        Application::GetCursorPos(&x, &y);
+        int w = Application::GetWindowWidth();
+        int h = Application::GetWindowHeight();
+        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
-    //    go->pos = m_ghost->pos;
-    //    go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-    //    m_ghost->active = false;
-    //    float sc = go->vel.Length();
-    //    sc = Math::Clamp(sc, 2.f, 10.f);
-    //    go->scale.Set(sc, sc, sc);
-    //    go->mass = (sc * sc * sc);
-    //}
+        go->pos = m_ghost->pos;
+        m_ghost->active = false;
+        go->scale.Set(1, 1, 1);
+        go->mass = 3.f;
+		go->aabb.SetAABB(go->pos, go->scale);
+    }
     static bool bRButtonState = false;
     if(!bRButtonState && Application::IsMousePressed(1))
     {
@@ -382,7 +379,12 @@ void SceneCollision::UpdateObjects(double dt)
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
-
+		else if (i->type == GameObject::GO_EXPLOSION)
+		{
+			Explosive* Ex = static_cast<Explosive*>(i);
+			Ex->Setexplosiontime(dt);
+			Ex->Update(m_goList, m_vBlocks, dt);
+		}
 	}
 }
 
@@ -508,6 +510,15 @@ void SceneCollision::RenderGO(GameObject *go)
         RenderMesh(BlockList[go->Btype], false);
         modelStack.PopMatrix();
         break;
+
+	case GameObject::GO_EXPLOSION:
+		modelStack.PushMatrix();
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
+		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
+		RenderMesh(meshList[GEO_BALL], false);
+		modelStack.PopMatrix();
+		break;
     }
 }
 

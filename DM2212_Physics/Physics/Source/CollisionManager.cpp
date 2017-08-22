@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include "Explosive.h"
 
 CollisionManager* CollisionManager::cm;
 
@@ -272,6 +273,12 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
 
 		return AABBvsCircle(m);
 	}
+	case GameObject::GO_EXPLOSION:
+	{
+		m->A = go1;
+		m->B = go2;
+		return CirclevsCircle(m);
+	}
 	default:
 		break;
 	}
@@ -312,6 +319,12 @@ bool CollisionManager::CheckCollisionB(GameObject * go1, GameObject * go2)
 
 		return AABBvsAABB(m);
 	}
+	case GameObject::GO_EXPLOSION:
+	{
+		m->A = go1;
+		m->B = go2;
+		return AABBvsCircle(m);
+	}
 	default:
 		break;
 	}
@@ -325,13 +338,32 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	{
 	case GameObject::GO_BALL:
 	{
-		Vector3 u1 = go->vel;
+		Vector3 u1;
+
+		if(go->type != GameObject::GO_EXPLOSION)
+			u1 = go->vel;
+		else
+			u1 = Vector3(5,5,1);
+
 		Vector3 u2 = go2->vel;
 		Vector3 N = (go2->pos - go->pos).Normalize();
 		Vector3 u1N = u1.Dot(N) * N;
 		Vector3 u2N = u2.Dot(N) * N;
-		go->vel = u1 + 2.f * (u2N - u1N);
-		go2->vel = u2 + 2.f * (u1N - u2N);
+
+		if(go->type!= GameObject::GO_EXPLOSION)
+			go->vel = u1 + 2.f * (u2N - u1N);
+
+		if (go->type == GameObject::GO_EXPLOSION)
+		{ 
+			if (!go2->vel.IsZero())
+				go2->vel = (u2 * (1 / atan2(go->scale.y, go->scale.x))) + (2.f *  (u2 * (1 / atan2(go->scale.y, go->scale.x))).Dot(N)) * N;
+			else
+				go2->vel = Vector3(go->scale.x, go->scale.y, 0) - (2.f *  Vector3(go->scale.x, go->scale.y, 0).Dot(N)) * N;
+		}
+		else
+			go2->vel = u2 + 2.f * (u1N - u2N);
+
+		
 
 		PositionalCorrection(go, go2);
 
@@ -366,47 +398,98 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 			go->vel = vel - (2.f * vel.Dot(N)) * N;
 			break;
 		}
+		if (go->type == GameObject::GO_EXPLOSION)
+		{
+			Vector3 rv = go2->vel;
 
-		Vector3 rv = go2->vel - go->vel;
+			float velAlongNormal = 0;
+			if (m->normal != Vector3(0, 0, 0))
+				velAlongNormal = rv.Dot(m->normal.Normalized());
 
-		float velAlongNormal = 0;
-		if(m->normal != Vector3(0, 0, 0))
-			velAlongNormal = rv.Dot(m->normal.Normalized());
+			//Calculate magnitude/bounciness
+			float e = std::min(go->restitution, go2->restitution);
 
-		//std::cout << " Type: " << typeid(go2).name() << std::endl;
+			float j = -(1 + e) * velAlongNormal;
+			j /= 1 / go->mass + 1 / go2->mass;
 
-		/*if (velAlongNormal > 0)
-			return;*/
+			Vector3 Impulse = j * m->normal.Normalized();
 
-		//Calculate magnitude/bounciness
-		float e = std::min(go->restitution, go2->restitution);
+			float masstotal = go->mass + go2->mass;
 
-		float j = -(1 + e) * velAlongNormal;
-		j /= 1 / go->mass + 1 / go2->mass;
+			float ratio = go->mass / masstotal;
 
-		Vector3 Impulse = j * m->normal.Normalized();
-		/*go->vel += 1/go->mass * Impulse;
-		go2->vel -= 1 / go2->mass * Impulse;*/
-
-		float masstotal = go->mass + go2->mass;
-
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
-
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
+			ratio = go2->mass / masstotal;
+			go2->vel += ratio * Impulse;
 
 
-		PositionalCorrection(go, go2);
+			PositionalCorrection(go, go2);
 
-		Vector3 rotation = 10 * m->normal + go2->vel;
-		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
-		
-		go2->torque += m->normal.Cross(Vector3(0, 5, 0));
+			Vector3 rotation = 10 * m->normal + go2->vel;
+			go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
 
-		go2->iscolliding = true;
+			go2->torque += m->normal.Cross(Vector3(0, 5, 0));
 
-		break;
+			go2->iscolliding = true;
+
+			break;
+		}
+		else
+		{
+			Vector3 rv = go2->vel - go->vel;
+
+			float velAlongNormal = 0;
+			if (m->normal != Vector3(0, 0, 0))
+				velAlongNormal = rv.Dot(m->normal.Normalized());
+
+			//std::cout << " Type: " << typeid(go2).name() << std::endl;
+
+			if (velAlongNormal > 0)
+				return;
+
+				//Calculate magnitude/bounciness
+			float e = std::min(go->restitution, go2->restitution);
+
+			float j = -(1 + e) * velAlongNormal;
+			j /= 1 / go->mass + 1 / go2->mass;
+
+			Vector3 Impulse = j * m->normal.Normalized();
+			/*go->vel += 1/go->mass * Impulse;
+			go2->vel -= 1 / go2->mass * Impulse;*/
+
+			float masstotal = go->mass + go2->mass;
+
+			float ratio = go->mass / masstotal;
+			go->vel -= ratio * Impulse;
+
+			ratio = go2->mass / masstotal;
+			go2->vel += ratio * Impulse;
+
+
+			PositionalCorrection(go, go2);
+
+			Vector3 rotation = 10 * m->normal + go2->vel;
+			go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
+
+			go2->torque += m->normal.Cross(Vector3(0, 5, 0));
+
+			go2->iscolliding = true;
+
+			break;
+		}
+	}
+	case GameObject::GO_EXPLOSION:
+	{
+		Explosive* Ex = static_cast <Explosive*>(go2);
+		if (Ex->getexploding())
+		{
+			Vector3 vel = go->vel;
+			Vector3 N = (go2->pos - go->pos).Normalize();
+			if (!go->vel.IsZero())
+				go->vel = (vel * (1 / atan2(go2->scale.y, go2->scale.x))) - (2.f *  (vel * (1 / atan2(go2->scale.y, go2->scale.x))).Dot(N)) * N;
+			else
+				go->vel = Vector3(go2->scale.x, go2->scale.y, 0) - (2.f *  Vector3(go2->scale.x, go2->scale.y, 0).Dot(N)) * N;
+		}
+			break;
 	}
 	default:
 		break;

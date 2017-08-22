@@ -82,7 +82,6 @@
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CollisionManager.cpp" />
     <ClCompile Include="Source\CannonTool.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
@@ -96,6 +95,12 @@
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="Source\minimap.cpp" />
+    <ClCompile Include="Source\Explosive.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -188,7 +193,6 @@
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CannonTool.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
@@ -201,7 +205,13 @@
     <ClInclude Include="Source\CollisionManager.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\minimap.h"/>
+    <ClInclude Include="Source\minimap.h" />
+    <ClInclude Include="Source\Explosive.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
