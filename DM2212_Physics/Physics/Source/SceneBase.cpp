@@ -97,7 +97,7 @@ void SceneBase::Init()
 	glUniform1f(m_parameters[U_LIGHT0_COSINNER], lights[0].cosInner);
 	glUniform1f(m_parameters[U_LIGHT0_EXPONENT], lights[0].exponent);
 
-	camera.Init(Vector3(2.f, 6.f, 1), Vector3(2.f, 6.f, 0), Vector3(0, 1, 0));
+	camera.Init(Vector3(2.f, 6.f, 5), Vector3(2.f, 6.f, 0), Vector3(0, 1, 0));
 
 	for(int i = 0; i < NUM_GEOMETRY; ++i)
 	{
