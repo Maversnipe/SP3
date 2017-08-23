@@ -66,7 +66,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	}
 	myfile << "\n";
 
-	for (unsigned y = 2; y < mapheight+2; ++y)
+	for (unsigned y = mapheight + 2; y > 2 ; --y)
 	{
 		for (unsigned x = 1; x < mapwidth+1; ++x)
 		{
