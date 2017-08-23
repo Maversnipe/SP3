@@ -84,6 +84,9 @@
     <ClCompile Include="Source\SpatialPartitioning\Grid.cpp">
       <Filter>Spatial Partitioning</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SpatialPartitioning\Unit.cpp">
+      <Filter>Spatial Partitioning</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Cannonball.cpp">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClCompile>
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Source\ThumperTool.cpp">
       <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneEditor.cpp">
+      <Filter>Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +219,9 @@
     </ClInclude>
     <ClInclude Include="Source\ThumperTool.h">
       <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneEditor.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
