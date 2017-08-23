@@ -16,15 +16,12 @@
 #include "DrillProj.h"
 #include "CollisionManager.h"
 #include "minimap.h"
+#include "MapEditor.h"
 
 class Grid;
 
 class SceneEditor : public SceneBase
 {
-	static const int MAX_SPEED = 10;
-	static const int BULLET_SPEED = 50;
-	static const int MISSILE_SPEED = 20;
-	static const int MISSILE_POWER = 1;
 
 public:
 	SceneEditor();
@@ -83,6 +80,9 @@ protected:
 
 	//player
 	PlayerInfo* player;
+
+	//Mapeditor
+	MapEditor* mapeditor;
 
 	// Spatial Partioning
 	Grid* m_grid;

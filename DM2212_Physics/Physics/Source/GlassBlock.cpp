@@ -4,6 +4,7 @@
 Glassblock::Glassblock(Grid* grid)
 	: Block(grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 }
 
 Glassblock::~Glassblock()

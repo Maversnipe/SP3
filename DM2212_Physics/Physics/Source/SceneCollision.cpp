@@ -26,7 +26,7 @@ void SceneCollision::Init()
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
     map->Read("Maps//test.csv");
     RenderMap();
-	//RenderMainMinimap();
+//	RenderMinimap(); //test
 
     //Player
     player = PlayerInfo::GetInstance();
@@ -364,80 +364,112 @@ void SceneCollision::RenderMinimap()
 
 void SceneCollision::RenderMainMinimap()
 {
-	/*
-	// Push the current transformation into the modelStack
-	modelStack.PushMatrix();
-		modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
-		
-		// Push the current transformation into the modelStack
-		modelStack.PushMatrix();
-		// Translate the current transformation (from minimap.cpp)
-			modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
-*/
-	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	for (auto go : m_vBlocks)
 	{
-		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+		modelStack.PushMatrix();
+		modelStack.Scale(0.038, 0.06, 0.05);
+		if (go->Btype == GameObject::GO_GRASS)
 		{
-			if (map->Map[i][k] == 3)
-			{
-				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k+1)*0.4)-10, ((map->GetNumOfTiles_Height()-i)-30)*0.2, 0);
-				RenderMesh(BlockList[GEO_GRASS], false);
-				modelStack.PopMatrix();
-
-			}
-			else if (map->Map[i][k] == 2)
-			{
-				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_GLASS], false);
-				modelStack.PopMatrix();
-			}
-			else if (map->Map[i][k] == 1)
-			{
-				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_WOOD], false);
-				modelStack.PopMatrix();
-			}
-			else if (map->Map[i][k] == 4)
-			{
-				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_METAL], false);
-				modelStack.PopMatrix();
-			}
-			else if (map->Map[i][k] == 5)
-			{
-				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_BRICK], false);
-				modelStack.PopMatrix();
-			}
-			/*else if (map->Map[i][k] == 10)
-			{
-				GameObject *go = FetchGO();
-				go->type = GameObject::GO_WALL;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i), 0);
-				go->scale.Set(1.f, 1.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 0.f;
-			}*/
+			modelStack.PushMatrix();
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) /20, 0);
+			RenderMesh(BlockList[GEO_GRASS], false);
+			modelStack.PopMatrix();
 		}
+
+		else if (go->Btype == GameObject::GO_GLASS)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			RenderMesh(BlockList[GEO_GLASS], false);
+			modelStack.PopMatrix();
+		}
+
+		else if (go->Btype == GameObject::GO_WOOD)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			RenderMesh(BlockList[GEO_WOOD], false);
+			modelStack.PopMatrix();
+		}
+
+		else if (go->Btype == GameObject::GO_METAL)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			RenderMesh(BlockList[GEO_METAL], false);
+			modelStack.PopMatrix();
+		}
+		else if (go->Btype == GameObject::GO_BRICK)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y-41) / 20, 0);
+			RenderMesh(BlockList[GEO_BRICK], false);
+			modelStack.PopMatrix();
+		}
+		modelStack.PopMatrix();
 	}
 
-	//	modelStack.PopMatrix();
-	//modelStack.PopMatrix();
+	//for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	//{
+	//	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+	//	{
+	//		if (map->Map[i][k] == 3)
+	//		{
+	//			modelStack.PushMatrix();
+
+	//			modelStack.Scale(0.038, 0.06, 0.05);
+	//			modelStack.Translate(((k+1)*0.4)-13, ((map->GetNumOfTiles_Height()-i)-41)*0.2, 0);
+	//			RenderMesh(BlockList[GEO_GRASS], false);
+	//			modelStack.PopMatrix();
+
+	//		}
+	//		else if (map->Map[i][k] == 2)
+	//		{
+	//			modelStack.PushMatrix();
+
+	//			modelStack.Scale(0.038, 0.06, 0.05);
+	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
+	//			RenderMesh(BlockList[GEO_GLASS], false);
+	//			modelStack.PopMatrix();
+	//		}
+	//		else if (map->Map[i][k] == 1)
+	//		{
+	//			modelStack.PushMatrix();
+
+	//			modelStack.Scale(0.038, 0.06, 0.05);
+	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
+	//			RenderMesh(BlockList[GEO_WOOD], false);
+	//			modelStack.PopMatrix();
+	//		}
+	//		else if (map->Map[i][k] == 4)
+	//		{
+	//			modelStack.PushMatrix();
+
+	//			modelStack.Scale(0.038, 0.06, 0.05);
+	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
+	//			RenderMesh(BlockList[GEO_METAL], false);
+	//			modelStack.PopMatrix();
+	//		}
+	//		else if (map->Map[i][k] == 5)
+	//		{
+	//			modelStack.PushMatrix();
+
+	//			modelStack.Scale(0.038, 0.06, 0.05);
+	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
+	//			RenderMesh(BlockList[GEO_BRICK], false);
+	//			modelStack.PopMatrix();
+	//		}
+	//		/*else if (map->Map[i][k] == 10)
+	//		{
+	//			GameObject *go = FetchGO();
+	//			go->type = GameObject::GO_WALL;
+	//			go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i), 0);
+	//			go->scale.Set(1.f, 1.f, 1.f);
+	//			go->vel.Set(0, 0, 0);
+	//			go->mass = 0.f;
+	//		}*/
+	//	}
+	//}
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -613,7 +645,7 @@ void SceneCollision::Render()
     // Model matrix : an identity matrix (model will be at the origin)
     modelStack.LoadIdentity();
     
-	RenderMinimap(); //test
+	RenderMinimap();
 
     RenderMesh(meshList[GEO_AXES], false);
 
@@ -643,6 +675,7 @@ void SceneCollision::Render()
 
     if(m_ghost->active)
         RenderGO(m_ghost);
+
 
     //On screen text
     std::ostringstream ss;

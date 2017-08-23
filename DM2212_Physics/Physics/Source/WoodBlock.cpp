@@ -3,6 +3,7 @@
 
 Woodblock::Woodblock(Grid* grid) : Block(grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 }
 
 Woodblock::~Woodblock()

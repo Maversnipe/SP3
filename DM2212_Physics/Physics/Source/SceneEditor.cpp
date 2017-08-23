@@ -20,17 +20,20 @@ void SceneEditor::Init()
 
 	// Spatial Partionining
 	m_grid = new Grid();
-
 	//Map reading
 	map = new FileIO();
 	map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
-	map->Read("Maps//Map_Lucas.csv");
+	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
 
 	//Player
 	player = PlayerInfo::GetInstance();
 	player->Init(m_grid);
+
+	//mapeditor
+	mapeditor = MapEditor::GetInstance();
+	mapeditor->Init(m_grid);
 
 	//Physics code here
 	m_speed = 1.f;
@@ -108,10 +111,9 @@ void SceneEditor::Update(double dt)
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
 	Vector3 mousepos(posX, posY, 0);
-	std::cout << mousepos << std::endl;
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
-
+	mapeditor->Update(dt, mousepos);
 								 //fullscreen and default screensize for minimap position
 	if (Application::GetWindowWidth() / 8 != 120)
 	{
@@ -150,7 +152,19 @@ void SceneEditor::Update(double dt)
 		bSpaceState = false;
 		std::cout << "SPACE BAR UP" << std::endl;
 
+		if (mapeditor->GetIsEditing())
+			mapeditor->PlaceBlock(m_vBlocks,m_grid);
+		else
 		player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+	// save file
+	static bool isS = false;
+	if (Application::IsKeyPressed('S') && !isS)
+		isS = true;
+	else if (!Application::IsKeyPressed('S') && isS)
+	{
+		mapeditor->SaveMap(m_vBlocks);
+		isS = false;
 	}
 
 	//Mouse Section
@@ -520,7 +534,7 @@ void SceneEditor::RenderGO(GameObject *go)
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 		//modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
@@ -566,7 +580,8 @@ void SceneEditor::Render()
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	RenderGO(player->GetActiveTool());//render  player active tool
+	//RenderGO(player->GetActiveTool());//render  player active tool
+	RenderGO(mapeditor->GetCurrentBlock());//render  player active tool
 
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{

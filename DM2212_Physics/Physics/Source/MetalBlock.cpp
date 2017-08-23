@@ -3,6 +3,7 @@
 
 Metalblock::Metalblock(Grid* grid) : Block(grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_METAL;
 }
 
 Metalblock::~Metalblock()
