@@ -1,19 +1,17 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 
-#include "GameObject.h"
 #include "CollisionManager.h"
+#include "GameObject.h"
 
+class Grid;
 class Block : public GameObject
 {
 public:
-	Block();
-	Block(int Type, int health, bool Destructable);								//Set Blocks
+	Block(Grid* grid);
 	virtual ~Block();
 
-	//virtual void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt) {}
-
-	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
+	//virtual void Update(double dt) {};
 	void Response();
 
 	int getHealth() { return m_iHealth; };										//Get health

@@ -7,16 +7,10 @@
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>Reader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneAsteroid.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneBase.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneCollision.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneKinematics.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Application.cpp">
@@ -125,16 +119,10 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneAsteroid.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneBase.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneCollision.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneKinematics.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vertex.h">
@@ -215,9 +203,6 @@
     </ClInclude>
     <ClInclude Include="Source\minimap.h" />
     <ClInclude Include="Source\SpatialPartitioning\Grid.h">
-      <Filter>Spatial Partitioning</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SpatialPartitioning\Unit.h">
       <Filter>Spatial Partitioning</Filter>
     </ClInclude>
     <ClInclude Include="Source\Cannonball.h">

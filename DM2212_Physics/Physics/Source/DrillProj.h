@@ -4,18 +4,18 @@
 #include "GameObject.h"
 #include "Blocks.h"
 
+class Grid;
 class DrillProj : public GameObject
 {
 public:
-	DrillProj();
+	DrillProj(Grid* grid);
 	~DrillProj();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
-	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
+	void Update(double dt);
 	void Response();
 
 protected:
-	Block* affected;
+	GameObject* affected;
 };
 
 #endif // !DrillProj_H

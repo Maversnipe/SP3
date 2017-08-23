@@ -1,7 +1,8 @@
 #include "Cannonball.h"
+#include "GameObject.h"
 
-Cannonball::Cannonball()
-	: GameObject(GameObject::GO_BALL)
+Cannonball::Cannonball(Grid* grid)
+	: GameObject(grid, GameObject::GO_BALL)
 {
 	Cannonball::pos = GameObject::pos;
 }
@@ -10,52 +11,17 @@ Cannonball::~Cannonball()
 {
 }
 
-void Cannonball::Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt)
+void Cannonball::Update(double dt)
 {
 	if(this->active)
 		this->pos += this->vel * static_cast<float>(dt);
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
 	}
-}
-
-bool Cannonball::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
-{
-	bool check = false;
-
-	for (auto &i : Objs)
-	{
-		if (i == this || !i->active)
-			continue;
-
-		check = CollisionManager::getCManager()->CheckCollisionC(this, i);
-
-		if (check)
-		{
-			affected = i;
-			break;
-		}
-	}
-
-	if (check)
-		return check;
-
-	for (auto &i : Blks)
-	{
-		check = CollisionManager::getCManager()->CheckCollisionC(this, i);
-
-		if (check)
-		{
-			affected = i;
-			break;
-		}
-	}
-
-	return check;
 }
 
 void Cannonball::Response()

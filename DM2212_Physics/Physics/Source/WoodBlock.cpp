@@ -1,6 +1,7 @@
 #include "WoodBlock.h"
+#include "GameObject.h"
 
-Woodblock::Woodblock() : Block(2, 3, true)
+Woodblock::Woodblock(Grid* grid) : Block(grid)
 {
 }
 
@@ -8,11 +9,11 @@ Woodblock::~Woodblock()
 {
 }
 
-void Woodblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
+void Woodblock::Update(double dt)
 {
 	// Check if block has health
-	if (this->getHealth() <= 0)
-		this->active = false;
+	//if (this->getHealth() <= 0)
+	//	this->active = false;
 
 	this->torque.SetZero();
 
@@ -42,10 +43,9 @@ void Woodblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 	this->aabb.SetAABB(this->pos, this->scale);
 
 	// Block's collision response
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
-		//this->getDamaged(1);
 	}
 
 	if (!this->torque.IsZero())

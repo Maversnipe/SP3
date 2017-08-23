@@ -2,15 +2,15 @@
 #define GLASSBLOCK_H
 
 #include "Blocks.h"
-#include "GameObject.h"
 
+class Grid;
 class Glassblock : public Block
 {
 public:
-	Glassblock();
+	Glassblock(Grid* grid);
 	~Glassblock();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void Update(double dt);
 };
 
 #endif //!GLASSBLOCK

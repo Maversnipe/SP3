@@ -3,13 +3,14 @@
 
 #include "Blocks.h"
 
+class Grid;
 class Grassblock : public Block
 {
 public:
-	Grassblock();
+	Grassblock(Grid* grid);
 	~Grassblock();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void Update(double dt);
 	
 };
 

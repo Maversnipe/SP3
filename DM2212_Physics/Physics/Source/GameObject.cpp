@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
+GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	: type(typeValue),
 	scale(1, 1, 1),
 	restitution(1),
@@ -14,11 +14,13 @@ GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btyp)
 	rotation(0.0f),
 	torque(0, 0, 0),
 	tooltype(TOOL_TYPE::NON_TOOL),
-	toolproj(TOOL_PROJ::NON_TOOLPROJ)
-
+	toolproj(TOOL_PROJ::NON_TOOLPROJ),
+	m_grid(grid),
+	next_(NULL),
+	prev_(NULL)
 {
 	if (typeValue == GO_BLOCK)
-		Btype = Btyp;
+		Btype = Btype_;
 }
 
 GameObject::~GameObject()
