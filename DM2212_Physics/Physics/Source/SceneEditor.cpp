@@ -23,7 +23,7 @@ void SceneEditor::Init()
 	//Map reading
 	map = new FileIO();
 	map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
-	map->Read("Maps//test.csv");
+	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
 

@@ -53,19 +53,20 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 
 void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 {
-	//std::ofstream myfile;
-	//myfile.open("Maps//example.csv");
-	//myfile << "This is the first cell in the first column.\n "
-	//	<< "a,b,c,\n"
-	//	<< "c,s,v,\n"
-	//	<< "1,2,3.456\n"
-	//	<< "semi;colon";
-	//myfile.close();
-
 	int mapwidth = 64;
-	int mapheight = 40;
+	int mapheight = 38;
 	bool found = false;
-	for (unsigned y = 2; y < mapheight; ++y)
+
+	std::ofstream myfile;
+	myfile.open("Maps//example.csv");
+	myfile << "//";
+	for (unsigned index = 1; index < mapwidth+1; ++index)
+	{
+		myfile << index << ",";
+	}
+	myfile << "\n";
+
+	for (unsigned y = 2; y < mapheight+2; ++y)
 	{
 		for (unsigned x = 1; x < mapwidth+1; ++x)
 		{
@@ -73,7 +74,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			{
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y/4 == y && blocklist[i]->active)
 				{
-					std::cout << blocklist[i]->Btype << ",";
+					myfile << blocklist[i]->Btype << ",";
 					found = true;
 					break;
 				}
@@ -82,13 +83,15 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				std::cout << "0,";
+				myfile << "0,";
 			}
 			found = false;
 
 		}
-		std::cout << "\n";
+		myfile << "\n";
 	}
+	myfile.close();
+
 	std::cout << "SAVE FILE" << std::endl;
 }
 
