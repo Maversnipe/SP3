@@ -32,7 +32,7 @@ public:
 
 	~PlayerInfo();
 
-	void Init();
+	void Init(Grid* grid);
 
 	void Update(double dt,Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);

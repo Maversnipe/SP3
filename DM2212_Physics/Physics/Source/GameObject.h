@@ -3,9 +3,11 @@
 
 #include "Vector3.h"
 #include "AABB.h"
+#include "SpatialPartitioning\Grid.h"
 
 class GameObject
 {
+	friend Grid;
 public:
 	enum GAMEOBJECT_TYPE
 	{
@@ -29,7 +31,7 @@ public:
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
-
+	GAMEOBJECT_TYPE type;
 
 	enum BLOCK_TYPE
 	{
@@ -45,6 +47,7 @@ public:
 		//GO_BRICKBROKEN,
 		GO_BTYPTOTAL,
 	};
+	BLOCK_TYPE Btype;
 
 	enum TOOL_TYPE
 	{
@@ -55,6 +58,7 @@ public:
 		THUMPER,
 		TOOL_TOTAL,
 	};
+	TOOL_TYPE tooltype;
 
 	enum TOOL_PROJ
 	{
@@ -63,40 +67,42 @@ public:
 		DRILLPROJ,
 		TOOLPROJ_TOTAL,
 	};
-
-	virtual void Update(double dt) {};
-
-	BLOCK_TYPE Btype;
-	TOOL_TYPE tooltype;
 	TOOL_PROJ toolproj;
-	GAMEOBJECT_TYPE type;
+
+	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
+	~GameObject();
+
+	//virtual void Update(double dt) {}
+
+	bool active;
+
+	// Object Movement
 	Vector3 pos;
 	Vector3 vel;
 	Vector3 scale;
 	Vector3 dir;
-	float restitution;
-	float momentOfInertia;
+	bool isonAir;
 
-	float angularVelocity;
-
-	Vector3 accel;
-	
+	// Object Rotation
 	float rotation;
 	Vector3 torque;
 	Vector3 force;
-	
-	bool active;
+	float momentOfInertia;
+	float angularVelocity;
 
+	// Collision
+	AABB aabb;
+	float restitution;
+	bool iscolliding;
 	float mass;
 	float invmass;
 
-	AABB aabb;
-
-	bool isonAir;
-	bool iscolliding;
-
-	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btyp = GO_GRASS);
-	~GameObject();
+	// Spatial Partioning
+	GameObject* next_;
+	GameObject* prev_;
+	Grid* m_grid;
+	int m_iCurrCellX;
+	int m_iCurrCellY;
 };
 
 #endif

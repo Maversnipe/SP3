@@ -2,14 +2,14 @@
 #define BRICK_BLOCK
 
 #include "Blocks.h"
-
+class Grid;
 class Brickblock : public Block
 {
 public:
-	Brickblock();
+	Brickblock(Grid* grid);
 	~Brickblock();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void Update(double dt);
 };
 
 #endif // !BRICK_BLOCK

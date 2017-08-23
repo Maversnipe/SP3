@@ -18,14 +18,14 @@ PlayerInfo::~PlayerInfo()
 {
 }
 
-void PlayerInfo::Init()
+void PlayerInfo::Init(Grid* grid)
 {
 	ToolManager = new ToolsInfo*[i_NumTools];
-	ToolManager[0] = new PickaxeTool();
-	ToolManager[1] = new CannonTool();
-	ToolManager[2] = new DrillTool();
-	ToolManager[3] = new ThumperTool();
-	ToolManager[4] = new TestWeapon();
+	ToolManager[0] = new PickaxeTool(grid);
+	ToolManager[1] = new CannonTool(grid);
+	ToolManager[2] = new DrillTool(grid);
+	ToolManager[3] = new ThumperTool(grid);
+	ToolManager[4] = new TestWeapon(grid);
 
 }
 
