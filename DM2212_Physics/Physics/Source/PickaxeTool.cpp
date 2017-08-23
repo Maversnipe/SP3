@@ -23,7 +23,25 @@ void PickaxeTool::Init()
 
 void PickaxeTool::Update(double dt, Vector3 mousepos)
 {
-	pos = mousepos;//update to mouse pos
+	int gridx, gridy;
+	if ((int)mousepos.x % 4 >= 2)
+	{
+		gridx = (int)mousepos.x +(4-(int)mousepos.x % 4);
+	}
+	else
+	{
+		gridx = (int)mousepos.x -((int)mousepos.x % 4);
+	}
+	if ((int)mousepos.y % 4 >= 2)
+	{
+		gridy = (int)mousepos.y + (4-(int)mousepos.y % 4);
+	}
+	else
+	{
+		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
+	}
+	
+	pos = Vector3(gridx, gridy, 0);//update to mouse pos
 }
 
 bool PickaxeTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
