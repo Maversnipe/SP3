@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
+#include "QuadTree\Quadtree.h"
 
 SceneCollision::SceneCollision()
 {
@@ -20,6 +21,10 @@ void SceneCollision::Init()
 
 	// Spatial Partionining
 	m_grid = new Grid();
+
+	AABB boundary;
+	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
+	m_Qtree = new Quadtree();
 
     //Map reading
     map = new FileIO();
@@ -257,16 +262,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
 				m_grid->Add(go);
 			}
-            else if (map->Map[i][k] == 10)
-            {
-                GameObject *go = FetchGO();
-                go->type = GameObject::GO_WALL;
-                go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
-				m_grid->Add(go);
-            }
         }
     }
 
@@ -387,15 +382,6 @@ void SceneCollision::RenderMainMinimap()
 				RenderMesh(BlockList[GEO_BRICK], false);
 				modelStack.PopMatrix();
 			}
-			/*else if (map->Map[i][k] == 10)
-			{
-				GameObject *go = FetchGO();
-				go->type = GameObject::GO_WALL;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i), 0);
-				go->scale.Set(1.f, 1.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 0.f;
-			}*/
 		}
 	}
 

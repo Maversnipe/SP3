@@ -157,6 +157,7 @@
     <ClCompile Include="Source\DrillTool.cpp" />
     <ClCompile Include="Source\minimap.cpp" />
     <ClCompile Include="Source\Cannonball.cpp" />
+    <ClCompile Include="Source\QuadTree\Quadtree.cpp" />
     <ClCompile Include="Source\SceneEditor.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\BrickBlock.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Source\DrillProj.h" />
     <ClInclude Include="Source\minimap.h" />
     <ClInclude Include="Source\Cannonball.h" />
+    <ClInclude Include="Source\QuadTree\Quadtree.h" />
     <ClInclude Include="Source\SceneEditor.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\BrickBlock.h" />

@@ -8,12 +8,15 @@ class Grid
 public:
 	Grid();
 	~Grid();
+	/*
+	X is 256 Units
+	Y is 152 Units, or 160 Units, still unsure
+	*/
+	static const int NUM_CELLS_X = 64;
+	static const int NUM_CELLS_Y = 38;
+	static const int CELL_SIZE = 4;
 
-	static const int NUM_CELLS_X = 12;
-	static const int NUM_CELLS_Y = 7;
-	static const int CELL_SIZE = 22;
-
-	GameObject* GetCells(int cellX, int cellY) { return m_cells[cellX][cellY]; }
+	GameObject* GetCell(int cellX, int cellY) { return m_cells[cellX][cellY]; }
 
 	void Add(GameObject* GO);
 	void Remove(GameObject* GO);
