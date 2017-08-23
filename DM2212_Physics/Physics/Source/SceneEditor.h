@@ -17,6 +17,8 @@
 #include "CollisionManager.h"
 #include "minimap.h"
 
+class Grid;
+
 class SceneEditor : public SceneBase
 {
 	static const int MAX_SPEED = 10;
@@ -38,14 +40,12 @@ public:
 	GameObject* FetchGO();
 	Block* FetchGo1();
 
-	//Collision check
-	float CheckCollision2(GameObject *go, GameObject *go2);
-
 	//Mapping
 	void RenderMap();
 
 	//render minimap
 	void RenderMinimap();
+	void RenderMainMinimap();
 
 protected:
 	//Physics
@@ -83,6 +83,9 @@ protected:
 
 	//player
 	PlayerInfo* player;
+
+	// Spatial Partioning
+	Grid* m_grid;
 };
 
 #endif
