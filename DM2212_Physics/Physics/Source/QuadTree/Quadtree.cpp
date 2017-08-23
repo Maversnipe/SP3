@@ -127,5 +127,14 @@ std::vector<GameObject*> Quadtree::QueryRange(AABB range)
 	// Bottom right
 	temp = SE->QueryRange(range);
 	inRange.insert(inRange.end(), temp.begin(), temp.end());
+}
 
+void Quadtree::Update(double dt)
+{
+	Iterate(this);
+}
+
+void Quadtree::Iterate(Quadtree* Qtree)
+{
+	
 }

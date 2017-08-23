@@ -6,7 +6,7 @@ class Grid;
 class Brickblock : public Block
 {
 public:
-	Brickblock(Grid* grid);
+	Brickblock(Quadtree* qtree, Grid* grid);
 	~Brickblock();
 
 	void Update(double dt);

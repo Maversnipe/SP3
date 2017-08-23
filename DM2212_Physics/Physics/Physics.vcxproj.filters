@@ -108,6 +108,7 @@
     <ClCompile Include="Source\QuadTree\Quadtree.cpp">
       <Filter>QuadTree</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MapEditor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -226,6 +227,7 @@
     <ClInclude Include="Source\QuadTree\Quadtree.h">
       <Filter>QuadTree</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MapEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

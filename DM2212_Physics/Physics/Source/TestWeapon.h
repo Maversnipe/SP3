@@ -5,7 +5,7 @@
 class TestWeapon :public ToolsInfo
 {
 public:
-	TestWeapon(Grid* grid);
+	TestWeapon(Quadtree* qtree, Grid* grid);
 	~TestWeapon();
 
 	void Init();//set default data

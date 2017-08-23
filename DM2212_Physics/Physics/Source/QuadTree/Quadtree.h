@@ -15,6 +15,9 @@ public:
 	bool Insert(GameObject* to_insert);
 	void Subdivide();
 	std::vector<GameObject*> QueryRange(AABB range);
+	void Update(double dt);
+	void Iterate(Quadtree*);
+
 private:
 	static const int MAX_OBJECTS = 4;
 	int currNumOfObjects;

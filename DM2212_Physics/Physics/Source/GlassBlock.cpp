@@ -1,8 +1,8 @@
 #include "GlassBlock.h"
 #include "GameObject.h"
 
-Glassblock::Glassblock(Grid* grid)
-	: Block(grid)
+Glassblock::Glassblock(Quadtree* qtree, Grid* grid)
+	: Block(qtree, grid)
 {
 }
 

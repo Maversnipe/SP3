@@ -20,8 +20,7 @@ void SceneCollision::Init()
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
-	m_grid = new Grid();
-
+	//m_grid = new Grid();
 	AABB boundary;
 	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
 	m_Qtree = new Quadtree();
@@ -35,7 +34,7 @@ void SceneCollision::Init()
 
     //Player
     player = PlayerInfo::GetInstance();
-	player->Init(m_grid);
+	player->Init(m_Qtree, m_grid);
 
     //Physics code here
     m_speed = 1.f;
@@ -44,8 +43,8 @@ void SceneCollision::Init()
 
     m_objectCount = 0;
 
-    m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+    m_ghost = new GameObject(m_Qtree, m_grid, GameObject::GO_WALL);
+	m_Block = new Block(m_Qtree, m_grid);
 
     initialKE = 0.0f;
     finalKE = 0.0f;
@@ -72,7 +71,7 @@ GameObject* SceneCollision::FetchGO()
         }
     }
 
-    GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+    GameObject *go = new GameObject(m_Qtree, m_grid, GameObject::GO_BALL);
     m_goList.push_back(go);
 
    
@@ -93,7 +92,7 @@ Block* SceneCollision::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block(m_Qtree, m_grid);
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -185,7 +184,7 @@ void SceneCollision::Update(double dt)
         go->scale.Set(sc, sc, sc);
         go->mass = 3.f;
 		go->aabb.SetAABB(go->pos, go->scale);
-		m_grid->Add(go);
+		//m_grid->Add(go);
     }
 
     //Physics Simulation Section
@@ -215,7 +214,8 @@ void SceneCollision::RenderMap()
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
             else if (map->Map[i][k] == 2)
             {
@@ -227,7 +227,8 @@ void SceneCollision::RenderMap()
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
             else if (map->Map[i][k] == 1)
             {
@@ -238,7 +239,8 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
             }
             else if (map->Map[i][k] == 4)
             {
@@ -249,7 +251,8 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
             }
 			else if (map->Map[i][k] == 5)
 			{
@@ -260,7 +263,8 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
         }
     }
@@ -398,13 +402,13 @@ void SceneCollision::UpdateObjects(double dt)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(dt);
-			m_grid->Move(cannonball);
+			//m_grid->Move(cannonball);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			//m_grid->Move(drillproj);
 		}
 
 	}
@@ -432,7 +436,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -442,7 +446,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -452,7 +456,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if(i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -462,7 +466,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 	}

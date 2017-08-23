@@ -18,14 +18,14 @@ PlayerInfo::~PlayerInfo()
 {
 }
 
-void PlayerInfo::Init(Grid* grid)
+void PlayerInfo::Init(Quadtree* qtree, Grid* grid)
 {
 	ToolManager = new ToolsInfo*[i_NumTools];
-	ToolManager[0] = new PickaxeTool(grid);
-	ToolManager[1] = new CannonTool(grid);
-	ToolManager[2] = new DrillTool(grid);
-	ToolManager[3] = new ThumperTool(grid);
-	ToolManager[4] = new TestWeapon(grid);
+	ToolManager[0] = new PickaxeTool(qtree, grid);
+	ToolManager[1] = new CannonTool(qtree, grid);
+	ToolManager[2] = new DrillTool(qtree, grid);
+	ToolManager[3] = new ThumperTool(qtree, grid);
+	ToolManager[4] = new TestWeapon(qtree, grid);
 
 }
 
@@ -33,23 +33,23 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 {
 	//switch tools
 	{
-	static bool isQ = false;
-	if (Application::IsKeyPressed('Q') && !isQ)
-		isQ = true;
-	else if (!Application::IsKeyPressed('Q') && isQ)
-	{
-		SetActiveToolIndex(i_ActiveTool - 1);
-		isQ = false;
+		static bool isQ = false;
+		if (Application::IsKeyPressed('Q') && !isQ)
+			isQ = true;
+		else if (!Application::IsKeyPressed('Q') && isQ)
+		{
+			SetActiveToolIndex(i_ActiveTool - 1);
+			isQ = false;
+		}
+		static bool isE = false;
+		if (Application::IsKeyPressed('E') && !isE)
+			isE = true;
+		else if (!Application::IsKeyPressed('E') && isE)
+		{
+			SetActiveToolIndex(i_ActiveTool + 1);
+			isE = false;
+		}
 	}
-	static bool isE = false;
-	if (Application::IsKeyPressed('E') && !isE)
-		isE = true;
-	else if (!Application::IsKeyPressed('E') && isE)
-	{
-		SetActiveToolIndex(i_ActiveTool + 1);
-		isE = false;
-	}
-}
 
 	ToolManager[i_ActiveTool]->Update(dt, mousepos);
 }
@@ -77,7 +77,7 @@ int PlayerInfo::GetActiveToolIndex()const
 void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 {
 	i_ActiveTool = ToolIndex;
-	if (i_ActiveTool == i_NumTools)
+	if (i_ActiveTool >= i_NumTools)
 		i_ActiveTool = 0;
 	if (i_ActiveTool == -1)
 		i_ActiveTool = i_NumTools - 1;

@@ -1,8 +1,8 @@
 #include "Cannonball.h"
 #include "GameObject.h"
 
-Cannonball::Cannonball(Grid* grid)
-	: GameObject(grid, GameObject::GO_BALL)
+Cannonball::Cannonball(Quadtree* qtree, Grid* grid)
+	: GameObject(qtree, grid, GameObject::GO_BALL)
 {
 	Cannonball::pos = GameObject::pos;
 }

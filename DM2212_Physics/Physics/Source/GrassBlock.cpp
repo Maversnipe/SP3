@@ -1,7 +1,7 @@
 #include "GrassBlock.h"
 #include "GameObject.h"
 
-Grassblock::Grassblock(Grid* grid) : Block(grid)
+Grassblock::Grassblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
 }
 

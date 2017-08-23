@@ -16,7 +16,7 @@ public:
 	static const int NUM_CELLS_Y = 38;
 	static const int CELL_SIZE = 4;
 
-	GameObject* GetCell(int cellX, int cellY) { return m_cells[cellX][cellY]; }
+	GameObject* GetCells(int cellX, int cellY) { return m_cells[cellX][cellY]; }
 
 	void Add(GameObject* GO);
 	void Remove(GameObject* GO);

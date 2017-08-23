@@ -1,7 +1,7 @@
 #include "BrickBlock.h"
 #include "GameObject.h"
 
-Brickblock::Brickblock(Grid* grid) : Block(grid)
+Brickblock::Brickblock(Quadtree* qtree, Grid* grid) : Block(grid)
 {
 }
 
