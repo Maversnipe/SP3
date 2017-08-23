@@ -18,7 +18,7 @@
 #include "minimap.h"
 
 class Grid;
-
+class Quadtree;
 class SceneCollision : public SceneBase
 {
 	static const int MAX_SPEED = 10;
@@ -86,6 +86,7 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
+	Quadtree* m_Qtree;
 };
 
 #endif

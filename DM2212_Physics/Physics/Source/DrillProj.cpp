@@ -1,7 +1,7 @@
 #include "DrillProj.h"
 
-DrillProj::DrillProj(Grid* grid)
-	: GameObject(grid, GameObject::GO_BALL)
+DrillProj::DrillProj(Quadtree* qtree, Grid* grid)
+	: GameObject(qtree, grid, GameObject::GO_BALL)
 {
 }
 

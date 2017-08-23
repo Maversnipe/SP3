@@ -1,9 +1,8 @@
 #include "WoodBlock.h"
 #include "GameObject.h"
 
-Woodblock::Woodblock(Grid* grid) : Block(grid)
+Woodblock::Woodblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
-	Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 }
 
 Woodblock::~Woodblock()

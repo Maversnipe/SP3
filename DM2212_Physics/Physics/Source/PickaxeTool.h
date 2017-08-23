@@ -6,7 +6,7 @@
 class PickaxeTool :public ToolsInfo
 {
 public:
-	PickaxeTool(Grid* grid);
+	PickaxeTool(Quadtree* qtree, Grid* grid);
 	~PickaxeTool();
 
 	void Init();//set default data

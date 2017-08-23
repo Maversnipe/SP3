@@ -1,9 +1,8 @@
 #include "GrassBlock.h"
 #include "GameObject.h"
 
-Grassblock::Grassblock(Grid* grid) : Block(grid)
+Grassblock::Grassblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
-	Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 }
 
 Grassblock::~Grassblock()
