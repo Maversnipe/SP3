@@ -165,7 +165,6 @@
     <ClCompile Include="Source\PickaxeTool.cpp" />
     <ClCompile Include="Source\PlayerInfo.cpp" />
     <ClCompile Include="Source\SpatialPartitioning\Grid.cpp" />
-    <ClCompile Include="Source\SpatialPartitioning\Unit.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Blocks.cpp" />
@@ -179,10 +178,8 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\MetalBlock.cpp" />
-    <ClCompile Include="Source\SceneAsteroid.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneCollision.cpp" />
-    <ClCompile Include="Source\SceneKinematics.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\TestWeapon.cpp" />
     <ClCompile Include="Source\ThumperTool.cpp" />
@@ -204,7 +201,6 @@
     <ClInclude Include="Source\PickaxeTool.h" />
     <ClInclude Include="Source\PlayerInfo.h" />
     <ClInclude Include="Source\SpatialPartitioning\Grid.h" />
-    <ClInclude Include="Source\SpatialPartitioning\Unit.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\Blocks.h" />
@@ -220,10 +216,8 @@
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\MetalBlock.h" />
     <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\SceneAsteroid.h" />
     <ClInclude Include="Source\SceneBase.h" />
     <ClInclude Include="Source\SceneCollision.h" />
-    <ClInclude Include="Source\SceneKinematics.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\TestWeapon.h" />
     <ClInclude Include="Source\ThumperTool.h" />

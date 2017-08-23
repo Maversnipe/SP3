@@ -1,15 +1,15 @@
 #ifndef WOODBLOCK_H
 #define WOODBLOCK_H
-
 #include "Blocks.h"
 
+class Grid;
 class Woodblock : public Block
 {
 public:
-	Woodblock();
+	Woodblock(Grid* grid);
 	~Woodblock();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void Update(double dt);
 	void BurnUpdate();
 
 protected:

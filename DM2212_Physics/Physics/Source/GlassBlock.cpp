@@ -1,6 +1,8 @@
 #include "GlassBlock.h"
+#include "GameObject.h"
 
-Glassblock::Glassblock() : Block(1, 2, true)
+Glassblock::Glassblock(Grid* grid)
+	: Block(grid)
 {
 }
 
@@ -8,10 +10,10 @@ Glassblock::~Glassblock()
 {
 }
 
-void Glassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
+void Glassblock::Update(double dt)
 {
-	if (this->getHealth() <= 0)
-		this->active = false;
+	//if (this->getHealth() <= 0)
+	//	this->active = false;
 
 	this->torque.SetZero();
 
@@ -35,10 +37,9 @@ void Glassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
-		//this->getDamaged(1);
 	}
 
 	if (!this->torque.IsZero())

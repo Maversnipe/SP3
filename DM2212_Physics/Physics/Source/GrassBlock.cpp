@@ -1,6 +1,7 @@
 #include "GrassBlock.h"
+#include "GameObject.h"
 
-Grassblock::Grassblock() : Block(3, 1, true)
+Grassblock::Grassblock(Grid* grid) : Block(grid)
 {
 }
 
@@ -8,7 +9,7 @@ Grassblock::~Grassblock()
 {
 }
 
-void Grassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
+void Grassblock::Update(double dt)
 {	
 	this->torque.SetZero();
 
@@ -32,7 +33,7 @@ void Grassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
 		//this->getDamaged(1);

@@ -1,6 +1,7 @@
 #include "MetalBlock.h"
+#include "GameObject.h"
 
-Metalblock::Metalblock() : Block(3, 1, false)
+Metalblock::Metalblock(Grid* grid) : Block(grid)
 {
 }
 
@@ -8,7 +9,7 @@ Metalblock::~Metalblock()
 {
 }
 
-void Metalblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
+void Metalblock::Update(double dt)
 {
 	this->torque.SetZero();
 
@@ -32,7 +33,7 @@ void Metalblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
 		//this->getDamaged(1);

@@ -5,10 +5,11 @@
 #include "Blocks.h"
 #include <vector>
 using std::vector;
+class Grid;
 class ToolsInfo : public GameObject
 {
 public:
-	ToolsInfo();
+	ToolsInfo(Grid* grid);
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data

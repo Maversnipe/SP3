@@ -7,16 +7,10 @@
     <ClCompile Include="Source\FileIO.cpp">
       <Filter>Reader</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneAsteroid.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneBase.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneCollision.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneKinematics.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Application.cpp">
@@ -90,9 +84,6 @@
     <ClCompile Include="Source\SpatialPartitioning\Grid.cpp">
       <Filter>Spatial Partitioning</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SpatialPartitioning\Unit.cpp">
-      <Filter>Spatial Partitioning</Filter>
-	 </ClCompile>
     <ClCompile Include="Source\Cannonball.cpp">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClCompile>
@@ -122,16 +113,10 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneAsteroid.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneBase.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneCollision.h">
-      <Filter>Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneKinematics.h">
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Vertex.h">
@@ -214,9 +199,6 @@
     <ClInclude Include="Source\SpatialPartitioning\Grid.h">
       <Filter>Spatial Partitioning</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SpatialPartitioning\Unit.h">
-      <Filter>Spatial Partitioning</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Cannonball.h">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClInclude>
@@ -269,7 +251,7 @@
     </Filter>
     <Filter Include="Spatial Partitioning">
       <UniqueIdentifier>{cc3a260d-7150-4781-8875-de86e6e04b49}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="GameObjects\Tools\Projectiles">
       <UniqueIdentifier>{01cb60f2-b0e9-43e5-b9e6-61d4d0fe3e05}</UniqueIdentifier>
     </Filter>

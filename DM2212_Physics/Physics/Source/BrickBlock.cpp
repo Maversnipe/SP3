@@ -1,6 +1,7 @@
 #include "BrickBlock.h"
+#include "GameObject.h"
 
-Brickblock::Brickblock() : Block(4, 5, true)
+Brickblock::Brickblock(Grid* grid) : Block(grid)
 {
 }
 
@@ -8,10 +9,10 @@ Brickblock::~Brickblock()
 {
 }
 
-void Brickblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
+void Brickblock::Update(double dt)
 {
-	if (this->getHealth() <= 0)
-		this->active = false;
+	//if (this->getHealth() <= 0)
+	//	this->active = false;
 
 	//this->rotation += 
 	this->torque.SetZero();
@@ -36,7 +37,7 @@ void Brickblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (checkCollision(objs, blks))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
 		//this->getDamaged(1);

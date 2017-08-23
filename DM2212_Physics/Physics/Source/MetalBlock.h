@@ -2,14 +2,14 @@
 #define METALBLOCK_H
 
 #include "Blocks.h"
-
+class Grid;
 class Metalblock : public Block
 {
 public:
-	Metalblock();
+	Metalblock(Grid* grid);
 	~Metalblock();
 
-	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void Update(double dt);
 };
 
 #endif //!METALBLOCK

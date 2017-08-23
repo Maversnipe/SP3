@@ -3,10 +3,11 @@
 #include "Application.h"
 #include "Blocks.h"
 
+class Grid;
 class ThumperTool :public ToolsInfo
 {
 public:
-	ThumperTool();
+	ThumperTool(Grid* grid);
 	~ThumperTool();
 
 	void Init();//set default data
