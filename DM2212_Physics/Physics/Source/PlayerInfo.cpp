@@ -33,23 +33,23 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 {
 	//switch tools
 	{
-	static bool isQ = false;
-	if (Application::IsKeyPressed('Q') && !isQ)
-		isQ = true;
-	else if (!Application::IsKeyPressed('Q') && isQ)
-	{
-		SetActiveToolIndex(i_ActiveTool - 1);
-		isQ = false;
+		static bool isQ = false;
+		if (Application::IsKeyPressed('Q') && !isQ)
+			isQ = true;
+		else if (!Application::IsKeyPressed('Q') && isQ)
+		{
+			SetActiveToolIndex(i_ActiveTool - 1);
+			isQ = false;
+		}
+		static bool isE = false;
+		if (Application::IsKeyPressed('E') && !isE)
+			isE = true;
+		else if (!Application::IsKeyPressed('E') && isE)
+		{
+			SetActiveToolIndex(i_ActiveTool + 1);
+			isE = false;
+		}
 	}
-	static bool isE = false;
-	if (Application::IsKeyPressed('E') && !isE)
-		isE = true;
-	else if (!Application::IsKeyPressed('E') && isE)
-	{
-		SetActiveToolIndex(i_ActiveTool + 1);
-		isE = false;
-	}
-}
 
 	ToolManager[i_ActiveTool]->Update(dt, mousepos);
 }
@@ -77,7 +77,7 @@ int PlayerInfo::GetActiveToolIndex()const
 void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 {
 	i_ActiveTool = ToolIndex;
-	if (i_ActiveTool == i_NumTools)
+	if (i_ActiveTool >= i_NumTools)
 		i_ActiveTool = 0;
 	if (i_ActiveTool == -1)
 		i_ActiveTool = i_NumTools - 1;

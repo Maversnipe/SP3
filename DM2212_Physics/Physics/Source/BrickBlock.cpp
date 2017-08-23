@@ -3,6 +3,7 @@
 
 Brickblock::Brickblock(Grid* grid) : Block(grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_BRICK;
 }
 
 Brickblock::~Brickblock()
