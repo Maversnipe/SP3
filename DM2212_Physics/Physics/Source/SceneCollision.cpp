@@ -24,7 +24,7 @@ void SceneCollision::Init()
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
-    map->Read("Maps//Map_Lucas.csv");
+    map->Read("Maps//test.csv");
     RenderMap();
 	//RenderMainMinimap();
 
@@ -153,44 +153,44 @@ void SceneCollision::Update(double dt)
     }
 
     //Mouse Section
-    static bool bLButtonState = false;
-    if(!bLButtonState && Application::IsMousePressed(0))
-    {
-        bLButtonState = true;
-        std::cout << "LBUTTON DOWN" << std::endl;
-        
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+  //  static bool bLButtonState = false;
+  //  if(!bLButtonState && Application::IsMousePressed(0))
+  //  {
+  //      bLButtonState = true;
+  //      std::cout << "LBUTTON DOWN" << std::endl;
+  //      
+  //      double x, y;
+  //      Application::GetCursorPos(&x, &y);
+  //      int w = Application::GetWindowWidth();
+  //      int h = Application::GetWindowHeight();
+  //      float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+  //      float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
-        m_ghost->pos.Set(posX, posY, 0); //IMPT
-        float sc = 2;
-        m_ghost->scale.Set(sc, sc, sc);
-    }
-    else if(bLButtonState && !Application::IsMousePressed(0))
-    {
-        bLButtonState = false;
-        std::cout << "LBUTTON UP" << std::endl;
+  //      m_ghost->pos.Set(posX, posY, 0); //IMPT
+  //      float sc = 2;
+  //      m_ghost->scale.Set(sc, sc, sc);
+  //  }
+  //  else if(bLButtonState && !Application::IsMousePressed(0))
+  //  {
+  //      bLButtonState = false;
+  //      std::cout << "LBUTTON UP" << std::endl;
 
-        //spawn small GO_BALL
-        GameObject *go = FetchGO();
-        go->type = GameObject::GO_EXPLOSION;
-        double x, y;
-        Application::GetCursorPos(&x, &y);
-        int w = Application::GetWindowWidth();
-        int h = Application::GetWindowHeight();
-        float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-        float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
+  //      //spawn small GO_BALL
+  //      GameObject *go = FetchGO();
+  //      go->type = GameObject::GO_EXPLOSION;
+  //      double x, y;
+  //      Application::GetCursorPos(&x, &y);
+  //      int w = Application::GetWindowWidth();
+  //      int h = Application::GetWindowHeight();
+  //      float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
+  //      float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 
-        go->pos = m_ghost->pos;
-        m_ghost->active = false;
-        go->scale.Set(1, 1, 1);
-        go->mass = 3.f;
-		go->aabb.SetAABB(go->pos, go->scale);
-    }
+  //      go->pos = m_ghost->pos;
+  //      m_ghost->active = false;
+  //      go->scale.Set(1, 1, 1);
+  //      go->mass = 3.f;
+		//go->aabb.SetAABB(go->pos, go->scale);
+  //  }
     static bool bRButtonState = false;
     if(!bRButtonState && Application::IsMousePressed(1))
     {

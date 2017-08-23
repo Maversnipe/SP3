@@ -7,7 +7,7 @@
 class Explosive : public GameObject
 {
 public:
-	Explosive();
+	Explosive(Grid* grid);
 	~Explosive();
 
 	void Setexplosiontime(double dt); 

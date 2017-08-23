@@ -1,7 +1,7 @@
 #include "Explosive.h"
 
-Explosive::Explosive()
-	: GameObject(GameObject::GO_EXPLOSION),
+Explosive::Explosive(Grid* grid)
+	: GameObject(grid, GameObject::GO_EXPLOSION),
 	m_fexplosiontime(1.f),
 	m_felapsedtime(0.f),
 	exploding(false)

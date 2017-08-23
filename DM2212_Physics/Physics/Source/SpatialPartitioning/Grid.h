@@ -9,9 +9,9 @@ public:
 	Grid();
 	~Grid();
 
-	static const int NUM_CELLS_X = 12;
-	static const int NUM_CELLS_Y = 7;
-	static const int CELL_SIZE = 22;
+	static const int NUM_CELLS_X = 16;
+	static const int NUM_CELLS_Y = 10;
+	static const int CELL_SIZE = 16;
 
 	GameObject* GetCells(int cellX, int cellY) { return m_cells[cellX][cellY]; }
 

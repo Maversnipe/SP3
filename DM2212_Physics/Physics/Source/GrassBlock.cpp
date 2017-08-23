@@ -39,7 +39,7 @@ void Grassblock::Update(double dt)
 		//this->getDamaged(1);
 	}
 
-	if (!this->torque.IsZero())
+	/*if (!this->torque.IsZero())
 	{
 		this->momentOfInertia = this->mass * 1 * 1;
 		float aa = this->torque.z * (1 / this->momentOfInertia);
@@ -71,7 +71,7 @@ void Grassblock::Update(double dt)
 	this->dir.Set(cos(theta), sin(theta), 0);
 
 	if (!this->dir.IsZero())
-		this->dir.Normalize();
+		this->dir.Normalize();*/
 
 	/*if (go2->getHealth() <= 2)
 		go->Btype = GameObject::BLOCK_TYPE::GO_WOODDAM;*/
