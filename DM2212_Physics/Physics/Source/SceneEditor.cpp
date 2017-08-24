@@ -15,6 +15,7 @@ SceneEditor::~SceneEditor()
 void SceneEditor::Init()
 {
 	SceneBase::Init();
+	m_objectCount = 0;
 
 	//RenderMinimap(); //test
 
@@ -45,7 +46,6 @@ void SceneEditor::Init()
 
 	Math::InitRNG();
 
-	m_objectCount = 0;
 
 	m_ghost = new GameObject(m_Qtree, m_grid, GameObject::GO_WALL);
 	m_Block = new Block(m_Qtree, m_grid);
@@ -70,7 +70,7 @@ GameObject* SceneEditor::FetchGO()
 		if (!go->active)
 		{
 			go->active = true;
-			++m_objectCount;
+			//++m_objectCount;
 			return go;
 		}
 	}
@@ -80,7 +80,7 @@ GameObject* SceneEditor::FetchGO()
 
 
 	go->active = true;
-	++m_objectCount;
+	//++m_objectCount;
 	return go;
 }
 
@@ -158,7 +158,16 @@ void SceneEditor::Update(double dt)
 		std::cout << "SPACE BAR UP" << std::endl;
 
 		if (mapeditor->GetIsEditing())
-			mapeditor->PlaceBlock(m_vBlocks,m_grid);
+		{
+			if (mapeditor->PlaceBlock(m_vBlocks, m_grid))
+			{
+				m_objectCount++;
+			}
+			else if(mapeditor->RemoveBlock(m_vBlocks, m_grid))
+			{
+				m_objectCount--;
+			}
+		}
 		else
 		player->UseCurrentTool(m_vBlocks, m_goList);
 	}
@@ -176,7 +185,9 @@ void SceneEditor::Update(double dt)
 		isD = true;
 	else if (!Application::IsKeyPressed('D') && isD)
 	{
-		mapeditor->DeleteMap(m_vBlocks);
+
+		m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+
 		isD = false;
 	}
 
@@ -227,7 +238,11 @@ void SceneEditor::RenderMap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			if (map->Map[i][k] == 0)
+			if (map->Map[i][k] > 0)
+			{
+				m_objectCount++;
+			}
+			if (map->Map[i][k] == 1)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -239,7 +254,7 @@ void SceneEditor::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 1)
+			else if (map->Map[i][k] == 2)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -251,7 +266,7 @@ void SceneEditor::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 			//	m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 2)
+			else if (map->Map[i][k] == 3)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -262,7 +277,7 @@ void SceneEditor::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 			//	m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 3)
+			else if (map->Map[i][k] == 4)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -273,7 +288,7 @@ void SceneEditor::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
 			//	m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 4)
+			else if (map->Map[i][k] == 5)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -645,10 +660,10 @@ void SceneEditor::Render()
 
 	////Exercise 3: render initial and final kinetic energy
 	//
-	//ss.str(std::string());
-	//ss.precision(3);
-	//ss << "Speed: " << m_speed;
-	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
+	ss.str(std::string());
+	ss.precision(3);
+	ss << "Blocks: " << m_objectCount;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 
 	ss.str(std::string());
 	ss.precision(5);

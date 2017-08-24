@@ -32,9 +32,10 @@ public:
 	Block* FetchBlocks(std::vector<Block*>& blocklist, Grid* grid);
 
 	void SaveMap(std::vector<Block*>& blocklist);
-	void DeleteMap(std::vector<Block*>& blocklist);
+	int DeleteMap(std::vector<Block*>& blocklist);
 
-	void PlaceBlock(std::vector<Block*>& blocklist,Grid* &m_grid);
+	bool PlaceBlock(std::vector<Block*>& blocklist,Grid* &m_grid);
+	bool RemoveBlock(std::vector<Block*>& blocklist, Grid* &m_grid);
 	void SwitchBlock(int i);
 
 	bool GetIsEditing();
