@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include "AABB.h"
 #include "SpatialPartitioning\Grid.h"
+#include "QuadTree\Quadtree.h"
 
 class GameObject
 {
@@ -69,7 +70,7 @@ public:
 	};
 	TOOL_PROJ toolproj;
 
-	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
+	GameObject(Quadtree* qtree, Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();
 
 	//virtual void Update(double dt) {}
@@ -108,6 +109,7 @@ public:
 	Grid* m_grid;
 	int m_iCurrCellX;
 	int m_iCurrCellY;
+	Quadtree* m_qtree;
 };
 
 #endif

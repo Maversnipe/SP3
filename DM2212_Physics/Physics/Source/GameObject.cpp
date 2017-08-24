@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
+GameObject::GameObject(Quadtree* qtree, Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	: type(typeValue),
 	scale(1, 1, 1),
 	restitution(0.2f),
@@ -20,7 +20,8 @@ GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	next_(NULL),
 	prev_(NULL),
 	staticFric(0.5f),
-	dynamicFric(0.3f)
+	dynamicFric(0.3f),
+	m_qtree(qtree)
 {
 	if (typeValue == GO_BLOCK)
 		Btype = Btype_;

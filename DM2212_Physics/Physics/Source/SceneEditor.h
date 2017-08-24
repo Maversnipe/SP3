@@ -19,6 +19,7 @@
 #include "MapEditor.h"
 
 class Grid;
+class Quadtree;
 
 class SceneEditor : public SceneBase
 {
@@ -86,6 +87,7 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
+	Quadtree* m_Qtree;
 };
 
 #endif

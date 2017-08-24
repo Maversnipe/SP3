@@ -7,7 +7,7 @@ class Grid;
 class Glassblock : public Block
 {
 public:
-	Glassblock(Grid* grid);
+	Glassblock(Quadtree* qtree, Grid* grid);
 	~Glassblock();
 
 	void Update(double dt);

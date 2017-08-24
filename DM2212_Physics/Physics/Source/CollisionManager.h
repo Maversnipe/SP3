@@ -25,7 +25,7 @@ public:
 
 	//"Update"
 	//void Check(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks, double dt);
-
+	
 	//Circular to other obj
 	bool CheckCollisionC(GameObject *go1, GameObject *go2);
 	//Box to other obj

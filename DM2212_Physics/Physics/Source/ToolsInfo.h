@@ -9,7 +9,7 @@ class Grid;
 class ToolsInfo : public GameObject
 {
 public:
-	ToolsInfo(Grid* grid);
+	ToolsInfo(Quadtree* qtree, Grid* grid);
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data

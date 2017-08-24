@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
+#include "QuadTree\Quadtree.h"
 
 SceneCollision::SceneCollision()
 {
@@ -19,18 +20,21 @@ void SceneCollision::Init()
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
-	m_grid = new Grid();
+	//m_grid = new Grid();
+	AABB boundary;
+	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
+	m_Qtree = new Quadtree();
 
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
     map->Read("Maps//test.csv");
     RenderMap();
-//	RenderMinimap(); //test
+	//RenderMainMinimap();
 
     //Player
     player = PlayerInfo::GetInstance();
-	player->Init(m_grid);
+	player->Init(m_Qtree, m_grid);
 
     //Physics code here
     m_speed = 1.f;
@@ -39,8 +43,8 @@ void SceneCollision::Init()
 
     m_objectCount = 0;
 
-    m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+    m_ghost = new GameObject(m_Qtree, m_grid, GameObject::GO_WALL);
+	m_Block = new Block(m_Qtree, m_grid);
 
     initialKE = 0.0f;
     finalKE = 0.0f;
@@ -67,7 +71,7 @@ GameObject* SceneCollision::FetchGO()
         }
     }
 
-    GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+    GameObject *go = new GameObject(m_Qtree, m_grid, GameObject::GO_BALL);
     m_goList.push_back(go);
 
     go->active = true;
@@ -87,7 +91,7 @@ Block* SceneCollision::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block(m_Qtree, m_grid);
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -217,7 +221,7 @@ void SceneCollision::Update(double dt)
         go->scale.Set(sc, sc, sc);
         go->mass = 3.f;
 		go->aabb.SetAABB(go->pos, go->scale);
-		m_grid->Add(go);
+		//m_grid->Add(go);
     }
 
     //Physics Simulation Section
@@ -247,7 +251,8 @@ void SceneCollision::RenderMap()
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
             else if (map->Map[i][k] == 2)
             {
@@ -259,7 +264,8 @@ void SceneCollision::RenderMap()
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
             else if (map->Map[i][k] == 1)
             {
@@ -270,7 +276,8 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
             }
             else if (map->Map[i][k] == 4)
             {
@@ -281,7 +288,8 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
             }
 			else if (map->Map[i][k] == 5)
 			{
@@ -292,18 +300,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				m_grid->Add(go);
+				//m_grid->Add(go);
+				m_Qtree->Insert(go);
 			}
-            else if (map->Map[i][k] == 10)
-            {
-                GameObject *go = FetchGO();
-                go->type = GameObject::GO_WALL;
-				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
-				m_grid->Add(go);
-            }
         }
     }
 
@@ -364,117 +363,71 @@ void SceneCollision::RenderMinimap()
 
 void SceneCollision::RenderMainMinimap()
 {
-	for (auto go : m_vBlocks)
+	/*
+	// Push the current transformation into the modelStack
+	modelStack.PushMatrix();
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+
+	// Push the current transformation into the modelStack
+	modelStack.PushMatrix();
+	// Translate the current transformation (from minimap.cpp)
+	modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
+	*/
+	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
 	{
-		modelStack.PushMatrix();
-		modelStack.Scale(0.038, 0.06, 0.05);
-		if (go->Btype == GameObject::GO_GRASS)
+		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171) /20, 0);
-			modelStack.Scale(0.5f, 0.5f, 1.f);
-			RenderMesh(BlockList[GEO_GRASS], false);
-			modelStack.PopMatrix();
-		}
+			if (map->Map[i][k] == 3)
+			{
+				modelStack.PushMatrix();
 
-		else if (go->Btype == GameObject::GO_GLASS)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
-			modelStack.Scale(0.5f, 0.5f, 1.f);
-			RenderMesh(BlockList[GEO_GLASS], false);
-			modelStack.PopMatrix();
-		}
+				modelStack.Scale(0.04, 0.06, 0.05);
+				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				RenderMesh(BlockList[GEO_GRASS], false);
+				modelStack.PopMatrix();
 
-		else if (go->Btype == GameObject::GO_WOOD)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
-			modelStack.Scale(0.5f, 0.5f, 1.f);
-			RenderMesh(BlockList[GEO_WOOD], false);
-			modelStack.PopMatrix();
-		}
+			}
+			else if (map->Map[i][k] == 2)
+			{
+				modelStack.PushMatrix();
 
-		else if (go->Btype == GameObject::GO_METAL)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
-			modelStack.Scale(0.5f, 0.5f, 1.f);
-			RenderMesh(BlockList[GEO_METAL], false);
-			modelStack.PopMatrix();
+				modelStack.Scale(0.04, 0.06, 0.05);
+				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				RenderMesh(BlockList[GEO_GLASS], false);
+				modelStack.PopMatrix();
+			}
+			else if (map->Map[i][k] == 1)
+			{
+				modelStack.PushMatrix();
+
+				modelStack.Scale(0.04, 0.06, 0.05);
+				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				RenderMesh(BlockList[GEO_WOOD], false);
+				modelStack.PopMatrix();
+			}
+			else if (map->Map[i][k] == 4)
+			{
+				modelStack.PushMatrix();
+
+				modelStack.Scale(0.04, 0.06, 0.05);
+				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				RenderMesh(BlockList[GEO_METAL], false);
+				modelStack.PopMatrix();
+			}
+			else if (map->Map[i][k] == 5)
+			{
+				modelStack.PushMatrix();
+
+				modelStack.Scale(0.04, 0.06, 0.05);
+				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				RenderMesh(BlockList[GEO_BRICK], false);
+				modelStack.PopMatrix();
+			}
 		}
-		else if (go->Btype == GameObject::GO_BRICK)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y-41) / 20, 0);
-			modelStack.Scale(0.5, 0.5, 1);
-			RenderMesh(BlockList[GEO_BRICK], false);
-			modelStack.PopMatrix();
-		}
-		modelStack.PopMatrix();
 	}
 
-	//for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
-	//{
-	//	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
-	//	{
-	//		if (map->Map[i][k] == 3)
-	//		{
-	//			modelStack.PushMatrix();
-
-	//			modelStack.Scale(0.038, 0.06, 0.05);
-	//			modelStack.Translate(((k+1)*0.4)-13, ((map->GetNumOfTiles_Height()-i)-41)*0.2, 0);
-	//			RenderMesh(BlockList[GEO_GRASS], false);
-	//			modelStack.PopMatrix();
-
-	//		}
-	//		else if (map->Map[i][k] == 2)
-	//		{
-	//			modelStack.PushMatrix();
-
-	//			modelStack.Scale(0.038, 0.06, 0.05);
-	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
-	//			RenderMesh(BlockList[GEO_GLASS], false);
-	//			modelStack.PopMatrix();
-	//		}
-	//		else if (map->Map[i][k] == 1)
-	//		{
-	//			modelStack.PushMatrix();
-
-	//			modelStack.Scale(0.038, 0.06, 0.05);
-	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
-	//			RenderMesh(BlockList[GEO_WOOD], false);
-	//			modelStack.PopMatrix();
-	//		}
-	//		else if (map->Map[i][k] == 4)
-	//		{
-	//			modelStack.PushMatrix();
-
-	//			modelStack.Scale(0.038, 0.06, 0.05);
-	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
-	//			RenderMesh(BlockList[GEO_METAL], false);
-	//			modelStack.PopMatrix();
-	//		}
-	//		else if (map->Map[i][k] == 5)
-	//		{
-	//			modelStack.PushMatrix();
-
-	//			modelStack.Scale(0.038, 0.06, 0.05);
-	//			modelStack.Translate(((k + 1)*0.4) - 13, ((map->GetNumOfTiles_Height() - i) - 41)*0.2, 0);
-	//			RenderMesh(BlockList[GEO_BRICK], false);
-	//			modelStack.PopMatrix();
-	//		}
-	//		/*else if (map->Map[i][k] == 10)
-	//		{
-	//			GameObject *go = FetchGO();
-	//			go->type = GameObject::GO_WALL;
-	//			go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i), 0);
-	//			go->scale.Set(1.f, 1.f, 1.f);
-	//			go->vel.Set(0, 0, 0);
-	//			go->mass = 0.f;
-	//		}*/
-	//	}
-	//}
+	//	modelStack.PopMatrix();
+	//modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -487,19 +440,13 @@ void SceneCollision::UpdateObjects(double dt)
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Init();
 			cannonball->Update(dt);
-			m_grid->Move(cannonball);
-		}
-		else if (i->type == GameObject::GO_EXPLOSION)
-		{
-			Explosive* Ex = static_cast<Explosive*>(i);
-			Ex->Setexplosiontime(dt);
-			Ex->Update(m_goList, m_vBlocks, dt);
+			//m_grid->Move(cannonball);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			//m_grid->Move(drillproj);
 		}
 	}
 }
@@ -526,7 +473,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -536,7 +483,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -546,7 +493,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 		else if(i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -556,7 +503,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				m_grid->Move(b);
+				//m_grid->Move(b);
 			}
 		}
 	}
@@ -651,7 +598,7 @@ void SceneCollision::Render()
     // Model matrix : an identity matrix (model will be at the origin)
     modelStack.LoadIdentity();
     
-	RenderMinimap();
+	RenderMinimap(); //test
 
     RenderMesh(meshList[GEO_AXES], false);
 
@@ -681,7 +628,6 @@ void SceneCollision::Render()
 
     if(m_ghost->active)
         RenderGO(m_ghost);
-
 
     //On screen text
     std::ostringstream ss;
@@ -738,9 +684,9 @@ void SceneCollision::Exit()
         m_ghost = NULL;
     }*/
 
-	if (m_grid)
+	/*if (m_grid)
 	{
 		delete m_grid;
 		m_grid = NULL;
-	}
+	}*/
 }

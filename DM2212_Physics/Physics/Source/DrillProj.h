@@ -8,7 +8,7 @@ class Grid;
 class DrillProj : public GameObject
 {
 public:
-	DrillProj(Grid* grid);
+	DrillProj(Quadtree* qtree, Grid* grid);
 	~DrillProj();
 
 	void Update(double dt);

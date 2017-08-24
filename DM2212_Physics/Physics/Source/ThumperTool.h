@@ -7,7 +7,7 @@ class Grid;
 class ThumperTool :public ToolsInfo
 {
 public:
-	ThumperTool(Grid* grid);
+	ThumperTool(Quadtree* qtree, Grid* grid);
 	~ThumperTool();
 
 	void Init();//set default data

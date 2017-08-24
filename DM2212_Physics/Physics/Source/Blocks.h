@@ -8,7 +8,7 @@ class Grid;
 class Block : public GameObject
 {
 public:
-	Block(Grid* grid);
+	Block(Quadtree* qtree, Grid* grid);
 	virtual ~Block();
 
 	//virtual void Update(double dt) {};

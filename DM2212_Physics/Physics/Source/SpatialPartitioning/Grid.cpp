@@ -78,22 +78,26 @@ bool Grid::CheckCollision(GameObject* GO, GameObject** GO2)
 		if (cellX > 0 && cellY > 0)
 		{ // Top left
 			temp = m_cells[cellX - 1][cellY - 1];
-			check = CheckCollisionLoop(temp, GO, &(*GO2));
+			if(temp != NULL)
+				check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 		if (cellX > 0 && !check)
 		{ // Left
 			temp = m_cells[cellX - 1][cellY];
-			check = CheckCollisionLoop(temp, GO, &(*GO2));
+			if (temp != NULL)
+				check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 		if (cellY < NUM_CELLS_Y - 1 && !check)
 		{ // Top
 			temp = m_cells[cellX][cellY + 1];
-			check = CheckCollisionLoop(temp, GO, &(*GO2));
+			if (temp != NULL)
+				check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 		if (cellX > 0 && cellY < NUM_CELLS_Y - 1 && !check)
 		{ // Bottom left
 			temp = m_cells[cellX - 1][cellY + 1];
-			check = CheckCollisionLoop(temp, GO, &(*GO2));
+			if (temp != NULL)
+				check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 	}
 

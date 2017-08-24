@@ -1,9 +1,10 @@
 #include "BrickBlock.h"
 #include "GameObject.h"
 
-Brickblock::Brickblock(Grid* grid) : Block(grid)
+Brickblock::Brickblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+
 }
 
 Brickblock::~Brickblock()
@@ -38,11 +39,11 @@ void Brickblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		Response();
-		//this->getDamaged(1);
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//	//this->getDamaged(1);
+	//}
 
 	if (!this->torque.IsZero())
 	{
