@@ -37,10 +37,10 @@ void Glassblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		Response();
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//}
 
 	if (!this->torque.IsZero())
 	{

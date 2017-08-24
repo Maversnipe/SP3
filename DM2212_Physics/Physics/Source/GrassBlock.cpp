@@ -33,11 +33,11 @@ void Grassblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		Response();
-		//this->getDamaged(1);
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//	//this->getDamaged(1);
+	//}
 
 	if (!this->torque.IsZero())
 	{
