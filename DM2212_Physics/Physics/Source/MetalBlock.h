@@ -6,7 +6,7 @@ class Grid;
 class Metalblock : public Block
 {
 public:
-	Metalblock(Grid* grid);
+	Metalblock(Quadtree* qtree, Grid* grid);
 	~Metalblock();
 
 	void Update(double dt);

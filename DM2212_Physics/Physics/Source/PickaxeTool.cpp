@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-PickaxeTool::PickaxeTool(Grid* grid) : ToolsInfo(grid)
+PickaxeTool::PickaxeTool(Quadtree* qtree, Grid* grid) : ToolsInfo(qtree, grid)
 {
 	i_Price = 0;
 	pos.Set(0, 0, 0);

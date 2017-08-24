@@ -1,9 +1,10 @@
 #include "MetalBlock.h"
 #include "GameObject.h"
 
-Metalblock::Metalblock(Grid* grid) : Block(grid)
+Metalblock::Metalblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_METAL;
+
 }
 
 Metalblock::~Metalblock()
@@ -34,11 +35,11 @@ void Metalblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		Response();
-		//this->getDamaged(1);
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//	//this->getDamaged(1);
+	//}
 
 	if (!this->torque.IsZero())
 	{

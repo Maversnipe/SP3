@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-ThumperTool::ThumperTool(Grid* grid) : ToolsInfo(grid)
+ThumperTool::ThumperTool(Quadtree* qtree, Grid* grid) : ToolsInfo(qtree, grid)
 {
 	i_Price = 0;
 	pos.Set(0, 0, 0);

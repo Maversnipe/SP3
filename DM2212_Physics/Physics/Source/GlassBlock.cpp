@@ -1,10 +1,11 @@
 #include "GlassBlock.h"
 #include "GameObject.h"
 
-Glassblock::Glassblock(Grid* grid)
-	: Block(grid)
+Glassblock::Glassblock(Quadtree* qtree, Grid* grid)
+	: Block(qtree, grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_GLASS;
+
 }
 
 Glassblock::~Glassblock()
@@ -38,10 +39,10 @@ void Glassblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		Response();
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//}
 
 	if (!this->torque.IsZero())
 	{

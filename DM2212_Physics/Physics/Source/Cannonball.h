@@ -6,7 +6,7 @@ class Grid;
 class Cannonball : public GameObject
 {
 public:
-	Cannonball(Grid* grid);
+	Cannonball(Quadtree* qtree, Grid* grid);
 	~Cannonball();
 
 	void Update(double dt);
