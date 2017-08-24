@@ -84,7 +84,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				myfile << "0,";
+				myfile << "-1,";
 			}
 			found = false;
 
@@ -96,8 +96,12 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	std::cout << "SAVE FILE" << std::endl;
 }
 
-void MapEditor::DeleteMap()
+void MapEditor::DeleteMap(std::vector<Block*>& blocklist)
 {
+	for (unsigned i = 0; i < blocklist.size(); ++i)
+	{
+		blocklist[i]->active = false;
+	}
 }
 
 void MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)

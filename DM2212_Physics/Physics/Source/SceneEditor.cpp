@@ -171,6 +171,14 @@ void SceneEditor::Update(double dt)
 		mapeditor->SaveMap(m_vBlocks);
 		isS = false;
 	}
+	static bool isD = false;
+	if (Application::IsKeyPressed('D') && !isD)
+		isD = true;
+	else if (!Application::IsKeyPressed('D') && isD)
+	{
+		mapeditor->DeleteMap(m_vBlocks);
+		isD = false;
+	}
 
 	//Mouse Section
 	static bool bRButtonState = false;
@@ -219,7 +227,7 @@ void SceneEditor::RenderMap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			if (map->Map[i][k] == 5)
+			if (map->Map[i][k] == 0)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
@@ -243,7 +251,7 @@ void SceneEditor::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 			//	m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 1)
+			else if (map->Map[i][k] == 2)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
