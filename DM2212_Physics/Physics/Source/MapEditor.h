@@ -28,7 +28,7 @@ public:
 
 	~MapEditor();
 
-	void Init(Grid* grid);
+	void Init(Quadtree* qtree, Grid* grid);
 	Block* FetchBlocks(std::vector<Block*>& blocklist, Grid* grid);
 
 	void SaveMap(std::vector<Block*>& blocklist);
@@ -41,6 +41,7 @@ public:
 	void SetIsEditing(bool editing);
 
 	void Update(double dt, Vector3 mousepos);
+	void SetQtree(Quadtree* qtree) { *m_Qtree = *qtree; }
 
 	GameObject* GetCurrentBlock();
 
@@ -50,5 +51,6 @@ private:
 	bool b_isEditing;
 	Vector3 brickPos;
 	Block** blockmanager;
+	Quadtree* m_Qtree;
 
 };

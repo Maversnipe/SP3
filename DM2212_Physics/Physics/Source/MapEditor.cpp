@@ -22,14 +22,14 @@ MapEditor::~MapEditor()
 
 }
 
-void MapEditor::Init(Grid* grid)
+void MapEditor::Init(Quadtree* qtree, Grid* grid)
 {
 	blockmanager = new Block*[totalnumblocks];
-	blockmanager[0] = new Brickblock(grid);
-	blockmanager[1] = new Glassblock(grid);
-	blockmanager[2] = new Grassblock(grid);
-	blockmanager[3] = new Metalblock(grid);
-	blockmanager[4] = new Woodblock(grid);
+	blockmanager[0] = new Brickblock(qtree, grid);
+	blockmanager[1] = new Glassblock(qtree, grid);
+	blockmanager[2] = new Grassblock(qtree, grid);
+	blockmanager[3] = new Metalblock(qtree, grid);
+	blockmanager[4] = new Woodblock(qtree, grid);
 }
 
 Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
@@ -44,7 +44,7 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block(m_Qtree, m_grid);
 	m_vBlocks.push_back(go);
 
 	go->active = true;
