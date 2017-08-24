@@ -4,6 +4,8 @@
 Glassblock::Glassblock(Quadtree* qtree, Grid* grid)
 	: Block(qtree, grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_GLASS;
+
 }
 
 Glassblock::~Glassblock()

@@ -66,7 +66,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	}
 	myfile << "\n";
 
-	for (unsigned y = 2; y < mapheight+2; ++y)
+	for (unsigned y = mapheight + 2; y > 2 ; --y)
 	{
 		for (unsigned x = 1; x < mapwidth+1; ++x)
 		{
@@ -75,6 +75,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y/4 == y && blocklist[i]->active)
 				{
 					myfile << blocklist[i]->Btype << ",";
+					std::cout << blocklist[i]->Btype << std::endl;
 					found = true;
 					break;
 				}
