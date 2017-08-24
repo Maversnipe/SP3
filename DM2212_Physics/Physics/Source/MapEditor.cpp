@@ -75,6 +75,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y/4 == y && blocklist[i]->active)
 				{
 					myfile << blocklist[i]->Btype << ",";
+					std::cout << blocklist[i]->Btype << std::endl;
 					found = true;
 					break;
 				}

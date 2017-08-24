@@ -41,7 +41,7 @@ public:
 	void SetIsEditing(bool editing);
 
 	void Update(double dt, Vector3 mousepos);
-	void SetQtree(Quadtree* qtree) { *m_Qtree = *qtree; }
+	void SetQtree(Quadtree* qtree) { m_Qtree = qtree; }
 
 	GameObject* GetCurrentBlock();
 

@@ -22,7 +22,7 @@ void SceneEditor::Init()
 	m_grid = new Grid();
 	AABB boundary;
 	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
-	m_Qtree = new Quadtree();
+	m_Qtree = new Quadtree;
 
 	//Map reading
 	map = new FileIO();
@@ -38,7 +38,7 @@ void SceneEditor::Init()
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
 	mapeditor->Init(m_Qtree, m_grid);
-	mapeditor->SetQtree(m_Qtree);
+	mapeditor->GetInstance()->SetQtree(m_Qtree);
 
 	//Physics code here
 	m_speed = 1.f;
@@ -585,8 +585,10 @@ void SceneEditor::Render()
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	//RenderGO(player->GetActiveTool());//render  player active tool
-	RenderGO(mapeditor->GetCurrentBlock());//render  player active tool
+	if(mapeditor->GetIsEditing())
+		RenderGO(mapeditor->GetCurrentBlock());//render  player active tool
+	else
+		RenderGO(player->GetActiveTool());//render  player active tool
 
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{

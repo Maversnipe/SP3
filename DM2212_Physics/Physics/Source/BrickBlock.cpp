@@ -3,6 +3,8 @@
 
 Brickblock::Brickblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
 {
+	Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+
 }
 
 Brickblock::~Brickblock()
