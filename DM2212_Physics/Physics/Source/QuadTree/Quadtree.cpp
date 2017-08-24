@@ -129,12 +129,7 @@ std::vector<GameObject*> Quadtree::QueryRange(AABB range)
 	inRange.insert(inRange.end(), temp.begin(), temp.end());
 }
 
-void Quadtree::Update(double dt)
+bool Quadtree::CollisionCheck(GameObject* GO)
 {
-	Iterate(this);
-}
 
-void Quadtree::Iterate(Quadtree* Qtree)
-{
-	
 }
