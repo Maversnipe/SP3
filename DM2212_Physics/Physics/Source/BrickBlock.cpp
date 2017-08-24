@@ -11,7 +11,7 @@ Brickblock::~Brickblock()
 {
 }
 
-void Brickblock::Update(double dt)
+void Brickblock::Update(double dt, Quadtree* main_tree)
 {
 	//if (this->getHealth() <= 0)
 	//	this->active = false;
@@ -44,6 +44,10 @@ void Brickblock::Update(double dt)
 	//	Response();
 	//	//this->getDamaged(1);
 	//}
+	if (main_tree->CollisionCheck(this, &affected))
+	{
+		Response();
+	}
 
 	if (!this->torque.IsZero())
 	{
