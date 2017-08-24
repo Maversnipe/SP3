@@ -329,47 +329,51 @@ void SceneCollision::RenderMainMinimap()
 {
 	for (auto go : m_vBlocks)
 	{
-		modelStack.PushMatrix();
-		modelStack.Scale(0.038, 0.06, 0.05);
-		if (go->Btype == GameObject::GO_GRASS)
+		if (go->active)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) /20, 0);
-			RenderMesh(BlockList[GEO_GRASS], false);
+			modelStack.Scale(0.038, 0.06, 0.05);
+			if (go->Btype == GameObject::GO_GRASS)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) /20, 0);
+				RenderMesh(BlockList[GEO_GRASS], false);
+				modelStack.PopMatrix();
+			}
+	
+			else if (go->Btype == GameObject::GO_GLASS)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+				RenderMesh(BlockList[GEO_GLASS], false);
+				modelStack.PopMatrix();
+			}
+	
+			else if (go->Btype == GameObject::GO_WOOD)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+				RenderMesh(BlockList[GEO_WOOD], false);
+				modelStack.PopMatrix();
+			}
+	
+			else if (go->Btype == GameObject::GO_METAL)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+				RenderMesh(BlockList[GEO_METAL], false);
+				modelStack.PopMatrix();
+			}
+			else if (go->Btype == GameObject::GO_BRICK)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(go->pos.x/10 - 13, (go->pos.y-41) / 20, 0);
+				RenderMesh(BlockList[GEO_BRICK], false);
+				modelStack.PopMatrix();
+			}
 			modelStack.PopMatrix();
 		}
-
-		else if (go->Btype == GameObject::GO_GLASS)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
-			RenderMesh(BlockList[GEO_GLASS], false);
-			modelStack.PopMatrix();
-		}
-
-		else if (go->Btype == GameObject::GO_WOOD)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
-			RenderMesh(BlockList[GEO_WOOD], false);
-			modelStack.PopMatrix();
-		}
-
-		else if (go->Btype == GameObject::GO_METAL)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
-			RenderMesh(BlockList[GEO_METAL], false);
-			modelStack.PopMatrix();
-		}
-		else if (go->Btype == GameObject::GO_BRICK)
-		{
-			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y-41) / 20, 0);
-			RenderMesh(BlockList[GEO_BRICK], false);
-			modelStack.PopMatrix();
-		}
-		modelStack.PopMatrix();
+		
 	}
 
 	//for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
