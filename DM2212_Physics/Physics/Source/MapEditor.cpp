@@ -141,15 +141,17 @@ bool MapEditor::RemoveBlock(std::vector<Block*>& blocklist, Grid *& m_grid)
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{
 		//check if there is any blocks on the same position
-		if (blocklist[i]->pos == brickPos && blocklist[i]->active == true && blocklist[i]->pos.y>4 && blocklist[i]->pos.y< 56)
+		if (blocklist[i]->pos == brickPos && blocklist[i]->active == true)
 		{
 			if (blocklist[i]->Btype == blockmanager[currblockint]->Btype)	//else if same block type
 			{
 				blocklist[i]->active = false;	//block set active false
-				return false;
+				return true;
 			}
 		}
 	}
+	return false;
+
 }
 
 void MapEditor::SwitchBlock(int index)

@@ -16,7 +16,7 @@ void SceneEditor::Init()
 {
 	SceneBase::Init();
 	m_objectCount = 0;
-
+	i_blocklimit = 50;
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
@@ -35,6 +35,7 @@ void SceneEditor::Init()
 	//Player
 	player = PlayerInfo::GetInstance();
 	player->Init(m_Qtree, m_grid);
+	player->SetGold(50);
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
@@ -159,9 +160,12 @@ void SceneEditor::Update(double dt)
 
 		if (mapeditor->GetIsEditing())
 		{
-			if (mapeditor->PlaceBlock(m_vBlocks, m_grid))
+			if (m_objectCount < i_blocklimit)
 			{
-				m_objectCount++;
+				if (mapeditor->PlaceBlock(m_vBlocks, m_grid))
+				{
+					m_objectCount++;
+				}
 			}
 			else if(mapeditor->RemoveBlock(m_vBlocks, m_grid))
 			{
@@ -185,12 +189,21 @@ void SceneEditor::Update(double dt)
 		isD = true;
 	else if (!Application::IsKeyPressed('D') && isD)
 	{
-
 		m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
-
 		isD = false;
 	}
+	static bool isW = false;
+	if (Application::IsKeyPressed('W') && !isW)
+		isW = true;
+	else if (!Application::IsKeyPressed('W') && isW)
+	{
+		if(mapeditor->GetIsEditing())
+			mapeditor->SetIsEditing(false);
+		else
+			mapeditor->SetIsEditing(true);
 
+		isW = false;
+	}
 	//Mouse Section
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
