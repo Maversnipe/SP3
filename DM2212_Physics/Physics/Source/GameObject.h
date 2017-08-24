@@ -98,6 +98,10 @@ public:
 	float mass;
 	float invmass;
 
+	//Friction
+	float staticFric;
+	float dynamicFric;
+
 	// Spatial Partioning
 	GameObject* next_;
 	GameObject* prev_;

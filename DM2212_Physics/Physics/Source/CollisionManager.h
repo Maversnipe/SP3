@@ -14,7 +14,6 @@ struct Manifold
 	GameObject* B;
 	float penetration;
 	Vector3 normal;
-	Vector3 tangent;
 };
 
 class CollisionManager
@@ -26,7 +25,7 @@ public:
 
 	//"Update"
 	//void Check(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks, double dt);
-	
+
 	//Circular to other obj
 	bool CheckCollisionC(GameObject *go1, GameObject *go2);
 	//Box to other obj
@@ -36,8 +35,9 @@ public:
 	//Box to other obj
 	void CollisionResponseB(GameObject *go, GameObject *go2);
 
-	//Prevent Overlaps
+	//Prevent Overlaps(objects)
 	void PositionalCorrection(GameObject *go, GameObject *go2);
+
 
 	~CollisionManager();
 

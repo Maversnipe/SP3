@@ -1,5 +1,4 @@
 #include "CollisionManager.h"
-#include "Explosive.h"
 
 CollisionManager* CollisionManager::cm;
 
@@ -22,178 +21,178 @@ void CollisionManager::SetWorldSize(int height, int width)
 
 /*void CollisionManager::Check(std::vector<GameObject*> &Objs, std::vector<Block *> &Blks, double dt)
 {
-	//std::cout << colltimecheck << std::endl;
-	//colltimecheck += dt;
+//std::cout << colltimecheck << std::endl;
+//colltimecheck += dt;
 
-	/*for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
-	{
-		GameObject *go = (GameObject *)*it;
+/*for (std::vector<GameObject *>::iterator it = Objs.begin(); it != Objs.end(); ++it)
+{
+GameObject *go = (GameObject *)*it;
 
-		if (go->mass == 0)
-			go->invmass = 0;
-		else
-			go->invmass = 1 / go->mass;
+if (go->mass == 0)
+go->invmass = 0;
+else
+go->invmass = 1 / go->mass;
 
-		if (go->active && go->type == GameObject::GO_BALL)
-		{
-			go->pos += go->vel * static_cast<float>(dt);
+if (go->active && go->type == GameObject::GO_BALL)
+{
+go->pos += go->vel * static_cast<float>(dt);
 
-			//Exercise 2a: Rebound game object at screen edges
-			// Rebound on X
-			//if (go->pos.x < 0 + go->scale.x && go->vel.x < 0)
-			//	go->vel.x = -go->vel.x;
-			//else if (go->pos.x > m_worldWidth - go->scale.x && go->vel.x > 0)
-			//	go->vel.x = -go->vel.x;
-			//// Rebound on Y
-			//if (go->pos.y < 0 + go->scale.y && go->vel.y < 0)
-			//	go->vel.y = -go->vel.y;
-			//else if (go->pos.y > m_worldHeight - go->scale.y && go->vel.y > 0)
-			//	go->vel.y = -go->vel.y;
-			////Exercise 2b: Unspawn if it really leave the screen
-			//if (go->pos.x > m_worldWidth || go->pos.x < 0 || go->pos.y > m_worldHeight || go->pos.y < 0)
-			//{
-			//	go->active = false;
-			//	--m_objectCount;
-			//	continue;
-			//}
-		}
+//Exercise 2a: Rebound game object at screen edges
+// Rebound on X
+//if (go->pos.x < 0 + go->scale.x && go->vel.x < 0)
+//	go->vel.x = -go->vel.x;
+//else if (go->pos.x > m_worldWidth - go->scale.x && go->vel.x > 0)
+//	go->vel.x = -go->vel.x;
+//// Rebound on Y
+//if (go->pos.y < 0 + go->scale.y && go->vel.y < 0)
+//	go->vel.y = -go->vel.y;
+//else if (go->pos.y > m_worldHeight - go->scale.y && go->vel.y > 0)
+//	go->vel.y = -go->vel.y;
+////Exercise 2b: Unspawn if it really leave the screen
+//if (go->pos.x > m_worldWidth || go->pos.x < 0 || go->pos.y > m_worldHeight || go->pos.y < 0)
+//{
+//	go->active = false;
+//	--m_objectCount;
+//	continue;
+//}
+}
 
-		for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != Objs.end(); ++it2)
-		{
-			GameObject *go2 = (GameObject *)(*it2);
+for (std::vector<GameObject *>::iterator it2 = it + 1; it2 != Objs.end(); ++it2)
+{
+GameObject *go2 = (GameObject *)(*it2);
 
-			if (!go2->active)
-				continue;
-			if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
-				continue;
+if (!go2->active)
+continue;
+if (go->type != GameObject::GO_BALL && go2->type != GameObject::GO_BALL)
+continue;
 
-			GameObject *goA, *goB;
+GameObject *goA, *goB;
 
-			if (go->type == GameObject::GO_BALL)
-			{
-				goA = go;
-				goB = go2;
-			}
-			else
-			{
-				goA = go2;
-				goB = go;
-			}
-
-
-			if (CheckCollisionC(goA, goB, dt))
-			{
-				CollisionResponseC(goA, goB, dt);
-			}
-		}
-		//Set AABBs
-		go->aabb.SetAABB(go->pos, go->scale);
-	}
-
-	for (std::vector<Block *>::iterator it = Blks.begin(); it != Blks.end(); ++it)
-	{
-		Block *go = (Block *)*it;
-
-		if (go->mass == 0)
-			go->invmass = 0;
-		else
-			go->invmass = 1 / go->mass;
-
-		//Blocks
-		if (go->active && go->type == GameObject::GO_BLOCK)
-		{
-
-			if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
-			{
-				go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
-			}
-			else
-				go->pos += go->vel* static_cast<float>(dt);
+if (go->type == GameObject::GO_BALL)
+{
+goA = go;
+goB = go2;
+}
+else
+{
+goA = go2;
+goB = go;
+}
 
 
+if (CheckCollisionC(goA, goB, dt))
+{
+CollisionResponseC(goA, goB, dt);
+}
+}
+//Set AABBs
+go->aabb.SetAABB(go->pos, go->scale);
+}
 
-			if (go->vel.y != 0 || go->vel.x != 0)
-				go->isonAir = true;
-			else
-				go->isonAir = false;
+for (std::vector<Block *>::iterator it = Blks.begin(); it != Blks.end(); ++it)
+{
+Block *go = (Block *)*it;
 
+if (go->mass == 0)
+go->invmass = 0;
+else
+go->invmass = 1 / go->mass;
 
-			//X
-			if (go->pos.x < 0 + go->scale.x && go->vel.x < 0 || go->pos.x > m_iworld_width - go->scale.x && go->vel.x > 0)
-			{
-				go->vel.x = 0;
-			}
-			//Y
-			if (go->isonAir && go->pos.y < 0 + go->scale.y && go->vel.y < 0 || go->pos.y > m_iworld_height - go->scale.y && go->vel.y > 0)
-			{
-				go->vel.SetZero();
-				go->isonAir = false;
-				go->iscolliding = true;
-			}
+//Blocks
+if (go->active && go->type == GameObject::GO_BLOCK)
+{
 
-			for (std::vector<Block *>::iterator it2 = it + 1; it2 != Blks.end(); ++it2)
-			{
-				Block *go2 = (Block *)(*it2);
-
-				if (!go2->active)
-					continue;
-				if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
-					continue;
-
-				if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
-					continue;
-
-				Block *goA, *goB;
-
-				if (go->type == GameObject::GO_BLOCK)
-				{
-					goA = go;
-					goB = go2;
-				}
-				else
-				{
-					goA = go2;
-					goB = go;
-				}
-
-				if (CheckCollisionB(goA, goB, dt))
-				{
-					CollisionResponseB(goA, goB);
-				}
-			}
-		}
-
-		for (std::vector<GameObject *>::iterator it2 = Objs.begin(); it2 != Objs.end(); ++it2)
-		{
-			GameObject *go2 = (GameObject *)(*it2);
-
-			if (!go2->active)
-				continue;
-			if (go2->type != GameObject::GO_BALL)
-				continue;
-
-			GameObject *goA, *goB;
-
-			if (go2->type == GameObject::GO_BALL)
-			{
-				goA = go2;
-				goB = go;
-			}
-			else
-			{
-				goA = go;
-				goB = go2;
-			}
+if (go->isonAir && go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
+{
+go->pos += (go->vel + m_vec3Gravity) * static_cast<float>(dt);
+}
+else
+go->pos += go->vel* static_cast<float>(dt);
 
 
-			if (CheckCollisionC(goA, goB, dt))
-			{
-				CollisionResponseC(goA, goB, dt);
-			}
-		}
-		//Set AABBs
-		go->aabb.SetAABB(go->pos, go->scale);
-	}
+
+if (go->vel.y != 0 || go->vel.x != 0)
+go->isonAir = true;
+else
+go->isonAir = false;
+
+
+//X
+if (go->pos.x < 0 + go->scale.x && go->vel.x < 0 || go->pos.x > m_iworld_width - go->scale.x && go->vel.x > 0)
+{
+go->vel.x = 0;
+}
+//Y
+if (go->isonAir && go->pos.y < 0 + go->scale.y && go->vel.y < 0 || go->pos.y > m_iworld_height - go->scale.y && go->vel.y > 0)
+{
+go->vel.SetZero();
+go->isonAir = false;
+go->iscolliding = true;
+}
+
+for (std::vector<Block *>::iterator it2 = it + 1; it2 != Blks.end(); ++it2)
+{
+Block *go2 = (Block *)(*it2);
+
+if (!go2->active)
+continue;
+if (go->type != GameObject::GO_BLOCK && go2->type != GameObject::GO_BLOCK)
+continue;
+
+if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS && go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
+continue;
+
+Block *goA, *goB;
+
+if (go->type == GameObject::GO_BLOCK)
+{
+goA = go;
+goB = go2;
+}
+else
+{
+goA = go2;
+goB = go;
+}
+
+if (CheckCollisionB(goA, goB, dt))
+{
+CollisionResponseB(goA, goB);
+}
+}
+}
+
+for (std::vector<GameObject *>::iterator it2 = Objs.begin(); it2 != Objs.end(); ++it2)
+{
+GameObject *go2 = (GameObject *)(*it2);
+
+if (!go2->active)
+continue;
+if (go2->type != GameObject::GO_BALL)
+continue;
+
+GameObject *goA, *goB;
+
+if (go2->type == GameObject::GO_BALL)
+{
+goA = go2;
+goB = go;
+}
+else
+{
+goA = go;
+goB = go2;
+}
+
+
+if (CheckCollisionC(goA, goB, dt))
+{
+CollisionResponseC(goA, goB, dt);
+}
+}
+//Set AABBs
+go->aabb.SetAABB(go->pos, go->scale);
+}
 }*/
 
 bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
@@ -232,8 +231,45 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
+		/*Block* go3 = static_cast <Block*>(go2);
+
+		Vector3 w0 = go2->pos;
+		Vector3 b1 = go->pos;
+		Vector3 N = go2->dir;
+		go3->setdir(Vector3(1, 0, 0));
+		Vector3 N1 = go3->getdir();
+		Vector3 NP = N.Cross(Vector3(0, 0, 1));
+		Vector3 NP1 = N1.Cross(Vector3(0, 0, 1));
+		float r = go->scale.x;
+		float h = go2->scale.x;
+		float l = go2->scale.y;
+		float h1 = go->scale.y;
+
+		bool check = false;
+
+		if ((abs((w0 - b1).Dot(N)) < r + h * 0.5) &&
+		(abs((w0 - b1).Dot(NP)) < r + l * 0.5))
+		{
+		go2->dir = Vector3(0, 1, 0);
+		check = true;
+		return true;
+		}
+
+		if (((abs((w0 - b1).Dot(N1)) < r + h * 0.5) &&
+		(abs((w0 - b1).Dot(NP1)) < r + l * 0.5)))
+		{
+		go2->dir = go3->getdir();
+		check = true;
+		return true;
+		}
+
+
+		return check;*/
+		//Manifold *m = new Manifold;
 		m->A = go2;
 		m->B = go1;
+
+
 		return AABBvsCircle(m);
 	}
 	case GameObject::GO_EXPLOSION:
@@ -286,6 +322,7 @@ bool CollisionManager::CheckCollisionB(GameObject * go1, GameObject * go2)
 	{
 		m->A = go1;
 		m->B = go2;
+
 		return AABBvsCircle(m);
 	}
 	default:
@@ -301,28 +338,33 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	{
 	case GameObject::GO_BALL:
 	{
-		Vector3 rv = go2->vel - go->vel;
+		Vector3 u1 = go->vel;
+		Vector3 u2 = go2->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+		Vector3 u1N = u1.Dot(N) * N;
+		Vector3 u2N = u2.Dot(N) * N;
+		go->vel = u1 + 2.f * (u2N - u1N);
+		go2->vel = u2 + 2.f * (u1N - u2N);
 
-		float velalongnormal = 0;
-		if (m->normal != Vector3(0, 0, 0))
-			velalongnormal = rv.Dot(m->normal.Normalized());
+		PositionalCorrection(go, go2);
 
-		if (velalongnormal > 0)
-			return;
+		break;
+	}
+	case GameObject::GO_WALL:
+	{
+		Vector3 vel = go->vel;
+		Vector3 N = go2->dir;
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
 
-		float e = std::min(go->restitution, go2->restitution);
+		PositionalCorrection(go, go2);
 
-		float j = -(1 + e) * velalongnormal;
-		j /= 1 / go->mass + 1 / go2->mass;
-
-		Vector3 Impulse = j * m->normal;
-
-		float masstotal = go->mass + go2->mass;
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
-
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
+		break;
+	}
+	case GameObject::GO_PILLAR:
+	{
+		Vector3 vel = go->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
 
 		PositionalCorrection(go, go2);
 
@@ -330,32 +372,48 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
+		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		{
+			Vector3 vel = go->vel;
+			Vector3 N = m->normal.Normalized();
+			go->vel = vel - (2.f * vel.Dot(N)) * N;
+			break;
+		}
+
 		Vector3 rv = go2->vel - go->vel;
 
-		float velalongnormal = 0;
+		float velAlongNormal = 0;
 		if (m->normal != Vector3(0, 0, 0))
-			velalongnormal = rv.Dot(m->normal.Normalized());
+			velAlongNormal = rv.Dot(m->normal.Normalized());
 
-		if (velalongnormal > 0)
-			return;;
+		//std::cout << " Type: " << typeid(go2).name() << std::endl;
 
+		/*if (velAlongNormal > 0)
+		return;*/
+
+		//Calculate magnitude/bounciness
 		float e = std::min(go->restitution, go2->restitution);
 
-		float j = -(1 + e) * velalongnormal;
+		float j = -(1 + e) * velAlongNormal;
 		j /= 1 / go->mass + 1 / go2->mass;
 
-		Vector3 Impulse = 0;
-		if (m->normal != Vector3(0, 0, 0))
-			Impulse = j * m->normal.Normalized();
+		Vector3 Impulse = j * m->normal.Normalized();
+		/*go->vel += 1/go->mass * Impulse;
+		go2->vel -= 1 / go2->mass * Impulse;*/
 
 		float masstotal = go->mass + go2->mass;
+
 		float ratio = go->mass / masstotal;
 		go->vel -= ratio * Impulse;
 
 		ratio = go2->mass / masstotal;
 		go2->vel += ratio * Impulse;
 
+
 		PositionalCorrection(go, go2);
+
+		Vector3 rotation = 10 * m->normal + go2->vel;
+		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
 
 		go2->torque += m->normal.Cross(Vector3(0, 5, 0));
 
@@ -365,17 +423,14 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_EXPLOSION:
 	{
-		Explosive* Ex = static_cast <Explosive*>(go2);
-		if (Ex->getexploding())
-		{
-			Vector3 vel = go->vel;
-			Vector3 N = (go2->pos - go->pos).Normalize();
-			if (!go->vel.IsZero())
-				go->vel = (vel * (1 / atan2(go2->scale.y, go2->scale.x))) - (2.f *  (vel * (1 / atan2(go2->scale.y, go2->scale.x))).Dot(N)) * N;
-			else
-				go->vel = Vector3(go2->scale.x, go2->scale.y, 0) - (2.f *  Vector3(go2->scale.x, go2->scale.y, 0).Dot(N)) * N;
-		}
-			break;
+		Vector3 vel = go->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
+
+		PositionalCorrection(go, go2);
+
+		break;
 	}
 	default:
 		break;
@@ -388,43 +443,48 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	{
 	case GameObject::GO_BALL:
 	{
-		Vector3 rv = go2->vel - go->vel;
-
-		float velalongnormal = 0;
-		if (m->normal != Vector3(0, 0, 0))
-			velalongnormal = rv.Dot(m->normal.Normalized());
-
-		if (velalongnormal > 0)
-			return;
-
-		float e = std::min(go->restitution, go2->restitution);
-
-		float j = -(1 + e) * velalongnormal;
-		j /= 1 / go->mass + 1 / go2->mass;
-
-		Vector3 Impulse = 0;
-		if (m->normal != Vector3(0, 0, 0))
-			Impulse = j * m->normal.Normalized();
-
-		float masstotal = go->mass + go2->mass;
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
-
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
-
-		PositionalCorrection(go, go2);
+		Vector3 u1 = go->vel;
+		Vector3 u2 = go2->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+		Vector3 u1N = u1.Dot(N) * N;
+		Vector3 u2N = u2.Dot(N) * N;
+		go->vel = u1 + 2.f * (u2N - u1N);
+		go2->vel = u2 + 2.f * (u1N - u2N);
 
 		go->torque += m->normal.Cross(Vector3(0, 5, 0));
 
-		go->iscolliding = true;
+		PositionalCorrection(go, go2);
 
+		go->iscolliding = true;
+		go2->iscolliding = true;
+		break;
+	}
+	case GameObject::GO_WALL:
+	{
+		Vector3 vel = go->vel;
+		Vector3 N = go2->dir;
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
+		PositionalCorrection(go, go2);
+		go->iscolliding = true;
+		go2->iscolliding = true;
+		break;
+	}
+	case GameObject::GO_PILLAR:
+	{
+		Vector3 vel = go->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+		go->vel = vel - (2.f * vel.Dot(N)) * N;
+		PositionalCorrection(go, go2);
+		go->iscolliding = true;
+		go2->iscolliding = true;
 		break;
 	}
 	case GameObject::GO_BLOCK:
 	{
+		//relative velocity
 		Vector3 rv = go2->vel - go->vel;
 
+		//Velocity along normal
 		float velAlongNormal = 0;
 		if (m->normal != Vector3(0, 0, 0))
 			velAlongNormal = rv.Dot(m->normal.Normalized());
@@ -436,39 +496,71 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		float e = std::min(go->restitution, go2->restitution);
 
 		float j = -(1 + e) * velAlongNormal;
-		j /= 1 / go->mass + 1 / go2->mass;
+		j /= go->invmass + go2->invmass;
 
-		Vector3 Impulse = j * m->normal.Normalized();
+		//Prevent Overlap
+		PositionalCorrection(go, go2);
 
-		float masstotal = go->mass + go2->mass;
+		//Applying Impulses
+		if (velAlongNormal < 0.f)
+		{
+			//Impulse
+			Vector3 Impulse = j * m->normal.Normalized();
 
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
+			float masstotal = go->mass + go2->mass;
 
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
+			float ratio = go->mass / masstotal;
+			go->vel -= ratio * Impulse;
+
+			ratio = go2->mass / masstotal;
+			go2->vel += ratio * Impulse;
+
+			//Friction
+			Vector3 t = rv - (m->normal.Normalized() * rv.Dot(m->normal.Normalized()));
+
+			//j tangent magnitude
+			float jt = rv.Dot(t);
+			jt /= (go->invmass + go2->invmass);
+
+			//Don' apply small fricition impulse
+			if (jt <= 0.f)
+				return;
+
+			//Calculate staticFric && dynamicFric
+			float sf = std::sqrt(go->staticFric * go->staticFric);
+			float df = std::sqrt(go->dynamicFric * go->dynamicFric);
+
+			//Coulumb law
+			Vector3 tangentImpulse;
+			if (std::abs(jt) < j * sf)
+				tangentImpulse = t * jt;
+			else
+				tangentImpulse = t * -j * df;
+
+			go->vel -= go->invmass * tangentImpulse;
+			go2->vel += go2->invmass * tangentImpulse;
+		}
+
+		/*go->iscolliding = true;
+		go->isonAir = false;
+		go2->iscolliding = true;*/
+
+		break;
+	}
+	case GameObject::GO_EXPLOSION:
+	{
+		Vector3 u1 = go->vel;
+		Vector3 u2 = go2->vel;
+		Vector3 N = (go2->pos - go->pos).Normalize();
+		Vector3 u1N = u1.Dot(N) * N;
+		Vector3 u2N = u2.Dot(N) * N;
+		go->vel = u1 + 2.f * (u2N - u1N);
 
 		PositionalCorrection(go, go2);
-		
+
+		go->torque += m->normal.Cross(Vector3(0, 5, 0));
+
 		go->iscolliding = true;
-		go2->iscolliding = true;
-		
-		if (!go->isonAir && go2->pos.y > go->pos.y)
-			go2->isonAir = false;
-		if (!go2->isonAir && go->pos.y > go2->pos.y)
-			go->isonAir = false;
-
-		if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
-		{
-			go2->onGround = true;
-			go2->isonAir = false;
-		}
-		else if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
-		{
-			go->onGround = true;
-			go->isonAir = false;
-		}
-
 		break;
 	}
 	default:
@@ -478,48 +570,17 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
 {
-	const float percent = 0.2; //20%-80%
-	const float slop = 0.01; // usually 0.01 to 0.1
+	const float percent = 0.8; //Penetration percentage to correct(usually 20-80%)
+	const float slop = 0.1; // Penetration allowance(usually 0.01 to 0.1)
 	Vector3 correction = (std::max((m->penetration - slop), 0.0f) / (go->invmass + go2->invmass)) * percent * m->normal;
 
-	if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS || go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+	if (m->penetration > slop)
 	{
-		if (go->Btype != GameObject::BLOCK_TYPE::GO_GRASS && go->isonAir)
-		{
-			Vector3 pos = go->pos + go->invmass * correction;
-			if (pos.y < go2->pos.y)
-			{
-				go->onGround = true;
-				go->pos += go->invmass * correction;
-				go->isonAir = false;
-			}
-		}
-		if (go2->Btype != GameObject::BLOCK_TYPE::GO_GRASS && go2->isonAir)
-		{
-			Vector3 pos = go2->pos + go2->invmass * correction;
-			if (pos.y > go->pos.y)
-			{
-				go2->onGround = true;
-				go2->pos += go2->invmass * correction;
-				go2->isonAir = false;
-			}
-			
-		}
-	}
-	else
-	{
-		if(!go->isonAir && !go->onGround)
+		if (go->type != GameObject::BLOCK_TYPE::GO_GRASS)
 			go->pos -= go->invmass * correction;
-
-		if (!go2->isonAir && !go2->onGround)
+		if (go2->type != GameObject::BLOCK_TYPE::GO_GRASS)
 			go2->pos += go2->invmass * correction;
-
-		if (!go->isonAir && go2->pos.y > go->pos.y)
-			go2->isonAir = false;
-		if (!go2->isonAir && go->pos.y > go2->pos.y)
-			go->isonAir = false;
 	}
-
 }
 
 CollisionManager::~CollisionManager()
@@ -540,6 +601,10 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 
 	AABB abox = A->aabb;
 	AABB bbox = B->aabb;
+
+	/*if ((abox.GetMaxAABB().x > bbox.GetMinAABB().x && abox.GetMinAABB().x < bbox.GetMaxAABB().x)
+	&& (abox.GetMaxAABB().y > bbox.GetMinAABB().y && abox.GetMinAABB().y < bbox.GetMaxAABB().y))
+	return true;*/
 
 	// Calculate half extents along x axis for each object
 	float a_extent = (abox.GetMaxAABB().x - abox.GetMinAABB().x) / 2;
@@ -564,16 +629,17 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 			// Find out which axis is axis of least penetration
 			if (x_overlap < y_overlap)
 			{
-				
+
 				// Point towards B knowing that n points from A to B
-					if (n.x < 0)
-						m->normal = Vector3(-1, 0, 0);
-					else
-						m->normal = Vector3(1, 0, 0);
-					
-					m->penetration = x_overlap;
-					return true;
+				if (n.x < 0)
+					m->normal = Vector3(-1, 0, 0);
+				else
+					m->normal = Vector3(1, 0, 0);
+
+				m->penetration = x_overlap;
+				return true;
 			}
+
 			else
 			{
 				// Point toward B knowing that n points from A to B
@@ -581,7 +647,7 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 					m->normal = Vector3(0, -1, 0);
 				else
 					m->normal = Vector3(0, 1, 0);
-			
+
 				m->penetration = y_overlap;
 				return true;
 			}
@@ -593,33 +659,9 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 
 bool CollisionManager::CirclevsCircle(Manifold * m)
 {
-	/*Vector3 r = m->A->aabb.GetPos() - m->B->aabb.GetPos();
+	Vector3 r = m->A->aabb.GetPos() - m->B->aabb.GetPos();
 
 	return  r.LengthSquared() < (m->A->aabb.GetRadius() + m->B->aabb.GetRadius()) * (m->A->aabb.GetRadius() + m->B->aabb.GetRadius());
-	*/
-
-	Vector3 n = m->A->aabb.GetPos() - m->B->aabb.GetPos();
-	float r = m->A->aabb.GetRadius() + m->B->aabb.GetRadius();
-
-	if (n.LengthSquared() > r * r)
-		return false;
-
-	float d = n.Length();
-
-	if (d != 0)
-	{
-		m->penetration = r - d;
-
-		m->normal =  r / d;
-
-		return true;
-	}
-	else
-	{
-		m->penetration = m->A->aabb.GetRadius();
-		m->normal = Vector3(1, 0, 0);
-		return true;
-	}
 }
 
 bool CollisionManager::AABBvsCircle(Manifold * m)
