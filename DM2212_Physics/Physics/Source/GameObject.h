@@ -82,6 +82,7 @@ public:
 	Vector3 scale;
 	Vector3 dir;
 	bool isonAir;
+	bool onGround;
 
 	// Object Rotation
 	float rotation;

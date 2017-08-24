@@ -14,6 +14,7 @@ struct Manifold
 	GameObject* B;
 	float penetration;
 	Vector3 normal;
+	Vector3 tangent;
 };
 
 class CollisionManager

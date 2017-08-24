@@ -12,16 +12,6 @@ Woodblock::~Woodblock()
 
 void Woodblock::Update(double dt)
 {
-
-	//<Gravity Code>
-	//if(isonAir)
-	//	this->vel.y += -9.8f * dt;
-	//</Gravity Code>
-
-	// Check if block has health
-	//if (this->getHealth() <= 0)
-	//	this->active = false;
-
 	this->torque.SetZero();
 
 	// Check block's mass
@@ -31,20 +21,23 @@ void Woodblock::Update(double dt)
 		this->invmass = 1 / this->mass;
 
 	// Check if block is on air to apply gravity
-	if (this->isonAir)
-	{
-		// Apply gravity
-		this->pos += (this->vel + Vector3(0, -this->mass, 0)) * static_cast<float>(dt);
-	}
-	else
-		this->pos += this->vel* static_cast<float>(dt);
+	if (isonAir && !onGround)
+		this->vel.y += -9.8 * dt;
 
+	// Check if block has health
+	//if (this->getHealth() <= 0)
+	//	this->active = false;
+
+	// Apply gravity
+	this->pos += this->vel * dt * 10;
+	
 	// Check and set if block is on air
-	if (this->vel.y != 0 && this->vel.x != 0)
+	if (this->vel.y != 0)
 		this->isonAir = true;
 	else
 	{
 		this->isonAir = false;
+		this->vel.y = 0;
 		this->angularVelocity = 0;
 	}
 
@@ -58,36 +51,48 @@ void Woodblock::Update(double dt)
 
 		if (this->isonAir)
 		{
-			Vector3 N(0, 1, 0);
 			Vector3 pos(Math::Clamp((affected->pos - this->pos).x, -this->scale.x / 2, this->scale.x / 2), Math::Clamp((affected->pos - this->pos).y, -this->scale.x / 2, this->scale.y / 2), 0);
 			Vector3 pos2(Math::Clamp((this->pos - affected->pos).x, -affected->scale.x / 2, affected->scale.x / 2), Math::Clamp((this->pos - affected->pos).y, -affected->scale.y / 2, affected->scale.y / 2), 0);
-			if (pos.y < 0)
-				N = -N;
-			pos += this->pos;
 
-			if ((pos - affected->pos).Length() < pos2.Length())
+			if (abs(pos.y) > abs(pos.x))// && abs(this->pos.x - affected->pos.x) < this->scale.x)
 			{
-				Vector3 right = N.Cross(Vector3(0, 0, 1));
-				if (abs(pos.x) > abs(pos.y))
-				{
-					if (pos.Dot(right) > 0)
-					{
-						N = N.Cross(Vector3(0, 0, 1));
-						N = -N;
-					}
-					if (pos.Dot(right) < 0)
-					{
-						N = N.Cross(Vector3(0, 0, 1));
-					}
-				}
+				pos += this->pos;
 
-				this->vel = this->vel - (2.f * this->vel.Dot(N)) * N;
-				this->vel *= 0.65;
-				this->isonAir = false;
+				if ((pos - affected->pos).Length() <= pos2.Length())
+				{
+					this->isonAir = false;
+					this->vel.y = 0;
+
+					//CollisionManager::getCManager()->PositionalCorrection(this, affected);
+				}
 			}
+
+			//else if (abs(pos.y) < abs(pos.x))
+			//{
+			//	if (pos.x < 0)
+			//	{
+			//		Vector3 rightvector(-1, 0, 0);
+			//		this->vel = this->vel - 2 * this->vel.Dot(rightvector) * rightvector;
+			//	}
+			//	else if (pos.x > 0)
+			//	{
+			//		Vector3 rightvector(1, 0, 0);
+			//		this->vel = this->vel - 2 * this->vel.Dot(rightvector) * rightvector;
+			//	}
+			//}
+			
+		}
+		else if (!isonAir)
+		{
+			this->pos += this->vel * dt * 10;
 		}
 	}
+	else
+	{
+		this->isonAir = true;
+	}
 
+	//Rotation
 	if (!this->torque.IsZero())
 	{
 		this->momentOfInertia = this->mass * 1 * 1;
@@ -96,7 +101,6 @@ void Woodblock::Update(double dt)
 		if (this->angularVelocity > 10)
 			this->angularVelocity = 10;
 	}
-
 	else
 	{
 		if (this->angularVelocity > 0)
@@ -121,6 +125,9 @@ void Woodblock::Update(double dt)
 
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
+
+	if (this->onGround)
+		this->vel.y = 0;
 
 	// Burning
 	if (m_bBurning)

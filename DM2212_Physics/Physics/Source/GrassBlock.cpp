@@ -4,6 +4,7 @@
 Grassblock::Grassblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_GRASS;
+	this->mass = 0;
 }
 
 Grassblock::~Grassblock()

@@ -68,7 +68,7 @@ protected:
 	void UpdateBlocks(double dt);
 
 	//"Gravity"
-	Vector3 m_vec3Gravity=Vector3(0, -9.8, 0);
+	Vector3 m_vec3Gravity;
 
 	//Minimap
 	Vector3 minimapvector;

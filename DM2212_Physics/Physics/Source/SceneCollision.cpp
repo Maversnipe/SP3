@@ -276,7 +276,7 @@ void SceneCollision::RenderMap()
             {
 				Block *go = FetchGo1();
                 go->type = GameObject::GO_BLOCK;
-                go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -287,7 +287,7 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
@@ -298,7 +298,7 @@ void SceneCollision::RenderMap()
             {
                 GameObject *go = FetchGO();
                 go->type = GameObject::GO_WALL;
-                go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -371,7 +371,8 @@ void SceneCollision::RenderMainMinimap()
 		if (go->Btype == GameObject::GO_GRASS)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) /20, 0);
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171) /20, 0);
+			modelStack.Scale(0.5f, 0.5f, 1.f);
 			RenderMesh(BlockList[GEO_GRASS], false);
 			modelStack.PopMatrix();
 		}
@@ -379,7 +380,8 @@ void SceneCollision::RenderMainMinimap()
 		else if (go->Btype == GameObject::GO_GLASS)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
+			modelStack.Scale(0.5f, 0.5f, 1.f);
 			RenderMesh(BlockList[GEO_GLASS], false);
 			modelStack.PopMatrix();
 		}
@@ -387,7 +389,8 @@ void SceneCollision::RenderMainMinimap()
 		else if (go->Btype == GameObject::GO_WOOD)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
+			modelStack.Scale(0.5f, 0.5f, 1.f);
 			RenderMesh(BlockList[GEO_WOOD], false);
 			modelStack.PopMatrix();
 		}
@@ -395,7 +398,8 @@ void SceneCollision::RenderMainMinimap()
 		else if (go->Btype == GameObject::GO_METAL)
 		{
 			modelStack.PushMatrix();
-			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 41) / 20, 0);
+			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y - 171.f) / 20, 0);
+			modelStack.Scale(0.5f, 0.5f, 1.f);
 			RenderMesh(BlockList[GEO_METAL], false);
 			modelStack.PopMatrix();
 		}
@@ -403,6 +407,7 @@ void SceneCollision::RenderMainMinimap()
 		{
 			modelStack.PushMatrix();
 			modelStack.Translate(go->pos.x/10 - 13, (go->pos.y-41) / 20, 0);
+			modelStack.Scale(0.5, 0.5, 1);
 			RenderMesh(BlockList[GEO_BRICK], false);
 			modelStack.PopMatrix();
 		}
@@ -480,6 +485,7 @@ void SceneCollision::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
+			cannonball->Init();
 			cannonball->Update(dt);
 			m_grid->Move(cannonball);
 		}

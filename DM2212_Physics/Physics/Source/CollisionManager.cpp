@@ -232,45 +232,8 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
 	}
 	case GameObject::GO_BLOCK:
 	{
-		/*Block* go3 = static_cast <Block*>(go2);
-
-		Vector3 w0 = go2->pos;
-		Vector3 b1 = go->pos;
-		Vector3 N = go2->dir;
-		go3->setdir(Vector3(1, 0, 0));
-		Vector3 N1 = go3->getdir();
-		Vector3 NP = N.Cross(Vector3(0, 0, 1));
-		Vector3 NP1 = N1.Cross(Vector3(0, 0, 1));
-		float r = go->scale.x;
-		float h = go2->scale.x;
-		float l = go2->scale.y;
-		float h1 = go->scale.y;
-
-		bool check = false;
-
-		if ((abs((w0 - b1).Dot(N)) < r + h * 0.5) &&
-		(abs((w0 - b1).Dot(NP)) < r + l * 0.5))
-		{
-		go2->dir = Vector3(0, 1, 0);
-		check = true;
-		return true;
-		}
-
-		if (((abs((w0 - b1).Dot(N1)) < r + h * 0.5) &&
-		(abs((w0 - b1).Dot(NP1)) < r + l * 0.5)))
-		{
-		go2->dir = go3->getdir();
-		check = true;
-		return true;
-		}
-
-
-		return check;*/
-		//Manifold *m = new Manifold;
 		m->A = go2;
 		m->B = go1;
-
-
 		return AABBvsCircle(m);
 	}
 	case GameObject::GO_EXPLOSION:
@@ -361,6 +324,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		ratio = go2->mass / masstotal;
 		go2->vel += ratio * Impulse;
 
+		PositionalCorrection(go, go2);
+
 		break;
 	}
 	case GameObject::GO_BLOCK:
@@ -379,7 +344,9 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		float j = -(1 + e) * velalongnormal;
 		j /= 1 / go->mass + 1 / go2->mass;
 
-		Vector3 Impulse = j * m->normal.Normalized();
+		Vector3 Impulse = 0;
+		if (m->normal != Vector3(0, 0, 0))
+			Impulse = j * m->normal.Normalized();
 
 		float masstotal = go->mass + go2->mass;
 		float ratio = go->mass / masstotal;
@@ -428,14 +395,16 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 			velalongnormal = rv.Dot(m->normal.Normalized());
 
 		if (velalongnormal > 0)
-			return;;
+			return;
 
 		float e = std::min(go->restitution, go2->restitution);
 
 		float j = -(1 + e) * velalongnormal;
 		j /= 1 / go->mass + 1 / go2->mass;
 
-		Vector3 Impulse = j * m->normal.Normalized();
+		Vector3 Impulse = 0;
+		if (m->normal != Vector3(0, 0, 0))
+			Impulse = j * m->normal.Normalized();
 
 		float masstotal = go->mass + go2->mass;
 		float ratio = go->mass / masstotal;
@@ -484,12 +453,19 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		go->iscolliding = true;
 		go2->iscolliding = true;
 		
+		if (!go->isonAir && go2->pos.y > go->pos.y)
+			go2->isonAir = false;
+		if (!go2->isonAir && go->pos.y > go2->pos.y)
+			go->isonAir = false;
+
 		if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
+			go2->onGround = true;
 			go2->isonAir = false;
 		}
 		else if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
+			go->onGround = true;
 			go->isonAir = false;
 		}
 
@@ -506,10 +482,44 @@ void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
 	const float slop = 0.01; // usually 0.01 to 0.1
 	Vector3 correction = (std::max((m->penetration - slop), 0.0f) / (go->invmass + go2->invmass)) * percent * m->normal;
 
-	if(go->Btype != GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
-		go->pos -= go->invmass * correction;
-	if (go2->Btype != GameObject::BLOCK_TYPE::GO_GRASS && !go->isonAir)
-		go2->pos += go2->invmass * correction;
+	if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS || go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+	{
+		if (go->Btype != GameObject::BLOCK_TYPE::GO_GRASS && go->isonAir)
+		{
+			Vector3 pos = go->pos + go->invmass * correction;
+			if (pos.y < go2->pos.y)
+			{
+				go->onGround = true;
+				go->pos += go->invmass * correction;
+				go->isonAir = false;
+			}
+		}
+		if (go2->Btype != GameObject::BLOCK_TYPE::GO_GRASS && go2->isonAir)
+		{
+			Vector3 pos = go2->pos + go2->invmass * correction;
+			if (pos.y > go->pos.y)
+			{
+				go2->onGround = true;
+				go2->pos += go2->invmass * correction;
+				go2->isonAir = false;
+			}
+			
+		}
+	}
+	else
+	{
+		if(!go->isonAir && !go->onGround)
+			go->pos -= go->invmass * correction;
+
+		if (!go2->isonAir && !go2->onGround)
+			go2->pos += go2->invmass * correction;
+
+		if (!go->isonAir && go2->pos.y > go->pos.y)
+			go2->isonAir = false;
+		if (!go2->isonAir && go->pos.y > go2->pos.y)
+			go->isonAir = false;
+	}
+
 }
 
 CollisionManager::~CollisionManager()

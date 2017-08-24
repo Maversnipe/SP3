@@ -4,11 +4,17 @@
 Cannonball::Cannonball(Grid* grid)
 	: GameObject(grid, GameObject::GO_BALL)
 {
-	Cannonball::pos = GameObject::pos;
 }
 
 Cannonball::~Cannonball()
 {
+}
+
+void Cannonball::Init()
+{
+	Cannonball::pos = GameObject::pos;
+	Cannonball::mass = 3.f;
+	Cannonball::scale = Vector3(3.f, 3.f, 1.f);
 }
 
 void Cannonball::Update(double dt)
