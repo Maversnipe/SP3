@@ -24,7 +24,7 @@ bool AABB::IntersectsAABB(AABB other)
 {
 	if (GetMaxAABB().x > other.GetMinAABB().x && GetMinAABB().x < other.GetMaxAABB().x)
 	{ // Checks if either this.Max.x > other.Min.x,
-		// or if this.Min.x < other.Max.x
+	  // or if this.Min.x < other.Max.x
 		if (GetMaxAABB().y > other.GetMinAABB().y && GetMinAABB().y < other.GetMaxAABB().y)
 		{
 			return true;

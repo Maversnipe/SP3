@@ -12,8 +12,8 @@ MapEditor *MapEditor::instance = 0;
 
 MapEditor::MapEditor()
 	:currblockint(0)
-	,b_isEditing(true)
-	,brickPos(0,0,0)
+	, b_isEditing(true)
+	, brickPos(0, 0, 0)
 {
 }
 
@@ -60,19 +60,19 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	std::ofstream myfile;
 	myfile.open("Maps//example.csv");
 	myfile << "//";
-	for (unsigned index = 1; index < mapwidth+1; ++index)
+	for (unsigned index = 1; index < mapwidth + 1; ++index)
 	{
 		myfile << index << ",";
 	}
 	myfile << "\n";
 
-	for (unsigned y = mapheight + 2; y > 2 ; --y)
+	for (unsigned y = mapheight + 2; y > 2; --y)
 	{
-		for (unsigned x = 1; x < mapwidth+1; ++x)
+		for (unsigned x = 1; x < mapwidth + 1; ++x)
 		{
 			for (unsigned i = 0; i < blocklist.size(); ++i)
 			{
-				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y/4 == y && blocklist[i]->active)
+				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
 				{
 					myfile << blocklist[i]->Btype << ",";
 					std::cout << blocklist[i]->Btype << std::endl;
@@ -80,7 +80,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 					break;
 				}
 			}
-			
+
 			//if no blocks here
 			if (!found)
 			{
@@ -110,7 +110,7 @@ void MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 			if (blocklist[i]->Btype == blockmanager[currblockint]->Btype)	//else if same block type
 				blocklist[i]->active = false;	//block set active false
 
-				return;
+			return;
 		}
 	}
 	//else if no blocks

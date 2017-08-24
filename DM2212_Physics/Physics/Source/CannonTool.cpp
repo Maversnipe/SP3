@@ -56,7 +56,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
-	//	m_grid->Add(go);
+		//	m_grid->Add(go);
 		isSet = false;
 		return true;
 	}

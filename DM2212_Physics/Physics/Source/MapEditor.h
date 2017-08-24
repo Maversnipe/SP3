@@ -34,7 +34,7 @@ public:
 	void SaveMap(std::vector<Block*>& blocklist);
 	void DeleteMap();
 
-	void PlaceBlock(std::vector<Block*>& blocklist,Grid* &m_grid);
+	void PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid);
 	void SwitchBlock(int i);
 
 	bool GetIsEditing();

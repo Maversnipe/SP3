@@ -36,10 +36,10 @@ public:
 	virtual void Exit();
 
 	void RenderGO(GameObject *go);
-	
+
 	GameObject* FetchGO();
 	Block* FetchGo1();
-	
+
 	//Mapping
 	void RenderMap();
 

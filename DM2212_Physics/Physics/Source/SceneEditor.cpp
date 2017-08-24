@@ -119,7 +119,7 @@ void SceneEditor::Update(double dt)
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
 	mapeditor->Update(dt, mousepos);
-								 //fullscreen and default screensize for minimap position
+	//fullscreen and default screensize for minimap position
 	if (Application::GetWindowWidth() / 8 != 120)
 	{
 		isFullScreen = true;
@@ -158,9 +158,9 @@ void SceneEditor::Update(double dt)
 		std::cout << "SPACE BAR UP" << std::endl;
 
 		if (mapeditor->GetIsEditing())
-			mapeditor->PlaceBlock(m_vBlocks,m_grid);
+			mapeditor->PlaceBlock(m_vBlocks, m_grid);
 		else
-		player->UseCurrentTool(m_vBlocks, m_goList);
+			player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 	// save file
 	static bool isS = false;
@@ -241,7 +241,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-			//	m_grid->Add(go);
+				//	m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -252,7 +252,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-			//	m_grid->Add(go);
+				//	m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 3)
 			{
@@ -263,7 +263,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-			//	m_grid->Add(go);
+				//	m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 4)
 			{
@@ -274,7 +274,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-			//	m_grid->Add(go);
+				//	m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 10)
 			{
@@ -284,7 +284,7 @@ void SceneEditor::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-			//	m_grid->Add(go);
+				//	m_grid->Add(go);
 			}
 		}
 	}
@@ -495,7 +495,7 @@ void SceneEditor::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-			//	m_grid->Move(b);
+				//	m_grid->Move(b);
 			}
 		}
 	}
@@ -585,7 +585,7 @@ void SceneEditor::Render()
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	if(mapeditor->GetIsEditing())
+	if (mapeditor->GetIsEditing())
 		RenderGO(mapeditor->GetCurrentBlock());//render  player active tool
 	else
 		RenderGO(player->GetActiveTool());//render  player active tool

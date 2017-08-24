@@ -58,7 +58,7 @@ void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &g
 {
 	if (ToolManager[i_ActiveTool]->GetPrice() < i_Money)
 	{
-		if(ToolManager[i_ActiveTool]->UseTool(blockList, goList))
+		if (ToolManager[i_ActiveTool]->UseTool(blockList, goList))
 			i_Money -= ToolManager[i_ActiveTool]->GetPrice();
 
 		std::cout << i_Money << std::endl;
