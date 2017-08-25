@@ -11,33 +11,69 @@ Brickblock::~Brickblock()
 {
 }
 
+/*bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
+{
+	bool check = false;
+
+	for (auto &i : Objs)
+	{
+		check = CollisionManager::getCManager()->CheckCollisionB(this, i);
+
+		if (check)
+		{
+			CollisionManager::getCManager()->CollisionResponseB(this, i);
+			//affected = i;
+			//break;
+		}
+	}
+
+	for (auto &i : Blks)
+	{
+		if (i == this)
+			continue;
+		
+		if (this->Btype == GameObject::BLOCK_TYPE::GO_GRASS && i->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+			continue;
+
+		check = CollisionManager::getCManager()->CheckCollisionB(this, i);
+
+		if (check)
+		{
+			CollisionManager::getCManager()->CollisionResponseB(this, i);
+			//affected = i;
+			//break;
+		}
+	}
+
+	return check;
+}*/
+
 void Brickblock::Update(double dt)
 {
 	//if (this->getHealth() <= 0)
 	//	this->active = false;
 
-	//this->rotation += 
 	this->torque.SetZero();
 
+	// Check block's mass
 	if (this->mass == 0)
 		this->invmass = 0;
 	else
 		this->invmass = 1 / this->mass;
 
-	if (this->isonAir)
-	{
-		this->pos += (this->vel + Vector3(0, -5, 0)) * static_cast<float>(dt);
+	// Apply gravity
+	this->vel.y += -mass * dt;
+	this->pos += this->vel * dt * 5;
 
-	}
-	else
-		this->pos += this->vel* static_cast<float>(dt);
-
-	if (this->vel.y != 0 || this->vel.x != 0)
-		this->isonAir = true;
-	else
-		this->isonAir = false;
-
+	// Set block's AABB
 	this->aabb.SetAABB(this->pos, this->scale);
+
+	// Block's collision response
+	//if (checkCollision(objs, blks))
+	//{
+	//	//Response();
+	//	//this->getDamaged(1);
+	//}
 
 	//if (m_grid->CheckCollision(this, &affected))
 	//{
@@ -45,6 +81,7 @@ void Brickblock::Update(double dt)
 	//	//this->getDamaged(1);
 	//}
 
+	//Rotation
 	if (!this->torque.IsZero())
 	{
 		this->momentOfInertia = this->mass * 1 * 1;
@@ -78,5 +115,4 @@ void Brickblock::Update(double dt)
 
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
-
 }

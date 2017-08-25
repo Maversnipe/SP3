@@ -34,31 +34,38 @@ void Woodblock::Update(double dt)
 	//	Response();
 	//}
 
+	// Block's collision response
+	//if (checkCollision(objs, blks))
+	//{
+	//	//Response();
+	//	//this->getDamaged(1);
+	//}
+
 	//Rotation
-	/*if (!this->torque.IsZero())
+	if (!this->torque.IsZero())
 	{
-	this->momentOfInertia = this->mass * 1 * 1;
-	float aa = this->torque.z * (1 / this->momentOfInertia);
-	this->angularVelocity += aa * static_cast<float>(dt);
-	if (this->angularVelocity > 10)
-	this->angularVelocity = 10;
+		this->momentOfInertia = this->mass * 1 * 1;
+		float aa = this->torque.z * (1 / this->momentOfInertia);
+		this->angularVelocity += aa * static_cast<float>(dt);
+		if (this->angularVelocity > 10)
+			this->angularVelocity = 10;
 	}
 	else
 	{
-	if (this->angularVelocity > 0)
-	{
-	this->angularVelocity += -0.1 * dt;
+		if (this->angularVelocity > 0)
+		{
+			this->angularVelocity += -0.1 * dt;
 
-	if (this->angularVelocity <= 0)
-	this->angularVelocity = 0;
-	}
-	else if (this->angularVelocity < 0)
-	{
-	this->angularVelocity += 0.1 * dt;
+			if (this->angularVelocity <= 0)
+				this->angularVelocity = 0;
+		}
+		else if (this->angularVelocity < 0)
+		{
+			this->angularVelocity += 0.1 * dt;
 
-	if (this->angularVelocity >= 0)
-	this->angularVelocity = 0;
-	}
+			if (this->angularVelocity >= 0)
+				this->angularVelocity = 0;
+		}
 	}
 
 	float theta = atan2(this->dir.y, this->dir.x);
@@ -66,7 +73,7 @@ void Woodblock::Update(double dt)
 	this->dir.Set(cos(theta), sin(theta), 0);
 
 	if (!this->dir.IsZero())
-	this->dir.Normalize();*/
+		this->dir.Normalize();
 
 	// Burning
 	if (m_bBurning)

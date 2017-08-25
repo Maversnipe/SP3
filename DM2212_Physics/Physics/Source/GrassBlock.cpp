@@ -30,4 +30,9 @@ void Grassblock::Update(double dt)
 	//	//this->getDamaged(1);
 	//}
 
+	//if (checkCollision(objs, blks))
+	//{
+	//	//Response();
+	//	//this->getDamaged(1);
+	//}
 }

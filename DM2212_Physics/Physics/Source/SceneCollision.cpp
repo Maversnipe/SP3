@@ -246,9 +246,9 @@ void SceneCollision::RenderMap()
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->scale.Set(44.f, 12.f, 1.f);
 				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
+				go->mass = 0.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);

@@ -12,6 +12,7 @@ public:
 	virtual ~Block();
 
 	//virtual void Update(double dt) {};
+	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 	void Response();
 
 	int getHealth() { return m_iHealth; };										//Get health

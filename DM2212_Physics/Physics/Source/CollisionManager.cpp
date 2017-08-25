@@ -380,44 +380,104 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 			break;
 		}
 
+		//relative velocity
 		Vector3 rv = go2->vel - go->vel;
 
+		//Velocity along normal
 		float velAlongNormal = 0;
 		if (m->normal != Vector3(0, 0, 0))
 			velAlongNormal = rv.Dot(m->normal.Normalized());
 
-		//std::cout << " Type: " << typeid(go2).name() << std::endl;
-
-		/*if (velAlongNormal > 0)
-		return;*/
+		if (velAlongNormal > 0)
+			return;
 
 		//Calculate magnitude/bounciness
 		float e = std::min(go->restitution, go2->restitution);
 
 		float j = -(1 + e) * velAlongNormal;
-		j /= 1 / go->mass + 1 / go2->mass;
+		j /= go->invmass + go2->invmass;
 
-		Vector3 Impulse = j * m->normal.Normalized();
-		/*go->vel += 1/go->mass * Impulse;
-		go2->vel -= 1 / go2->mass * Impulse;*/
-
-		float masstotal = go->mass + go2->mass;
-
-		float ratio = go->mass / masstotal;
-		go->vel -= ratio * Impulse;
-
-		ratio = go2->mass / masstotal;
-		go2->vel += ratio * Impulse;
-
-
+		//Prevent Overlap
 		PositionalCorrection(go, go2);
 
-		Vector3 rotation = 10 * m->normal + go2->vel;
-		go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
+		//Applying Impulses
+		if (velAlongNormal < 0.f)
+		{
+			//Impulse
+			Vector3 Impulse = j * m->normal.Normalized();
 
-		go2->torque += m->normal.Cross(Vector3(0, 5, 0));
+			float masstotal = go->mass + go2->mass;
 
-		go2->iscolliding = true;
+			float ratio = go->mass / masstotal;
+			go->vel -= ratio * Impulse;
+
+			ratio = go2->mass / masstotal;
+			go2->vel += ratio * Impulse;
+
+			//Friction
+			Vector3 t = rv - (m->normal.Normalized() * rv.Dot(m->normal.Normalized()));
+
+			//j tangent magnitude
+			float jt = rv.Dot(t);
+			jt /= (go->invmass + go2->invmass);
+
+			//Don' apply small fricition impulse
+			if (jt <= 0.f)
+				return;
+
+			//Calculate staticFric && dynamicFric
+			float sf = std::sqrt(go->staticFric * go2->staticFric);
+			float df = std::sqrt(go->dynamicFric * go2->dynamicFric);
+
+			//Coulumb law
+			Vector3 tangentImpulse;
+			if (std::abs(jt) < j * sf)
+				tangentImpulse = t * jt;
+			else
+				tangentImpulse = t * -j * df;
+
+			go->vel -= go->invmass * tangentImpulse;
+			go2->vel += go2->invmass * tangentImpulse;
+		}
+
+		//Vector3 rv = go2->vel - go->vel;
+
+		//float velAlongNormal = 0;
+		//if(m->normal != Vector3(0, 0, 0))
+		//	velAlongNormal = rv.Dot(m->normal.Normalized());
+
+		////std::cout << " Type: " << typeid(go2).name() << std::endl;
+
+		///*if (velAlongNormal > 0)
+		//	return;*/
+
+		////Calculate magnitude/bounciness
+		//float e = std::min(go->restitution, go2->restitution);
+
+		//float j = -(1 + e) * velAlongNormal;
+		//j /= 1 / go->mass + 1 / go2->mass;
+
+		//Vector3 Impulse = j * m->normal.Normalized();
+		///*go->vel += 1/go->mass * Impulse;
+		//go2->vel -= 1 / go2->mass * Impulse;*/
+
+		//float masstotal = go->mass + go2->mass;
+
+		//float ratio = go->mass / masstotal;
+		//go->vel -= ratio * Impulse;
+
+		//ratio = go2->mass / masstotal;
+		//go2->vel += ratio * Impulse;
+
+
+		//PositionalCorrection(go, go2);
+
+		//Vector3 rotation = 10 * m->normal + go2->vel;
+		//go2->rotation += Math::RadianToDegree(atan2(rotation.y, rotation.x));
+		//
+		//go2->torque += m->normal.Cross(Vector3(0, 5, 0));
+
+		//go2->iscolliding = true;
 
 		break;
 	}
@@ -499,8 +559,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		j /= go->invmass + go2->invmass;
 
 		//Prevent Overlap
-		if (go->type != GameObject::BLOCK_TYPE::GO_GRASS)
-			PositionalCorrection(go, go2);
+		PositionalCorrection(go, go2);
 
 		//Applying Impulses
 		if (velAlongNormal < 0.f)
@@ -528,8 +587,8 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 				return;
 
 			//Calculate staticFric && dynamicFric
-			float sf = std::sqrt(go->staticFric * go2->staticFric);
-			float df = std::sqrt(go->dynamicFric * go2->dynamicFric);
+			float sf = std::sqrt((go->staticFric * go->staticFric) + (go2->staticFric * go2->staticFric));
+			float df = std::sqrt((go->dynamicFric * go->dynamicFric) + (go2->dynamicFric * go2->dynamicFric));
 
 			//Coulumb law
 			Vector3 tangentImpulse;
@@ -571,15 +630,15 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
 {
-	const float percent = 1.0; //Penetration percentage to correct(usually 20-80%)
-	const float slop = 0.04; // Penetration allowance(usually 0.01 to 0.1)
-	Vector3 correction = (std::max((m->penetration - slop), 0.0f) / (go->invmass + go2->invmass)) * percent * m->normal;
+	const float percent = 0.8; //Penetration percentage to correct(usually 20-80%)
+	const float slop = 0.1; // Penetration allowance(usually 0.01 to 0.1)
+	Vector3 correction = (std::max((m->penetration - slop), 0.0f) / (go->invmass + go2->invmass)) * percent * m->normal.Normalized();
 
 	if (m->penetration > slop)
 	{
-		if (go->type != GameObject::BLOCK_TYPE::GO_GRASS)
+		if (go->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
 			go->pos -= go->invmass * correction;
-		if (go2->type != GameObject::BLOCK_TYPE::GO_GRASS)
+		if (go2->Btype != GameObject::BLOCK_TYPE::GO_GRASS)
 			go2->pos += go2->invmass * correction;
 	}
 }

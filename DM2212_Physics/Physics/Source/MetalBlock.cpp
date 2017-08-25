@@ -15,33 +15,36 @@ void Metalblock::Update(double dt)
 {
 	this->torque.SetZero();
 
+	// Check block's mass
 	if (this->mass == 0)
 		this->invmass = 0;
 	else
 		this->invmass = 1 / this->mass;
 
-	if (this->isonAir)
-	{
-		this->pos += (this->vel + Vector3(0, -5, 0)) * static_cast<float>(dt);
+	// Apply gravity
+	this->vel.y += -mass * dt;
+	this->pos += this->vel * dt * 5;
 
-	}
-	else
-		this->pos += this->vel* static_cast<float>(dt);
-
-	if (this->vel.y != 0 || this->vel.x != 0)
-		this->isonAir = true;
-	else
-		this->isonAir = false;
-
+	// Set block's AABB
 	this->aabb.SetAABB(this->pos, this->scale);
 
+	// Block's collision response
+	//normal
+	/*if (checkCollision(objs, blks))
+	{
+		//Response();
+		//this->getDamaged(1);
+	}*/
+
+	//grid
 	//if (m_grid->CheckCollision(this, &affected))
 	//{
 	//	Response();
 	//	//this->getDamaged(1);
 	//}
 
-	if (!this->torque.IsZero())
+	//Rotation
+	/*if (!this->torque.IsZero())
 	{
 		this->momentOfInertia = this->mass * 1 * 1;
 		float aa = this->torque.z * (1 / this->momentOfInertia);
@@ -49,19 +52,18 @@ void Metalblock::Update(double dt)
 		if (this->angularVelocity > 10)
 			this->angularVelocity = 10;
 	}
-
 	else
 	{
 		if (this->angularVelocity > 0)
 		{
-			this->angularVelocity += -0.2 * dt;
+			this->angularVelocity += -0.1 * dt;
 
 			if (this->angularVelocity <= 0)
 				this->angularVelocity = 0;
 		}
 		else if (this->angularVelocity < 0)
 		{
-			this->angularVelocity += 0.2 * dt;
+			this->angularVelocity += 0.1 * dt;
 
 			if (this->angularVelocity >= 0)
 				this->angularVelocity = 0;
@@ -73,5 +75,5 @@ void Metalblock::Update(double dt)
 	this->dir.Set(cos(theta), sin(theta), 0);
 
 	if (!this->dir.IsZero())
-		this->dir.Normalize();
+		this->dir.Normalize();*/
 }
