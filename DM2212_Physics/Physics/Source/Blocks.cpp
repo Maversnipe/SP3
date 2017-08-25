@@ -1,7 +1,7 @@
 #include "Blocks.h"
 
-Block::Block(Quadtree* qtree, Grid* grid)
-	: GameObject(qtree, grid, GameObject::GO_BLOCK),
+Block::Block(Grid* grid)
+	: GameObject(grid, GameObject::GO_BLOCK),
 	m_iHealth(0),
 	m_iType((int)GameObject::Btype),
 	m_bIsdestroyed(false),
@@ -25,10 +25,10 @@ void Block::Response()
 
 void Block::getDamaged(int damage)
 {
-	 this->m_iHealth -= damage;
-	 //std::cout << this->getHealth() << std::endl;
-	 if (this->Isdestroyed())
-	 {
-		 active = false;
-	 }
+	this->m_iHealth -= damage;
+	//std::cout << this->getHealth() << std::endl;
+	if (this->Isdestroyed())
+	{
+		active = false;
+	}
 }

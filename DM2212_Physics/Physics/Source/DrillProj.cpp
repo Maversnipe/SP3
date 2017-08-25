@@ -1,7 +1,7 @@
 #include "DrillProj.h"
 
-DrillProj::DrillProj(Quadtree* qtree, Grid* grid)
-	: GameObject(qtree, grid, GameObject::GO_BALL)
+DrillProj::DrillProj(Grid* grid)
+	: GameObject(grid, GameObject::GO_BALL)
 {
 }
 
@@ -16,14 +16,14 @@ void DrillProj::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		Response();
+	}
 }
 
 void DrillProj::Response()
 {/*
-	affected->getDamaged(5);*/
+ affected->getDamaged(5);*/
 	CollisionManager::getCManager()->CollisionResponseB(this, affected);
 }

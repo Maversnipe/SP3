@@ -37,10 +37,10 @@ public:
 	virtual void Exit();
 
 	void RenderGO(GameObject *go);
-	
+
 	GameObject* FetchGO();
 	Block* FetchGo1();
-	
+
 	//Mapping
 	void RenderMap();
 
@@ -87,9 +87,7 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
-	Quadtree* m_Qtree;
 
-	//
 	Vector3 mousepos;
 };
 

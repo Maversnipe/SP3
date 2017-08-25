@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-TestWeapon::TestWeapon(Quadtree* qtree, Grid* grid) : ToolsInfo(qtree, grid)
+TestWeapon::TestWeapon(Grid* grid) : ToolsInfo(grid)
 {
 	i_Price = 10;
 	pos.Set(0, 0, 0);

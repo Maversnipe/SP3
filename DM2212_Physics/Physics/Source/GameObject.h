@@ -4,7 +4,6 @@
 #include "Vector3.h"
 #include "AABB.h"
 #include "SpatialPartitioning\Grid.h"
-#include "QuadTree\Quadtree.h"
 
 class GameObject
 {
@@ -28,6 +27,7 @@ public:
 		//sp3 ^-^
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
+		GO_EXPLOSION,
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
@@ -71,10 +71,8 @@ public:
 	};
 	TOOL_PROJ toolproj;
 
-	GameObject(Quadtree* qtree, Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
+	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();
-
-	//virtual void Update(double dt) {}
 
 	bool active;
 
@@ -84,6 +82,7 @@ public:
 	Vector3 scale;
 	Vector3 dir;
 	bool isonAir;
+	bool onGround;
 
 	// Object Rotation
 	float rotation;
@@ -99,13 +98,16 @@ public:
 	float mass;
 	float invmass;
 
+	//Friction
+	float staticFric;
+	float dynamicFric;
+
 	// Spatial Partioning
 	GameObject* next_;
 	GameObject* prev_;
 	Grid* m_grid;
 	int m_iCurrCellX;
 	int m_iCurrCellY;
-	Quadtree* m_qtree;
 };
 
 #endif

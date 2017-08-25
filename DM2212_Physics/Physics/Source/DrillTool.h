@@ -2,12 +2,10 @@
 #include "ToolsInfo.h"
 #include "Application.h"
 
-class Grid;
-class Quadtree;
 class DrillTool :public ToolsInfo
 {
 public:
-	DrillTool(Quadtree* qtree, Grid* grid);
+	DrillTool(Grid* grid);
 	~DrillTool();
 
 	void Init();//set default data

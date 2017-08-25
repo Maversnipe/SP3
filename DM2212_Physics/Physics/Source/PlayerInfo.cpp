@@ -19,15 +19,15 @@ PlayerInfo::~PlayerInfo()
 {
 }
 
-void PlayerInfo::Init(Quadtree* qtree, Grid* grid)
+void PlayerInfo::Init(Grid* grid)
 {
 	ToolManager = new ToolsInfo*[i_NumTools];
-	ToolManager[0] = new PickaxeTool(qtree, grid);
-	ToolManager[1] = new CannonTool(qtree, grid);
-	ToolManager[2] = new DrillTool(qtree, grid);
-	ToolManager[3] = new ThumperTool(qtree, grid);
-	ToolManager[4] = new TestWeapon(qtree, grid);
-	ToolManager[5] = new MissileTool(qtree, grid);
+	ToolManager[0] = new PickaxeTool(grid);
+	ToolManager[1] = new CannonTool(grid);
+	ToolManager[2] = new DrillTool(grid);
+	ToolManager[3] = new ThumperTool(grid);
+	ToolManager[4] = new TestWeapon(grid);
+	ToolManager[5] = new MissileTool(grid);
 }
 
 void PlayerInfo::Update(double dt, Vector3 mousepos)
@@ -59,7 +59,7 @@ void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &g
 {
 	if (ToolManager[i_ActiveTool]->GetPrice() < i_Money)
 	{
-		if(ToolManager[i_ActiveTool]->UseTool(blockList, goList))
+		if (ToolManager[i_ActiveTool]->UseTool(blockList, goList))
 			i_Money -= ToolManager[i_ActiveTool]->GetPrice();
 
 		std::cout << i_Money << std::endl;
@@ -83,6 +83,11 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 	if (i_ActiveTool < 1)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
+}
+
+void PlayerInfo::SetGold(int gold)
+{
+	i_Money = gold;
 }
 
 ToolsInfo* PlayerInfo::GetActiveTool()

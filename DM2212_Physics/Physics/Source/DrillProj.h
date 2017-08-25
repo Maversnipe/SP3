@@ -4,11 +4,10 @@
 #include "GameObject.h"
 #include "Blocks.h"
 
-class Grid;
 class DrillProj : public GameObject
 {
 public:
-	DrillProj(Quadtree* qtree, Grid* grid);
+	DrillProj(Grid* grid);
 	~DrillProj();
 
 	void Update(double dt);

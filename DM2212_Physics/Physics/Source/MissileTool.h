@@ -5,7 +5,7 @@
 class MissileTool :public ToolsInfo
 {
 public:
-	MissileTool(Quadtree* qtree, Grid* grid);
+	MissileTool(Grid* grid);
 	~MissileTool();
 
 	void Init();//set default data

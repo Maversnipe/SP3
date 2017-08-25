@@ -3,11 +3,10 @@
 #include "GameObject.h"
 #include "Blocks.h"
 
-class Grid;
 class missile : public GameObject
 {
 public:
-	missile(Quadtree* qtree, Grid* grid);
+	missile(Grid* grid);
 	~missile();
 
 	void Init();

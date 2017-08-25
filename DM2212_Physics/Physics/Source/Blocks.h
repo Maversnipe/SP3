@@ -4,11 +4,10 @@
 #include "CollisionManager.h"
 #include "GameObject.h"
 
-class Grid;
 class Block : public GameObject
 {
 public:
-	Block(Quadtree* qtree, Grid* grid);
+	Block(Grid* grid);
 	virtual ~Block();
 
 	//virtual void Update(double dt) {};

@@ -19,9 +19,6 @@
 #include "minimap.h"
 #include "MapEditor.h"
 
-class Grid;
-class Quadtree;
-
 class SceneEditor : public SceneBase
 {
 
@@ -55,6 +52,7 @@ protected:
 	float m_timeEstimated1;
 	float m_timeTaken1;
 	bool m_timerStarted;
+	int i_blocklimit;
 
 	//Objects
 	GameObject *m_ghost;
@@ -88,7 +86,6 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
-	Quadtree* m_Qtree;
 };
 
 #endif
