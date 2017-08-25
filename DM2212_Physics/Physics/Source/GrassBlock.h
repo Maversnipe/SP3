@@ -10,7 +10,7 @@ public:
 	~Grassblock();
 
 	void Update(double dt);
-	
+
 };
 
 #endif //!GRASSBLOCK

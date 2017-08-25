@@ -13,7 +13,7 @@ public:
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data
-	virtual void Update(double dt,Vector3 mousepos);//upadate data
+	virtual void Update(double dt, Vector3 mousepos);//upadate data
 
 	virtual void SetPrice(const int in_price);
 	virtual int GetPrice() const;

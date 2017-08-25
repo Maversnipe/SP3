@@ -51,6 +51,7 @@ protected:
 	float m_timeEstimated1;
 	float m_timeTaken1;
 	bool m_timerStarted;
+	int i_blocklimit;
 
 	//Objects
 	GameObject *m_ghost;

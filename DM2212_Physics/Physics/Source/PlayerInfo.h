@@ -34,12 +34,13 @@ public:
 
 	void Init(Grid* grid);
 
-	void Update(double dt,Vector3 mousepos);//use weapons in here
+	void Update(double dt, Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
 
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
 
+	void SetGold(int gold);
 	ToolsInfo* GetActiveTool();
 
 private:
@@ -50,5 +51,5 @@ private:
 	const int i_NumTools = 5;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
-	
+
 };

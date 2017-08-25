@@ -14,7 +14,7 @@ public:
 	//Getters
 	Vector3 GetMaxAABB() { return max; };
 	Vector3 GetMinAABB() { return min; };
-	Vector3 GetPos() { return position;};
+	Vector3 GetPos() { return position; };
 	float GetRadius() { return radius; };
 
 protected:
