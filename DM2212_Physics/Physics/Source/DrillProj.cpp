@@ -24,6 +24,6 @@ void DrillProj::Update(double dt)
 
 void DrillProj::Response()
 {/*
-	affected->getDamaged(5);*/
+ affected->getDamaged(5);*/
 	CollisionManager::getCManager()->CollisionResponseB(this, affected);
 }

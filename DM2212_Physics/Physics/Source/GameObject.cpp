@@ -3,13 +3,14 @@
 GameObject::GameObject(Quadtree* qtree, Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	: type(typeValue),
 	scale(1, 1, 1),
-	restitution(1),
+	restitution(0.2f),
 	dir(1, 0, 0),
 	active(false),
 	mass(1.f),
 	momentOfInertia(mass * (scale.x * 0.5) * (scale.x * 0.5)),
 	angularVelocity(0.0f),
 	isonAir(false),
+	onGround(false),
 	iscolliding(false),
 	rotation(0.0f),
 	torque(0, 0, 0),
@@ -18,6 +19,8 @@ GameObject::GameObject(Quadtree* qtree, Grid* grid, GAMEOBJECT_TYPE typeValue, B
 	m_grid(grid),
 	next_(NULL),
 	prev_(NULL),
+	staticFric(0.5f),
+	dynamicFric(0.3f),
 	m_qtree(qtree)
 {
 	if (typeValue == GO_BLOCK)

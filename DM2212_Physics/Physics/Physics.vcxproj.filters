@@ -73,7 +73,9 @@
     <ClCompile Include="Source\SoundEngine.cpp">
       <Filter>SoundEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CollisionManager.cpp" />
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
     <ClCompile Include="Source\AABB.cpp">
       <Filter>Physics</Filter>
     </ClCompile>
@@ -105,10 +107,8 @@
     <ClCompile Include="Source\SceneEditor.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\QuadTree\Quadtree.cpp">
-      <Filter>QuadTree</Filter>
-    </ClCompile>
     <ClCompile Include="Source\MapEditor.cpp" />
+    <ClCompile Include="Source\QuadTree\Quadtree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -192,7 +192,6 @@
     <ClInclude Include="Source\SoundEngine.h">
       <Filter>SoundEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CollisionManager.h" />
     <ClInclude Include="Source\CannonTool.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
@@ -224,10 +223,8 @@
     <ClInclude Include="Source\SceneEditor.h">
       <Filter>Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\QuadTree\Quadtree.h">
-      <Filter>QuadTree</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MapEditor.h" />
+    <ClInclude Include="Source\QuadTree\Quadtree.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
@@ -268,9 +265,6 @@
     </Filter>
     <Filter Include="GameObjects\Tools\Projectiles">
       <UniqueIdentifier>{01cb60f2-b0e9-43e5-b9e6-61d4d0fe3e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="QuadTree">
-      <UniqueIdentifier>{8e9cad36-d4fc-49fe-9eb7-ee61a8d633bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

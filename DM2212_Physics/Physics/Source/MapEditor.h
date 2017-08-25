@@ -36,6 +36,7 @@ public:
 
 	bool PlaceBlock(std::vector<Block*>& blocklist,Grid* &m_grid);
 	bool RemoveBlock(std::vector<Block*>& blocklist, Grid* &m_grid);
+
 	void SwitchBlock(int i);
 
 	bool GetIsEditing();

@@ -9,6 +9,8 @@ public:
 	Cannonball(Quadtree* qtree, Grid* grid);
 	~Cannonball();
 
+	void Init();
+
 	void Update(double dt);
 	void Response();
 

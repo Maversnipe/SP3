@@ -27,7 +27,7 @@ void Brickblock::Update(double dt)
 	if (this->isonAir)
 	{
 		this->pos += (this->vel + Vector3(0, -5, 0)) * static_cast<float>(dt);
-		
+
 	}
 	else
 		this->pos += this->vel* static_cast<float>(dt);

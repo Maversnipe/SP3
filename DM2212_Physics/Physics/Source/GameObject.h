@@ -28,6 +28,7 @@ public:
 		//sp3 ^-^
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
+		GO_EXPLOSION,
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
@@ -82,6 +83,7 @@ public:
 	Vector3 scale;
 	Vector3 dir;
 	bool isonAir;
+	bool onGround;
 
 	// Object Rotation
 	float rotation;
@@ -96,6 +98,10 @@ public:
 	bool iscolliding;
 	float mass;
 	float invmass;
+
+	//Friction
+	float staticFric;
+	float dynamicFric;
 
 	// Spatial Partioning
 	GameObject* next_;
