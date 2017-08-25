@@ -40,6 +40,7 @@ public:
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
 
+	void SetGold(int gold);
 	ToolsInfo* GetActiveTool();
 
 private:

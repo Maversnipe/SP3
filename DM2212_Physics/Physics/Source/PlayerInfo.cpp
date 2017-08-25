@@ -84,6 +84,11 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 	std::cout << i_ActiveTool << std::endl;
 }
 
+void PlayerInfo::SetGold(int gold)
+{
+	i_Money = gold;
+}
+
 ToolsInfo* PlayerInfo::GetActiveTool()
 {
 	return ToolManager[i_ActiveTool];

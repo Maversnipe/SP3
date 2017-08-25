@@ -74,8 +74,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			{
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
 				{
-					myfile << blocklist[i]->Btype << ",";
-					std::cout << blocklist[i]->Btype << std::endl;
+					myfile << blocklist[i]->Btype+1 << ",";
 					found = true;
 					break;
 				}
@@ -84,7 +83,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				myfile << "0,";
+				myfile << "-1,";
 			}
 			found = false;
 
@@ -96,21 +95,28 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	std::cout << "SAVE FILE" << std::endl;
 }
 
-void MapEditor::DeleteMap()
+int MapEditor::DeleteMap(std::vector<Block*>& blocklist)
 {
+	int noDeleted =0;
+	for (unsigned i = 0; i < blocklist.size(); ++i)
+	{
+		if (blocklist[i]->active && blocklist[i]->pos.y > 4)
+		{
+			blocklist[i]->active = false;
+			noDeleted++;
+		}
+	}
+	return noDeleted;
 }
 
-void MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
+bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 {
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{
 		//check if there is any blocks on the same position
 		if (blocklist[i]->pos == brickPos && blocklist[i]->active == true)
 		{
-			if (blocklist[i]->Btype == blockmanager[currblockint]->Btype)	//else if same block type
-				blocklist[i]->active = false;	//block set active false
-
-			return;
+			return false;
 		}
 	}
 	//else if no blocks
@@ -124,7 +130,25 @@ void MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 	go->Btype = blockmanager[currblockint]->Btype;
 	go->aabb.SetAABB(go->pos, go->scale);
 	m_grid->Add(go);
-	std::cout << go->pos << std::endl;
+	return true;
+}
+
+bool MapEditor::RemoveBlock(std::vector<Block*>& blocklist, Grid *& m_grid)
+{
+	for (unsigned i = 0; i < blocklist.size(); ++i)
+	{
+		//check if there is any blocks on the same position
+		if (blocklist[i]->pos == brickPos && blocklist[i]->active == true)
+		{
+			if (blocklist[i]->Btype == blockmanager[currblockint]->Btype)	//else if same block type
+			{
+				blocklist[i]->active = false;	//block set active false
+				return true;
+			}
+		}
+	}
+	return false;
+
 }
 
 void MapEditor::SwitchBlock(int index)
@@ -134,7 +158,6 @@ void MapEditor::SwitchBlock(int index)
 		currblockint = 0;
 	if (currblockint == -1)
 		currblockint = totalnumblocks - 1;
-	std::cout << currblockint << std::endl;
 }
 
 bool MapEditor::GetIsEditing()
