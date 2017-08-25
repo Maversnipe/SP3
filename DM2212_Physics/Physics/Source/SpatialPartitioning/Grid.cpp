@@ -8,6 +8,7 @@
 #include "../BrickBlock.h"
 #include "../Cannonball.h"
 #include "../DrillProj.h"
+#include "../missile.h"
 
 Grid::Grid()
 {

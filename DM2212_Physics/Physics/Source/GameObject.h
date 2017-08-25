@@ -56,6 +56,7 @@ public:
 		CANNON,
 		DRILL,
 		THUMPER,
+		MISSILE,
 		TOOL_TOTAL,
 	};
 	TOOL_TYPE tooltype;
@@ -65,6 +66,7 @@ public:
 		NON_TOOLPROJ = 0,
 		CANNONBALL,
 		DRILLPROJ,
+		ROCKET,
 		TOOLPROJ_TOTAL,
 	};
 	TOOL_PROJ toolproj;

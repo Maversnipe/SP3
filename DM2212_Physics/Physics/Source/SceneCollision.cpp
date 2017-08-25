@@ -20,7 +20,7 @@ void SceneCollision::Init()
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
-	//m_grid = new Grid();
+	m_grid = new Grid();
 	AABB boundary;
 	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
 	m_Qtree = new Quadtree();
@@ -111,8 +111,7 @@ void SceneCollision::Update(double dt)
 	int offsetWindowX = Application::GetWindowWidth() / 8;
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
-	Vector3 mousepos(posX, posY, 0);
-	std::cout << mousepos << std::endl;
+	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
 
@@ -175,10 +174,14 @@ void SceneCollision::Update(double dt)
         std::cout << "RBUTTON UP" << std::endl;
 
         GameObject *go = FetchGO();
-        go->type = GameObject::GO_BALL;
+		go->type = GameObject::GO_BALL; 
 		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
         go->pos = m_ghost->pos;
-        go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
+
+		//if(go->toolproj == GameObject::TOOL_PROJ::MISSILE)
+		//go->pos.x = -go->scale.x / 2;
+        
+		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
         m_ghost->active = false;
         float sc = 3.f;
         go->scale.Set(sc, sc, sc);
@@ -407,7 +410,13 @@ void SceneCollision::UpdateObjects(double dt)
 			drillproj->Update(dt);
 			//m_grid->Move(drillproj);
 		}
+		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		{
+			missile* Missile = static_cast<missile*>(i);
 
+			Missile->Update(mousepos, dt);
+			//m_grid->Move(drillproj);
+		}
 	}
 }
 

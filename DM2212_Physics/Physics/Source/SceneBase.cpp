@@ -152,7 +152,9 @@ void SceneBase::Init()
 		//ToolList[GEO_CANNON] = MeshBuilder::GenerateQuad("Cannon", Color(1, 1, 1), 1);
 		//ToolList[GEO_CANNON]->textureID = LoadTGA("");
 		ToolList[GEO_THUMPER] = MeshBuilder::GenerateQuad("Thumper", Color(1, 1, 1), 1);
-		//ToolList[GEO_THUMPER]->textureID = LoadTGA("");
+
+		ToolList[GEO_MISSILE] = MeshBuilder::GenerateQuad("Missile", Color(1, 1, 1), 1);
+		//ToolList[GEO_MISSILE]->textureID = LoadTGA("");
 	}
 
 	//minimap

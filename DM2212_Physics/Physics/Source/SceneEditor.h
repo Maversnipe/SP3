@@ -14,6 +14,7 @@
 #include "BrickBlock.h"
 #include "Cannonball.h"
 #include "DrillProj.h"
+#include "missile.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "MapEditor.h"

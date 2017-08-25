@@ -35,7 +35,6 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 		if (mousepos != pos)
 			dir = (mousepos - pos).Normalized();
 	}
-
 }
 
 bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)

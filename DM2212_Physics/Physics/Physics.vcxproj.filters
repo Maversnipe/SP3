@@ -109,6 +109,12 @@
       <Filter>QuadTree</Filter>
     </ClCompile>
     <ClCompile Include="Source\MapEditor.cpp" />
+    <ClCompile Include="Source\missile.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MissileTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -228,6 +234,12 @@
       <Filter>QuadTree</Filter>
     </ClInclude>
     <ClInclude Include="Source\MapEditor.h" />
+    <ClInclude Include="Source\missile.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MissileTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

@@ -439,7 +439,12 @@ void SceneEditor::UpdateObjects(double dt)
 			drillproj->Update(dt);
 			//m_grid->Move(drillproj);
 		}
-
+		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		{
+			missile* Missile = static_cast<missile*>(i);
+			//Missile->Update(mousepos, dt);
+			//m_grid->Move(drillproj);
+		}
 	}
 }
 

@@ -86,6 +86,7 @@ public:
 		GEO_CANNON,
 		GEO_DRILL,
 		GEO_THUMPER,
+		GEO_MISSILE,
 		NUM_TOOLS,
 	};
 
