@@ -1,17 +1,16 @@
 #include "BrickBlock.h"
 #include "GameObject.h"
 
-Brickblock::Brickblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Brickblock::Brickblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-
 }
 
 Brickblock::~Brickblock()
 {
 }
 
-void Brickblock::Update(double dt, Quadtree* main_tree)
+void Brickblock::Update(double dt)
 {
 	//if (this->getHealth() <= 0)
 	//	this->active = false;
@@ -39,14 +38,10 @@ void Brickblock::Update(double dt, Quadtree* main_tree)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//	//this->getDamaged(1);
-	//}
-	if (main_tree->CollisionCheck(this, &affected))
+	if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
+		//this->getDamaged(1);
 	}
 
 	if (!this->torque.IsZero())

@@ -123,17 +123,11 @@ bool Grid::CheckCollisionLoop(GameObject* temp, GameObject* GO, GameObject** GO2
 
 		if (GO->type == GameObject::GO_BALL)
 		{ // If GO is a tool, do circle collision check
-			if (temp->type == GameObject::GO_BLOCK)
-				check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
-			else if (temp->type == GameObject::GO_BALL)
-				check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
+			check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
 		}
 		else if (GO->type == GameObject::GO_BLOCK)
 		{ // Else if GO is a block, do box collision check
-			if (temp->type == GameObject::GO_BLOCK)
-				check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
-			else if (temp->type == GameObject::GO_BALL)
-				check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
+			check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
 		}
 
 		if (check)
@@ -158,5 +152,4 @@ void Grid::Move(GameObject* GO)
 	Remove(GO); // Remove object from current cell
 	if (newX > 0 && newY > 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
 		Add(GO); // Add object to new grid cell
-	
 }

@@ -1,7 +1,7 @@
 #include "MetalBlock.h"
 #include "GameObject.h"
 
-Metalblock::Metalblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Metalblock::Metalblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_METAL;
 
@@ -35,11 +35,11 @@ void Metalblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//	//this->getDamaged(1);
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		Response();
+		//this->getDamaged(1);
+	}
 
 	if (!this->torque.IsZero())
 	{
@@ -49,7 +49,6 @@ void Metalblock::Update(double dt)
 		if (this->angularVelocity > 10)
 			this->angularVelocity = 10;
 	}
-
 	else
 	{
 		if (this->angularVelocity > 0)

@@ -2,11 +2,10 @@
 #define METALBLOCK_H
 
 #include "Blocks.h"
-class Grid;
 class Metalblock : public Block
 {
 public:
-	Metalblock(Quadtree* qtree, Grid* grid);
+	Metalblock(Grid* grid);
 	~Metalblock();
 
 	void Update(double dt);

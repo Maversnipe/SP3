@@ -20,9 +20,6 @@ void SceneEditor::Init()
 
 	// Spatial Partionining
 	m_grid = new Grid();
-	AABB boundary;
-	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
-	m_Qtree = new Quadtree;
 
 	//Map reading
 	map = new FileIO();
@@ -33,12 +30,11 @@ void SceneEditor::Init()
 
 	//Player
 	player = PlayerInfo::GetInstance();
-	player->Init(m_Qtree, m_grid);
+	player->Init(m_grid);
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
-	mapeditor->Init(m_Qtree, m_grid);
-	mapeditor->GetInstance()->SetQtree(m_Qtree);
+	mapeditor->Init(m_grid);
 
 	//Physics code here
 	m_speed = 1.f;
@@ -47,8 +43,8 @@ void SceneEditor::Init()
 
 	m_objectCount = 0;
 
-	m_ghost = new GameObject(m_Qtree, m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_Qtree, m_grid);
+	m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
+	m_Block = new Block(m_grid);
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
@@ -75,7 +71,7 @@ GameObject* SceneEditor::FetchGO()
 		}
 	}
 
-	GameObject *go = new GameObject(m_Qtree, m_grid, GameObject::GO_BALL);
+	GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
 	m_goList.push_back(go);
 
 
@@ -96,7 +92,7 @@ Block* SceneEditor::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_Qtree, m_grid);
+	Block *go = new Block(m_grid);
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -229,7 +225,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -241,7 +237,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-			//	m_grid->Add(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -252,7 +248,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-			//	m_grid->Add(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 3)
 			{
@@ -263,7 +259,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-			//	m_grid->Add(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 4)
 			{
@@ -274,7 +270,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-			//	m_grid->Add(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 10)
 			{
@@ -284,7 +280,7 @@ void SceneEditor::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-			//	m_grid->Add(go);
+				m_grid->Add(go);
 			}
 		}
 	}
@@ -431,13 +427,13 @@ void SceneEditor::UpdateObjects(double dt)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Update(dt);
-			//m_grid->Move(cannonball);
+			m_grid->Move(cannonball);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(dt);
-			//m_grid->Move(drillproj);
+			m_grid->Move(drillproj);
 		}
 
 	}
@@ -465,7 +461,7 @@ void SceneEditor::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -475,7 +471,7 @@ void SceneEditor::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -485,7 +481,7 @@ void SceneEditor::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -494,8 +490,8 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-			//	m_grid->Move(b);
+			////	b->Update(dt);
+			////	m_grid->Move(b);
 			}
 		}
 	}

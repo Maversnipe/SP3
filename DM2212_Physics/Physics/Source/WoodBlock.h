@@ -6,7 +6,7 @@ class Grid;
 class Woodblock : public Block
 {
 public:
-	Woodblock(Quadtree* qtree, Grid* grid);
+	Woodblock(Grid* grid);
 	~Woodblock();
 
 	void Update(double dt);

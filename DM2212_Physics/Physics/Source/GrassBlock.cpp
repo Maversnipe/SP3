@@ -1,7 +1,7 @@
 #include "GrassBlock.h"
 #include "GameObject.h"
 
-Grassblock::Grassblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Grassblock::Grassblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 
@@ -35,11 +35,11 @@ void Grassblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//	//this->getDamaged(1);
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		Response();
+		//this->getDamaged(1);
+	}
 
 	if (!this->torque.IsZero())
 	{

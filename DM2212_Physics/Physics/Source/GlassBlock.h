@@ -3,11 +3,10 @@
 
 #include "Blocks.h"
 
-class Grid;
 class Glassblock : public Block
 {
 public:
-	Glassblock(Quadtree* qtree, Grid* grid);
+	Glassblock(Grid* grid);
 	~Glassblock();
 
 	void Update(double dt);

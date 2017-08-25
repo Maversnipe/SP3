@@ -86,7 +86,6 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
-	Quadtree* m_Qtree;
 };
 
 #endif

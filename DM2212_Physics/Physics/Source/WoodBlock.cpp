@@ -1,7 +1,7 @@
 #include "WoodBlock.h"
 #include "GameObject.h"
 
-Woodblock::Woodblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Woodblock::Woodblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 
@@ -45,10 +45,10 @@ void Woodblock::Update(double dt)
 	this->aabb.SetAABB(this->pos, this->scale);
 
 	// Block's collision response
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		Response();
+	}
 
 	if (!this->torque.IsZero())
 	{

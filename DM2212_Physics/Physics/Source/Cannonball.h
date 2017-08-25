@@ -2,11 +2,10 @@
 #define CANNONBALL_H
 #include "Blocks.h"
 
-class Grid;
 class Cannonball : public GameObject
 {
 public:
-	Cannonball(Quadtree* qtree, Grid* grid);
+	Cannonball(Grid* grid);
 	~Cannonball();
 
 	void Update(double dt);
