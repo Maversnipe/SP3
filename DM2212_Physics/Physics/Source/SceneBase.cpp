@@ -159,11 +159,21 @@ void SceneBase::Init()
 
 	//minimap
 	Maplist[GEO_MAPBG] = MeshBuilder::GenerateQuad("mapbg", Color(1.f, 0.f, 0.f), 1.f);
-	Maplist[GEO_MAPBG]->textureID = LoadTGA("Image//Background//evening.tga");
-	CMinimap::GetInstance()->SetBackground(Maplist[GEO_MAPBG]);
+	Maplist[GEO_MAPBG]->textureID = LoadTGA("Image//Background//dusk.tga");
 	Maplist[GEO_MAPBORDER] = MeshBuilder::GenerateQuad("mapborder", Color(1.f, 1.f, 1.f), 1.f);
 	CMinimap::GetInstance()->SetBorder(Maplist[GEO_MAPBORDER]);
 
+	//Backgrounds
+	BGlist[GEO_MORNING] = MeshBuilder::GenerateQuad("morningBG", Color(1.f, 0.f, 0.f), 1.f);
+	BGlist[GEO_MORNING]->textureID = LoadTGA("Image//Background//morning.tga");
+	BGlist[GEO_MIDDAY] = MeshBuilder::GenerateQuad("middayBG", Color(1.f, 0.f, 0.f), 1.f);
+	BGlist[GEO_MIDDAY]->textureID = LoadTGA("Image//Background//midday.tga");
+	BGlist[GEO_EVENING] = MeshBuilder::GenerateQuad("eveningBG", Color(1.f, 0.f, 0.f), 1.f);
+	BGlist[GEO_EVENING]->textureID = LoadTGA("Image//Background//evening.tga");
+	BGlist[GEO_DUSK] = MeshBuilder::GenerateQuad("duskBG", Color(1.f, 0.f, 0.f), 1.f);
+	BGlist[GEO_DUSK]->textureID = LoadTGA("Image//Background//dusk.tga");
+	BGlist[GEO_BONUS] = MeshBuilder::GenerateQuad("bonusBG", Color(1.f, 0.f, 0.f), 1.f);
+	BGlist[GEO_BONUS]->textureID = LoadTGA("Image//Background//bonus.tga");
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();

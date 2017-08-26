@@ -48,6 +48,9 @@ public:
 	void RenderMinimap();
 	void RenderMainMinimap();
 
+	//render background
+	void RenderBG();
+
 protected:
 	//Physics
 	float m_speed;
