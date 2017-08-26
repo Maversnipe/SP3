@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\background.cpp" />
     <ClCompile Include="Source\missile.cpp" />
     <ClCompile Include="Source\MissileTool.cpp" />
     <ClCompile Include="Source\CannonTool.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="Source\WoodBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\background.h" />
     <ClInclude Include="Source\missile.h" />
     <ClInclude Include="Source\MissileTool.h" />
     <ClInclude Include="Source\CannonTool.h" />

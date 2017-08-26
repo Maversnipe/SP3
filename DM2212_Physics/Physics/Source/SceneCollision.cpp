@@ -419,11 +419,11 @@ void SceneCollision::RenderMainMinimap()
 
 void SceneCollision::RenderBG()
 {
-	modelStack.PushMatrix();
-	modelStack.Scale(5,5,5);
-	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-	RenderMesh(BGlist[GEO_BONUS], false);
-	modelStack.PopMatrix();
+		modelStack.PushMatrix();
+		modelStack.Scale(5, 5, 5);
+		//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+		RenderMesh(BGlist[GEO_BONUS], false);
+		modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -602,6 +602,7 @@ void SceneCollision::Render()
 	modelStack.LoadIdentity();
 
 	RenderMinimap(); //test
+	RenderBG();
 
 	RenderMesh(meshList[GEO_AXES], false);
 

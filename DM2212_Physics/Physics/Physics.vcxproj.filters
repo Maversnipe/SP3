@@ -114,6 +114,7 @@
     <ClCompile Include="Source\MissileTool.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Source\background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -235,6 +236,7 @@
     <ClInclude Include="Source\MissileTool.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Source\background.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
