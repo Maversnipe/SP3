@@ -22,7 +22,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
+    map->Init(Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 20, 32, Application::GetWindowHeight() * 1.f, Application::GetWindowWidth() * 2.f, 30, 30);
     map->Read("Maps//Map_Lucas.csv");
     RenderMap();
 	//RenderMainMinimap();
@@ -239,8 +239,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
@@ -251,8 +251,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
@@ -263,8 +263,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
@@ -274,8 +274,8 @@ void SceneCollision::RenderMap()
             {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
@@ -285,8 +285,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;

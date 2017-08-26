@@ -27,9 +27,6 @@ Grid::~Grid()
 
 void Grid::Add(GameObject* GO)
 {
-	/*if (GO->next_ && GO->prev_)
-		return;*/
-
 	// To determine which grid cell the Game Object is in
 	int cellX = (int)((GO->pos.x - 2.f) / (float)CELL_SIZE);
 	int cellY = (int)((GO->pos.y - 6.f) / (float)CELL_SIZE);
