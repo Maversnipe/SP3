@@ -63,6 +63,16 @@ public:
 		NUM_MAP,
 	};
 
+	enum BG_TYPE
+	{
+		GEO_MORNING,
+		GEO_MIDDAY,
+		GEO_EVENING,
+		GEO_DUSK,
+		GEO_BONUS,
+		NUM_BG,
+	};
+
 	enum BLOCK_TYPE
 	{
 		//Blocks
@@ -114,6 +124,8 @@ protected:
 	Mesh* ToolList[NUM_TOOLS];
 	//Maplist
 	Mesh* Maplist[NUM_MAP];
+	//Background list
+	Mesh* BGlist[NUM_BG];
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
 

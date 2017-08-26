@@ -311,12 +311,11 @@ void SceneCollision::RenderMap()
 
 void SceneCollision::RenderMinimap()
 {
+	CMinimap::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg of minimap here
 
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-
 	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
-
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
 	// Translate the current transformation (from minimap.cpp)
@@ -326,12 +325,11 @@ void SceneCollision::RenderMinimap()
 	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
 
 	RenderMainMinimap();
-
 	modelStack.PushMatrix();
 	if (CMinimap::GetInstance()->m_cMinimap_Background)
 	{
 		modelStack.PushMatrix();
-		RenderMesh(Maplist[GEO_MAPBG], false);
+		RenderMesh(BGlist[GEO_BONUS], false); //and here
 		modelStack.PopMatrix();
 	}
 	modelStack.PopMatrix();
@@ -417,6 +415,15 @@ void SceneCollision::RenderMainMinimap()
 
 	//	modelStack.PopMatrix();
 	//modelStack.PopMatrix();
+}
+
+void SceneCollision::RenderBG()
+{
+	modelStack.PushMatrix();
+	modelStack.Scale(5,5,5);
+	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+	RenderMesh(BGlist[GEO_BONUS], false);
+	modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
