@@ -235,10 +235,10 @@ void SceneEditor::Update(double dt)
 	if (m_timerStarted)
 		m_timeTaken1 += dt;
 
-	dt *= m_speed;
+	//dt *= m_speed;
 
-	UpdateObjects(dt);
-	UpdateBlocks(dt);
+	//UpdateObjects(dt);
+	//UpdateBlocks(dt);
 	camera.Update(dt);
 }
 

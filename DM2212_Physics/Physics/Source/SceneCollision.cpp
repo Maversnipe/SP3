@@ -4,6 +4,7 @@
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
 #include "QuadTree\Quadtree.h"
+#include "SceneManager.h"
 
 SceneCollision::SceneCollision()
 {
@@ -154,6 +155,11 @@ void SceneCollision::Update(double dt)
 		std::cout << "SPACE BAR UP" << std::endl;
 
 		player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+
+	if (Application::IsKeyPressed(VK_F10))
+	{
+		SceneManager::currscene = 2;
 	}
 
 	//Mouse Section

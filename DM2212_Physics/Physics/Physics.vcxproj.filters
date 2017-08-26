@@ -109,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="Source\MapEditor.cpp" />
     <ClCompile Include="Source\QuadTree\Quadtree.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -225,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="Source\MapEditor.h" />
     <ClInclude Include="Source\QuadTree\Quadtree.h" />
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

@@ -56,12 +56,11 @@ bool FileIO::Read(const string mapName)
 			if (height >= m_iNoofTiles_Height)
 				break;
 
-			// If this line is not a comment line, then process it
+			// Do not read comment lines
 			if (!(Text.find("//*") == NULL) && Text != "")
 			{
 				if (height == 0)
 				{
-					// This is the first line of the map data file
 					string token;
 					istringstream iss(Text);
 					while (getline(iss, token, ','))

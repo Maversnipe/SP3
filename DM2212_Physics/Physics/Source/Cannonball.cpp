@@ -76,10 +76,10 @@ void Cannonball::Update(double dt)
 	}
 	}*/
 
-	if (m_grid->CheckCollision(this, &affected))
+	/*if (m_grid->CheckCollision(this, &affected))
 	{
 		Response();
-	}
+	}*/
 }
 
 void Cannonball::Response()

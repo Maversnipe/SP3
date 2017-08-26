@@ -3,6 +3,10 @@
 #define APPLICATION_H
 
 #include "timer.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <map>
+#include "Scene.h"
 
 class Application
 {
@@ -21,12 +25,16 @@ public:
 	static int GetWindowWidth();
 	static int GetWindowHeight();
 
+	//Declare a window object
+	static bool IsExit;
+	static GLFWwindow* m_window;
+	static const unsigned char Application::FPS; // FPS of this game
+	static const unsigned int Application::frameTime; // time for each frame
+	static StopWatch m_timer;
+
 private:
 	Application();
 	~Application();
-
-	//Declare a window object
-	StopWatch m_timer;
 };
 
 #endif
