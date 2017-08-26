@@ -3,6 +3,8 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
+#include "SceneManager.h"
+
 SceneCollision::SceneCollision()
 {
 }
@@ -150,6 +152,11 @@ void SceneCollision::Update(double dt)
 		player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 
+	if (Application::IsKeyPressed(VK_F10))
+	{
+		SceneManager::currscene = 2;
+	}
+
 	//Mouse Section
 	//  static bool bLButtonState = false;
 	//  if(!bLButtonState && Application::IsMousePressed(0))
@@ -242,7 +249,7 @@ void SceneCollision::RenderMap()
 				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
+				go->mass = 0.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
 				m_grid->Add(go);
@@ -311,12 +318,11 @@ void SceneCollision::RenderMap()
 
 void SceneCollision::RenderMinimap()
 {
+	CMinimap::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg of minimap here
 
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-
 	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
-
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
 	// Translate the current transformation (from minimap.cpp)
@@ -326,12 +332,11 @@ void SceneCollision::RenderMinimap()
 	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
 
 	RenderMainMinimap();
-
 	modelStack.PushMatrix();
 	if (CMinimap::GetInstance()->m_cMinimap_Background)
 	{
 		modelStack.PushMatrix();
-		RenderMesh(Maplist[GEO_MAPBG], false);
+		RenderMesh(BGlist[GEO_BONUS], false); //and here
 		modelStack.PopMatrix();
 	}
 	modelStack.PopMatrix();
@@ -417,6 +422,15 @@ void SceneCollision::RenderMainMinimap()
 
 	//	modelStack.PopMatrix();
 	//modelStack.PopMatrix();
+}
+
+void SceneCollision::RenderBG()
+{
+	modelStack.PushMatrix();
+	modelStack.Scale(5,5,5);
+	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+	RenderMesh(BGlist[GEO_BONUS], false);
+	modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
