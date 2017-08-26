@@ -10,7 +10,7 @@ public:
 	CBackground(void);
 	virtual ~CBackground(void);
 
-	void Init(float x, float y);//Initialise the class instance
+	void Init(/*float x, float y*/);//Initialise the class instance
 
 	Mesh* m_CBackground;
 

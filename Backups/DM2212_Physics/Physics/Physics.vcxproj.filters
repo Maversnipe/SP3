@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FileIO.cpp">
+      <Filter>Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneBase.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneCollision.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadOBJ.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpriteAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PickaxeTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ToolsInfo.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PlayerInfo.cpp">
+      <Filter>PlayerInfo</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Blocks.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GlassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GrassBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MetalBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WoodBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\BrickBlock.cpp">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SoundEngine.cpp">
+      <Filter>SoundEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AABB.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\minimap.cpp" />
+    <ClCompile Include="Source\SpatialPartitioning\Grid.cpp">
+      <Filter>Spatial Partitioning</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cannonball.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillProj.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CannonTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TestWeapon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DrillTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ThumperTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneEditor.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MapEditor.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Scenes</Filter>
+	 </ClCompile>
+    <ClCompile Include="Source\missile.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MissileTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FileIO.h">
+      <Filter>Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneBase.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneCollision.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadOBJ.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PickaxeTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ToolsInfo.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PlayerInfo.h">
+      <Filter>PlayerInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Blocks.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GlassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GrassBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MetalBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\WoodBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BrickBlock.h">
+      <Filter>GameObjects\Blocks</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SoundEngine.h">
+      <Filter>SoundEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CannonTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AABB.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\minimap.h" />
+    <ClInclude Include="Source\SpatialPartitioning\Grid.h">
+      <Filter>Spatial Partitioning</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannonball.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillProj.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TestWeapon.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DrillTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ThumperTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneEditor.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MapEditor.h" />
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\missile.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MissileTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{73d941b9-f6dc-4318-8f18-1dc2f164ddb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reader">
+      <UniqueIdentifier>{62ba502d-2b68-4097-ace5-20cf6b6cdebc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{3e6f51b1-9966-4462-af0c-c3a3b26a3a41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c36afc04-3fee-4183-b661-3be8f6b8a354}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{abbabb67-36f6-490d-aee3-358b6f84cd97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{9d55e25b-ed1f-4460-99fd-e02406b7436f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Tools">
+      <UniqueIdentifier>{39a13c5d-6b10-4c6d-8970-ac13df62fdd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlayerInfo">
+      <UniqueIdentifier>{098b7017-76dc-4629-8fd5-1037f46d33fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{cf086d67-8eb0-42f0-811f-83b57047cdb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Blocks">
+      <UniqueIdentifier>{d8bf885d-8021-42f4-899b-b656be4f1900}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SoundEngine">
+      <UniqueIdentifier>{65e515e8-0dfc-4765-b3d8-4ba68ea4553f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Spatial Partitioning">
+      <UniqueIdentifier>{cc3a260d-7150-4781-8875-de86e6e04b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Tools\Projectiles">
+      <UniqueIdentifier>{01cb60f2-b0e9-43e5-b9e6-61d4d0fe3e05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

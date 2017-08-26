@@ -108,6 +108,9 @@
       <Filter>Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\MapEditor.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Scenes</Filter>
+	 </ClCompile>
     <ClCompile Include="Source\missile.cpp">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClCompile>
@@ -230,6 +233,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\MapEditor.h" />
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="Source\missile.h">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClInclude>

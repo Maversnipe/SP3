@@ -49,13 +49,34 @@ void Grid::Remove(GameObject* GO)
 {
 	// To remove the Object accordingly
 										// If A -> B -> C, where B is GO, A is GO->prev_ and C is GO->next_
-	if(GO->prev_ != NULL)
+	if (GO->prev_ != NULL)
+	{
 		(GO->prev_)->next_ = GO->next_; // This assigns A's next value to be C instead of B
-	if(GO->next_ != NULL)
+	}
+	if (GO->next_ != NULL)
+	{
 		(GO->next_)->prev_ = GO->prev_; // This assigns C's previous value to be A instead of B
-	
+	}
+
 	if (GO == m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY]) 
 		m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY] = GO->next_; // If B is the head of the linked list, change head to B->next_
+
+	GO->prev_ = NULL;
+	GO->next_ = NULL;
+}
+
+void Grid::Move(GameObject* GO)
+{
+	int newX = (int)((GO->pos.x - 2.f) / (float)CELL_SIZE);
+	int newY = (int)((GO->pos.y - 6.f) / (float)CELL_SIZE);
+
+	if (newX == GO->m_iCurrCellX && newY == GO->m_iCurrCellY)
+		return; // Checks if object has not changed to different grid cell
+				// If true, return
+
+	Remove(GO); // Remove object from current cell
+	if (newX > 0 && newY > 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
+		Add(GO); // Add object to new grid cell
 }
 
 bool Grid::CheckCollision(GameObject* GO, GameObject** GO2)
@@ -77,9 +98,9 @@ bool Grid::CheckCollision(GameObject* GO, GameObject** GO2)
 		X O O		This ensures that the grid always check towards the left-top side cells
 					therefore increasing effiency
 		*/
-		if (cellX > 0 && cellY > 0)
+		if (cellX > 0 && cellY < NUM_CELLS_Y - 1)
 		{ // Top left
-			temp = m_cells[cellX - 1][cellY - 1];
+			temp = m_cells[cellX - 1][cellY + 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 		if (cellX > 0 && !check)
@@ -92,9 +113,9 @@ bool Grid::CheckCollision(GameObject* GO, GameObject** GO2)
 			temp = m_cells[cellX][cellY + 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
-		if (cellX > 0 && cellY < NUM_CELLS_Y - 1 && !check)
+		if (cellX > 0 && cellY > 0 && !check)
 		{ // Bottom left
-			temp = m_cells[cellX - 1][cellY + 1];
+			temp = m_cells[cellX - 1][cellY - 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
 	}
@@ -136,18 +157,4 @@ bool Grid::CheckCollisionLoop(GameObject* temp, GameObject* GO, GameObject** GO2
 		temp = temp->next_;
 	}
 	return check;
-}
-
-void Grid::Move(GameObject* GO)
-{
-	int newX = (int)((GO->pos.x - 2.f) / (float)CELL_SIZE);
-	int newY = (int)((GO->pos.y - 6.f) / (float)CELL_SIZE);
-
-	if (newX == GO->m_iCurrCellX && newY == GO->m_iCurrCellY)
-		return; // Checks if object has changed to different grid cell
-				// If true, return
-
-	Remove(GO); // Remove object from current cell
-	if (newX > 0 && newY > 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
-		Add(GO); // Add object to new grid cell
 }
