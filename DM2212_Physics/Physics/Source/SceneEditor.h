@@ -14,12 +14,10 @@
 #include "BrickBlock.h"
 #include "Cannonball.h"
 #include "DrillProj.h"
+#include "missile.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "MapEditor.h"
-
-class Grid;
-class Quadtree;
 
 class SceneEditor : public SceneBase
 {
@@ -88,7 +86,6 @@ protected:
 
 	// Spatial Partioning
 	Grid* m_grid;
-	Quadtree* m_Qtree;
 };
 
 #endif

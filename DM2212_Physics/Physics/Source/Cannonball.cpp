@@ -1,8 +1,8 @@
 #include "Cannonball.h"
 #include "GameObject.h"
 
-Cannonball::Cannonball(Quadtree* qtree, Grid* grid)
-	: GameObject(qtree, grid, GameObject::GO_BALL)
+Cannonball::Cannonball(Grid* grid)
+	: GameObject(grid, GameObject::GO_BALL)
 {
 }
 
@@ -38,7 +38,6 @@ void Cannonball::Update(double dt)
 	}
 
 	this->aabb.SetAABB(this->pos, this->scale);
-
 
 	/*if (m_grid->CheckCollision(this, &affected))
 	{

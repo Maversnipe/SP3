@@ -1,10 +1,9 @@
 #include "BrickBlock.h"
 #include "GameObject.h"
 
-Brickblock::Brickblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Brickblock::Brickblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-
 }
 
 Brickblock::~Brickblock()

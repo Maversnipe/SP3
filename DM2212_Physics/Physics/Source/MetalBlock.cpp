@@ -1,7 +1,7 @@
 #include "MetalBlock.h"
 #include "GameObject.h"
 
-Metalblock::Metalblock(Quadtree* qtree, Grid* grid) : Block(qtree, grid)
+Metalblock::Metalblock(Grid* grid) : Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_METAL;
 

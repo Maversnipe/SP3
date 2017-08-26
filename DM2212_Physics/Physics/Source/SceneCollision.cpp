@@ -3,7 +3,6 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
-#include "QuadTree\Quadtree.h"
 #include "SceneManager.h"
 
 SceneCollision::SceneCollision()
@@ -21,31 +20,27 @@ void SceneCollision::Init()
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
-	//m_grid = new Grid();
-	AABB boundary;
-	boundary.SetAABB(Vector3(130.f, 82.f, 0.f), Vector3(128.f, 76.f, 0.f));
-	m_Qtree = new Quadtree();
+	m_grid = new Grid();
 
-	//Map reading
-	map = new FileIO();
-	map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
-	map->Read("Maps//test.csv");
-	RenderMap();
+    //Map reading
+    map = new FileIO();
+    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
+    map->Read("Maps//test.csv");
+    RenderMap();
 	//RenderMainMinimap();
 
-	//Player
-	player = PlayerInfo::GetInstance();
-	player->Init(m_Qtree, m_grid);
+    //Player
+    player = PlayerInfo::GetInstance();
+	player->Init(m_grid);
 
 	//Physics code here
 	m_speed = 1.f;
 
 	Math::InitRNG();
 
+    m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
+	m_Block = new Block(m_grid);
 	m_objectCount = 0;
-
-	m_ghost = new GameObject(m_Qtree, m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_Qtree, m_grid);
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
@@ -61,23 +56,24 @@ void SceneCollision::Init()
 
 GameObject* SceneCollision::FetchGO()
 {
-	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
-	{
-		GameObject *go = (GameObject *)*it;
-		if (!go->active)
-		{
-			go->active = true;
-			++m_objectCount;
-			return go;
-		}
-	}
+    for(std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
+    {
+        GameObject *go = (GameObject *)*it;
+        if(!go->active)
+        {
+            go->active = true;
+            ++m_objectCount;
+            return go;
+        }
+    }
 
-	GameObject *go = new GameObject(m_Qtree, m_grid, GameObject::GO_BALL);
-	m_goList.push_back(go);
+    GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+    m_goList.push_back(go);
 
-	go->active = true;
-	++m_objectCount;
-	return go;
+   
+    go->active = true;
+    ++m_objectCount;
+    return go;
 }
 
 Block* SceneCollision::FetchGo1()
@@ -92,7 +88,7 @@ Block* SceneCollision::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_Qtree, m_grid);
+	Block *go = new Block(m_grid);
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -111,8 +107,7 @@ void SceneCollision::Update(double dt)
 	int offsetWindowX = Application::GetWindowWidth() / 8;
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
-	Vector3 mousepos(posX, posY, 0);
-	std::cout << mousepos << std::endl;
+	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
 
@@ -217,18 +212,18 @@ void SceneCollision::Update(double dt)
 		bRButtonState = false;
 		std::cout << "RBUTTON UP" << std::endl;
 
-		GameObject *go = FetchGO();
-		go->type = GameObject::GO_BALL;
+        GameObject *go = FetchGO();
+		go->type = GameObject::GO_BALL; 
 		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
-		go->pos = m_ghost->pos;
+        go->pos = m_ghost->pos;        
 		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-		m_ghost->active = false;
-		float sc = 3.f;
-		go->scale.Set(sc, sc, sc);
-		go->mass = 3.f;
+        m_ghost->active = false;
+        float sc = 3.f;
+        go->scale.Set(sc, sc, sc);
+        go->mass = 3.f;
 		go->aabb.SetAABB(go->pos, go->scale);
-		//m_grid->Add(go);
-	}
+		m_grid->Add(go);
+    }
 
 	//Physics Simulation Section
 	if (m_timerStarted)
@@ -257,8 +252,7 @@ void SceneCollision::RenderMap()
 				go->mass = 0.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
-				m_Qtree->Insert(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 2)
 			{
@@ -270,8 +264,7 @@ void SceneCollision::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
-				m_Qtree->Insert(go);
+				m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -281,22 +274,20 @@ void SceneCollision::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				//m_grid->Add(go);
-				m_Qtree->Insert(go);
-			}
-			else if (map->Map[i][k] == 4)
-			{
+                go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+				m_grid->Add(go);
+            }
+            else if (map->Map[i][k] == 4)
+            {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				//m_grid->Add(go);
-				m_Qtree->Insert(go);
-			}
+                go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
+				m_grid->Add(go);
+            }
 			else if (map->Map[i][k] == 5)
 			{
 				Block *go = FetchGo1();
@@ -306,8 +297,7 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				//m_grid->Add(go);
-				m_Qtree->Insert(go);
+				m_grid->Add(go);
 			}
 		}
 	}
@@ -446,13 +436,20 @@ void SceneCollision::UpdateObjects(double dt)
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
 			cannonball->Init();
 			cannonball->Update(dt);
-			//m_grid->Move(cannonball);
+			m_grid->Move(cannonball);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(dt);
-			//m_grid->Move(drillproj);
+			m_grid->Move(drillproj);
+		}
+		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		{
+			missile* Missile = static_cast<missile*>(i);
+
+			Missile->Update(mousepos, dt);
+			m_grid->Move(Missile);
 		}
 	}
 }
@@ -479,7 +476,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -489,7 +486,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -499,7 +496,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -509,7 +506,7 @@ void SceneCollision::UpdateBlocks(double dt)
 			if (b != NULL)
 			{
 				b->Update(dt);
-				//m_grid->Move(b);
+				m_grid->Move(b);
 			}
 		}
 	}

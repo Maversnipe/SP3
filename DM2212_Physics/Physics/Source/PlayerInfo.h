@@ -32,7 +32,7 @@ public:
 
 	~PlayerInfo();
 
-	void Init(Quadtree* qtree, Grid* grid);
+	void Init(Grid* grid);
 
 	void Update(double dt, Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
@@ -48,7 +48,7 @@ private:
 	int i_Score;
 
 	//tool stuff
-	const int i_NumTools = 5;
+	const int i_NumTools = 6;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
 

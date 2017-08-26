@@ -3,6 +3,7 @@
 #include "CannonTool.h"
 #include "DrillTool.h"
 #include "ThumperTool.h"
+#include "MissileTool.h"
 #include "TestWeapon.h"
 
 PlayerInfo *PlayerInfo::instance = 0;
@@ -18,15 +19,15 @@ PlayerInfo::~PlayerInfo()
 {
 }
 
-void PlayerInfo::Init(Quadtree* qtree, Grid* grid)
+void PlayerInfo::Init(Grid* grid)
 {
 	ToolManager = new ToolsInfo*[i_NumTools];
-	ToolManager[0] = new PickaxeTool(qtree, grid);
-	ToolManager[1] = new CannonTool(qtree, grid);
-	ToolManager[2] = new DrillTool(qtree, grid);
-	ToolManager[3] = new ThumperTool(qtree, grid);
-	ToolManager[4] = new TestWeapon(qtree, grid);
-
+	ToolManager[0] = new PickaxeTool(grid);
+	ToolManager[1] = new CannonTool(grid);
+	ToolManager[2] = new DrillTool(grid);
+	ToolManager[3] = new ThumperTool(grid);
+	ToolManager[4] = new TestWeapon(grid);
+	ToolManager[5] = new MissileTool(grid);
 }
 
 void PlayerInfo::Update(double dt, Vector3 mousepos)
@@ -77,9 +78,9 @@ int PlayerInfo::GetActiveToolIndex()const
 void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 {
 	i_ActiveTool = ToolIndex;
-	if (i_ActiveTool >= i_NumTools)
-		i_ActiveTool = 0;
-	if (i_ActiveTool == -1)
+	if (i_ActiveTool > i_NumTools - 1)
+		i_ActiveTool = 1;
+	if (i_ActiveTool < 1)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
 }

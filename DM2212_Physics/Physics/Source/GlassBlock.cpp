@@ -1,8 +1,8 @@
 #include "GlassBlock.h"
 #include "GameObject.h"
 
-Glassblock::Glassblock(Quadtree* qtree, Grid* grid)
-	: Block(qtree, grid)
+Glassblock::Glassblock(Grid* grid)
+	: Block(grid)
 {
 	Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 

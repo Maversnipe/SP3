@@ -17,10 +17,6 @@ public:
 	Vector3 GetPos() { return position; };
 	float GetRadius() { return radius; };
 
-	// For Quadtree
-	bool ContainsPoint(Vector3 point);
-	bool IntersectsAABB(AABB other);
-
 protected:
 	Vector3 min;
 	Vector3 max;

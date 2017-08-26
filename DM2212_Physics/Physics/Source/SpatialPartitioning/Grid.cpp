@@ -8,6 +8,7 @@
 #include "../BrickBlock.h"
 #include "../Cannonball.h"
 #include "../DrillProj.h"
+#include "../missile.h"
 
 Grid::Grid()
 {
@@ -30,15 +31,16 @@ void Grid::Add(GameObject* GO)
 	int cellX = (int)((GO->pos.x - 2.f) / (float)CELL_SIZE);
 	int cellY = (int)((GO->pos.y - 6.f) / (float)CELL_SIZE);
 
+	if (m_cells[cellX][cellY] != NULL)
+	{
+		m_cells[cellX][cellY]->prev_ = GO;
+	}
+
 	// Add to front of the list of the cell that the object is in
 	GO->prev_ = NULL;
 	GO->next_ = m_cells[cellX][cellY];
 	m_cells[cellX][cellY] = GO;
 
-	if (GO->next_ != NULL)
-	{
-		GO->next_->prev_ = GO;
-	}
 	GO->m_iCurrCellX = cellX;
 	GO->m_iCurrCellY = cellY;
 }
@@ -119,17 +121,11 @@ bool Grid::CheckCollisionLoop(GameObject* temp, GameObject* GO, GameObject** GO2
 
 		if (GO->type == GameObject::GO_BALL)
 		{ // If GO is a tool, do circle collision check
-			if (temp->type == GameObject::GO_BLOCK)
-				check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
-			else if (temp->type == GameObject::GO_BALL)
-				check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
+			check = CollisionManager::getCManager()->CheckCollisionC(GO, temp);
 		}
 		else if (GO->type == GameObject::GO_BLOCK)
 		{ // Else if GO is a block, do box collision check
-			if (temp->type == GameObject::GO_BLOCK)
-				check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
-			else if (temp->type == GameObject::GO_BALL)
-				check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
+			check = CollisionManager::getCManager()->CheckCollisionB(GO, temp);
 		}
 
 		if (check)
@@ -154,5 +150,4 @@ void Grid::Move(GameObject* GO)
 	Remove(GO); // Remove object from current cell
 	if (newX > 0 && newY > 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
 		Add(GO); // Add object to new grid cell
-	
 }
