@@ -18,7 +18,7 @@ CBackground::~CBackground(void)
 void CBackground::Init(/*float x, float y*/)
 {
 	position.Set(20, 20, -1.f);
-	scale.Set(480.0f, 300.0f, 1.f);
+	scale.Set(240.0f, 150.0f, 1.f);
 }
 
 // Set the background mesh to this class

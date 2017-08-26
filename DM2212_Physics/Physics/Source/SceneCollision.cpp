@@ -388,7 +388,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7 , ((map->GetNumOfTiles_Height() - i) - 27)*0.3, 0);
 				RenderMesh(BlockList[GEO_GRASS], false);
 				modelStack.PopMatrix();
 
@@ -398,7 +398,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i) - 27)*0.3, 0);
 				RenderMesh(BlockList[GEO_GLASS], false);
 				modelStack.PopMatrix();
 			}
@@ -407,7 +407,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i) - 27)*0.3, 0);
 				RenderMesh(BlockList[GEO_WOOD], false);
 				modelStack.PopMatrix();
 			}
@@ -416,7 +416,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i) - 27)*0.3, 0);
 				RenderMesh(BlockList[GEO_METAL], false);
 				modelStack.PopMatrix();
 			}
@@ -425,7 +425,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i) - 27)*0.3, 0);
 				RenderMesh(BlockList[GEO_BRICK], false);
 				modelStack.PopMatrix();
 			}
