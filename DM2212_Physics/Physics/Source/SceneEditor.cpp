@@ -568,7 +568,7 @@ void SceneEditor::RenderGO(GameObject *go)
 
 	case GameObject::GO_TOOLS:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z + 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(ToolList[go->tooltype], false);
