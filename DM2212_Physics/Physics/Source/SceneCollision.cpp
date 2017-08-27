@@ -24,7 +24,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 20, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 22, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
     map->Read("Maps//Map_Lucas.csv");
     RenderMap();
 	//RenderMainMinimap();
@@ -249,7 +249,7 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 0.f;
@@ -261,7 +261,7 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -273,7 +273,7 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -284,7 +284,7 @@ void SceneCollision::RenderMap()
             {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((float)(k + 1) * 8.f - 2.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -295,7 +295,7 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((float)(k + 1) * 8.f - 2.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
@@ -671,8 +671,6 @@ void SceneCollision::Render()
 	if (m_ghost->active)
 		RenderGO(m_ghost);
 
-	RenderGrid();
-
 	//On screen text
 	std::ostringstream ss;
 	//ss << "Time Estimated: " << m_timeEstimated1;
@@ -702,6 +700,8 @@ void SceneCollision::Render()
 
 	RenderBG();
 
+	RenderGrid();
+
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
@@ -722,7 +722,7 @@ void SceneCollision::RenderGrid()
 		{
 			Vector3 position = Vector3((float)((x * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), (float)((y * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), 0.f);
 			modelStack.PushMatrix();
-			modelStack.Translate(position.x + 2.f, position.y + 6.f, -1.f);
+			modelStack.Translate(position.x + 2.f, position.y + 6.f, 0.f);
 			modelStack.Scale(m_grid->CELL_SIZE, m_grid->CELL_SIZE, m_grid->CELL_SIZE);
 			RenderMesh(meshList[GEO_GRID], false);
 			modelStack.PopMatrix();
