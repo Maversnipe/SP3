@@ -24,10 +24,13 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
-    map->Read("Maps//test.csv");
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 22, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
+    map->Read("Maps//Map_Lucas.csv");
     RenderMap();
 	//RenderMainMinimap();
+
+	//bg
+	CBackground:: GetInstance()-> Init();
 
     //Player
     player = PlayerInfo::GetInstance();
@@ -111,7 +114,7 @@ void SceneCollision::Update(double dt)
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
 
-								 //fullscreen and default screensize for minimap position
+	//fullscreen and default screensize for minimap position
 	if (Application::GetWindowWidth() / 8 != 120)
 	{
 		isFullScreen = true;
@@ -255,8 +258,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(44.f, 12.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 0.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
@@ -268,8 +271,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
@@ -281,8 +284,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
@@ -294,8 +297,8 @@ void SceneCollision::RenderMap()
             {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((float)(k + 1) * 8.f - 2.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
@@ -307,8 +310,8 @@ void SceneCollision::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->pos = Vector3((float)(k + 1) * 8.f - 2.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
@@ -320,17 +323,17 @@ void SceneCollision::RenderMap()
 	}
 
 	//For debug
-	/*
-	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
-	{
-	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
-	{
-	std::cout << map->Map[i][k];
-	}
+	
+	//for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	//{
+	//for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+	//{
+	//std::cout << map->Map[i][k];
+	//}
 
-	std::cout << std::endl;
-	}
-	*/
+	//std::cout << std::endl;
+	//}
+	
 }
 
 void SceneCollision::RenderMinimap()
@@ -339,14 +342,23 @@ void SceneCollision::RenderMinimap()
 
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+	modelStack.Translate
+	(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, 
+		camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 
+		10);
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
 	// Translate the current transformation (from minimap.cpp)
-	modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
+	modelStack.Translate
+	(CMinimap::GetInstance()->getPosition().x, 
+		CMinimap::GetInstance()->getPosition().y, 
+		CMinimap::GetInstance()->getPosition().z);
 	//modelStack.Translate(CMinimap::GetInstance()->getPosition().x, CMinimap::GetInstance()->getPosition().y, CMinimap::GetInstance()->getPosition().z);
 	// Scale the current transformation (from minimap.cpp)
-	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
+	modelStack.Scale
+	(CMinimap::GetInstance()->getScale().x, 
+		CMinimap::GetInstance()->getScale().y, 
+		CMinimap::GetInstance()->getScale().z);
 
 	RenderMainMinimap();
 	modelStack.PushMatrix();
@@ -393,7 +405,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7 , ((map->GetNumOfTiles_Height() - i)*0.77)- 8.6, 0);
 				RenderMesh(BlockList[GEO_GRASS], false);
 				modelStack.PopMatrix();
 
@@ -403,7 +415,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i)*0.77) - 8.6, 0);
 				RenderMesh(BlockList[GEO_GLASS], false);
 				modelStack.PopMatrix();
 			}
@@ -412,7 +424,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i)*0.77) - 8.6, 0);
 				RenderMesh(BlockList[GEO_WOOD], false);
 				modelStack.PopMatrix();
 			}
@@ -421,7 +433,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i)*0.77) - 8.6, 0);
 				RenderMesh(BlockList[GEO_METAL], false);
 				modelStack.PopMatrix();
 			}
@@ -430,7 +442,7 @@ void SceneCollision::RenderMainMinimap()
 				modelStack.PushMatrix();
 
 				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Translate(((k + 1)*0.77) - 12.7, ((map->GetNumOfTiles_Height() - i)*0.77) - 8.6, 0);
 				RenderMesh(BlockList[GEO_BRICK], false);
 				modelStack.PopMatrix();
 			}
@@ -443,11 +455,29 @@ void SceneCollision::RenderMainMinimap()
 
 void SceneCollision::RenderBG()
 {
+	CBackground::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg
+	
 	modelStack.PushMatrix();
-	modelStack.Scale(5,5,5);
-	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-	RenderMesh(BGlist[GEO_BONUS], false);
+	modelStack.Translate
+	(CBackground::GetInstance()->getPosition().x, 
+		CBackground::GetInstance()->getPosition().y, 
+		CBackground::GetInstance()->getPosition().z);
+	modelStack.Scale
+	(CBackground::GetInstance()->getScale().x, 
+		CBackground::GetInstance()->getScale().y, 
+		CBackground::GetInstance()->getScale().z);
+
+	modelStack.PushMatrix();
+	if (CBackground::GetInstance()->m_CBackground)
+	{
+		modelStack.PushMatrix();
+		RenderMesh(BGlist[GEO_BONUS], false); //and here
+		modelStack.PopMatrix();
+	}
 	modelStack.PopMatrix();
+
+	modelStack.PopMatrix();
+
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -635,7 +665,9 @@ void SceneCollision::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
+
 	RenderMinimap(); //test
+
 
 	RenderMesh(meshList[GEO_AXES], false);
 
@@ -693,6 +725,10 @@ void SceneCollision::Render()
 	//ss << "Speed: " << m_speed;
 	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
 
+	RenderBG();
+
+	RenderGrid();
+
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
@@ -706,6 +742,22 @@ void SceneCollision::Render()
 
 	//RenderMinimap(); //test
 
+}
+
+void SceneCollision::RenderGrid()
+{
+	for (int y = 0; y < m_grid->NUM_CELLS_Y; y++)
+	{
+		for (int x = 0; x < m_grid->NUM_CELLS_X; x++)
+		{
+			Vector3 position = Vector3((float)((x * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), (float)((y * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), 0.f);
+			modelStack.PushMatrix();
+			modelStack.Translate(position.x + 2.f, position.y + 6.f, 0.f);
+			modelStack.Scale(m_grid->CELL_SIZE, m_grid->CELL_SIZE, m_grid->CELL_SIZE);
+			RenderMesh(meshList[GEO_GRID], false);
+			modelStack.PopMatrix();
+		}
+	}
 }
 
 void SceneCollision::Exit()

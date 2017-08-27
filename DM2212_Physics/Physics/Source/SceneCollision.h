@@ -17,6 +17,8 @@
 #include "missile.h"
 #include "CollisionManager.h"
 #include "minimap.h"
+#include "background.h"
+
 
 class Grid;
 class Quadtree;
@@ -47,6 +49,8 @@ public:
 	//render minimap
 	void RenderMinimap();
 	void RenderMainMinimap();
+
+	void RenderGrid();
 
 	//render background
 	void RenderBG();

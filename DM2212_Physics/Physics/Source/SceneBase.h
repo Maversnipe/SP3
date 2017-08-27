@@ -50,6 +50,7 @@ public:
 		GEO_BALL,
 		GEO_CUBE,
 		GEO_SHIP,
+		GEO_GRID,
 		
 		//SP 3
 		GEO_TEST_ANIMATION,

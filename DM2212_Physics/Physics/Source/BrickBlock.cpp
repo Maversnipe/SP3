@@ -37,11 +37,11 @@ void Brickblock::Update(double dt)
 	//	//this->getDamaged(1);
 	//}
 
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//	//this->getDamaged(1);
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		//Response();
+		//this->getDamaged(1);
+	}
 
 	//Rotation
 	if (!this->torque.IsZero())
