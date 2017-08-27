@@ -110,7 +110,7 @@
     <ClCompile Include="Source\MapEditor.cpp" />
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Scenes</Filter>
-	 </ClCompile>
+    </ClCompile>
     <ClCompile Include="Source\missile.cpp">
       <Filter>GameObjects\Tools\Projectiles</Filter>
     </ClCompile>
@@ -118,6 +118,9 @@
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Source\background.cpp" />
+    <ClCompile Include="Source\DynamiteTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -243,6 +246,9 @@
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\background.h" />
+    <ClInclude Include="Source\DynamiteTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">

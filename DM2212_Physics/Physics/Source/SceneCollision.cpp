@@ -24,7 +24,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 22, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 20, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
     map->Read("Maps//Map_Lucas.csv");
     RenderMap();
 	//RenderMainMinimap();
