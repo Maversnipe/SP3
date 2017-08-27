@@ -111,6 +111,8 @@ void SceneBase::Init()
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
+	meshList[GEO_GRID] = MeshBuilder::GenerateQuad("grid", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRID]->textureID = LoadTGA("Image//Block_White.tga");
 
 	//----------Sprite animation ^-^----------
 	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);

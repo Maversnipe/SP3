@@ -12,6 +12,7 @@
 
 Grid::Grid()
 {
+	int index = 0;
 	for (int x = 0; x < NUM_CELLS_X; x++)
 	{ // Clears the grid
 		for (int y = 0; y < NUM_CELLS_Y; y++)
@@ -31,14 +32,15 @@ void Grid::Add(GameObject* GO)
 	int cellX = (int)((GO->pos.x - 2.f) / (float)CELL_SIZE);
 	int cellY = (int)((GO->pos.y - 6.f) / (float)CELL_SIZE);
 
-	if (m_cells[cellX][cellY] != NULL)
+	GameObject* OriginalFront = m_cells[cellX][cellY];
+	if (OriginalFront != NULL)
 	{
-		m_cells[cellX][cellY]->prev_ = GO;
+		OriginalFront->prev_ = GO;
 	}
 
 	// Add to front of the list of the cell that the object is in
 	GO->prev_ = NULL;
-	GO->next_ = m_cells[cellX][cellY];
+	GO->next_ = OriginalFront;
 	m_cells[cellX][cellY] = GO;
 
 	GO->m_iCurrCellX = cellX;
@@ -49,17 +51,21 @@ void Grid::Remove(GameObject* GO)
 {
 	// To remove the Object accordingly
 										// If A -> B -> C, where B is GO, A is GO->prev_ and C is GO->next_
+	GameObject* BeforeGO = GO->prev_;
+	GameObject* AfterGO = GO->next_;
 	if (GO->prev_ != NULL)
 	{
-		(GO->prev_)->next_ = GO->next_; // This assigns A's next value to be C instead of B
+		BeforeGO->next_ = GO->next_; // This assigns A's next value to be C instead of B
 	}
 	if (GO->next_ != NULL)
 	{
-		(GO->next_)->prev_ = GO->prev_; // This assigns C's previous value to be A instead of B
+		AfterGO->prev_ = GO->prev_; // This assigns C's previous value to be A instead of B
 	}
 
-	if (GO == m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY]) 
-		m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY] = GO->next_; // If B is the head of the linked list, change head to B->next_
+	if (GO == m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY])
+	{
+		m_cells[GO->m_iCurrCellX][GO->m_iCurrCellY] = AfterGO; // If B is the head of the linked list, change head to B->next_
+	}
 
 	GO->prev_ = NULL;
 	GO->next_ = NULL;
@@ -75,7 +81,7 @@ void Grid::Move(GameObject* GO)
 				// If true, return
 
 	Remove(GO); // Remove object from current cell
-	if (newX > 0 && newY > 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
+	if (newX >= 0 && newY >= 0 && newX < NUM_CELLS_X && newY < NUM_CELLS_Y)
 		Add(GO); // Add object to new grid cell
 }
 
@@ -103,17 +109,17 @@ bool Grid::CheckCollision(GameObject* GO, GameObject** GO2)
 			temp = m_cells[cellX - 1][cellY + 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
-		if (cellX > 0 && !check)
+		if (cellX > 0)
 		{ // Left
 			temp = m_cells[cellX - 1][cellY];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
-		if (cellY < NUM_CELLS_Y - 1 && !check)
+		if (cellY < NUM_CELLS_Y - 1)
 		{ // Top
 			temp = m_cells[cellX][cellY + 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
 		}
-		if (cellX > 0 && cellY > 0 && !check)
+		if (cellX > 0 && cellY > 0)
 		{ // Bottom left
 			temp = m_cells[cellX - 1][cellY - 1];
 			check = CheckCollisionLoop(temp, GO, &(*GO2));
@@ -134,7 +140,7 @@ bool Grid::CheckCollisionLoop(GameObject* temp, GameObject* GO, GameObject** GO2
 			continue;
 		}
 		if (temp->Btype == GameObject::BLOCK_TYPE::GO_GRASS &&
-			GO->Btype == GameObject::BLOCK_TYPE::GO_GRASS && !GO->isonAir)
+			GO->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
 			temp = temp->next_;
 			continue;
@@ -151,8 +157,12 @@ bool Grid::CheckCollisionLoop(GameObject* temp, GameObject* GO, GameObject** GO2
 
 		if (check)
 		{ // Break loop if true
-			*GO2 = temp;
-			break;
+			//*GO2 = temp;
+			if(GO->type == GameObject::GO_BLOCK)
+				CollisionManager::getCManager()->CollisionResponseB(GO, temp);
+			else if(GO->type == GameObject::GO_BALL)
+				CollisionManager::getCManager()->CollisionResponseC(GO, temp);
+			//break;
 		}
 		temp = temp->next_;
 	}

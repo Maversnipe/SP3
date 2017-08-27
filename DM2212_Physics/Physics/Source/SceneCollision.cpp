@@ -24,7 +24,7 @@ void SceneCollision::Init()
 
     //Map reading
     map = new FileIO();
-    map->Init(Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 20, 32, Application::GetWindowHeight() * 1.f, Application::GetWindowWidth() * 2.f, 30, 30);
+    map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 20, 32, Application::GetWindowHeight(), Application::GetWindowWidth() , 30, 30);
     map->Read("Maps//Map_Lucas.csv");
     RenderMap();
 	//RenderMainMinimap();
@@ -303,17 +303,17 @@ void SceneCollision::RenderMap()
 	}
 
 	//For debug
-	/*
-	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
-	{
-	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
-	{
-	std::cout << map->Map[i][k];
-	}
+	
+	//for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
+	//{
+	//for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+	//{
+	//std::cout << map->Map[i][k];
+	//}
 
-	std::cout << std::endl;
-	}
-	*/
+	//std::cout << std::endl;
+	//}
+	
 }
 
 void SceneCollision::RenderMinimap()
@@ -639,6 +639,8 @@ void SceneCollision::Render()
 	if (m_ghost->active)
 		RenderGO(m_ghost);
 
+	RenderGrid();
+
 	//On screen text
 	std::ostringstream ss;
 	//ss << "Time Estimated: " << m_timeEstimated1;
@@ -676,6 +678,22 @@ void SceneCollision::Render()
 
 	//RenderMinimap(); //test
 
+}
+
+void SceneCollision::RenderGrid()
+{
+	for (int y = 0; y < m_grid->NUM_CELLS_Y; y++)
+	{
+		for (int x = 0; x < m_grid->NUM_CELLS_X; x++)
+		{
+			Vector3 position = Vector3((float)((x * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), (float)((y * m_grid->CELL_SIZE) + (m_grid->CELL_SIZE / 2.f)), 0.f);
+			modelStack.PushMatrix();
+			modelStack.Translate(position.x + 2.f, position.y + 6.f, -1.f);
+			modelStack.Scale(m_grid->CELL_SIZE, m_grid->CELL_SIZE, m_grid->CELL_SIZE);
+			RenderMesh(meshList[GEO_GRID], false);
+			modelStack.PopMatrix();
+		}
+	}
 }
 
 void SceneCollision::Exit()

@@ -48,6 +48,8 @@ public:
 	void RenderMinimap();
 	void RenderMainMinimap();
 
+	void RenderGrid();
+
 	//render background
 	void RenderBG();
 

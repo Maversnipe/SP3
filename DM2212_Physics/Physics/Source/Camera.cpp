@@ -133,7 +133,6 @@ void Camera::M_CameraMovement(double dt)
 				}
 				else if (defaultPos.y + m_fOffset_y < minBoundary.y)
 				{ // If offset to down is less than minBoundary, set as minBoundary
-					std::cout << "MIN REACHED" << std::endl;
 					m_fOffset_y = -(defaultPos.y - minBoundary.y);
 				}
 			}

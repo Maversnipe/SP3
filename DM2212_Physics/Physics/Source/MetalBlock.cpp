@@ -37,11 +37,11 @@ void Metalblock::Update(double dt)
 	}*/
 
 	//grid
-	//if (m_grid->CheckCollision(this, &affected))
-	//{
-	//	Response();
-	//	//this->getDamaged(1);
-	//}
+	if (m_grid->CheckCollision(this, &affected))
+	{
+		//Response();
+		//this->getDamaged(1);
+	}
 
 	//Rotation
 	/*if (!this->torque.IsZero())
