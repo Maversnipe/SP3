@@ -212,15 +212,24 @@ void SceneCollision::Update(double dt)
 		bRButtonState = false;
 		std::cout << "RBUTTON UP" << std::endl;
 
-        GameObject *go = FetchGO();
-		go->type = GameObject::GO_BALL; 
-		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
-        go->pos = m_ghost->pos;        
+		/*Block *go = FetchGo1();
+		go->type = GameObject::GO_BLOCK;
+		go->pos = m_ghost->pos;
+		go->scale.Set(4.f, 4.f, 1.f);
 		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-        m_ghost->active = false;
-        float sc = 3.f;
-        go->scale.Set(sc, sc, sc);
-        go->mass = 3.f;
+		go->mass = 1.f;
+		go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+		go->aabb.SetAABB(go->pos, go->scale);*/
+
+		GameObject *go = FetchGO();
+		go->type = GameObject::GO_BALL;
+		go->toolproj = GameObject::CANNONBALL;
+		go->pos = m_ghost->pos;
+		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
+		m_ghost->active = false;
+		float sc = 3.f;
+		go->scale.Set(sc, sc, sc);
+		go->mass = 5.f;
 		go->aabb.SetAABB(go->pos, go->scale);
 		m_grid->Add(go);
     }
@@ -251,8 +260,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 0.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
+				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 2)
 			{
@@ -263,8 +273,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
+				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -275,7 +286,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				m_grid->Add(go);
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
+				//m_grid->Add(go);
             }
             else if (map->Map[i][k] == 4)
             {
@@ -286,7 +299,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				m_grid->Add(go);
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
+				//m_grid->Add(go);
             }
 			else if (map->Map[i][k] == 5)
 			{
@@ -297,7 +312,9 @@ void SceneCollision::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				m_grid->Add(go);
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
+				//m_grid->Add(go);
 			}
 		}
 	}
@@ -438,12 +455,15 @@ void SceneCollision::UpdateObjects(double dt)
 	for (auto &i : m_goList)
 	{
 		//i->Update(dt);
+		if (!i->active)
+			continue;
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			cannonball->Init();
-			cannonball->Update(dt);
-			m_grid->Move(cannonball);
+			//cannonball->Init();
+			//cannonball->Update(dt);
+			//m_grid->Move(cannonball);
+			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
 		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
@@ -466,6 +486,8 @@ void SceneCollision::UpdateBlocks(double dt)
 	for (auto &i : m_vBlocks)
 	{
 		//i->Update(m_goList, m_vBlocks, dt);
+		if (!i->active)
+			continue;
 
 		if (i->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
@@ -473,7 +495,8 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
+				//b->Update(dt);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_GLASS)
@@ -482,8 +505,9 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -492,8 +516,9 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -502,8 +527,9 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -512,8 +538,9 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 	}
@@ -672,7 +699,10 @@ void SceneCollision::Render()
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
 
-	RenderTextOnScreen(meshList[GEO_TEXT], "Collision", Color(0, 1, 0), 3, 0, 0);
+	ss.str("");
+	ss.precision(5);
+	ss << "Money: " << PlayerInfo::GetInstance()->GetGold();
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
 	//RenderMinimap(); //test
 
