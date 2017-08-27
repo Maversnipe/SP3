@@ -24,7 +24,7 @@ void SceneEditor::Init()
 
 	//Map reading
 	map = new FileIO();
-    map->Init(Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 20, 32, Application::GetWindowHeight() * 1.f, Application::GetWindowWidth() * 2.f, 30, 30);
+	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 22, 32, Application::GetWindowHeight(), Application::GetWindowWidth(), 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
@@ -247,7 +247,7 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 0.f;
@@ -259,7 +259,7 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -271,7 +271,7 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -282,7 +282,7 @@ void SceneEditor::RenderMap()
             {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
@@ -293,7 +293,7 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
+				go->pos = Vector3((k + 1) * 8.f - 2.f, (map->GetNumOfTiles_Height() - i) * 8.f + 2.f, 0);
 				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;

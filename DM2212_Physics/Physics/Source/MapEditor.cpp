@@ -60,7 +60,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	std::ofstream myfile;
 	myfile.open("Maps//example.csv");
 	myfile << "//";
-	for (unsigned index = 1; index < mapwidth *2 + 1; ++index)
+	for (unsigned index = 1; index < mapwidth + 1; ++index)
 	{
 		myfile << index << ",";
 	}
@@ -72,7 +72,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 		{
 			for (unsigned i = 0; i < blocklist.size(); ++i)
 			{
-				if (blocklist[i]->pos.x / 8 == x && blocklist[i]->pos.y / 8 == y && blocklist[i]->active)
+				if ((blocklist[i]->pos.x + 2) / 8 == x && (blocklist[i]->pos.y - 2) / 8 == y && blocklist[i]->active)
 				{
 					std::cout << blocklist[i]->Btype+1 << ",";
 					myfile << blocklist[i]->Btype + 1 << ",";
@@ -196,24 +196,27 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	}
 
 	int gridx, gridy;
-	if ((int)mousepos.x % 8 >= 4)
+	int mouseposx, mouseposy;
+	mouseposx = mousepos.x + 2;
+	mouseposy = mousepos.y - 2;
+	if ((int)mouseposx % 8 >= 4)
 	{
-		gridx = (int)mousepos.x + (8 - (int)mousepos.x % 8);
+		gridx = (int)mouseposx + (8 - (int)mouseposx % 8);
 	}
 	else
 	{
-		gridx = (int)mousepos.x - ((int)mousepos.x % 8);
+		gridx = (int)mouseposx - ((int)mouseposx % 8);
 	}
-	if ((int)mousepos.y % 8 >= 4)
+	if ((int)mouseposy % 8 >= 4)
 	{
-		gridy = (int)mousepos.y + (8 - (int)mousepos.y % 8);
+		gridy = (int)mouseposy + (8 - (int)mouseposy % 8);
 	}
 	else
 	{
-		gridy = (int)mousepos.y - ((int)mousepos.y % 8);
+		gridy = (int)mouseposy - ((int)mouseposy % 8);
 	}
 
-	brickPos = Vector3(gridx, gridy, 0);//update to mouse pos
+	brickPos = Vector3(gridx-2, gridy+2, 0);//update to mouse pos
 	blockmanager[currblockint]->pos = brickPos;
 	blockmanager[currblockint]->scale.Set(8, 8, 1);
 }
