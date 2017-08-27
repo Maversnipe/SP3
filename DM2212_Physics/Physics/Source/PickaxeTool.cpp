@@ -24,21 +24,21 @@ void PickaxeTool::Init()
 void PickaxeTool::Update(double dt, Vector3 mousepos)
 {
 	int gridx, gridy;
-	if ((int)mousepos.x % 4 >= 2)
+	if ((int)mousepos.x % 8 >= 4)
 	{
-		gridx = (int)mousepos.x + (4 - (int)mousepos.x % 4);
+		gridx = (int)mousepos.x + (8 - (int)mousepos.x % 8);
 	}
 	else
 	{
-		gridx = (int)mousepos.x - ((int)mousepos.x % 4);
+		gridx = (int)mousepos.x - ((int)mousepos.x % 8);
 	}
-	if ((int)mousepos.y % 4 >= 2)
+	if ((int)mousepos.y % 8 >= 4)
 	{
-		gridy = (int)mousepos.y + (4 - (int)mousepos.y % 4);
+		gridy = (int)mousepos.y + (8 - (int)mousepos.y % 8);
 	}
 	else
 	{
-		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
+		gridy = (int)mousepos.y - ((int)mousepos.y % 8);
 	}
 
 	pos = Vector3(gridx, gridy, 0);//update to mouse pos
@@ -52,6 +52,7 @@ bool PickaxeTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 		if ((blockList[i]->pos - pos).LengthSquared() < blockList[i]->scale.x * blockList[i]->scale.x && blockList[i]->active)
 		{
 			blockList[i]->getDamaged(1);
+			std::cout << blockList[i]->getHealth() << std::endl;
 		}
 	}
 	return true;
