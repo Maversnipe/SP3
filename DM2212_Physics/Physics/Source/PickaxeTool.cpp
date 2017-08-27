@@ -24,23 +24,27 @@ void PickaxeTool::Init()
 void PickaxeTool::Update(double dt, Vector3 mousepos)
 {
 	int gridx, gridy;
-	if ((int)mousepos.x % 8 >= 4)
+	int mouseposx, mouseposy;
+	mouseposx = mousepos.x + 2;
+	mouseposy = mousepos.y - 2;
+	if ((int)mouseposx % 8 >= 4)
 	{
-		gridx = (int)mousepos.x + (8 - (int)mousepos.x % 8);
+		gridx = (int)mouseposx + (8 - (int)mouseposx % 8);
 	}
 	else
 	{
-		gridx = (int)mousepos.x - ((int)mousepos.x % 8);
+		gridx = (int)mouseposx - ((int)mouseposx % 8);
 	}
-	if ((int)mousepos.y % 8 >= 4)
+	if ((int)mouseposy % 8 >= 4)
 	{
-		gridy = (int)mousepos.y + (8 - (int)mousepos.y % 8);
+		gridy = (int)mouseposy + (8 - (int)mouseposy % 8);
 	}
 	else
 	{
-		gridy = (int)mousepos.y - ((int)mousepos.y % 8);
+		gridy = (int)mouseposy - ((int)mouseposy % 8);
 	}
-
+	gridx -= 2.f;
+	gridy += 2.f;
 	pos = Vector3(gridx, gridy, 0);//update to mouse pos
 }
 
