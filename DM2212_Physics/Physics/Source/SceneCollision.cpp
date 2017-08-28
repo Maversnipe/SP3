@@ -586,7 +586,7 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		if(go->block_status == GameObject::BLOCK_STATUS::FULL_HEALTH)
@@ -608,7 +608,7 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_TOOLS:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z + 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(ToolList[go->tooltype], false);
@@ -708,7 +708,6 @@ void SceneCollision::Render()
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	RenderGO(player->GetActiveTool());//render player active tool
 
 	RenderUI(player->GetActiveTool());//render player active tool to change UI
 
@@ -733,6 +732,8 @@ void SceneCollision::Render()
 
 		}
 	}
+
+	RenderGO(player->GetActiveTool());//render player active tool
 
 	if (m_ghost->active)
 		RenderGO(m_ghost);
