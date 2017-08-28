@@ -86,6 +86,23 @@ void Cannonball::Update(double dt)
 
 void Cannonball::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
 {
+	if (this->vel.x > 30)
+	{
+		this->vel.x = 30;
+	}
+	else if (this->vel.x < -30)
+	{
+		this->vel.x = -30;
+	}
+	if (this->vel.y > 30)
+	{
+		this->vel.y = 30;
+	}
+	else if (this->vel.y < -30)
+	{
+		this->vel.y = -30;
+	}
+
 	//Check mass
 	if (this->mass == 0)
 		this->invmass = 0;
@@ -94,7 +111,7 @@ void Cannonball::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 
 	if (this->active)
 	{
-		this->vel.y += -mass * dt;
+		this->vel.y += -9.8 * dt;
 		this->pos += this->vel * static_cast<float>(dt);
 	}
 	this->aabb.SetAABB(this->pos, this->scale);
@@ -123,9 +140,6 @@ bool Cannonball::checkCollision(std::vector<GameObject*>& Objs, std::vector<Bloc
 			//break;
 		}
 	}
-
-	if (check)
-		return check;
 
 	for (auto &i : Blks)
 	{

@@ -18,7 +18,7 @@ void DrillProj::Update(double dt)
 
 	if (m_grid->CheckCollision(this, &affected))
 	{
-	//	Response();
+		Response();
 	}
 }
 

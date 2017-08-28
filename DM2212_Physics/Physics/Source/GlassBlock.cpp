@@ -38,10 +38,10 @@ void Glassblock::Update(double dt)
 	//	//this->getDamaged(1);
 	//}
 	//grid
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		//Response();
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//}
 
 	//Rotation
 	if (!this->torque.IsZero())

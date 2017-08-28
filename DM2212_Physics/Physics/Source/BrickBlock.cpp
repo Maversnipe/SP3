@@ -37,11 +37,11 @@ void Brickblock::Update(double dt)
 	//	//this->getDamaged(1);
 	//}
 
-	if (m_grid->CheckCollision(this, &affected))
-	{
-		//Response();
-		//this->getDamaged(1);
-	}
+	//if (m_grid->CheckCollision(this, &affected))
+	//{
+	//	Response();
+	//	//this->getDamaged(1);
+	//}
 
 	//Rotation
 	if (!this->torque.IsZero())
@@ -83,6 +83,23 @@ void Brickblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 {
 	if (this->getHealth() <= 0)
 		this->active = false;
+
+	if (this->vel.x > 5)
+	{
+		this->vel.x = 5;
+	}
+	else if (this->vel.x < -5)
+	{
+		this->vel.x = -5;
+	}
+	if (this->vel.y > 5)
+	{
+		this->vel.y = 5;
+	}
+	else if (this->vel.y < -5)
+	{
+		this->vel.y = -5;
+	}
 
 	this->torque.SetZero();
 

@@ -102,7 +102,7 @@ void Block::Response()
 void Block::getDamaged(int damage)
 {
 	this->m_iHealth -= damage;
-	//std::cout << this->getHealth() << std::endl;
+	
 	if (this->Isdestroyed() && this->Isdestructable())
 	{
 		this->active = false;

@@ -24,7 +24,7 @@ void SceneEditor::Init()
 
 	//Map reading
 	map = new FileIO();
-    map->Init(Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 20, 32, Application::GetWindowHeight() * 1.f, Application::GetWindowWidth() * 2.f, 30, 30);
+	map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
@@ -243,14 +243,18 @@ void SceneEditor::RenderMap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
+			if (map->Map[i][k] > 0)
+			{
+				m_objectCount++;
+			}
 			if (map->Map[i][k] == 1)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
-				go->mass = 0.f;
+				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
 				m_grid->Add(go);
@@ -259,8 +263,8 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
@@ -271,33 +275,43 @@ void SceneEditor::RenderMap()
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((k + 1) * 8.f, (map->GetNumOfTiles_Height() - i) * 8.f, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-                go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 				m_grid->Add(go);
-            }
-            else if (map->Map[i][k] == 4)
-            {
+			}
+			else if (map->Map[i][k] == 4)
+			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-                go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
+				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
 				m_grid->Add(go);
-            }
+			}
 			else if (map->Map[i][k] == 5)
 			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
-				go->pos = Vector3((float)(k + 1) * 8.f, (float)(map->GetNumOfTiles_Height() - i) * 8.f, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+				m_grid->Add(go);
+			}
+			else if (map->Map[i][k] == 10)
+			{
+				GameObject *go = FetchGO();
+				go->type = GameObject::GO_WALL;
+				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
+				go->scale.Set(4.f, 4.f, 1.f);
+				go->vel.Set(0, 0, 0);
+				go->mass = 1.f;
 				m_grid->Add(go);
 			}
 		}
@@ -568,7 +582,7 @@ void SceneEditor::RenderGO(GameObject *go)
 
 	case GameObject::GO_TOOLS:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z + 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(ToolList[go->tooltype], false);

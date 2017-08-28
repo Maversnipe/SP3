@@ -31,7 +31,7 @@ void Woodblock::Update(double dt)
 	// Block's collision response
 	if (m_grid->CheckCollision(this, &affected))
 	{
-	//	Response();
+		Response();
 	}
 
 	// Block's collision response

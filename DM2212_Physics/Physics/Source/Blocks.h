@@ -18,7 +18,7 @@ public:
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
 	bool Isdestroyed() { if (m_iHealth <= 0) return true; else return false; };	//Get active or not
-	bool Isdestructable() { return m_bDestructable; };
+	bool Isdestructable() { return m_bDestructable; };							//Get if block can/cannot be destroyed
 	void getDamaged(int damage);//damage block
 
 protected:

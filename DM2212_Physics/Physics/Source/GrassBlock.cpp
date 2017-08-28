@@ -26,7 +26,7 @@ void Grassblock::Update(double dt)
 
 	if (m_grid->CheckCollision(this, &affected))
 	{
-		//Response();
+		Response();
 		//this->getDamaged(1);
 	}
 

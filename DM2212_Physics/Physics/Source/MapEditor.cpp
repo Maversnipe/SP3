@@ -53,29 +53,28 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 
 void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 {
-	int mapwidth = 32;
-	int mapheight = 20;
+	int mapwidth = 64;
+	int mapheight = 38;
 	bool found = false;
 
 	std::ofstream myfile;
 	myfile.open("Maps//example.csv");
 	myfile << "//";
-	for (unsigned index = 1; index < mapwidth *2 + 1; ++index)
+	for (unsigned index = 1; index < mapwidth + 1; ++index)
 	{
 		myfile << index << ",";
 	}
 	myfile << "\n";
 
-	for (unsigned y = mapheight; y > 0; --y)
+	for (unsigned y = mapheight + 2; y > 2; --y)
 	{
-		for (unsigned x = 0; x < mapwidth; ++x)
+		for (unsigned x = 1; x < mapwidth + 1; ++x)
 		{
 			for (unsigned i = 0; i < blocklist.size(); ++i)
 			{
-				if (blocklist[i]->pos.x / 8 == x && blocklist[i]->pos.y / 8 == y && blocklist[i]->active)
+				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
 				{
-					std::cout << blocklist[i]->Btype+1 << ",";
-					myfile << blocklist[i]->Btype + 1 << ",";
+					myfile << blocklist[i]->Btype+1 << ",";
 					found = true;
 					break;
 				}
@@ -84,13 +83,11 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				std::cout << "0,";
-				myfile << "0,";
+				myfile << "-1,";
 			}
 			found = false;
 
 		}
-		std::cout << "\n";
 		myfile << "\n";
 	}
 	myfile.close();
@@ -127,7 +124,7 @@ bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 	Block* go = FetchBlocks(blocklist, m_grid);
 	go->type = GameObject::GO_BLOCK;
 	go->pos = brickPos;
-	go->scale.Set(8.f, 8.f, 1.f);
+	go->scale.Set(4.f, 4.f, 1.f);
 	go->vel.Set(0, 0, 0);
 	go->mass = 1.f;
 	go->Btype = blockmanager[currblockint]->Btype;
@@ -196,26 +193,26 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	}
 
 	int gridx, gridy;
-	if ((int)mousepos.x % 8 >= 4)
+	if ((int)mousepos.x % 4 >= 2)
 	{
-		gridx = (int)mousepos.x + (8 - (int)mousepos.x % 8);
+		gridx = (int)mousepos.x + (4 - (int)mousepos.x % 4);
 	}
 	else
 	{
-		gridx = (int)mousepos.x - ((int)mousepos.x % 8);
+		gridx = (int)mousepos.x - ((int)mousepos.x % 4);
 	}
-	if ((int)mousepos.y % 8 >= 4)
+	if ((int)mousepos.y % 4 >= 2)
 	{
-		gridy = (int)mousepos.y + (8 - (int)mousepos.y % 8);
+		gridy = (int)mousepos.y + (4 - (int)mousepos.y % 4);
 	}
 	else
 	{
-		gridy = (int)mousepos.y - ((int)mousepos.y % 8);
+		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
 	}
 
 	brickPos = Vector3(gridx, gridy, 0);//update to mouse pos
 	blockmanager[currblockint]->pos = brickPos;
-	blockmanager[currblockint]->scale.Set(8, 8, 1);
+	blockmanager[currblockint]->scale.Set(4, 4, 1);
 }
 
 GameObject * MapEditor::GetCurrentBlock()

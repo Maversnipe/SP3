@@ -53,7 +53,6 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 	}
 
 	ToolManager[i_ActiveTool]->Update(dt, mousepos);
-	ToolManager[i_ActiveTool]->scale.Set(8, 8, 1);
 }
 
 void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList)
@@ -80,8 +79,8 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 {
 	i_ActiveTool = ToolIndex;
 	if (i_ActiveTool > i_NumTools - 1)
-		i_ActiveTool = 0;
-	if (i_ActiveTool < 0)
+		i_ActiveTool = 1;
+	if (i_ActiveTool < 1)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
 }
