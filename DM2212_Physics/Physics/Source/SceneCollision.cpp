@@ -445,7 +445,6 @@ void SceneCollision::RenderBG()
 
 	modelStack.PushMatrix();
 	modelStack.Translate
-
 	(CBackground::GetInstance()->getPosition().x,
 		CBackground::GetInstance()->getPosition().y,
 		CBackground::GetInstance()->getPosition().z);
@@ -639,6 +638,59 @@ void SceneCollision::RenderGO(GameObject *go)
 	}
 }
 
+void SceneCollision::RenderUI(GameObject * thing)
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+	switch (thing->tooltype)
+	{
+	case 1:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sPICKAXE], false);
+		modelStack.PopMatrix();
+
+	case 2:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sCANNON], false);
+		modelStack.PopMatrix();
+
+	case 3:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sDRILL], false);
+		modelStack.PopMatrix();
+
+	case 4:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sTHUMPER], false);
+		modelStack.PopMatrix();
+
+	case 5:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sMISSILE], false);
+		modelStack.PopMatrix();
+
+	case 6:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sDYNAMITE], false);
+		modelStack.PopMatrix();
+
+	}
+	modelStack.PopMatrix();
+	//thing->tooltype;
+}
+
 void SceneCollision::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -666,7 +718,9 @@ void SceneCollision::Render()
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	RenderGO(player->GetActiveTool());//render  player active tool
+	RenderGO(player->GetActiveTool());//render player active tool
+
+	RenderUI(player->GetActiveTool());//render player active tool to change UI
 
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{

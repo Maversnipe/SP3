@@ -195,9 +195,9 @@ void SceneBase::Init()
 	MenuButtons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
 	MenuButtons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
 	MenuButtons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
-	//MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+	MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
 	//MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
-	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//editor.tga");
 
 	//UI (toolbox)
 	Toolboxlist[GEO_sPICKAXE] = MeshBuilder::GenerateQuad("selectpickaxe", Color(1.f, 0.f, 0.f), 1.f);
@@ -208,6 +208,8 @@ void SceneBase::Init()
 	Toolboxlist[GEO_sDRILL]->textureID = LoadTGA("Image//toolbox//selectdrill.tga");
 	Toolboxlist[GEO_sTHUMPER] = MeshBuilder::GenerateQuad("selectthumper", Color(1.f, 0.f, 0.f), 1.f);
 	Toolboxlist[GEO_sTHUMPER]->textureID = LoadTGA("Image//toolbox//selectthumper.tga");
+	Toolboxlist[GEO_sDYNAMITE] = MeshBuilder::GenerateQuad("selectdynamite", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sDYNAMITE]->textureID = LoadTGA("Image//toolbox//selectdynamite.tga");
 	Toolboxlist[GEO_sMISSILE] = MeshBuilder::GenerateQuad("selectmissile", Color(1.f, 0.f, 0.f), 1.f);
 	Toolboxlist[GEO_sMISSILE]->textureID = LoadTGA("Image//toolbox//selectmissile.tga");
 

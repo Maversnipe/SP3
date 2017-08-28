@@ -81,6 +81,7 @@ public:
 		GEO_sCANNON,
 		GEO_sDRILL,
 		GEO_sTHUMPER,
+		GEO_sDYNAMITE,
 		GEO_sMISSILE,
 		NUM_TOOLBOX,
 	};
