@@ -187,6 +187,7 @@ void SceneBase::Init()
 	BGlist[GEO_BONUS] = MeshBuilder::GenerateQuad("bonusBG", Color(1.f, 0.f, 0.f), 1.f);
 	BGlist[GEO_BONUS]->textureID = LoadTGA("Image//Background//bonus.tga");
 
+	//Main Menu
 	MenuButtons[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
 	MenuButtons[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
 	MenuButtons[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
@@ -197,6 +198,29 @@ void SceneBase::Init()
 	//MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
 	//MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
 	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+
+	//UI (toolbox)
+	Toolboxlist[GEO_sPICKAXE] = MeshBuilder::GenerateQuad("selectpickaxe", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sPICKAXE]->textureID = LoadTGA("Image//toolbox//selectpickaxe.tga");
+	Toolboxlist[GEO_sCANNON] = MeshBuilder::GenerateQuad("selectcannon", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sCANNON]->textureID = LoadTGA("Image//toolbox//selectcannon.tga");
+	Toolboxlist[GEO_sDRILL] = MeshBuilder::GenerateQuad("selectdrill", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sDRILL]->textureID = LoadTGA("Image//toolbox//selectdrill.tga");
+	Toolboxlist[GEO_sTHUMPER] = MeshBuilder::GenerateQuad("selectthumper", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sTHUMPER]->textureID = LoadTGA("Image//toolbox//selectthumper.tga");
+	Toolboxlist[GEO_sMISSILE] = MeshBuilder::GenerateQuad("selectmissile", Color(1.f, 0.f, 0.f), 1.f);
+	Toolboxlist[GEO_sMISSILE]->textureID = LoadTGA("Image//toolbox//selectmissile.tga");
+
+	//UI (editor)
+	Editorboxlist[GEO_sGLASS] = MeshBuilder::GenerateQuad("sglass", Color(1.f, 0.f, 0.f), 1.f);
+	Editorboxlist[GEO_sGLASS]->textureID = LoadTGA("Image//editorbox//glassedit.tga");
+	Editorboxlist[GEO_sWOOD] = MeshBuilder::GenerateQuad("swood", Color(1.f, 0.f, 0.f), 1.f);
+	Editorboxlist[GEO_sWOOD]->textureID = LoadTGA("Image//editorbox//woodedit.tga");
+	Editorboxlist[GEO_sBRICK] = MeshBuilder::GenerateQuad("sbrick", Color(1.f, 0.f, 0.f), 1.f);	
+	Editorboxlist[GEO_sBRICK]->textureID = LoadTGA("Image//editorbox//brickedit.tga");
+	Editorboxlist[GEO_sMETAL] = MeshBuilder::GenerateQuad("smetal", Color(1.f, 0.f, 0.f), 1.f);
+	Editorboxlist[GEO_sMETAL]->textureID = LoadTGA("Image//editorbox//metaledit.tga");
+
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();
