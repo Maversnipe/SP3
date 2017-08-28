@@ -442,26 +442,14 @@ void SceneCollision::RenderMainMinimap()
 void SceneCollision::RenderBG()
 {
 	CBackground::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg here
-
-	modelStack.PushMatrix();
-	modelStack.Translate
-	(CBackground::GetInstance()->getPosition().x,
-		CBackground::GetInstance()->getPosition().y,
-		CBackground::GetInstance()->getPosition().z);
-	modelStack.Scale
-	(CBackground::GetInstance()->getScale().x,
-		CBackground::GetInstance()->getScale().y,
-		CBackground::GetInstance()->getScale().z);
-
-	modelStack.PushMatrix();
 	if (CBackground::GetInstance()->m_CBackground)
 	{
 		modelStack.PushMatrix();
+		modelStack.Translate(130, 95, -4.f);
+		modelStack.Scale(256.0f, 196.0f, 1.f);
 		RenderMesh(BGlist[GEO_BONUS], false); //and here
 		modelStack.PopMatrix();
 	}
-
-	modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -714,6 +702,8 @@ void SceneCollision::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
+	RenderBG();
+
 	RenderMinimap(); //test
 
 	RenderMesh(meshList[GEO_AXES], false);
@@ -785,7 +775,6 @@ void SceneCollision::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
 	//RenderMinimap(); //test
-	RenderBG();
 
 }
 
