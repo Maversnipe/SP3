@@ -1,6 +1,7 @@
 #pragma once
 #include "ToolsInfo.h"
 #include "Application.h"
+#include "Cannon.h"
 
 class CannonTool :public ToolsInfo
 {
@@ -13,4 +14,5 @@ public:
 	bool UseTool(vector<Block*> blockList, vector<GameObject*> &goList);
 private:
 	bool isSet;
+	Cannon* cannon;
 };

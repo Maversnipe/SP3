@@ -34,6 +34,8 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 	{
 		if (mousepos != pos)
 			dir = (mousepos - pos).Normalized();
+
+		cannon->Update(dt, mousepos);
 	}
 }
 
@@ -43,15 +45,37 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 	{
 		isSet = true;
 		cout << "Cannon Set at: " << pos << endl;
+		//Spawn Cannon
+		//Base
+		GameObject *go = FetchGO(goList);
+		go->type = GameObject::GO_CUBE;
+		go->pos = pos;
+		go->vel.SetZero();
+		go->scale.Set(5, 5, 1);
+		go->aabb.SetAABB(go->pos, go->scale);
+		m_grid->Add(go);
+
+		//Tip
+		GameObject *go2 = FetchGO(goList);
+		go2->type = GameObject::GO_CANNON;
+		go2->pos = pos;
+		go2->pos.y += 1.f;
+		go2->vel.SetZero();
+		go2->scale.Set(10, 3, 1);
+		go2->aabb.SetAABB(go2->pos, go2->scale);
+		m_grid->Add(go2);
+		cannon = static_cast<Cannon*>(go2);
+		
 		return false;
 	}
 	else
 	{
+		//Spawn Cannonball
 		GameObject *go = FetchGO(goList);
 
 		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::CANNONBALL;
-		go->pos = pos;
+		go->pos = cannon->pos + Vector3(3, 3, 0);
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);

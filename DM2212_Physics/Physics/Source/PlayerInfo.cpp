@@ -5,6 +5,7 @@
 #include "ThumperTool.h"
 #include "MissileTool.h"
 #include "TestWeapon.h"
+#include "DynamiteTool.h"
 
 PlayerInfo *PlayerInfo::instance = 0;
 
@@ -26,7 +27,7 @@ void PlayerInfo::Init(Grid* grid)
 	ToolManager[1] = new CannonTool(grid);
 	ToolManager[2] = new DrillTool(grid);
 	ToolManager[3] = new ThumperTool(grid);
-	ToolManager[4] = new TestWeapon(grid);
+	ToolManager[4] = new DynamiteTool(grid);
 	ToolManager[5] = new MissileTool(grid);
 }
 
@@ -89,6 +90,11 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 void PlayerInfo::SetGold(int gold)
 {
 	i_Money = gold;
+}
+
+void PlayerInfo::AddGold(int amount_)
+{
+	i_Money += amount_;
 }
 
 ToolsInfo* PlayerInfo::GetActiveTool()

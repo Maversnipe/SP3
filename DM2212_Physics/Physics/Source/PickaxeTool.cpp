@@ -24,24 +24,25 @@ void PickaxeTool::Init()
 void PickaxeTool::Update(double dt, Vector3 mousepos)
 {
 	int gridx, gridy;
-	int mouseposx, mouseposy;
-	mouseposx = mousepos.x + 2;
-	mouseposy = mousepos.y - 2;
-	if ((int)mouseposx % 8 >= 4)
+
+	if ((int)mousepos.x % 4 >= 2)
 	{
-		gridx = (int)mouseposx + (8 - (int)mouseposx % 8);
+		gridx = (int)mousepos.x + (4 - (int)mousepos.x % 4);
 	}
 	else
 	{
-		gridx = (int)mouseposx - ((int)mouseposx % 8);
+		gridx = (int)mousepos.x - ((int)mousepos.x % 4);
 	}
-	if ((int)mouseposy % 8 >= 4)
+	if ((int)mousepos.y % 4 >= 2)
 	{
-		gridy = (int)mouseposy + (8 - (int)mouseposy % 8);
+		gridy = (int)mousepos.y + (4 - (int)mousepos.y % 4);
 	}
 	else
 	{
-		gridy = (int)mouseposy - ((int)mouseposy % 8);
+		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
+		int mouseposx, mouseposy;
+		mouseposx = mousepos.x + 2;
+		mouseposy = mousepos.y - 2;
 	}
 	gridx -= 2.f;
 	gridy += 2.f;
@@ -56,7 +57,6 @@ bool PickaxeTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 		if ((blockList[i]->pos - pos).LengthSquared() < blockList[i]->scale.x * blockList[i]->scale.x && blockList[i]->active)
 		{
 			blockList[i]->getDamaged(1);
-			std::cout << blockList[i]->getHealth() << std::endl;
 		}
 	}
 	return true;
