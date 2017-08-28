@@ -24,7 +24,7 @@ void SceneEditor::Init()
 
 	//Map reading
 	map = new FileIO();
-	map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 40, 64, Application::GetWindowHeight() * 2.f, Application::GetWindowWidth() * 2.f, 30, 30);
+	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
@@ -252,7 +252,7 @@ void SceneEditor::RenderMap()
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
+				go->scale.Set(8.f, 8.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;

@@ -73,6 +73,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			for (unsigned i = 0; i < blocklist.size(); ++i)
 			{
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
+				if ((blocklist[i]->pos.x + 2) / 8 == x && (blocklist[i]->pos.y - 2) / 8 == y && blocklist[i]->active)
 				{
 					myfile << blocklist[i]->Btype+1 << ",";
 					found = true;
@@ -193,6 +194,7 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	}
 
 	int gridx, gridy;
+ 
 	if ((int)mousepos.x % 4 >= 2)
 	{
 		gridx = (int)mousepos.x + (4 - (int)mousepos.x % 4);
@@ -208,9 +210,13 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	else
 	{
 		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
+
+		int mouseposx, mouseposy;
+		mouseposx = mousepos.x + 2;
+		mouseposy = mousepos.y - 2;
 	}
 
-	brickPos = Vector3(gridx, gridy, 0);//update to mouse pos
+	brickPos = Vector3(gridx-2, gridy+2, 0);//update to mouse pos
 	blockmanager[currblockint]->pos = brickPos;
 	blockmanager[currblockint]->scale.Set(4, 4, 1);
 }
