@@ -11,8 +11,9 @@ DrillProj::~DrillProj()
 
 void DrillProj::Update(double dt)
 {
-	if (this->active)
-		this->pos += this->vel * static_cast<float>(dt);
+	if (!this->active)
+		return;
+	this->pos += this->vel * static_cast<float>(dt);
 
 	this->aabb.SetAABB(this->pos, this->scale);
 

@@ -51,7 +51,7 @@ public:
 		GEO_CUBE,
 		GEO_SHIP,
 		GEO_GRID,
-		
+
 		//SP 3
 		GEO_TEST_ANIMATION,
 		NUM_GEOMETRY,
@@ -130,7 +130,7 @@ protected:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
 	//Block list
-	Mesh* BlockList[NUM_BLOCKS];
+	Mesh* BlockList[NUM_BLOCKS][3];
 	//Tool list
 	Mesh* ToolList[NUM_TOOLS];
 	//Maplist

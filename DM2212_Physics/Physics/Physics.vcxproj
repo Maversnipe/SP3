@@ -154,6 +154,9 @@
   <ItemGroup>
     <ClCompile Include="Source\background.cpp" />
     <ClCompile Include="Source\Button.cpp" />
+    <ClCompile Include="Source\Cannon.cpp" />
+    <ClCompile Include="Source\Explosion.cpp" />
+    <ClCompile Include="Source\DynamiteTool.cpp" />
     <ClCompile Include="Source\missile.cpp" />
     <ClCompile Include="Source\MissileTool.cpp" />
     <ClCompile Include="Source\CannonTool.cpp" />
@@ -198,6 +201,9 @@
   <ItemGroup>
     <ClInclude Include="Source\background.h" />
     <ClInclude Include="Source\Button.h" />
+    <ClInclude Include="Source\Cannon.h" />
+    <ClInclude Include="Source\Explosion.h" />
+    <ClInclude Include="Source\DynamiteTool.h" />
     <ClInclude Include="Source\missile.h" />
     <ClInclude Include="Source\MissileTool.h" />
     <ClInclude Include="Source\CannonTool.h" />

@@ -19,7 +19,6 @@
 #include "minimap.h"
 #include "background.h"
 
-
 class Grid;
 class Quadtree;
 class SceneCollision : public SceneBase
@@ -49,8 +48,6 @@ public:
 	//render minimap
 	void RenderMinimap();
 	void RenderMainMinimap();
-
-	void RenderGrid();
 
 	//render background
 	void RenderBG();

@@ -21,7 +21,7 @@ void Camera::Init(const Vector3& pos, const Vector3& target, const Vector3& up)
 	this->defaultTarget = target;
 	this->defaultUp = up;
 	this->minBoundary.Set(2.f, 6.f, -1.f); // Setting of Camera minimum X and Y
-	this->maxBoundary.Set(98.f, 66.f, 1.f); // Setting of Camera maximum X and Y
+	this->maxBoundary.Set(98.f, 58.f, 1.f); // Setting of Camera maximum X and Y
 	m_eMoveType = CLICK_N_DRAG;
 }
 
@@ -133,6 +133,7 @@ void Camera::M_CameraMovement(double dt)
 				}
 				else if (defaultPos.y + m_fOffset_y < minBoundary.y)
 				{ // If offset to down is less than minBoundary, set as minBoundary
+					std::cout << "MIN REACHED" << std::endl;
 					m_fOffset_y = -(defaultPos.y - minBoundary.y);
 				}
 			}

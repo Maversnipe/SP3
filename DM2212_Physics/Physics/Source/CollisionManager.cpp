@@ -345,6 +345,44 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		Vector3 u2N = u2.Dot(N) * N;
 		go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
+		//Vector3 temp = go->vel;
+		//go->vel -= go2->vel;
+		//go2->vel -= temp;
+		
+
+		if (go->vel.x > 20)
+		{
+			go->vel.x = 20;
+		}
+		else if (go->vel.x < -20)
+		{
+			go->vel.x = -20;
+		}
+		if (go->vel.y > 20)
+		{
+			go->vel.y = 20;
+		}
+		else if (go->vel.y < -20)
+		{
+			go->vel.y = -20;
+		}
+
+		if (go2->vel.x > 20)
+		{
+			go2->vel.x = 20;
+		}
+		else if (go2->vel.x < -20)
+		{
+			go2->vel.x = -20;
+		}
+		if (go2->vel.y > 20)
+		{
+			go2->vel.y = 20;
+		}
+		else if (go2->vel.y < -20)
+		{
+			go2->vel.y = -20;
+		}
 
 		PositionalCorrection(go, go2);
 
@@ -376,7 +414,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		{
 			Vector3 vel = go->vel;
 			Vector3 N = m->normal.Normalized();
-			go->vel = vel - (2.f * vel.Dot(N)) * N;
+			//go->vel = vel - (2.f * vel.Dot(N)) * N;
+			go->vel.SetZero();
 			break;
 		}
 
@@ -415,15 +454,12 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 			go2->vel += ratio * Impulse;
 
 			//Friction
+			Vector3 rv = go2->vel - go->vel;
 			Vector3 t = rv - (m->normal.Normalized() * rv.Dot(m->normal.Normalized()));
 
 			//j tangent magnitude
-			float jt = rv.Dot(t);
+			float jt = -rv.Dot(t);
 			jt /= (go->invmass + go2->invmass);
-
-			//Don' apply small fricition impulse
-			if (jt <= 0.f)
-				return;
 
 			//Calculate staticFric && dynamicFric
 			float sf = std::sqrt(go->staticFric * go2->staticFric);
@@ -438,6 +474,40 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 
 			go->vel -= go->invmass * tangentImpulse;
 			go2->vel += go2->invmass * tangentImpulse;
+		}
+
+		if (go->vel.x > 5)
+		{
+			go->vel.x = 5;
+		}
+		else if (go->vel.x < -5)
+		{
+			go->vel.x = -5;
+		}
+		if (go->vel.y > 5)
+		{
+			go->vel.y = 5;
+		}
+		else if (go->vel.y < -5)
+		{
+			go->vel.y = -5;
+		}
+
+		if (go2->vel.x > 5)
+		{
+			go2->vel.x = 5;
+		}
+		else if (go2->vel.x < -5)
+		{
+			go2->vel.x = -5;
+		}
+		if (go2->vel.y > 5)
+		{
+			go2->vel.y = 5;
+		}
+		else if (go2->vel.y < -5)
+		{
+			go2->vel.y = -5;
 		}
 
 		//Vector3 rv = go2->vel - go->vel;
@@ -503,15 +573,27 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	{
 	case GameObject::GO_BALL:
 	{
+		if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
+		{
+			Vector3 vel = go2->vel;
+			Vector3 normal = Vector3(0, 1, 0);
+			Vector3 N = normal.Normalized();
+			//go2->vel = vel - (2.f * vel.Dot(N)) * N;
+			go2->vel.SetZero();
+			go2->active = false;
+			break;
+		}
+
 		Vector3 u1 = go->vel;
 		Vector3 u2 = go2->vel;
 		Vector3 N = (go2->pos - go->pos).Normalize();
 		Vector3 u1N = u1.Dot(N) * N;
 		Vector3 u2N = u2.Dot(N) * N;
-		go->vel = u1 + 2.f * (u2N - u1N);
+		//go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
-
-		go->torque += m->normal.Cross(Vector3(0, 5, 0));
+		go2->vel -= go->vel;
+		go->vel.x -= go2->mass * m->normal.Normalized().x;
+		go->torque += m->normal.Cross(Vector3(0, 1, 0));
 
 		PositionalCorrection(go, go2);
 
@@ -556,7 +638,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		float e = std::min(go->restitution, go2->restitution);
 
 		float j = -(1 + e) * velAlongNormal;
-		j /= go->invmass + go2->invmass;
+		j /= (go->invmass + go2->invmass);
 
 		//Prevent Overlap
 		PositionalCorrection(go, go2);
@@ -576,15 +658,12 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 			go2->vel += ratio * Impulse;
 
 			//Friction
+			Vector3 rv = go2->vel - go->vel;
 			Vector3 t = rv - (m->normal.Normalized() * rv.Dot(m->normal.Normalized()));
 
 			//j tangent magnitude
-			float jt = rv.Dot(t);
+			float jt = -rv.Dot(t);
 			jt /= (go->invmass + go2->invmass);
-
-			//Don' apply small fricition impulse
-			if (jt <= 0.f)
-				return;
 
 			//Calculate staticFric && dynamicFric
 			float sf = std::sqrt((go->staticFric * go->staticFric) + (go2->staticFric * go2->staticFric));
@@ -599,6 +678,40 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 
 			go->vel -= go->invmass * tangentImpulse;
 			go2->vel += go2->invmass * tangentImpulse;
+
+			if (go->vel.x > 5)
+			{
+				go->vel.x = 5;
+			}
+			else if (go->vel.x < -5)
+			{
+				go->vel.x = -5;
+			}
+			if (go->vel.y > 5)
+			{
+				go->vel.y = 5;
+			}
+			else if (go->vel.y < -5)
+			{
+				go->vel.y = -5;
+			}
+
+			if (go2->vel.x > 5)
+			{
+				go2->vel.x = 5;
+			}
+			else if (go2->vel.x < -5)
+			{
+				go2->vel.x = -5;
+			}
+			if (go2->vel.y > 5)
+			{
+				go2->vel.y = 5;
+			}
+			else if (go2->vel.y < -5)
+			{
+				go2->vel.y = -5;
+			}
 		}
 
 		/*go->iscolliding = true;
@@ -626,6 +739,18 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	default:
 		break;
 	}
+}
+
+bool CollisionManager::CheckCollisionM(Vector3 Mousepos, GameObject* go)
+{
+	switch (go->type)
+	{
+		case GameObject::GO_BALL:
+		{
+			break;
+		}
+	}
+	return false;
 }
 
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)

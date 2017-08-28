@@ -28,6 +28,7 @@ public:
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
 		GO_EXPLOSION,
+		GO_CANNON,
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
@@ -37,14 +38,9 @@ public:
 	{
 		GO_GRASS,
 		GO_GLASS,
-		//GO_GLASSDAM,
 		GO_WOOD,
-		//GO_WOODDAM,
-		//GO_WOODBROKEN,
 		GO_METAL,
 		GO_BRICK,
-		//GO_BRICKDAM,
-		//GO_BRICKBROKEN,
 		GO_BTYPTOTAL,
 	};
 	BLOCK_TYPE Btype;
@@ -57,6 +53,7 @@ public:
 		DRILL,
 		THUMPER,
 		MISSILE,
+		DYNAMITE,
 		TOOL_TOTAL,
 	};
 	TOOL_TYPE tooltype;
@@ -67,9 +64,20 @@ public:
 		CANNONBALL,
 		DRILLPROJ,
 		ROCKET,
+		EXPLOSION,
 		TOOLPROJ_TOTAL,
 	};
 	TOOL_PROJ toolproj;
+
+	enum BLOCK_STATUS
+	{
+		NON_BLOCK = 0,
+		FULL_HEALTH,
+		DAMAGED,
+		BROKEN,
+		STAT_TOTAL,
+	};
+	BLOCK_STATUS block_status;
 
 	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();

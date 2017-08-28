@@ -34,6 +34,9 @@ public:
 	void CollisionResponseC(GameObject *go, GameObject *go2);
 	//Box to other obj
 	void CollisionResponseB(GameObject *go, GameObject *go2);
+	//Mouse to boxes
+	bool CheckCollisionM(Vector3 Mousepos, GameObject* go);
+
 
 	//Prevent Overlaps(objects)
 	void PositionalCorrection(GameObject *go, GameObject *go2);

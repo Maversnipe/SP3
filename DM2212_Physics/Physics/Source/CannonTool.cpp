@@ -34,6 +34,8 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 	{
 		if (mousepos != pos)
 			dir = (mousepos - pos).Normalized();
+
+		cannon->Update(dt, mousepos);
 	}
 }
 
@@ -43,21 +45,52 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 	{
 		isSet = true;
 		cout << "Cannon Set at: " << pos << endl;
-		return false;
+		
+		//Spawn Cannon
+		GameObject *go2 = FetchGO(goList);
+		go2->type = GameObject::GO_CANNON;
+		go2->pos = pos;
+		go2->pos.y += 1.f;
+		go2->vel.SetZero();
+		go2->scale.Set(10, 5, 1);
+		go2->aabb.SetAABB(go2->pos, go2->scale);
+		m_grid->Add(go2);
+		cannon = static_cast<Cannon*>(go2);
+		cannon->Init();
+		
+		return true;
 	}
 	else
 	{
+		//Spawn Cannonball
 		GameObject *go = FetchGO(goList);
-
 		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::CANNONBALL;
-		go->pos = pos;
-		go->vel = dir * 50;
+		go->pos = cannon->pos;
+		go->vel = cannon->dir * 50;
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
+		cannon->Decrease(1);
 		m_grid->Add(go);
-		isSet = false;
 
-		return true;
+		if (cannon->Getbullet() == 0)
+		{
+			cannon->active = false;
+			isSet = false;
+		}
+
+		return false;
 	}
+}
+
+bool CannonTool::CheckPlacement(vector<Block*> blockList)
+{
+	bool check = false;
+
+	for (auto &i : blockList)
+	{
+		if (!i->active)
+			continue;
+	}
+	return check;
 }

@@ -120,6 +120,16 @@
     <ClCompile Include="Source\background.cpp" />
     <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\Button.cpp" />
+    <ClCompile Include="Source\DynamiteTool.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Explosion.cpp">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cannon.cpp">
+      <Filter>GameObjects\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -247,6 +257,16 @@
     <ClInclude Include="Source\background.h" />
     <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\Button.h" />
+    <ClInclude Include="Source\DynamiteTool.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Explosion.h">
+      <Filter>GameObjects\Tools\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cannon.h">
+      <Filter>GameObjects\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\background.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
