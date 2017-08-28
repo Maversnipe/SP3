@@ -34,6 +34,7 @@ public:
 	~PlayerInfo();
 
 	void Init(Grid* grid);
+	void Init(Grid* grid,bool pickaxe,bool cannon, bool thumper, bool drill, bool dynamite, bool missile);
 
 	void Update(double dt, Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
@@ -56,7 +57,7 @@ private:
 	std::string s_str;	//RenderTextonScreen(bullets,etc)
 
 	//tool stuff
-	const int i_NumTools = 6;
+	int i_NumTools;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
 

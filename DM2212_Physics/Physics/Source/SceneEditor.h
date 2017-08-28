@@ -39,11 +39,17 @@ public:
 	//Mapping
 	void RenderMap();
 
+	//render background
+	void RenderBG();
+
 	//render minimap
 	void RenderMinimap();
 	void RenderMainMinimap();
 
 protected:
+	//background
+	int backgroundindex;
+
 	//Physics
 	float m_speed;
 	float m_worldWidth;

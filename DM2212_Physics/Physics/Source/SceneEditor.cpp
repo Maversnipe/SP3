@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
+#include "background.h"
 
 SceneEditor::SceneEditor()
 {
@@ -17,6 +18,7 @@ void SceneEditor::Init()
 	SceneBase::Init();
 	m_objectCount = 0;
 	i_blocklimit = 50;
+	backgroundindex = 1;
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
@@ -27,11 +29,13 @@ void SceneEditor::Init()
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
+	CBackground::GetInstance()->Init();
 	//RenderMainMinimap();
 
 	//Player
 	player = PlayerInfo::GetInstance();
 	player->Init(m_grid);
+	//player->Init(m_grid,0,1,0,1,0,0);// limiting the player items
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
@@ -339,6 +343,19 @@ void SceneEditor::RenderMap()
 	*/
 }
 
+void SceneEditor::RenderBG()
+{
+	CBackground::GetInstance()->SetBackground(BGlist[backgroundindex]); //change bg here
+	if (CBackground::GetInstance()->m_CBackground)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(130, 95, -4.f);
+		modelStack.Scale(256.0f, 196.0f, 1.f);
+		RenderMesh(BGlist[backgroundindex], false); //and here
+		modelStack.PopMatrix();
+	}
+}
+
 void SceneEditor::RenderMinimap()
 {
 
@@ -621,6 +638,8 @@ void SceneEditor::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	RenderBG();
 
 	RenderMinimap(); //test
 

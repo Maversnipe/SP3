@@ -22,6 +22,7 @@ PlayerInfo::~PlayerInfo()
 
 void PlayerInfo::Init(Grid* grid)
 {
+	i_NumTools = 6;
 	ToolManager = new ToolsInfo*[i_NumTools];
 	ToolManager[0] = new PickaxeTool(grid);
 	ToolManager[1] = new CannonTool(grid);
@@ -29,6 +30,42 @@ void PlayerInfo::Init(Grid* grid)
 	ToolManager[3] = new DrillTool(grid);
 	ToolManager[4] = new DynamiteTool(grid);
 	ToolManager[5] = new MissileTool(grid);
+}
+
+void PlayerInfo::Init(Grid * grid, bool pickaxe, bool cannon, bool thumper, bool drill, bool dynamite, bool missile)
+{
+	i_NumTools = 0;
+	ToolManager = new ToolsInfo*[6];
+	if (pickaxe)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new PickaxeTool(grid);
+	}
+	if (cannon)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new CannonTool(grid);
+	}
+	if (thumper)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new ThumperTool(grid);
+	}
+	if (drill)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new DrillTool(grid);
+	}
+	if (dynamite)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new DynamiteTool(grid);
+	}
+	if (missile)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools] = new MissileTool(grid);
+	}
 }
 
 void PlayerInfo::Update(double dt, Vector3 mousepos)
