@@ -346,6 +346,40 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
 
+		if (go->vel.x > 5)
+		{
+			go->vel.x = 5;
+		}
+		else if (go->vel.x < -5)
+		{
+			go->vel.x = -5;
+		}
+		if (go->vel.y > 5)
+		{
+			go->vel.y = 5;
+		}
+		else if (go->vel.y < -5)
+		{
+			go->vel.y = -5;
+		}
+
+		if (go2->vel.x > 5)
+		{
+			go2->vel.x = 5;
+		}
+		else if (go2->vel.x < -5)
+		{
+			go2->vel.x = -5;
+		}
+		if (go2->vel.y > 5)
+		{
+			go2->vel.y = 5;
+		}
+		else if (go2->vel.y < -5)
+		{
+			go2->vel.y = -5;
+		}
+
 		PositionalCorrection(go, go2);
 
 		break;
@@ -438,6 +472,40 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 			go2->vel += go2->invmass * tangentImpulse;
 		}
 
+		if (go->vel.x > 5)
+		{
+			go->vel.x = 5;
+		}
+		else if (go->vel.x < -5)
+		{
+			go->vel.x = -5;
+		}
+		if (go->vel.y > 5)
+		{
+			go->vel.y = 5;
+		}
+		else if (go->vel.y < -5)
+		{
+			go->vel.y = -5;
+		}
+
+		if (go2->vel.x > 5)
+		{
+			go2->vel.x = 5;
+		}
+		else if (go2->vel.x < -5)
+		{
+			go2->vel.x = -5;
+		}
+		if (go2->vel.y > 5)
+		{
+			go2->vel.y = 5;
+		}
+		else if (go2->vel.y < -5)
+		{
+			go2->vel.y = -5;
+		}
+
 		//Vector3 rv = go2->vel - go->vel;
 
 		//float velAlongNormal = 0;
@@ -508,6 +576,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 			Vector3 N = normal.Normalized();
 			//go2->vel = vel - (2.f * vel.Dot(N)) * N;
 			go2->vel.SetZero();
+			go2->active = false;
 			break;
 		}
 

@@ -77,7 +77,7 @@ void Glassblock::Update(double dt)
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
 
-	if (m_iHealth < 2)
+	if (m_iHealth <= 1)
 		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
 }
 
@@ -158,6 +158,6 @@ void Glassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
 
-	else if (m_iHealth == 1)
+	if (m_iHealth <= 1)
 		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
 }
