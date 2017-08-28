@@ -345,41 +345,43 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		Vector3 u2N = u2.Dot(N) * N;
 		go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
-		go->vel -= go2->vel;
+		//Vector3 temp = go->vel;
+		//go->vel -= go2->vel;
+		//go2->vel -= temp;
 		
 
-		if (go->vel.x > 5)
+		if (go->vel.x > 20)
 		{
-			go->vel.x = 5;
+			go->vel.x = 20;
 		}
-		else if (go->vel.x < -5)
+		else if (go->vel.x < -20)
 		{
-			go->vel.x = -5;
+			go->vel.x = -20;
 		}
-		if (go->vel.y > 5)
+		if (go->vel.y > 20)
 		{
-			go->vel.y = 5;
+			go->vel.y = 20;
 		}
-		else if (go->vel.y < -5)
+		else if (go->vel.y < -20)
 		{
-			go->vel.y = -5;
+			go->vel.y = -20;
 		}
 
-		if (go2->vel.x > 5)
+		if (go2->vel.x > 20)
 		{
-			go2->vel.x = 5;
+			go2->vel.x = 20;
 		}
-		else if (go2->vel.x < -5)
+		else if (go2->vel.x < -20)
 		{
-			go2->vel.x = -5;
+			go2->vel.x = -20;
 		}
-		if (go2->vel.y > 5)
+		if (go2->vel.y > 20)
 		{
-			go2->vel.y = 5;
+			go2->vel.y = 20;
 		}
-		else if (go2->vel.y < -5)
+		else if (go2->vel.y < -20)
 		{
-			go2->vel.y = -5;
+			go2->vel.y = -20;
 		}
 
 		PositionalCorrection(go, go2);
