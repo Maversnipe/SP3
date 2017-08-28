@@ -17,6 +17,7 @@ Block::~Block()
 
 void Block::Init()
 {
+	this->block_status = GameObject::BLOCK_STATUS::FULL_HEALTH;
 	switch (Btype)
 	{
 	case GameObject::GO_GRASS:
@@ -24,7 +25,7 @@ void Block::Init()
 		this->m_bDestructable = false;
 		break;
 	case GameObject::GO_GLASS:
-		this->m_iHealth = 1;
+		this->m_iHealth = 2;
 		this->m_bDestructable = true;
 		break;
 	case GameObject::GO_WOOD:

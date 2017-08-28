@@ -16,6 +16,7 @@ GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	torque(0, 0, 0),
 	tooltype(TOOL_TYPE::NON_TOOL),
 	toolproj(TOOL_PROJ::NON_TOOLPROJ),
+	block_status(BLOCK_STATUS::NON_BLOCK),
 	m_grid(grid),
 	next_(NULL),
 	prev_(NULL),

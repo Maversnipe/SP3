@@ -157,7 +157,7 @@ void SceneCollision::Update(double dt)
 
 	if (Application::IsKeyPressed(VK_F10))
 	{
-		SceneManager::currscene = 2;
+		SceneManager::currscene = 3;
 	}
 
 	//Mouse Section
@@ -394,47 +394,42 @@ void SceneCollision::RenderMainMinimap()
 			if (map->Map[i][k] == 3)
 			{
 				modelStack.PushMatrix();
-
 				modelStack.Scale(0.15, 0.1, 0.05);
 				modelStack.Translate(((k + 1)*0.09) - 3.2, ((map->GetNumOfTiles_Height() - i)*0.25)-5.2, 0);
-				RenderMesh(BlockList[GEO_GRASS], false);
+				RenderMesh(BlockList[GEO_GRASS][0], false);
 				modelStack.PopMatrix();
 
 			}
 			else if (map->Map[i][k] == 2)
 			{
 				modelStack.PushMatrix();
-
 				modelStack.Scale(0.025, 0.035, 0.05);
 				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
-				RenderMesh(BlockList[GEO_GLASS], false);
+				RenderMesh(BlockList[GEO_GLASS][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 1)
 			{
 				modelStack.PushMatrix();
-
 				modelStack.Scale(0.025, 0.035, 0.05);
 				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
-				RenderMesh(BlockList[GEO_WOOD], false);
+				RenderMesh(BlockList[GEO_WOOD][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 4)
 			{
 				modelStack.PushMatrix();
-
 				modelStack.Scale(0.025, 0.035, 0.05);
 				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
-				RenderMesh(BlockList[GEO_METAL], false);
+				RenderMesh(BlockList[GEO_METAL][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 5)
 			{
 				modelStack.PushMatrix();
-
 				modelStack.Scale(0.025, 0.035, 0.05);
 				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
-				RenderMesh(BlockList[GEO_BRICK], false);
+				RenderMesh(BlockList[GEO_BRICK][0], false);
 				modelStack.PopMatrix();
 			}
 		}
@@ -468,8 +463,6 @@ void SceneCollision::RenderBG()
 	}
 
 	modelStack.PopMatrix();
-
-
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -609,7 +602,12 @@ void SceneCollision::RenderGO(GameObject *go)
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(BlockList[go->Btype], false);
+		if(go->block_status == GameObject::BLOCK_STATUS::FULL_HEALTH)
+			RenderMesh(BlockList[go->Btype][0], false);
+		else if (go->block_status == GameObject::BLOCK_STATUS::DAMAGED)
+			RenderMesh(BlockList[go->Btype][1], false);
+		else if (go->block_status == GameObject::BLOCK_STATUS::BROKEN)
+			RenderMesh(BlockList[go->Btype][2], false);
 		modelStack.PopMatrix();
 		break;
 

@@ -153,7 +153,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\background.cpp" />
+    <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Cannon.cpp" />
+    <ClCompile Include="Source\Explosion.cpp" />
+    <ClCompile Include="Source\DynamiteTool.cpp" />
     <ClCompile Include="Source\missile.cpp" />
     <ClCompile Include="Source\MissileTool.cpp" />
     <ClCompile Include="Source\CannonTool.cpp" />
@@ -163,6 +166,7 @@
     <ClCompile Include="Source\minimap.cpp" />
     <ClCompile Include="Source\Cannonball.cpp" />
     <ClCompile Include="Source\SceneEditor.cpp" />
+    <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\SoundEngine.cpp" />
     <ClCompile Include="Source\BrickBlock.cpp" />
@@ -196,7 +200,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\background.h" />
+    <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\Cannon.h" />
+    <ClInclude Include="Source\Explosion.h" />
+    <ClInclude Include="Source\DynamiteTool.h" />
     <ClInclude Include="Source\missile.h" />
     <ClInclude Include="Source\MissileTool.h" />
     <ClInclude Include="Source\CannonTool.h" />
@@ -206,6 +213,7 @@
     <ClInclude Include="Source\minimap.h" />
     <ClInclude Include="Source\Cannonball.h" />
     <ClInclude Include="Source\SceneEditor.h" />
+    <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\SoundEngine.h" />
     <ClInclude Include="Source\BrickBlock.h" />

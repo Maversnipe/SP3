@@ -104,13 +104,15 @@ void SceneBase::Init()
 		meshList[i] = NULL;
 	}
 	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
-	meshList[GEO_BALL] = MeshBuilder::GenerateSphere("ball", Color(1, 1, 1), 10, 10, 1.f);
+	meshList[GEO_BALL] = MeshBuilder::GenerateQuad("ball", Color(1, 1, 1), 2.f);
 	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
 	meshList[GEO_SHIP] = MeshBuilder::GenerateQuad("ship", Color(1, 1, 1), 1.f);
 	meshList[GEO_SHIP]->textureID = LoadTGA("Image//rocket.tga");
 	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
 	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
 	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
+	meshList[GEO_GRID] = MeshBuilder::GenerateQuad("grid", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRID]->textureID = LoadTGA("Image//Block_White.tga");
 
 	//----------Sprite animation ^-^----------
 	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
@@ -125,20 +127,30 @@ void SceneBase::Init()
 
 	//Game (Load Block Textures Here)
 	{
-		BlockList[GEO_GRASS] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
-		BlockList[GEO_GRASS]->textureID = LoadTGA("Image//blocks//ground//dirt.tga");
+		BlockList[GEO_GRASS][0] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
+		BlockList[GEO_GRASS][0]->textureID = LoadTGA("Image//blocks//ground//dirt.tga");
 
-		BlockList[GEO_GLASS] = MeshBuilder::GenerateQuad("Glassblock", Color(0.f, 0.f, 0.f), 1.f);
-		BlockList[GEO_GLASS]->textureID = LoadTGA("Image//blocks//glass//glass_fullhealth.tga");
+		BlockList[GEO_GLASS][0] = MeshBuilder::GenerateQuad("Glassblock1", Color(0.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_GLASS][0]->textureID = LoadTGA("Image//blocks//glass//glass_fullhealth.tga");
+		BlockList[GEO_GLASS][1] = MeshBuilder::GenerateQuad("Glassblock2", Color(0.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_GLASS][1]->textureID = LoadTGA("Image//blocks//glass//glass_damaged.tga");
 
-		BlockList[GEO_WOOD] = MeshBuilder::GenerateQuad("Woodblock", Color(0.9f, 0.9f, 0.9f), 1.f);
-		BlockList[GEO_WOOD]->textureID = LoadTGA("Image//blocks//wood//wood_fullhealth.tga");
+		BlockList[GEO_WOOD][0] = MeshBuilder::GenerateQuad("Woodblock1", Color(0.9f, 0.9f, 0.9f), 1.f);
+		BlockList[GEO_WOOD][0]->textureID = LoadTGA("Image//blocks//wood//wood_fullhealth.tga");
+		BlockList[GEO_WOOD][1] = MeshBuilder::GenerateQuad("Woodblock2", Color(0.9f, 0.9f, 0.9f), 1.f);
+		BlockList[GEO_WOOD][1]->textureID = LoadTGA("Image//blocks//wood//wood_damaged.tga");
+		BlockList[GEO_WOOD][2] = MeshBuilder::GenerateQuad("Woodblock3", Color(0.9f, 0.9f, 0.9f), 1.f);
+		BlockList[GEO_WOOD][2]->textureID = LoadTGA("Image//blocks//wood//wood_broken.tga");
 
-		BlockList[GEO_METAL] = MeshBuilder::GenerateQuad("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
-		BlockList[GEO_METAL]->textureID = LoadTGA("Image//blocks//metal//metal.tga");
+		BlockList[GEO_METAL][0] = MeshBuilder::GenerateQuad("Metalblock", Color(1.f, 1.f, 1.f), 1.f);
+		BlockList[GEO_METAL][0]->textureID = LoadTGA("Image//blocks//metal//metal.tga");
 
-		BlockList[GEO_BRICK] = MeshBuilder::GenerateQuad("Brickblock", Color(1.f, 0.f, 0.f), 1.f);
-		BlockList[GEO_BRICK]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
+		BlockList[GEO_BRICK][0] = MeshBuilder::GenerateQuad("Brickblock1", Color(1.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_BRICK][0]->textureID = LoadTGA("Image//blocks//brick//brick_fullhealth.tga");
+		BlockList[GEO_BRICK][1] = MeshBuilder::GenerateQuad("Brickblock2", Color(1.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_BRICK][1]->textureID = LoadTGA("Image//blocks//brick//brick_damaged.tga");
+		BlockList[GEO_BRICK][2] = MeshBuilder::GenerateQuad("Brickblock3", Color(1.f, 0.f, 0.f), 1.f);
+		BlockList[GEO_BRICK][2]->textureID = LoadTGA("Image//blocks//brick//brick_broken.tga");
 	}
 
 	//tools
@@ -174,6 +186,17 @@ void SceneBase::Init()
 	BGlist[GEO_DUSK]->textureID = LoadTGA("Image//Background//dusk.tga");
 	BGlist[GEO_BONUS] = MeshBuilder::GenerateQuad("bonusBG", Color(1.f, 0.f, 0.f), 1.f);
 	BGlist[GEO_BONUS]->textureID = LoadTGA("Image//Background//bonus.tga");
+
+	MenuButtons[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
+	MenuButtons[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_PLAY]->textureID = LoadTGA("Image//mainmenu//play.tga");
+	MenuButtons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
+	MenuButtons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
+	//MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+	//MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
+	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();

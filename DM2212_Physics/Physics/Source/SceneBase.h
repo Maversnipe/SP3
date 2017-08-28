@@ -50,7 +50,8 @@ public:
 		GEO_BALL,
 		GEO_CUBE,
 		GEO_SHIP,
-		
+		GEO_GRID,
+
 		//SP 3
 		GEO_TEST_ANIMATION,
 		NUM_GEOMETRY,
@@ -99,6 +100,16 @@ public:
 		GEO_MISSILE,
 		NUM_TOOLS,
 	};
+	enum MENU_BUTTONS
+	{
+		MENU_NONE = 0,
+		MENU_PLAY,
+		//MENU_SANDBOX,
+		MENU_OPTIONS,
+		MENU_EXIT,
+		MENU_BACKGROUND,
+		MAX_MENU,
+	};
 
 public:
 	SceneBase();
@@ -119,16 +130,18 @@ protected:
 	unsigned m_vertexArrayID;
 	Mesh* meshList[NUM_GEOMETRY];
 	//Block list
-	Mesh* BlockList[NUM_BLOCKS];
+	Mesh* BlockList[NUM_BLOCKS][3];
 	//Tool list
 	Mesh* ToolList[NUM_TOOLS];
 	//Maplist
 	Mesh* Maplist[NUM_MAP];
 	//Background list
 	Mesh* BGlist[NUM_BG];
+	//MENU BUTTONS
+	Mesh* MenuButtons[MAX_MENU];
+
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-
 	Camera camera;
 
 	MS modelStack;

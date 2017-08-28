@@ -53,7 +53,7 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 
 void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 {
-	int mapwidth = 64;
+	int mapwidth = 48;
 	int mapheight = 38;
 	bool found = false;
 
@@ -66,15 +66,15 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 	}
 	myfile << "\n";
 
-	for (unsigned y = mapheight + 2; y > 2; --y)
+	for (unsigned y = mapheight + 1; y > 1; --y)
 	{
 		for (unsigned x = 1; x < mapwidth + 1; ++x)
 		{
 			for (unsigned i = 0; i < blocklist.size(); ++i)
 			{
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
-				if ((blocklist[i]->pos.x + 2) / 8 == x && (blocklist[i]->pos.y - 2) / 8 == y && blocklist[i]->active)
 				{
+					std::cout << blocklist[i]->Btype + 1 << ",";
 					myfile << blocklist[i]->Btype+1 << ",";
 					found = true;
 					break;
@@ -84,11 +84,13 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				myfile << "-1,";
+				std::cout << "0,";
+				myfile << "0,";
 			}
 			found = false;
 
 		}
+		std::cout << "\n";
 		myfile << "\n";
 	}
 	myfile.close();
@@ -194,7 +196,6 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	}
 
 	int gridx, gridy;
- 
 	if ((int)mousepos.x % 4 >= 2)
 	{
 		gridx = (int)mousepos.x + (4 - (int)mousepos.x % 4);
@@ -210,13 +211,10 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	else
 	{
 		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
-
-		int mouseposx, mouseposy;
-		mouseposx = mousepos.x + 2;
-		mouseposy = mousepos.y - 2;
 	}
 
-	brickPos = Vector3(gridx-2, gridy+2, 0);//update to mouse pos
+	brickPos = Vector3(gridx, gridy, 0);//update to mouse pos
+
 	blockmanager[currblockint]->pos = brickPos;
 	blockmanager[currblockint]->scale.Set(4, 4, 1);
 }

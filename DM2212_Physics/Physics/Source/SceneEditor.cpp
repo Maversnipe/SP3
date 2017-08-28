@@ -24,7 +24,7 @@ void SceneEditor::Init()
 
 	//Map reading
 	map = new FileIO();
-	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
+    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
@@ -257,7 +257,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 2)
 			{
@@ -269,7 +269,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 3)
 			{
@@ -280,7 +280,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 4)
 			{
@@ -291,7 +291,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 5)
 			{
@@ -302,7 +302,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 10)
 			{
@@ -312,7 +312,7 @@ void SceneEditor::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 		}
 	}
@@ -394,7 +394,7 @@ void SceneEditor::RenderMainMinimap()
 
 				modelStack.Scale(0.04, 0.06, 0.05);
 				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_GRASS], false);
+				RenderMesh(BlockList[GEO_GRASS][0], false);
 				modelStack.PopMatrix();
 
 			}
@@ -404,7 +404,7 @@ void SceneEditor::RenderMainMinimap()
 
 				modelStack.Scale(0.04, 0.06, 0.05);
 				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_GLASS], false);
+				RenderMesh(BlockList[GEO_GLASS][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 1)
@@ -413,7 +413,7 @@ void SceneEditor::RenderMainMinimap()
 
 				modelStack.Scale(0.04, 0.06, 0.05);
 				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_WOOD], false);
+				RenderMesh(BlockList[GEO_WOOD][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 4)
@@ -422,7 +422,7 @@ void SceneEditor::RenderMainMinimap()
 
 				modelStack.Scale(0.04, 0.06, 0.05);
 				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_METAL], false);
+				RenderMesh(BlockList[GEO_METAL][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 5)
@@ -431,7 +431,7 @@ void SceneEditor::RenderMainMinimap()
 
 				modelStack.Scale(0.04, 0.06, 0.05);
 				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-				RenderMesh(BlockList[GEO_BRICK], false);
+				RenderMesh(BlockList[GEO_BRICK][0], false);
 				modelStack.PopMatrix();
 			}
 			/*else if (map->Map[i][k] == 10)
@@ -576,7 +576,7 @@ void SceneEditor::RenderGO(GameObject *go)
 		//modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(BlockList[go->Btype], false);
+		RenderMesh(BlockList[go->Btype][0], false);
 		modelStack.PopMatrix();
 		break;
 

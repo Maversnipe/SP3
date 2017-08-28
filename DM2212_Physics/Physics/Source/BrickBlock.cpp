@@ -75,6 +75,11 @@ void Brickblock::Update(double dt)
 
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
+
+	if (m_iHealth == 4)
+		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
+	else if (m_iHealth == 2)
+		this->block_status = GameObject::BLOCK_STATUS::BROKEN;
 }
 
 void Brickblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
@@ -155,4 +160,8 @@ void Brickblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
 
+	if (m_iHealth <= 4 && m_iHealth > 2)
+		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
+	else if (m_iHealth <= 2)
+		this->block_status = GameObject::BLOCK_STATUS::BROKEN;
 }

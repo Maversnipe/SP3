@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "SceneCollision.h"
 #include "SceneEditor.h"
+#include "SceneMainMenu.h"
 
 SceneManager* SceneManager::scenemanager;
 int SceneManager::prevscene = DEFAULT;
@@ -60,6 +61,7 @@ void SceneManager::Exit(int key)
 SceneManager::SceneManager()
 {
 	prevscene = DEFAULT;
-	scenes[1] = new SceneCollision;
-	scenes[2] = new SceneEditor;
+	scenes[1] = new SceneMainMenu;
+	scenes[2] = new SceneCollision;
+	scenes[3] = new SceneEditor;
 }

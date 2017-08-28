@@ -75,9 +75,11 @@ void Woodblock::Update(double dt)
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
 
-	// Burning
-	if (m_bBurning)
-		BurnUpdate();
+	if (m_iHealth == 2)
+		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
+	else if(m_iHealth == 1)
+		this->block_status = GameObject::BLOCK_STATUS::BROKEN;
+
 }
 
 void Woodblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
@@ -116,7 +118,8 @@ void Woodblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 
 	// Block's collision response
 	if (checkCollision(objs, blks))
-	{;
+	{
+		;
 		//Response();
 	}
 
@@ -153,9 +156,9 @@ void Woodblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 
 	if (!this->dir.IsZero())
 		this->dir.Normalize();
-}
 
-void Woodblock::BurnUpdate()
-{
-
+	if (m_iHealth == 2)
+		this->block_status = GameObject::BLOCK_STATUS::DAMAGED;
+	else if (m_iHealth == 1)
+		this->block_status = GameObject::BLOCK_STATUS::BROKEN;
 }

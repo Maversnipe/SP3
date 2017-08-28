@@ -5,6 +5,7 @@
 #include "ThumperTool.h"
 #include "MissileTool.h"
 #include "TestWeapon.h"
+#include "DynamiteTool.h"
 
 PlayerInfo *PlayerInfo::instance = 0;
 
@@ -26,7 +27,7 @@ void PlayerInfo::Init(Grid* grid)
 	ToolManager[1] = new CannonTool(grid);
 	ToolManager[2] = new DrillTool(grid);
 	ToolManager[3] = new ThumperTool(grid);
-	ToolManager[4] = new TestWeapon(grid);
+	ToolManager[4] = new DynamiteTool(grid);
 	ToolManager[5] = new MissileTool(grid);
 }
 
@@ -53,6 +54,7 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 	}
 
 	ToolManager[i_ActiveTool]->Update(dt, mousepos);
+	ToolManager[i_ActiveTool]->scale.Set(8, 8, 1);
 }
 
 void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList)
@@ -79,25 +81,20 @@ void PlayerInfo::SetActiveToolIndex(int ToolIndex)
 {
 	i_ActiveTool = ToolIndex;
 	if (i_ActiveTool > i_NumTools - 1)
-		i_ActiveTool = 1;
-	if (i_ActiveTool < 1)
+		i_ActiveTool = 0;
+	if (i_ActiveTool < 0)
 		i_ActiveTool = i_NumTools - 1;
 	std::cout << i_ActiveTool << std::endl;
-}
-
-int PlayerInfo::GetGold()
-{
-	return i_Money;
-}
-
-void PlayerInfo::AddGold(int amount)
-{
-	i_Money += amount;
 }
 
 void PlayerInfo::SetGold(int gold)
 {
 	i_Money = gold;
+}
+
+void PlayerInfo::AddGold(int amount_)
+{
+	i_Money += amount_;
 }
 
 ToolsInfo* PlayerInfo::GetActiveTool()

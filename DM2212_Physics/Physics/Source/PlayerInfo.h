@@ -41,7 +41,7 @@ public:
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
 
-	int GetGold();
+	int GetGold() { return i_Money; };
 	void AddGold(int amount);
 
 	void SetGold(int gold);
