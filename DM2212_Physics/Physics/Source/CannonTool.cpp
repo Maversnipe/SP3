@@ -30,6 +30,15 @@ void CannonTool::Init()
 
 void CannonTool::Update(double dt, Vector3 mousepos)
 {
+	m_fcooldown -= dt;
+
+	if (cannon != nullptr)
+	{
+		if(cannon->Getbullet() > 2 || cannon->Getbullet() < 0 && cannonball == nullptr)
+			cannon->Init();
+		cannon->vel.SetZero();
+	}
+
 	if (!m_bisSet)
 	{
 		pos = mousepos;//update to mouse pos
@@ -39,21 +48,23 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 		if (mousepos != pos)
 			dir = (mousepos - pos).Normalized();
 
-			cannon->Update(dt, mousepos);
+		cannon->Update(dt, mousepos);
 
-			std::ostringstream ss;
-			ss.str(std::string());
-			ss.precision(5);
-			ss << "Bullets: " << cannon->Getbullet();
-			std::string s = ss.str();
-			PlayerInfo::GetInstance()->SetString(s);
+		std::ostringstream ss;
+		ss.str(std::string());
+		ss.precision(5);
+		ss << "Bullets: " << cannon->Getbullet();
+		std::string s = ss.str();
+		PlayerInfo::GetInstance()->SetString(s);
 
-			if (cannon->Getbullet() <= 0)
-			{
-				cannon->active = false;
-				cannon = nullptr;
-				m_bisSet = false;
-			}
+		if (cannon->Getbullet() <= 0)
+		{
+			cannon->active = false;
+			cannon = nullptr;
+			m_bisSet = false;
+		}
+
+		
 	}
 }
 
@@ -64,27 +75,26 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 		if (CheckPlacement(blockList))
 		{
 			std::cout << "Cannon Set at: " << pos << std::endl;
-			
+
 			//Spawn Cannon
-			GameObject *go2 = FetchGO(goList);
-			go2->type = GameObject::GO_CANNON;
-			go2->pos = pos;
-			go2->pos.y += 1.f;
-			go2->vel.SetZero();
-			go2->scale.Set(10, 5, 1);
-			go2->aabb.SetAABB(go2->pos, go2->scale);
-			cannon = static_cast<Cannon*>(go2);
+			cannon = static_cast<Cannon*>(FetchGO(goList));
+			cannon->type = GameObject::GO_CANNONT;
+			cannon->pos = pos;
+			cannon->pos.y += 1.f;
+			cannon->vel.SetZero();
+			cannon->scale.Set(10, 5, 1);
+			cannon->aabb.SetAABB(cannon->pos, cannon->scale);
+			m_grid->Add(cannon);
 			cannon->Init();
 			m_bisSet = true;
-			m_grid->Add(go2);
 
 			return true;
 		}
 	}
 	else
 	{
-		//Limit number of cannonball at 1 time
-		if (cannonball == nullptr ||!cannonball->active)
+		//Time between shots
+		if (m_fcooldown <= 0)
 		{
 			//Spawn Cannonball
 			GameObject *go = FetchGO(goList);
@@ -94,9 +104,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			go->vel = cannon->dir * 50;
 			go->scale.Set(2, 2, 2);
 			go->aabb.SetAABB(go->pos, go->scale);
-			cannonball = static_cast<Cannonball*>(go);
-			m_grid->Add(go);
-			cannon->Decrease();
+			cannon->Decrease(1);
 		}
 	}
 	return false;
@@ -104,8 +112,8 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 
 bool CannonTool::CheckPlacement(vector<Block*> blockList)
 {
-	bool check = false;			//Check if inside other blocks
-	bool canplace = true;		//Check for suitable for placement
+	bool check = false;         //Check if inside other blocks
+	bool canplace = true;       //Check for suitable for placement
 
 	for (auto &i : blockList)
 	{
@@ -113,8 +121,8 @@ bool CannonTool::CheckPlacement(vector<Block*> blockList)
 			continue;
 
 		check = CollisionManager::getCManager()->PtVsAABB(pos, i);
-		
-		//Collision check, prevent spawn on blocks 
+
+		//Collision check, prevent spawn on blocks
 		if (check)
 		{
 			canplace = false;

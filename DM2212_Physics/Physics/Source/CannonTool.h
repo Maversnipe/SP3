@@ -17,6 +17,7 @@ public:
 	int GetAmmo();
 
 private:
+	float m_fcooldown;		//Time between shots
 	bool m_bisSet;			//Cannon Place check
 	Cannon* cannon;			//Points to Cannon
 	Cannonball* cannonball; //Points to Cannonball

@@ -52,6 +52,9 @@ public:
 	//render background
 	void RenderBG();
 
+	//render UI 
+	void RenderUI(GameObject *thing);
+
 protected:
 	//Physics
 	float m_speed;

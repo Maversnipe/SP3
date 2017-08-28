@@ -336,6 +336,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 {
 	switch (go2->type)
 	{
+	case GameObject::GO_CANNONT:
+		break;
 	case GameObject::GO_BALL:
 	{
 		Vector3 u1 = go->vel;

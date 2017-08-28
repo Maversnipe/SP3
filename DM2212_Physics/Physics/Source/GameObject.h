@@ -28,7 +28,7 @@ public:
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
 		GO_EXPLOSION,
-		GO_CANNON,
+		GO_CANNONT,
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};

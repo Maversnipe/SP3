@@ -15,10 +15,14 @@ public:
 	void Update(double dt, Vector3 mousepos);
 
 	int Getbullet();
-	void Decrease();
+	void Decrease(int amount);
 
-protected:
+	bool GetFiring();
+	void SetFiring(bool state);
+
+private:
 	int m_ibullet;		//Bullets
+	bool m_bfiring;
 };
 
 #endif // !CANNON_H

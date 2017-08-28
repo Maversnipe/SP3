@@ -24,7 +24,7 @@ protected:
 	float m_worldHeight;
 	bool inMapSelect;
 	bool inControls;
-	static const int numButtons = 2;
+	static const int numButtons = 4;
 	Button* ButtArray[numButtons];
 	
 };

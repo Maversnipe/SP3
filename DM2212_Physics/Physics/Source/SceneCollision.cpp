@@ -112,6 +112,22 @@ void SceneCollision::Update(double dt)
 	int offsetX = 90;
 	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
+
+
+	static bool bSpaceState = false;
+	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = true;
+		std::cout << "SPACE BAR DOWN" << std::endl;
+	}
+	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = false;
+		std::cout << "SPACE BAR UP" << std::endl;
+
+		player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+
 	player->Update(dt, mousepos);//updates player and tools
 
 	//fullscreen and default screensize for minimap position
@@ -139,20 +155,6 @@ void SceneCollision::Update(double dt)
 	if (Application::IsKeyPressed('0'))
 	{
 		m_speed += 0.1f;
-	}
-
-	static bool bSpaceState = false;
-	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = true;
-		std::cout << "SPACE BAR DOWN" << std::endl;
-	}
-	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
-
-		player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 
 	/*if (Application::IsKeyPressed(VK_F10))
@@ -442,27 +444,14 @@ void SceneCollision::RenderMainMinimap()
 void SceneCollision::RenderBG()
 {
 	CBackground::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg here
-
-	modelStack.PushMatrix();
-	modelStack.Translate
-
-	(CBackground::GetInstance()->getPosition().x,
-		CBackground::GetInstance()->getPosition().y,
-		CBackground::GetInstance()->getPosition().z);
-	modelStack.Scale
-	(CBackground::GetInstance()->getScale().x,
-		CBackground::GetInstance()->getScale().y,
-		CBackground::GetInstance()->getScale().z);
-
-	modelStack.PushMatrix();
 	if (CBackground::GetInstance()->m_CBackground)
 	{
 		modelStack.PushMatrix();
+		modelStack.Translate(130, 95, -4.f);
+		modelStack.Scale(256.0f, 196.0f, 1.f);
 		RenderMesh(BGlist[GEO_BONUS], false); //and here
 		modelStack.PopMatrix();
 	}
-
-	modelStack.PopMatrix();
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -599,7 +588,7 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		if(go->block_status == GameObject::BLOCK_STATUS::FULL_HEALTH)
@@ -621,15 +610,14 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_TOOLS:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z + 1);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
 		RenderMesh(ToolList[go->tooltype], false);
 		modelStack.PopMatrix();
 		break;
 
-	case GameObject::GO_CANNON:
+	case GameObject::GO_CANNONT:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
@@ -638,6 +626,59 @@ void SceneCollision::RenderGO(GameObject *go)
 		modelStack.PopMatrix();
 		break;
 	}
+}
+
+void SceneCollision::RenderUI(GameObject * thing)
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+	switch (thing->tooltype)
+	{
+	case 1:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sPICKAXE], false);
+		modelStack.PopMatrix();
+
+	case 2:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sCANNON], false);
+		modelStack.PopMatrix();
+
+	case 3:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sDRILL], false);
+		modelStack.PopMatrix();
+
+	case 4:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sTHUMPER], false);
+		modelStack.PopMatrix();
+
+	case 5:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sMISSILE], false);
+		modelStack.PopMatrix();
+
+	case 6:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(56, 11, 1);
+		RenderMesh(Toolboxlist[GEO_sDYNAMITE], false);
+		modelStack.PopMatrix();
+
+	}
+	modelStack.PopMatrix();
+	//thing->tooltype;
 }
 
 void SceneCollision::Render()
@@ -663,11 +704,14 @@ void SceneCollision::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
+	RenderBG();
+
 	RenderMinimap(); //test
 
 	RenderMesh(meshList[GEO_AXES], false);
 
-	RenderGO(player->GetActiveTool());//render  player active tool
+
+	RenderUI(player->GetActiveTool());//render player active tool to change UI
 
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{
@@ -690,6 +734,8 @@ void SceneCollision::Render()
 
 		}
 	}
+
+	RenderGO(player->GetActiveTool());//render player active tool
 
 	if (m_ghost->active)
 		RenderGO(m_ghost);
