@@ -17,9 +17,9 @@ void Cannon::Init()
 void Cannon::Update(double dt, Vector3 mousepos)
 {
 	//Rotate to mousepos
-	this->dir.Set(this->pos.x - mousepos.x, this->pos.y - mousepos.y, 0);
+	this->dir.Set(mousepos.x - this->pos.x,mousepos.y - this->pos.y, 0);
 	this->dir.Normalize();
-	this->dir.y = Math::Clamp(std::abs(this->dir.y), sin(-90.f), sin(180.f));
+	this->dir.y = Math::Clamp(std::abs(this->dir.y), sin(-270.f), sin(90.f));
 }
 
 int Cannon::Getbullet()

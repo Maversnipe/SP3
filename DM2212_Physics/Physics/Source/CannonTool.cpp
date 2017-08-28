@@ -67,7 +67,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::CANNONBALL;
 		go->pos = cannon->pos;
-		go->vel = -cannon->dir * 50;
+		go->vel = cannon->dir * 50;
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
 		cannon->Decrease(1);
