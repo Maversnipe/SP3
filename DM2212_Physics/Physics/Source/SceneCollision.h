@@ -55,6 +55,9 @@ public:
 	//render UI 
 	void RenderUI(GameObject *thing);
 
+	//Change Level
+	void ChangeLvL();
+
 protected:
 	//Physics
 	float m_speed;
@@ -74,9 +77,6 @@ protected:
 	Block *m_Block;
 	void UpdateBlocks(double dt);
 
-	//"Gravity"
-	Vector3 m_vec3Gravity;
-
 	//Minimap
 	Vector3 minimapvector;
 
@@ -84,7 +84,6 @@ protected:
 	float m1, m2;
 	Vector3 u1, u2, v1, v2;
 	Vector3 initialMomentum, finalMomentum;
-	float initialKE, finalKE;
 
 	//Map
 	FileIO* map;
@@ -96,6 +95,15 @@ protected:
 	Grid* m_grid;
 
 	Vector3 mousepos;
+
+	//Pause
+	bool pause;
+
+	//GamePlay
+	//Time
+	float timer;
+	//Level
+	int level;
 };
 
 #endif

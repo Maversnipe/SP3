@@ -32,13 +32,6 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 {
 	m_fcooldown -= dt;
 
-	if (cannon != nullptr)
-	{
-		if(cannon->Getbullet() > 2 || cannon->Getbullet() < 0 && cannonball == nullptr)
-			cannon->Init();
-		cannon->vel.SetZero();
-	}
-
 	if (!m_bisSet)
 	{
 		pos = mousepos;//update to mouse pos
@@ -62,6 +55,7 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 			cannon->active = false;
 			cannon = nullptr;
 			m_bisSet = false;
+			Init();
 		}
 
 		
@@ -105,6 +99,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			go->scale.Set(2, 2, 2);
 			go->aabb.SetAABB(go->pos, go->scale);
 			cannon->Decrease(1);
+			m_fcooldown = 2.f;
 		}
 	}
 	return false;

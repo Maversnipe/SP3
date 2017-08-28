@@ -17,6 +17,10 @@ void SceneCollision::Init()
 {
 	SceneBase::Init();
 
+	timer = 0.0f;
+	pause = false;
+	level = 1;
+
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
@@ -44,11 +48,6 @@ void SceneCollision::Init()
     m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
 	m_Block = new Block(m_grid);
 	m_objectCount = 0;
-
-	initialKE = 0.0f;
-	finalKE = 0.0f;
-
-	m_vec3Gravity.Set(0, -9.8, 0);
 
 	//CMinimap::Init
 	//cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
@@ -100,6 +99,11 @@ Block* SceneCollision::FetchGo1()
 
 void SceneCollision::Update(double dt)
 {
+	/*if (pause)
+		return;*/
+
+	timer += dt;
+
 	double x, y;
 	Application::GetCursorPos(&x, &y);
 	int w = Application::GetWindowWidth();
@@ -157,11 +161,14 @@ void SceneCollision::Update(double dt)
 		m_speed += 0.1f;
 	}
 
-	/*if (Application::IsKeyPressed(VK_F10))
+	if (Application::IsKeyPressed(VK_ESCAPE))
 	{
-		SceneManager::currscene = 3;
-	}*/
-
+		pause = true;
+	}
+	if (Application::IsKeyPressed(VK_F1))
+	{
+		pause = false;
+	}
 	//Mouse Section
 	//  static bool bLButtonState = false;
 	//  if(!bLButtonState && Application::IsMousePressed(0))
@@ -681,6 +688,16 @@ void SceneCollision::RenderUI(GameObject * thing)
 	//thing->tooltype;
 }
 
+void SceneCollision::ChangeLvL()
+{
+	switch (level)
+	{
+	case 1:
+		map->Read("Maps//test.csv");
+		RenderMap();
+	}
+}
+
 void SceneCollision::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -775,6 +792,11 @@ void SceneCollision::Render()
 
 	ss.str("");
 	ss.precision(5);
+	ss << "Time: " << timer;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 46, 3);
+
+	ss.str("");
+	ss.precision(5);
 	ss << "Money: " << PlayerInfo::GetInstance()->GetGold();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
@@ -792,17 +814,19 @@ void SceneCollision::Exit()
 {
 	SceneBase::Exit();
 	//Cleanup GameObjects
-	/* while(m_goList.size() > 0)
+	/*while (m_goList.size() > 0)
 	{
-	GameObject *go = m_goList.back();
-	delete go;
-	m_goList.pop_back();
-	}
-	if(m_ghost)
-	{
-	delete m_ghost;
-	m_ghost = NULL;
+		GameObject *go = m_goList.back();
+		if(go!= NULL)
+			delete go;
+		m_goList.pop_back();
 	}*/
+
+	if (m_ghost)
+	{
+		delete m_ghost;
+		m_ghost = NULL;
+	}
 
 	/*if (m_grid)
 	{
