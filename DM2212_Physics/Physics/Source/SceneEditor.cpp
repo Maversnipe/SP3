@@ -147,11 +147,6 @@ void SceneEditor::Update(double dt)
 	{
 		bSpaceState = true;
 		std::cout << "SPACE BAR DOWN" << std::endl;
-	}
-	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
 
 		if (mapeditor->GetIsEditing())
 		{
@@ -159,13 +154,18 @@ void SceneEditor::Update(double dt)
 			{
 				m_objectCount++;
 			}
-			else if(mapeditor->RemoveBlock(m_vBlocks, m_grid))
+			else if (mapeditor->RemoveBlock(m_vBlocks, m_grid))
 			{
 				m_objectCount--;
 			}
 		}
 		else
 			player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = false;
+		std::cout << "SPACE BAR UP" << std::endl;
 	}
 	// save file
 	static bool isS = false;
@@ -195,6 +195,14 @@ void SceneEditor::Update(double dt)
 			mapeditor->SetIsEditing(true);
 
 		isW = false;
+	}
+	static bool isA = false;
+	if (Application::IsKeyPressed('A') && !isA)
+		isA = true;
+	else if (!Application::IsKeyPressed('A') && isA)
+	{
+		//map->Read("Maps//example.csv");
+		//RenderMap();
 	}
 	//Mouse Section
 	static bool bRButtonState = false;
@@ -243,7 +251,7 @@ void SceneEditor::RenderMap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			if (map->Map[i][k] > 0)
+			if (map->Map[i][k] > 1)
 			{
 				m_objectCount++;
 			}
@@ -252,7 +260,7 @@ void SceneEditor::RenderMap()
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->scale.Set(44.f, 12.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
