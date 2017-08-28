@@ -17,6 +17,7 @@
 #include "missile.h"
 #include "CollisionManager.h"
 #include "minimap.h"
+#include "background.h"
 
 class Grid;
 class Quadtree;

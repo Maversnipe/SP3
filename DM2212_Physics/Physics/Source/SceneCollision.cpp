@@ -28,6 +28,9 @@ void SceneCollision::Init()
     map->Read("Maps//test.csv");
     RenderMap();
 	//RenderMainMinimap();
+	
+	//bg
+	CBackground::GetInstance()->Init();
 
     //Player
     player = PlayerInfo::GetInstance();
@@ -443,11 +446,30 @@ void SceneCollision::RenderMainMinimap()
 
 void SceneCollision::RenderBG()
 {
+	CBackground::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg here
+
 	modelStack.PushMatrix();
-	modelStack.Scale(5,5,5);
-	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-	RenderMesh(BGlist[GEO_BONUS], false);
+	modelStack.Translate
+
+	(CBackground::GetInstance()->getPosition().x,
+		CBackground::GetInstance()->getPosition().y,
+		CBackground::GetInstance()->getPosition().z);
+	modelStack.Scale
+	(CBackground::GetInstance()->getScale().x,
+		CBackground::GetInstance()->getScale().y,
+		CBackground::GetInstance()->getScale().z);
+
+	modelStack.PushMatrix();
+	if (CBackground::GetInstance()->m_CBackground)
+	{
+		modelStack.PushMatrix();
+		RenderMesh(BGlist[GEO_BONUS], false); //and here
+		modelStack.PopMatrix();
+	}
+
 	modelStack.PopMatrix();
+
+
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -723,6 +745,7 @@ void SceneCollision::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
 	//RenderMinimap(); //test
+	RenderBG();
 
 }
 
