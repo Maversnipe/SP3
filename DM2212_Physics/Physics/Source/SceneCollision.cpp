@@ -155,10 +155,10 @@ void SceneCollision::Update(double dt)
 		player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 
-	if (Application::IsKeyPressed(VK_F10))
+	/*if (Application::IsKeyPressed(VK_F10))
 	{
 		SceneManager::currscene = 3;
-	}
+	}*/
 
 	//Mouse Section
 	//  static bool bLButtonState = false;

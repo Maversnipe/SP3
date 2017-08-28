@@ -15,7 +15,7 @@ public:
 	void Update(double dt, Vector3 mousepos);
 
 	int Getbullet();
-	void Decrease(int amount);
+	void Decrease();
 
 protected:
 	int m_ibullet;		//Bullets

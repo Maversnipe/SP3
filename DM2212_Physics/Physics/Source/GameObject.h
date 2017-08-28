@@ -79,9 +79,10 @@ public:
 	};
 	BLOCK_STATUS block_status;
 
+	GameObject();
 	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();
-
+	virtual void Update() {};
 	bool active;
 
 	// Object Movement

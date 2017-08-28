@@ -11,7 +11,7 @@ Cannon::~Cannon()
 
 void Cannon::Init()
 {
-	m_ibullet = 5;
+	m_ibullet = 2;
 }
 
 void Cannon::Update(double dt, Vector3 mousepos)
@@ -27,7 +27,7 @@ int Cannon::Getbullet()
 	return m_ibullet;
 }
 
-void Cannon::Decrease(int amount)
+void Cannon::Decrease()
 {
-	m_ibullet -= amount;
+	m_ibullet -= 1;
 }
