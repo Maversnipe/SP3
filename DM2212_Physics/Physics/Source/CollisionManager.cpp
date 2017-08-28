@@ -668,6 +668,18 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	}
 }
 
+bool CollisionManager::CheckCollisionM(Vector3 Mousepos, GameObject* go)
+{
+	switch (go->type)
+	{
+		case GameObject::GO_BALL:
+		{
+			break;
+		}
+	}
+	return false;
+}
+
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
 {
 	const float percent = 0.8; //Penetration percentage to correct(usually 20-80%)
