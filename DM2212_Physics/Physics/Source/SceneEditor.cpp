@@ -24,7 +24,7 @@ void SceneEditor::Init()
 
 	//Map reading
 	map = new FileIO();
-	map->Init(Application::GetWindowHeight(), Application::GetWindowWidth(), 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
+    map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
 	//RenderMainMinimap();
@@ -257,7 +257,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 2)
 			{
@@ -269,7 +269,7 @@ void SceneEditor::RenderMap()
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->aabb.SetAABB(go->pos, go->scale);
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 3)
 			{
@@ -280,7 +280,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 4)
 			{
@@ -291,7 +291,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 5)
 			{
@@ -302,7 +302,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 10)
 			{
@@ -312,7 +312,7 @@ void SceneEditor::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-				m_grid->Add(go);
+				//m_grid->Add(go);
 			}
 		}
 	}

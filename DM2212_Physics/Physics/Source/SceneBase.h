@@ -100,6 +100,16 @@ public:
 		GEO_MISSILE,
 		NUM_TOOLS,
 	};
+	enum MENU_BUTTONS
+	{
+		MENU_NONE = 0,
+		MENU_PLAY,
+		//MENU_SANDBOX,
+		MENU_OPTIONS,
+		MENU_EXIT,
+		MENU_BACKGROUND,
+		MAX_MENU,
+	};
 
 public:
 	SceneBase();
@@ -127,9 +137,11 @@ protected:
 	Mesh* Maplist[NUM_MAP];
 	//Background list
 	Mesh* BGlist[NUM_BG];
+	//MENU BUTTONS
+	Mesh* MenuButtons[MAX_MENU];
+
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
-
 	Camera camera;
 
 	MS modelStack;

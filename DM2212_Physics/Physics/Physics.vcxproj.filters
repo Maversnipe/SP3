@@ -118,6 +118,8 @@
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Source\background.cpp" />
+    <ClCompile Include="Source\SceneMainMenu.cpp" />
+    <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\DynamiteTool.cpp">
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
@@ -253,6 +255,8 @@
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\background.h" />
+    <ClInclude Include="Source\SceneMainMenu.h" />
+    <ClInclude Include="Source\Button.h" />
     <ClInclude Include="Source\DynamiteTool.h">
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>

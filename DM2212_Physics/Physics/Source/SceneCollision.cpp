@@ -157,7 +157,7 @@ void SceneCollision::Update(double dt)
 
 	if (Application::IsKeyPressed(VK_F10))
 	{
-		SceneManager::currscene = 2;
+		SceneManager::currscene = 3;
 	}
 
 	//Mouse Section
