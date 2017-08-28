@@ -177,6 +177,17 @@ void SceneBase::Init()
 	BGlist[GEO_BONUS] = MeshBuilder::GenerateQuad("bonusBG", Color(1.f, 0.f, 0.f), 1.f);
 	BGlist[GEO_BONUS]->textureID = LoadTGA("Image//Background//bonus.tga");
 
+	MenuButtons[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
+	MenuButtons[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_PLAY]->textureID = LoadTGA("Image//mainmenu//play.tga");
+	MenuButtons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
+	MenuButtons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
+	//MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+	//MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
+	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();
 	CSoundEngine::GetInstance()->AddSound("test", "Sound//Napalm.wav");
