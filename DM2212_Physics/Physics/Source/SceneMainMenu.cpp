@@ -19,12 +19,12 @@ void SceneMainMenu::Init()
 	//Calculating aspect ratio
 	m_worldHeight = 100.f;
 	m_worldWidth = m_worldHeight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-	float testscale = 1.5;
+	float textscale = 1.5;
 
-	Vector3 firstpos(m_worldWidth / 2 + 52, m_worldHeight / 2 + 36, 0);
-	ButtArray[0] = new Button(Vector3(22.6 * testscale, 4.9 * testscale), firstpos,Button::BUTTON_TYPE::BUTTON_PLAY);
-	ButtArray[1] = new Button(Vector3(32.6 * testscale, 4.9 * testscale), firstpos - Vector3(0, ButtArray[0]->GetScale().y*2),Button::BUTTON_TYPE::BUTTON_OPTIONS);
-
+	ButtArray[0] = new Button(Vector3(22.6 * textscale, 4.9 * textscale), Vector3(m_worldWidth / 2 + 52, m_worldHeight / 2 + 36, 0),Button::BUTTON_TYPE::BUTTON_PLAY);
+	ButtArray[1] = new Button(Vector3(32.6 * textscale, 4.9 * textscale), ButtArray[0]->GetPos() - Vector3(0, ButtArray[0]->GetScale().y*2),Button::BUTTON_TYPE::BUTTON_SANDBOX);
+	ButtArray[2] = new Button(Vector3(27.6 * textscale, 4.9 * textscale), ButtArray[1]->GetPos() - Vector3(0, ButtArray[1]->GetScale().y * 2), Button::BUTTON_TYPE::BUTTON_OPTIONS);
+	ButtArray[3] = new Button(Vector3(17.8 * textscale, 5.6 * textscale), ButtArray[2]->GetPos() - Vector3(0, ButtArray[2]->GetScale().y * 2), Button::BUTTON_TYPE::BUTTON_EXIT);
 }
 
 void SceneMainMenu::Update(double dt)
@@ -46,10 +46,20 @@ void SceneMainMenu::Update(double dt)
 		  {
 			  if (ButtArray[i]->MouseCheck(mousepos))
 			  {
-				  if (ButtArray[i]->buttype == Button::BUTTON_PLAY)
+				  switch(ButtArray[i]->buttype)
 				  {
+				  case(Button::BUTTON_PLAY):
 					  SceneManager::currscene = 2;
+					  break;
+				  case(Button::BUTTON_SANDBOX):
+					  SceneManager::currscene = 3;
+					  break;
+				  case(Button::BUTTON_OPTIONS):
+					  break;
+				  case(Button::BUTTON_EXIT):
+					  break;
 				  }
+
 			  }
 		  }
 	  }
@@ -58,7 +68,19 @@ void SceneMainMenu::Update(double dt)
 	      bLButtonState = false;
 	      std::cout << "LBUTTON UP" << std::endl;
 	  }
-
+	  for (unsigned i = 0; i < numButtons; ++i)
+	  {
+		  if (ButtArray[i]->MouseCheck(mousepos) && !ButtArray[i]->GetBig())
+		  {
+			  ButtArray[i]->SetScale(ButtArray[i]->GetScale()*1.1);
+			  ButtArray[i]->SetBig(true);
+		  }
+		  else if(!ButtArray[i]->MouseCheck(mousepos) && ButtArray[i]->GetBig())
+		  {
+			  ButtArray[i]->SetScale(ButtArray[i]->GetScale()*0.91);
+			  ButtArray[i]->SetBig(false);
+		  }
+	  }
 
 }
 

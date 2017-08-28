@@ -194,9 +194,9 @@ void SceneBase::Init()
 	MenuButtons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
 	MenuButtons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
 	MenuButtons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
-	//MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
-	//MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
-	//MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//bonus.tga");
+	MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
+	MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//editor.tga");
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();
