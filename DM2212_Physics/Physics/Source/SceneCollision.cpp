@@ -28,6 +28,9 @@ void SceneCollision::Init()
     map->Read("Maps//test.csv");
     RenderMap();
 	//RenderMainMinimap();
+	
+	//bg
+	CBackground::GetInstance()->Init();
 
     //Player
     player = PlayerInfo::GetInstance();
@@ -392,8 +395,8 @@ void SceneCollision::RenderMainMinimap()
 			{
 				modelStack.PushMatrix();
 
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.15, 0.1, 0.05);
+				modelStack.Translate(((k + 1)*0.09) - 3.2, ((map->GetNumOfTiles_Height() - i)*0.25)-5.2, 0);
 				RenderMesh(BlockList[GEO_GRASS], false);
 				modelStack.PopMatrix();
 
@@ -402,8 +405,8 @@ void SceneCollision::RenderMainMinimap()
 			{
 				modelStack.PushMatrix();
 
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_GLASS], false);
 				modelStack.PopMatrix();
 			}
@@ -411,8 +414,8 @@ void SceneCollision::RenderMainMinimap()
 			{
 				modelStack.PushMatrix();
 
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_WOOD], false);
 				modelStack.PopMatrix();
 			}
@@ -420,8 +423,8 @@ void SceneCollision::RenderMainMinimap()
 			{
 				modelStack.PushMatrix();
 
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_METAL], false);
 				modelStack.PopMatrix();
 			}
@@ -429,8 +432,8 @@ void SceneCollision::RenderMainMinimap()
 			{
 				modelStack.PushMatrix();
 
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_BRICK], false);
 				modelStack.PopMatrix();
 			}
@@ -443,11 +446,30 @@ void SceneCollision::RenderMainMinimap()
 
 void SceneCollision::RenderBG()
 {
+	CBackground::GetInstance()->SetBackground(BGlist[GEO_BONUS]); //change bg here
+
 	modelStack.PushMatrix();
-	modelStack.Scale(5,5,5);
-	//modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
-	RenderMesh(BGlist[GEO_BONUS], false);
+	modelStack.Translate
+
+	(CBackground::GetInstance()->getPosition().x,
+		CBackground::GetInstance()->getPosition().y,
+		CBackground::GetInstance()->getPosition().z);
+	modelStack.Scale
+	(CBackground::GetInstance()->getScale().x,
+		CBackground::GetInstance()->getScale().y,
+		CBackground::GetInstance()->getScale().z);
+
+	modelStack.PushMatrix();
+	if (CBackground::GetInstance()->m_CBackground)
+	{
+		modelStack.PushMatrix();
+		RenderMesh(BGlist[GEO_BONUS], false); //and here
+		modelStack.PopMatrix();
+	}
+
 	modelStack.PopMatrix();
+
+
 }
 
 void SceneCollision::UpdateObjects(double dt)
@@ -721,6 +743,7 @@ void SceneCollision::Render()
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
 	//RenderMinimap(); //test
+	RenderBG();
 
 }
 

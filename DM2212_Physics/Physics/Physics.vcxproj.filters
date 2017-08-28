@@ -120,6 +120,7 @@
     <ClCompile Include="Source\Cannon.cpp">
       <Filter>GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\background.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -247,6 +248,7 @@
     <ClInclude Include="Source\Cannon.h">
       <Filter>GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\background.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
