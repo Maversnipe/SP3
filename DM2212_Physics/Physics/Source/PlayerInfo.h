@@ -3,6 +3,7 @@
 #include "ToolsInfo.h"
 #include "GameObject.h"
 #include <vector>
+#include <string>
 
 using std::vector;
 class PlayerInfo
@@ -46,9 +47,13 @@ public:
 	void SetGold(int gold);
 	ToolsInfo* GetActiveTool();
 
+	void SetString(std::string input);
+	std::string GetString();
+
 private:
-	int i_Money;
-	int i_Score;
+	int i_Money;		//Money
+	int i_Score;		//For timer
+	std::string s_str;	//RenderTextonScreen(bullets,etc)
 
 	//tool stuff
 	const int i_NumTools = 6;

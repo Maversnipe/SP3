@@ -86,21 +86,21 @@ void Cannonball::Update(double dt)
 
 void Cannonball::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
 {
-	if (this->vel.x > 30)
+	if (this->vel.x > 50)
 	{
-		this->vel.x = 30;
+		this->vel.x = 50;
 	}
-	else if (this->vel.x < -30)
+	else if (this->vel.x < -50)
 	{
-		this->vel.x = -30;
+		this->vel.x = -50;
 	}
-	if (this->vel.y > 30)
+	if (this->vel.y > 50)
 	{
-		this->vel.y = 30;
+		this->vel.y = 50;
 	}
-	else if (this->vel.y < -30)
+	else if (this->vel.y < -50)
 	{
-		this->vel.y = -30;
+		this->vel.y = -50;
 	}
 
 	//Check mass

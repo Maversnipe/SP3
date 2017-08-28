@@ -104,3 +104,13 @@ ToolsInfo* PlayerInfo::GetActiveTool()
 {
 	return ToolManager[i_ActiveTool];
 }
+
+void PlayerInfo::SetString(std::string input)
+{
+	s_str = input;
+}
+
+std::string PlayerInfo::GetString()
+{
+	return s_str;
+}

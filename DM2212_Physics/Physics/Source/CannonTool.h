@@ -2,6 +2,7 @@
 #include "ToolsInfo.h"
 #include "Application.h"
 #include "Cannon.h"
+#include "Cannonball.h"
 
 class CannonTool :public ToolsInfo
 {
@@ -10,12 +11,13 @@ public:
 	~CannonTool();
 
 	void Init();//set default data
-	void Update(double dt, Vector3 mousepos);//upadate data(Cannon, icon pos)
+	void Update(double dt, Vector3 mousepos);							  //Update data(Cannon, icon pos)
 	bool UseTool(vector<Block*> blockList, vector<GameObject*> &goList); //Shoot/Set Cannon
-	bool CheckPlacement(vector<Block*> blockList);
-
+	bool CheckPlacement(vector<Block*> blockList);						//Check cannon can be placed
+	int GetAmmo();
 
 private:
-	bool isSet;
-	Cannon* cannon;
+	bool m_bisSet;			//Cannon Place check
+	Cannon* cannon;			//Points to Cannon
+	Cannonball* cannonball; //Points to Cannonball
 };

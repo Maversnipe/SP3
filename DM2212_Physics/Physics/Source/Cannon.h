@@ -18,7 +18,6 @@ public:
 	void Decrease(int amount);
 
 protected:
-	float m_ftimer;		//Despawn time
 	int m_ibullet;		//Bullets
 };
 

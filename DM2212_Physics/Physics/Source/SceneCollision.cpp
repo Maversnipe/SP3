@@ -722,6 +722,7 @@ void SceneCollision::Render()
 	//ss.precision(3);
 	//ss << "Speed: " << m_speed;
 	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
+	RenderBG();
 
 	ss.str(std::string());
 	ss.precision(5);
@@ -733,9 +734,14 @@ void SceneCollision::Render()
 	ss << "Money: " << PlayerInfo::GetInstance()->GetGold();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
-	//RenderMinimap(); //test
-	RenderBG();
-
+	if (PlayerInfo::GetInstance()->GetActiveToolIndex() == 1)
+	{
+		std::ostringstream ss;
+		ss.str(std::string());
+		ss.precision(5);
+		ss << PlayerInfo::GetInstance()->GetString();
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 46, 0);
+	}
 }
 
 void SceneCollision::Exit()

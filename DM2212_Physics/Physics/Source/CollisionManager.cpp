@@ -510,6 +510,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 			Vector3 N = normal.Normalized();
 			//go2->vel = vel - (2.f * vel.Dot(N)) * N;
 			go2->vel.SetZero();
+			go2->active = false;
 			break;
 		}
 
@@ -670,16 +671,13 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	}
 }
 
-bool CollisionManager::CheckCollisionM(Vector3 Mousepos, GameObject* go)
+bool CollisionManager::PtVsAABB(Vector3 pos, GameObject * go)
 {
-	switch (go->type)
-	{
-		case GameObject::GO_BALL:
-		{
-			break;
-		}
-	}
-	return false;
+	if ((pos.x > go->aabb.GetMinAABB().x && pos.x < go->aabb.GetMaxAABB().x)
+	&& (pos.y > go->aabb.GetMinAABB().y && pos.y < go->aabb.GetMaxAABB().y))
+		return true;
+	else
+		return false;
 }
 
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
@@ -715,10 +713,6 @@ bool CollisionManager::AABBvsAABB(Manifold * m)
 
 	AABB abox = A->aabb;
 	AABB bbox = B->aabb;
-
-	/*if ((abox.GetMaxAABB().x > bbox.GetMinAABB().x && abox.GetMinAABB().x < bbox.GetMaxAABB().x)
-	&& (abox.GetMaxAABB().y > bbox.GetMinAABB().y && abox.GetMinAABB().y < bbox.GetMaxAABB().y))
-	return true;*/
 
 	// Calculate half extents along x axis for each object
 	float a_extent = (abox.GetMaxAABB().x - abox.GetMinAABB().x) / 2;
