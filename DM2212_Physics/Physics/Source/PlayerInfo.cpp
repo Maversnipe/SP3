@@ -25,8 +25,8 @@ void PlayerInfo::Init(Grid* grid)
 	ToolManager = new ToolsInfo*[i_NumTools];
 	ToolManager[0] = new PickaxeTool(grid);
 	ToolManager[1] = new CannonTool(grid);
-	ToolManager[2] = new DrillTool(grid);
-	ToolManager[3] = new ThumperTool(grid);
+	ToolManager[2] = new ThumperTool(grid);
+	ToolManager[3] = new DrillTool(grid);
 	ToolManager[4] = new DynamiteTool(grid);
 	ToolManager[5] = new MissileTool(grid);
 }

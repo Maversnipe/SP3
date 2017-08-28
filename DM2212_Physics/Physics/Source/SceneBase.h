@@ -74,6 +74,28 @@ public:
 		NUM_BG,
 	};
 
+	enum TOOLBOX_TYPE //Tools UI
+	{
+		//s means select
+		GEO_sPICKAXE,
+		GEO_sCANNON,
+		GEO_sDRILL,
+		GEO_sTHUMPER,
+		GEO_sDYNAMITE,
+		GEO_sMISSILE,
+		NUM_TOOLBOX,
+	};
+
+	enum EDITORBOX_TYPE //Editor tools UI
+	{
+		//s means select
+		GEO_sGLASS,
+		GEO_sWOOD,
+		GEO_sBRICK,
+		GEO_sMETAL,
+		NUM_EDITORBOX,
+	};
+
 	enum BLOCK_TYPE
 	{
 		//Blocks
@@ -137,6 +159,10 @@ protected:
 	Mesh* Maplist[NUM_MAP];
 	//Background list
 	Mesh* BGlist[NUM_BG];
+	//Toolbox list
+	Mesh* Toolboxlist[NUM_TOOLBOX];
+	//Editorbox list
+	Mesh* Editorboxlist[NUM_EDITORBOX];
 	//MENU BUTTONS
 	Mesh* MenuButtons[MAX_MENU];
 
