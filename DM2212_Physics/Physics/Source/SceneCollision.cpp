@@ -112,6 +112,22 @@ void SceneCollision::Update(double dt)
 	int offsetX = 90;
 	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
+
+
+	static bool bSpaceState = false;
+	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = true;
+		std::cout << "SPACE BAR DOWN" << std::endl;
+	}
+	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = false;
+		std::cout << "SPACE BAR UP" << std::endl;
+
+		player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+
 	player->Update(dt, mousepos);//updates player and tools
 
 	//fullscreen and default screensize for minimap position
@@ -141,24 +157,10 @@ void SceneCollision::Update(double dt)
 		m_speed += 0.1f;
 	}
 
-	static bool bSpaceState = false;
-	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = true;
-		std::cout << "SPACE BAR DOWN" << std::endl;
-	}
-	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
-
-		player->UseCurrentTool(m_vBlocks, m_goList);
-	}
-
-	if (Application::IsKeyPressed(VK_F10))
+	/*if (Application::IsKeyPressed(VK_F10))
 	{
 		SceneManager::currscene = 3;
-	}
+	}*/
 
 	//Mouse Section
 	//  static bool bLButtonState = false;
@@ -615,7 +617,7 @@ void SceneCollision::RenderGO(GameObject *go)
 		modelStack.PopMatrix();
 		break;
 
-	case GameObject::GO_CANNON:
+	case GameObject::GO_CANNONT:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
@@ -764,6 +766,7 @@ void SceneCollision::Render()
 	//ss.precision(3);
 	//ss << "Speed: " << m_speed;
 	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
+	RenderBG();
 
 	ss.str(std::string());
 	ss.precision(5);
@@ -775,8 +778,14 @@ void SceneCollision::Render()
 	ss << "Money: " << PlayerInfo::GetInstance()->GetGold();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
-	//RenderMinimap(); //test
-
+	if (PlayerInfo::GetInstance()->GetActiveToolIndex() == 1)
+	{
+		std::ostringstream ss;
+		ss.str(std::string());
+		ss.precision(5);
+		ss << PlayerInfo::GetInstance()->GetString();
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 46, 0);
+	}
 }
 
 void SceneCollision::Exit()
