@@ -12,8 +12,6 @@ Brickblock::~Brickblock()
 
 void Brickblock::Update(double dt)
 {
-	//if (this->getHealth() <= 0)
-	//	this->active = false;
 	vel.SetZero();
 	this->torque.SetZero();
 

@@ -11,10 +11,15 @@ public:
 	Cannon(Grid* grid);
 	~Cannon();
 
+	void Init();
 	void Update(double dt, Vector3 mousepos);
 
+	int Getbullet();
+	void Decrease(int amount);
+
 protected:
-	float timer;
+	float m_ftimer;		//Despawn time
+	int m_ibullet;		//Bullets
 };
 
 #endif // !CANNON_H

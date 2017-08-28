@@ -600,7 +600,6 @@ void SceneCollision::RenderGO(GameObject *go)
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1);
-		//modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		if(go->block_status == GameObject::BLOCK_STATUS::FULL_HEALTH)
@@ -632,19 +631,10 @@ void SceneCollision::RenderGO(GameObject *go)
 
 	case GameObject::GO_CANNON:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 4.f);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(meshList[GEO_CUBE], false);
-		modelStack.PopMatrix();
-		break;
-
-	case GameObject::GO_CUBE:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 3.f);
-		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
 		modelStack.PopMatrix();
 		break;
 	}
@@ -734,7 +724,6 @@ void SceneCollision::Render()
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
-	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
 
 	ss.str("");

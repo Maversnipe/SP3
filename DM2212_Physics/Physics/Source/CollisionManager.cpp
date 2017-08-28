@@ -345,6 +345,8 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 		Vector3 u2N = u2.Dot(N) * N;
 		go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
+		go->vel -= go2->vel;
+		
 
 		if (go->vel.x > 5)
 		{
@@ -587,7 +589,7 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		Vector3 u2N = u2.Dot(N) * N;
 		//go->vel = u1 + 2.f * (u2N - u1N);
 		go2->vel = u2 + 2.f * (u1N - u2N);
-		//go2->vel -= go->vel;
+		go2->vel -= go->vel;
 		go->vel.x -= go2->mass * m->normal.Normalized().x;
 		go->torque += m->normal.Cross(Vector3(0, 1, 0));
 
@@ -735,6 +737,18 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	default:
 		break;
 	}
+}
+
+bool CollisionManager::CheckCollisionM(Vector3 Mousepos, GameObject* go)
+{
+	switch (go->type)
+	{
+		case GameObject::GO_BALL:
+		{
+			break;
+		}
+	}
+	return false;
 }
 
 void CollisionManager::PositionalCorrection(GameObject * go, GameObject * go2)
