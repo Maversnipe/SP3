@@ -89,7 +89,9 @@ bool FileIO::Read(const string mapName)
 		}
 	}
 
-
+	//Debug
+	/*std::cout << height << std::endl;
+	std::cout << maxColumn << std::endl;*/
 
 	return true;
 }
