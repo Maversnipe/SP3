@@ -293,24 +293,24 @@ void SceneCollision::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-                go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
-            }
-            else if (map->Map[i][k] == 4)
-            {
+			}
+			else if (map->Map[i][k] == 4)
+			{
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
-                go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
+				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
-            }
+			}
 			else if (map->Map[i][k] == 5)
 			{
 				Block *go = FetchGo1();
@@ -324,21 +324,22 @@ void SceneCollision::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
+			else
+				continue;
 		}
 	}
 
 	//For debug
-	/*
+	
 	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
 	{
-	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
-	{
-	std::cout << map->Map[i][k];
-	}
+		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
+		{
+			std::cout << map->Map[i][k];
+		}
 
-	std::cout << std::endl;
+		std::cout << std::endl;
 	}
-	*/
 }
 
 void SceneCollision::RenderMinimap()

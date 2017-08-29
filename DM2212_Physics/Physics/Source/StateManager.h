@@ -17,7 +17,7 @@
 
 #include "Application.h"
 #include "SceneBase.h"
-#include "Button.h"
+#include "AABB.h"
 
 enum States
 {
@@ -70,8 +70,8 @@ private:
 
 
 	bool inControls;
-	static const int numButtons = 4;
-	Button* Array[numButtons];
+	static const int numButtons = 3;
+	AABB* Array[numButtons];
 
 	//Buttons
 	Mesh* MenuButton[MAX_MENU];
