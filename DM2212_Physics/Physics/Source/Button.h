@@ -11,7 +11,18 @@ public:
 		BUTTON_SANDBOX,
 		BUTTON_OPTIONS,
 		BUTTON_EXIT,
-		BUTTON_MAX,
+		EDITOR_BACKGROUND_LEFT,
+		EDITOR_BACKGROUND_RIGHT,
+		EDITOR_MONEY_LEFT,
+		EDITOR_MONEY_RIGHT,
+		EDITOR_PICKAXE,
+		EDITOR_CANNON,
+		EDITOR_THUMPER,
+		EDITOR_DRILL,
+		EDITOR_MISSILE,
+		EDITOR_DYNAMITE,
+		BUTTON_MAX,//max
+
 	};
 	Button();
 	Button(Vector3 scale, Vector3 pos, BUTTON_TYPE buttype);
@@ -20,6 +31,8 @@ public:
 	Vector3 GetScale();
 	Vector3 GetPos();
 	void SetScale(Vector3 scale);
+	void SetPos(Vector3 pos);
+
 	bool MouseCheck(Vector3 mousepos);
 
 	void SetBig(bool big);
