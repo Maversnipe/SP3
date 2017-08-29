@@ -21,8 +21,10 @@ void Explosion::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 
 	if (this->active)
 	{
-		this->scale.x += dt * 5.f;
-		this->scale.y += dt * 5.f;
+		this->scale.x += dt * 100.f;
+		this->scale.y += dt * 100.f;
+		if (this->scale.x > m_fMaxScale && this->scale.y > m_fMaxScale)
+			this->active = false;
 	}
 	this->aabb.SetAABB(this->pos, this->scale);
 

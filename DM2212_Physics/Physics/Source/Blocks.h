@@ -19,6 +19,8 @@ public:
 	bool Isdestructable() { return m_bDestructable; };							//Get if block can/cannot be destroyed
 	void getDamaged(int damage);//damage block
 
+	GameObject* FetchGO(std::vector<GameObject*>& goList);
+
 protected:
 	int m_iType;			//Type of blocks(0. Grass, 1. Glass, 2. Wood, 3. Metal)
 	int m_iHealth;			//Hp

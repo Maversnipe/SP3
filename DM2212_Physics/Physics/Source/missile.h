@@ -10,11 +10,9 @@ public:
 	~missile();
 
 	void Init();
-	void Update(Vector3 mousepos, double dt);
-	void Response();
+	void Update(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks, Vector3 mousepos, double dt);
+	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 
 	bool touchCursor;
-protected:
-	GameObject* affected;
 };
 

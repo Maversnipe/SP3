@@ -39,37 +39,4 @@ void DrillProj::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 		this->pos += this->vel * static_cast<float>(dt);
 	}
 	this->aabb.SetAABB(this->pos, this->scale);
-
-	checkCollision(objs, blks);
-}
-
-void DrillProj::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
-{
-	bool check = false;
-
-	for (auto &i : Objs)
-	{
-		if (i == this || !i->active)
-			continue;
-
-		check = CollisionManager::getCManager()->CheckCollisionC(this, i);
-
-		if (check)
-		{
-			CollisionManager::getCManager()->CollisionResponseC(this, i);
-		}
-	}
-
-	for (auto &i : Blks)
-	{
-		if (!i->active)
-			continue;
-
-		check = CollisionManager::getCManager()->CheckCollisionC(this, i);
-
-		if (check)
-		{
-			CollisionManager::getCManager()->CollisionResponseC(this, i);
-		}
-	}
 }

@@ -58,7 +58,6 @@ bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
 		m->A = go2;
 		m->B = go1;
 
-
 		return AABBvsCircle(m);
 	}
 	case GameObject::GO_EXPLOSION:
@@ -126,7 +125,6 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	switch (go2->type)
 	{
 	case GameObject::GO_CANNONT:
-		break;
 	case GameObject::GO_BALL:
 	{
 		Vector3 u1 = go->vel;
@@ -302,7 +300,7 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	case GameObject::GO_EXPLOSION:
 	{
 		Vector3 vel = (go->pos - go2->pos).Normalized();
-		float magnitude_of_explosion = (go2->scale.x / go2->m_fMaxScale) * 20.f;
+		float magnitude_of_explosion = (1.f - go2->scale.x / go2->m_fMaxScale) * 30.f;
 		vel *= magnitude_of_explosion;
 		
 		go->vel += vel;
@@ -322,6 +320,9 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	{
 	case GameObject::GO_BALL:
 	{
+		if (go2->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+			break;
+
 		if (go->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
 			Vector3 vel = go2->vel;
@@ -471,6 +472,23 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 		Vector3 u1N = u1.Dot(N) * N;
 		Vector3 u2N = u2.Dot(N) * N;
 		go->vel = u1 + 2.f * (u2N - u1N);
+
+		if (go->vel.x > 20)
+		{
+			go->vel.x = 20;
+		}
+		else if (go->vel.x < -20)
+		{
+			go->vel.x = -20;
+		}
+		if (go->vel.y > 20)
+		{
+			go->vel.y = 20;
+		}
+		else if (go->vel.y < -20)
+		{
+			go->vel.y = -20;
+		}
 
 		PositionalCorrection(go, go2);
 

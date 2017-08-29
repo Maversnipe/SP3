@@ -5,6 +5,8 @@
 DynamiteTool::DynamiteTool() : ToolsInfo()
 {
 	tooltype = TOOL_TYPE::DYNAMITE;
+	isSet = false;
+
 }
 
 DynamiteTool::~DynamiteTool()
@@ -15,7 +17,6 @@ void DynamiteTool::Init()
 {
 	i_Price = 10;
 	pos.Set(0.f, 0.f, 0.f);
-	isSet = false;
 }
 
 void DynamiteTool::Update(double dt, Vector3 mousepos)
@@ -23,11 +24,6 @@ void DynamiteTool::Update(double dt, Vector3 mousepos)
 	if (!isSet)
 	{
 		pos = mousepos;
-	}
-	else
-	{
-		if (mousepos != pos)
-			dir = (mousepos - pos).Normalized();
 	}
 }
 
@@ -42,7 +38,7 @@ bool DynamiteTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList
 	{
 		GameObject *go = FetchGO(goList);
 
-		go->type = GameObject::GO_BALL;
+		go->type = GameObject::GO_EXPLOSION;
 		go->toolproj = TOOL_PROJ::EXPLOSION;
 		go->pos = pos;
 		go->vel.SetZero();

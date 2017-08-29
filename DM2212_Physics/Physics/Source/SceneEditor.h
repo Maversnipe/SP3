@@ -18,6 +18,7 @@
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "MapEditor.h"
+#include "Button.h"
 
 class SceneEditor : public SceneBase
 {
@@ -42,6 +43,9 @@ public:
 	//render background
 	void RenderBG();
 
+	//options
+	void RenderOptions();
+	void UpdateOptions();
 	//render UI 
 	void RenderUI(GameObject *thing);
 
@@ -50,8 +54,20 @@ public:
 	void RenderMainMinimap();
 
 protected:
+	static const int numButtons = 10;
+	Button* ButtArray[numButtons];
 	//background
 	int backgroundindex;
+	//options menu
+	bool optionsmenu;
+	//playerstuff
+	bool ispickaxe;
+	bool iscannon;
+	bool isthumper;
+	bool isdrill;
+	bool ismissile;
+	bool isdynamite;
+	
 
 	//Physics
 	float m_speed;

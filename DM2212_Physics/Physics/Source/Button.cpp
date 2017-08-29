@@ -28,6 +28,11 @@ void Button::SetScale(Vector3 scale)
 	this->scale = scale;
 }
 
+void Button::SetPos(Vector3 pos)
+{
+	this->pos = pos;
+}
+
 bool Button::MouseCheck( Vector3 mousepos)
 {
 	return (mousepos.x < pos.x + scale.x*0.5

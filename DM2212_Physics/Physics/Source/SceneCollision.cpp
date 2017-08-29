@@ -464,11 +464,17 @@ void SceneCollision::UpdateObjects(double dt)
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		else  if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
 
-			Missile->Update(mousepos, dt);
+			Missile->Update(m_goList, m_vBlocks, mousepos, dt);
+		}
+		else  if (i->toolproj == GameObject::TOOL_PROJ::EXPLOSION)
+		{
+			Explosion* explosive = static_cast<Explosion*>(i);
+
+			explosive->Update(m_goList, m_vBlocks, dt);
 		}
 	}
 }
@@ -487,7 +493,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -497,8 +502,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -508,8 +511,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -519,8 +520,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -530,8 +529,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -570,7 +567,7 @@ void SceneCollision::RenderGO(GameObject *go)
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		RenderMesh(meshList[GEO_EXPLOSION], false);
+	//	RenderMesh(meshList[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 

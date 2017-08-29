@@ -15,6 +15,7 @@
 #include "Cannonball.h"
 #include "DrillProj.h"
 #include "missile.h"
+#include "Explosion.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "background.h"
@@ -47,9 +48,6 @@ public:
 	//render minimap
 	void RenderMinimap();
 	void RenderMainMinimap();
-
-	// Render Grid
-	void RenderGrid();
 
 	//render background
 	void RenderBG();

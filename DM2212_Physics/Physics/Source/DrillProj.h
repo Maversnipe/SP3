@@ -11,7 +11,6 @@ public:
 	~DrillProj();
 
 	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
-	void checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 };
 
 #endif // !DrillProj_H

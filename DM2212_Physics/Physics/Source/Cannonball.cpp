@@ -50,7 +50,7 @@ void Cannonball::Update(std::vector<GameObject*> objs, std::vector<Block*> blks,
 	}
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	checkCollision(objs, blks);
+	//checkCollision(objs, blks);
 }
 
 void Cannonball::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)

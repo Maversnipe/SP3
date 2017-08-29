@@ -17,8 +17,6 @@ public:
 	virtual void Render();
 	virtual void Exit();
 
-	void RenderText();//render text with background
-	void RenderTest(Vector3 mousepos);
 
 protected:
 	float m_worldWidth;
