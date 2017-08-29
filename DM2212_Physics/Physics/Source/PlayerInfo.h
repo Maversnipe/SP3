@@ -3,6 +3,7 @@
 #include "ToolsInfo.h"
 #include "GameObject.h"
 #include <vector>
+#include <string>
 
 using std::vector;
 class PlayerInfo
@@ -33,6 +34,7 @@ public:
 	~PlayerInfo();
 
 	void Init(Grid* grid);
+	void Init(Grid* grid,bool pickaxe,bool cannon, bool thumper, bool drill, bool dynamite, bool missile);
 
 	void Update(double dt, Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
@@ -46,12 +48,16 @@ public:
 	void SetGold(int gold);
 	ToolsInfo* GetActiveTool();
 
+	void SetString(std::string input);
+	std::string GetString();
+
 private:
-	int i_Money;
-	int i_Score;
+	int i_Money;		//Money
+	int i_Score;		//For timer
+	std::string s_str;	//RenderTextonScreen(bullets,etc)
 
 	//tool stuff
-	const int i_NumTools = 6;
+	int i_NumTools;
 	int i_ActiveTool;//index of the active tool e.g pickaxe index = 0;
 	ToolsInfo** ToolManager;
 

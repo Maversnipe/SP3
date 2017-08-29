@@ -11,7 +11,7 @@
 MapEditor *MapEditor::instance = 0;
 
 MapEditor::MapEditor()
-	:currblockint(0)
+	:currblockint(1)
 	, b_isEditing(true)
 	, brickPos(0, 0, 0)
 {
@@ -25,11 +25,11 @@ MapEditor::~MapEditor()
 void MapEditor::Init(Grid* grid)
 {
 	blockmanager = new Block*[totalnumblocks];
-	blockmanager[0] = new Brickblock(grid);
+	blockmanager[0] = new Grassblock(grid);
 	blockmanager[1] = new Glassblock(grid);
-	blockmanager[2] = new Grassblock(grid);
+	blockmanager[2] = new Woodblock(grid);
 	blockmanager[3] = new Metalblock(grid);
-	blockmanager[4] = new Woodblock(grid);
+	blockmanager[4] = new Brickblock(grid);
 }
 
 Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
@@ -54,7 +54,7 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 {
 	int mapwidth = 48;
-	int mapheight = 38;
+	int mapheight = 28;
 	bool found = false;
 
 	std::ofstream myfile;
@@ -103,7 +103,7 @@ int MapEditor::DeleteMap(std::vector<Block*>& blocklist)
 	int noDeleted =0;
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{
-		if (blocklist[i]->active && blocklist[i]->pos.y > 4)
+		if (blocklist[i]->active && blocklist[i]->pos.y >= 20)
 		{
 			blocklist[i]->active = false;
 			noDeleted++;
@@ -158,8 +158,8 @@ void MapEditor::SwitchBlock(int index)
 {
 	currblockint = index;
 	if (currblockint >= totalnumblocks)
-		currblockint = 0;
-	if (currblockint == -1)
+		currblockint = 1;
+	if (currblockint == 0)
 		currblockint = totalnumblocks - 1;
 }
 
@@ -212,6 +212,8 @@ void MapEditor::Update(double dt, Vector3 mousepos)
 	{
 		gridy = (int)mousepos.y - ((int)mousepos.y % 4);
 	}
+	if (gridy < 20)
+		gridy = 20;
 
 	brickPos = Vector3(gridx, gridy, 0);//update to mouse pos
 

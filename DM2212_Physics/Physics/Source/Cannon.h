@@ -17,9 +17,12 @@ public:
 	int Getbullet();
 	void Decrease(int amount);
 
-protected:
-	float m_ftimer;		//Despawn time
+	bool GetFiring();
+	void SetFiring(bool state);
+
+private:
 	int m_ibullet;		//Bullets
+	bool m_bfiring;
 };
 
 #endif // !CANNON_H

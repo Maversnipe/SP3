@@ -28,7 +28,7 @@ public:
 		GO_TEST_ANIMATION,
 		GO_BLOCK,
 		GO_EXPLOSION,
-		GO_CANNON,
+		GO_CANNONT,
 		GO_TOOLS,
 		GO_TOTAL, //must be last
 	};
@@ -79,9 +79,10 @@ public:
 	};
 	BLOCK_STATUS block_status;
 
+	GameObject();
 	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();
-
+	virtual void Update() {};
 	bool active;
 
 	// Object Movement

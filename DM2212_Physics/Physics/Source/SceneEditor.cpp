@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "SpatialPartitioning\Grid.h"
+#include "background.h"
 
 SceneEditor::SceneEditor()
 {
@@ -17,6 +18,7 @@ void SceneEditor::Init()
 	SceneBase::Init();
 	m_objectCount = 0;
 	i_blocklimit = 50;
+	backgroundindex = 1;
 	//RenderMinimap(); //test
 
 	// Spatial Partionining
@@ -27,11 +29,13 @@ void SceneEditor::Init()
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
 	map->Read("Maps//example.csv");
 	RenderMap();
+	CBackground::GetInstance()->Init();
 	//RenderMainMinimap();
 
 	//Player
 	player = PlayerInfo::GetInstance();
 	player->Init(m_grid);
+	//player->Init(m_grid,0,1,0,1,0,0);// limiting the player items
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
@@ -147,11 +151,6 @@ void SceneEditor::Update(double dt)
 	{
 		bSpaceState = true;
 		std::cout << "SPACE BAR DOWN" << std::endl;
-	}
-	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
-	{
-		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
 
 		if (mapeditor->GetIsEditing())
 		{
@@ -159,13 +158,18 @@ void SceneEditor::Update(double dt)
 			{
 				m_objectCount++;
 			}
-			else if(mapeditor->RemoveBlock(m_vBlocks, m_grid))
+			else if (mapeditor->RemoveBlock(m_vBlocks, m_grid))
 			{
 				m_objectCount--;
 			}
 		}
 		else
 			player->UseCurrentTool(m_vBlocks, m_goList);
+	}
+	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
+	{
+		bSpaceState = false;
+		std::cout << "SPACE BAR UP" << std::endl;
 	}
 	// save file
 	static bool isS = false;
@@ -195,6 +199,14 @@ void SceneEditor::Update(double dt)
 			mapeditor->SetIsEditing(true);
 
 		isW = false;
+	}
+	static bool isA = false;
+	if (Application::IsKeyPressed('A') && !isA)
+		isA = true;
+	else if (!Application::IsKeyPressed('A') && isA)
+	{
+		//map->Read("Maps//example.csv");
+		//RenderMap();
 	}
 	//Mouse Section
 	static bool bRButtonState = false;
@@ -243,7 +255,7 @@ void SceneEditor::RenderMap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			if (map->Map[i][k] > 0)
+			if (map->Map[i][k] > 1)
 			{
 				m_objectCount++;
 			}
@@ -252,7 +264,7 @@ void SceneEditor::RenderMap()
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(8.f, 8.f, 1.f);
+				go->scale.Set(44.f, 12.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
@@ -329,6 +341,19 @@ void SceneEditor::RenderMap()
 	std::cout << std::endl;
 	}
 	*/
+}
+
+void SceneEditor::RenderBG()
+{
+	CBackground::GetInstance()->SetBackground(BGlist[backgroundindex]); //change bg here
+	if (CBackground::GetInstance()->m_CBackground)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(130, 95, -4.f);
+		modelStack.Scale(256.0f, 196.0f, 1.f);
+		RenderMesh(BGlist[backgroundindex], false); //and here
+		modelStack.PopMatrix();
+	}
 }
 
 void SceneEditor::RenderMinimap()
@@ -613,6 +638,8 @@ void SceneEditor::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	RenderBG();
 
 	RenderMinimap(); //test
 

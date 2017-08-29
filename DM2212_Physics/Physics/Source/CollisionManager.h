@@ -34,9 +34,9 @@ public:
 	void CollisionResponseC(GameObject *go, GameObject *go2);
 	//Box to other obj
 	void CollisionResponseB(GameObject *go, GameObject *go2);
-	//Mouse to boxes
-	bool CheckCollisionM(Vector3 Mousepos, GameObject* go);
 
+	//Check for points(Mouse)
+	bool PtVsAABB(Vector3 pos, GameObject* go);
 
 	//Prevent Overlaps(objects)
 	void PositionalCorrection(GameObject *go, GameObject *go2);
@@ -54,6 +54,7 @@ private:
 	bool CirclevsCircle(Manifold* m);
 
 	bool AABBvsCircle(Manifold* m);
+
 
 protected:
 	//Playable Area
