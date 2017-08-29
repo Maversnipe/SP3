@@ -606,6 +606,44 @@ void SceneEditor::RenderGO(GameObject *go)
 	}
 }
 
+void SceneEditor::RenderUI(GameObject * thing)
+{
+	modelStack.PushMatrix();
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+	switch (thing->Btype)
+	{
+	case 1:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(38, 11, 1);
+		RenderMesh(Editorboxlist[GEO_sGLASS], false);
+		modelStack.PopMatrix();
+
+	case 2:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(38, 11, 1);
+		RenderMesh(Editorboxlist[GEO_sWOOD], false);
+		modelStack.PopMatrix();
+
+	case 3:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(38, 11, 1);
+		RenderMesh(Editorboxlist[GEO_sMETAL], false);
+		modelStack.PopMatrix();
+
+	case 4:
+		modelStack.PushMatrix();
+		modelStack.Translate(15, 80, 1);
+		modelStack.Scale(38, 11, 1);
+		RenderMesh(Editorboxlist[GEO_sBRICK], false);
+		modelStack.PopMatrix();
+	}
+	modelStack.PopMatrix();
+	//thing->tooltype;
+}
+
 void SceneEditor::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -634,6 +672,8 @@ void SceneEditor::Render()
 	RenderMinimap(); //test
 
 	RenderMesh(meshList[GEO_AXES], false);
+
+	RenderUI(mapeditor->GetCurrentBlock());//render player active tool to change UI
 
 	if (mapeditor->GetIsEditing())
 		RenderGO(mapeditor->GetCurrentBlock());//render  player active tool

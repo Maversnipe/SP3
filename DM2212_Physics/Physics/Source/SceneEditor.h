@@ -42,6 +42,9 @@ public:
 	//render background
 	void RenderBG();
 
+	//render UI 
+	void RenderUI(GameObject *thing);
+
 	//render minimap
 	void RenderMinimap();
 	void RenderMainMinimap();
