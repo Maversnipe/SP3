@@ -124,7 +124,7 @@ void SceneEditor::Update(double dt)
 	int offsetWindowX = Application::GetWindowWidth() / 8;
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
-	Vector3 mousepos(posX, posY, 0);
+	mousepos = Vector3(posX, posY, 0);
 	SceneBase::Update(dt);
 	if(!mapeditor->GetIsEditing())
 	player->Update(dt, mousepos);//updates player and tools
@@ -207,7 +207,10 @@ void SceneEditor::Update(double dt)
 		isD = true;
 	else if (!Application::IsKeyPressed('D') && isD)
 	{
-		m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+		if (mapeditor->GetIsEditing())
+		{
+			m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+		}
 		isD = false;
 	}
 	static bool isEnter = false;
@@ -228,6 +231,10 @@ void SceneEditor::Update(double dt)
 		{
 			mapeditor->SetIsEditing(true);//return to editing mode
 			m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+			for (int i = 0; i < m_goList.size(); ++i)
+			{
+				m_goList[i]->active = false;
+			}
 			RenderMap();
 		}
 	}
@@ -692,12 +699,11 @@ void SceneEditor::UpdateOptions()
 
 void SceneEditor::RenderMinimap()
 {
+	CMinimap::GetInstance()->SetBackground(BGlist[backgroundindex]); //change bg of minimap here
 
-	// Push the current transformation into the modelStack
+															   // Push the current transformation into the modelStack
 	modelStack.PushMatrix();
-
-	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 0);
-
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 1);
 	// Push the current transformation into the modelStack
 	modelStack.PushMatrix();
 	// Translate the current transformation (from minimap.cpp)
@@ -707,12 +713,11 @@ void SceneEditor::RenderMinimap()
 	modelStack.Scale(CMinimap::GetInstance()->getScale().x, CMinimap::GetInstance()->getScale().y, CMinimap::GetInstance()->getScale().z);
 
 	RenderMainMinimap();
-
 	modelStack.PushMatrix();
 	if (CMinimap::GetInstance()->m_cMinimap_Background)
 	{
 		modelStack.PushMatrix();
-		RenderMesh(Maplist[GEO_MAPBG], false);
+		RenderMesh(BGlist[backgroundindex], false); //and here
 		modelStack.PopMatrix();
 	}
 	modelStack.PopMatrix();
@@ -747,7 +752,7 @@ void SceneEditor::RenderMainMinimap()
 	{
 		for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
 		{
-			if (map->Map[i][k] == 3)
+			if (map->Map[i][k] == 1)
 			{
 				modelStack.PushMatrix();
 
@@ -766,7 +771,7 @@ void SceneEditor::RenderMainMinimap()
 				RenderMesh(BlockList[GEO_GLASS][0], false);
 				modelStack.PopMatrix();
 			}
-			else if (map->Map[i][k] == 1)
+			else if (map->Map[i][k] == 3)
 			{
 				modelStack.PushMatrix();
 
@@ -793,15 +798,6 @@ void SceneEditor::RenderMainMinimap()
 				RenderMesh(BlockList[GEO_BRICK][0], false);
 				modelStack.PopMatrix();
 			}
-			/*else if (map->Map[i][k] == 10)
-			{
-			GameObject *go = FetchGO();
-			go->type = GameObject::GO_WALL;
-			go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i), 0);
-			go->scale.Set(1.f, 1.f, 1.f);
-			go->vel.Set(0, 0, 0);
-			go->mass = 0.f;
-			}*/
 		}
 	}
 
@@ -814,13 +810,17 @@ void SceneEditor::UpdateObjects(double dt)
 	for (auto &i : m_goList)
 	{
 		//i->Update(dt);
+		if (!i->active)
+			continue;
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			cannonball->Update(dt);
-			m_grid->Move(cannonball);
+			//cannonball->Init();
+			//cannonball->Update(dt);
+			//m_grid->Move(cannonball);
+			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(dt);
@@ -829,8 +829,9 @@ void SceneEditor::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
-			//Missile->Update(mousepos, dt);
-			//m_grid->Move(drillproj);
+
+			Missile->Update(mousepos, dt);
+			m_grid->Move(Missile);
 		}
 	}
 }
