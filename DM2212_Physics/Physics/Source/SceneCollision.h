@@ -44,17 +44,21 @@ public:
 	Block* FetchGo1();
 
 	//Mapping
-	void RenderMap();
+	void RenderMap(int mapNum);
+
+	void InitMap(int mapNum);
 
 	//render minimap
 	void RenderMinimap();
-	void RenderMainMinimap();
+	void RenderMainMinimap(int mapNum);
 
 	//render background
 	void RenderBG();
 
 	//render UI 
 	void RenderUI(GameObject *thing);
+
+	void LevelManager();
 
 protected:
 	//Physics
@@ -84,7 +88,7 @@ protected:
 	Vector3 initialMomentum, finalMomentum;
 
 	//Map
-	FileIO* map;
+	FileIO** Map;
 
 	//player
 	PlayerInfo* player;
@@ -95,8 +99,16 @@ protected:
 	bool pause;
 
 	//GamePlay
-	//Time
 	float timer;
+
+	// Levels
+	int m_iCurrMap;
+	bool m_bWin;
+	int m_iBlockCount;
+	int LEVEL_ONE_TARGET;
+	int LEVEL_TWO_TARGET;
+	int LEVEL_THREE_TARGET;
+	int LEVEL_FOUR_TARGET;
 };
 
 #endif
