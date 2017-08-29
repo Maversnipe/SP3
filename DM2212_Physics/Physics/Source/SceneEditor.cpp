@@ -165,7 +165,7 @@ void SceneEditor::Update(double dt)
 
 		if (mapeditor->GetIsEditing())
 		{
-			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks))
+			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks) && !optionsmenu)
 			{
 				m_objectCount++;
 			}
@@ -228,7 +228,7 @@ void SceneEditor::Update(double dt)
 		else
 		{
 			mapeditor->SetIsEditing(true);//return to editing mode
-			m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+			m_objectCount = 0;
 			for (int i = 0; i < m_goList.size(); ++i)
 			{
 				m_goList[i]->active = false;
@@ -1124,8 +1124,14 @@ void SceneEditor::Render()
 	{
 		ss.str(std::string());
 		ss << "Press D to remove all blocks ";
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 2, 0, 3);
 	}
+
+	ss.str(std::string());
+	ss.precision(5);
+	ss << "blocks: " << m_objectCount;
+	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 
 	ss.str(std::string());
 	ss.precision(5);
