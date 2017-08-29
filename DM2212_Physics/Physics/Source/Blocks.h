@@ -7,12 +7,11 @@
 class Block : public GameObject
 {
 public:
-	Block(Grid* grid);
+	Block();
 	virtual ~Block();
 
-	//virtual void Update(double dt) {};
 	void Init();
-	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
+	void checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block

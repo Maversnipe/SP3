@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 
-CannonTool::CannonTool(Grid* grid) : ToolsInfo(grid)
+CannonTool::CannonTool() : ToolsInfo()
 {
 	i_Price = 10;
 	pos.Set(0, 0, 0);
@@ -84,7 +84,6 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			cannon->vel.SetZero();
 			cannon->scale.Set(10, 5, 1);
 			cannon->aabb.SetAABB(cannon->pos, cannon->scale);
-			m_grid->Add(cannon);
 			cannon->Init();
 			m_bisSet = true;
 

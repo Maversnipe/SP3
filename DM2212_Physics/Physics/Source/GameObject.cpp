@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
+GameObject::GameObject(GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	: type(typeValue),
 	scale(1, 1, 1),
 	restitution(0.0f),
@@ -17,9 +17,6 @@ GameObject::GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue, BLOCK_TYPE Btype_)
 	tooltype(TOOL_TYPE::NON_TOOL),
 	toolproj(TOOL_PROJ::NON_TOOLPROJ),
 	block_status(BLOCK_STATUS::NON_BLOCK),
-	m_grid(grid),
-	next_(NULL),
-	prev_(NULL),
 	staticFric(1.0f),
 	dynamicFric(0.8f)
 {

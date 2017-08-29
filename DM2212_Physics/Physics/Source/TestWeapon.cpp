@@ -4,7 +4,7 @@
 using std::cout;
 using std::endl;
 
-TestWeapon::TestWeapon(Grid* grid) : ToolsInfo(grid)
+TestWeapon::TestWeapon() : ToolsInfo()
 {
 	i_Price = 10;
 	pos.Set(0, 0, 0);
@@ -75,7 +75,6 @@ bool TestWeapon::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 		go->vel = dir * 50;
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
-		//m_grid->Add(go);
 		isSet = false;
 		return true;
 	}

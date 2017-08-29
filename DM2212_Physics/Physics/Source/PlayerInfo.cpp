@@ -20,51 +20,51 @@ PlayerInfo::~PlayerInfo()
 {
 }
 
-void PlayerInfo::Init(Grid* grid)
+void PlayerInfo::Init()
 {
 	i_NumTools = 6;
 	ToolManager = new ToolsInfo*[i_NumTools];
-	ToolManager[0] = new PickaxeTool(grid);
-	ToolManager[1] = new CannonTool(grid);
-	ToolManager[2] = new ThumperTool(grid);
-	ToolManager[3] = new DrillTool(grid);
-	ToolManager[4] = new DynamiteTool(grid);
-	ToolManager[5] = new MissileTool(grid);
+	ToolManager[0] = new PickaxeTool();
+	ToolManager[1] = new CannonTool();
+	ToolManager[2] = new ThumperTool();
+	ToolManager[3] = new DrillTool();
+	ToolManager[4] = new DynamiteTool();
+	ToolManager[5] = new MissileTool();
 }
 
-void PlayerInfo::Init(Grid * grid, bool pickaxe, bool cannon, bool thumper, bool drill, bool dynamite, bool missile)
+void PlayerInfo::Init(bool pickaxe, bool cannon, bool thumper, bool drill, bool dynamite, bool missile)
 {
 	i_NumTools = 0;
 	ToolManager = new ToolsInfo*[6];
 	if (pickaxe)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools-1] = new PickaxeTool(grid);
+		ToolManager[i_NumTools-1] = new PickaxeTool();
 	}
 	if (cannon)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools-1] = new CannonTool(grid);
+		ToolManager[i_NumTools-1] = new CannonTool();
 	}
 	if (thumper)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools-1] = new ThumperTool(grid);
+		ToolManager[i_NumTools-1] = new ThumperTool();
 	}
 	if (drill)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools-1] = new DrillTool(grid);
+		ToolManager[i_NumTools-1] = new DrillTool();
 	}
 	if (dynamite)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools-1] = new DynamiteTool(grid);
+		ToolManager[i_NumTools-1] = new DynamiteTool();
 	}
 	if (missile)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools] = new MissileTool(grid);
+		ToolManager[i_NumTools] = new MissileTool();
 	}
 }
 

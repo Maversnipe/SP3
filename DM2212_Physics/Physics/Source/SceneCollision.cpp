@@ -2,7 +2,6 @@
 #include "GL\glew.h"
 #include "Application.h"
 #include <sstream>
-#include "SpatialPartitioning\Grid.h"
 #include "SceneManager.h"
 
 SceneCollision::SceneCollision()
@@ -19,9 +18,6 @@ void SceneCollision::Init()
 
 	//RenderMinimap(); //test
 
-	// Spatial Partionining
-	m_grid = new Grid();
-
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
@@ -34,15 +30,15 @@ void SceneCollision::Init()
 
     //Player
     player = PlayerInfo::GetInstance();
-	player->Init(m_grid);
+	player->Init();
 
 	//Physics code here
 	m_speed = 1.f;
 
 	Math::InitRNG();
 
-    m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+    m_ghost = new GameObject(GameObject::GO_WALL);
+	m_Block = new Block();
 	m_objectCount = 0;
 
 	initialKE = 0.0f;
@@ -70,7 +66,7 @@ GameObject* SceneCollision::FetchGO()
         }
     }
 
-    GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+    GameObject *go = new GameObject(GameObject::GO_BALL);
     m_goList.push_back(go);
 
    
@@ -91,7 +87,7 @@ Block* SceneCollision::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block();
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -236,7 +232,6 @@ void SceneCollision::Update(double dt)
 		go->scale.Set(sc, sc, sc);
 		go->mass = 5.f;
 		go->aabb.SetAABB(go->pos, go->scale);
-		m_grid->Add(go);
     }
 
 	//Physics Simulation Section
@@ -280,7 +275,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -293,7 +287,6 @@ void SceneCollision::RenderMap()
                 go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
             }
             else if (map->Map[i][k] == 4)
             {
@@ -306,7 +299,6 @@ void SceneCollision::RenderMap()
                 go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
             }
 			else if (map->Map[i][k] == 5)
 			{
@@ -319,7 +311,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
 		}
 	}
@@ -464,23 +455,18 @@ void SceneCollision::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			//cannonball->Init();
-			//cannonball->Update(dt);
-			//m_grid->Move(cannonball);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
 		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
-			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
 
 			Missile->Update(mousepos, dt);
-			m_grid->Move(Missile);
 		}
 	}
 }

@@ -5,10 +5,9 @@
 class Brickblock : public Block
 {
 public:
-	Brickblock(Grid* grid);
+	Brickblock();
 	~Brickblock();
 
-	void Update(double dt);
 	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 };
 

@@ -1,7 +1,7 @@
 #include "missile.h"
 
-missile::missile(Grid* grid) 
-	: GameObject(grid, GameObject::GO_BALL)
+missile::missile() 
+	: GameObject(GameObject::GO_BALL)
 {
 	this->aabb.SetAABB(this->pos, this->scale); //set collision area
 }

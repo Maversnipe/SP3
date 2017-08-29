@@ -6,7 +6,7 @@
 class missile : public GameObject
 {
 public:
-	missile(Grid* grid);
+	missile();
 	~missile();
 
 	void Init();

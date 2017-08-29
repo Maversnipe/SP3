@@ -3,12 +3,11 @@
 
 #include "GameObject.h"
 #include "Vector3.h"
-#include "SpatialPartitioning\Grid.h"
 
 class Cannon : public GameObject
 {
 public:
-	Cannon(Grid* grid);
+	Cannon();
 	~Cannon();
 
 	void Init();

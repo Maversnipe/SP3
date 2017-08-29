@@ -33,8 +33,8 @@ public:
 
 	~PlayerInfo();
 
-	void Init(Grid* grid);
-	void Init(Grid* grid,bool pickaxe,bool cannon, bool thumper, bool drill, bool dynamite, bool missile);
+	void Init();
+	void Init(bool pickaxe,bool cannon, bool thumper, bool drill, bool dynamite, bool missile);
 
 	void Update(double dt, Vector3 mousepos);//use weapons in here
 	void UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList);
@@ -42,7 +42,7 @@ public:
 	int GetActiveToolIndex()const;
 	void SetActiveToolIndex(int ToolIndex);
 
-	int GetGold() { return i_Money; };
+	int GetGold() { return i_Money; }
 	void AddGold(int amount);
 
 	void SetGold(int gold);

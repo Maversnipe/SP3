@@ -6,7 +6,7 @@
 class ThumperTool :public ToolsInfo
 {
 public:
-	ThumperTool(Grid* grid);
+	ThumperTool();
 	~ThumperTool();
 
 	void Init();//set default data

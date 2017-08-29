@@ -5,7 +5,7 @@
 using std::cout;
 using std::endl;
 
-MissileTool::MissileTool(Grid* grid) : ToolsInfo(grid)
+MissileTool::MissileTool() : ToolsInfo()
 {
 	i_Price = 0;
 	pos.Set(0, 0, 0);
@@ -65,7 +65,6 @@ bool MissileTool::UseTool(vector<Block*> blockList, vector<GameObject*> &goList)
 		Missile->pos.y = pos.y;
 		Missile->pos.x = -Missile->scale.x;
 		Missile->aabb.SetAABB(Missile->pos, Missile->scale);
-		m_grid->Add(Missile);
 
 		Missile->Init();
 		isSet = false;

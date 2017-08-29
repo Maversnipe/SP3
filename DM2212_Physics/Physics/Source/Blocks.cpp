@@ -1,8 +1,8 @@
 #include "Blocks.h"
 #include "PlayerInfo.h"
 
-Block::Block(Grid* grid)
-	: GameObject(grid, GameObject::GO_BLOCK),
+Block::Block()
+	: GameObject(GameObject::GO_BLOCK),
 	m_iHealth(0),
 	m_iType((int)GameObject::Btype),
 	m_bIsdestroyed(false),
@@ -43,7 +43,7 @@ void Block::Init()
 	}
 }
 
-bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
+void Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
 {
 	bool check = false;
 
@@ -62,9 +62,6 @@ bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& 
 			{
 				this->getDamaged(1);
 			}
-
-			//affected = i;
-			//break;
 		}
 	}
 
@@ -84,12 +81,8 @@ bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& 
 		if (check)
 		{
 			CollisionManager::getCManager()->CollisionResponseB(this, i);
-			//affected = i;
-			//break;
 		}
 	}
-
-	return check;
 }
 
 void Block::getDamaged(int damage)

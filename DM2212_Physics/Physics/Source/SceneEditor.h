@@ -90,8 +90,7 @@ protected:
 	//Mapeditor
 	MapEditor* mapeditor;
 
-	// Spatial Partioning
-	Grid* m_grid;
+	Vector3 mousepos;
 };
 
 #endif

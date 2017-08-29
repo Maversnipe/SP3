@@ -21,9 +21,6 @@ void SceneEditor::Init()
 	backgroundindex = 1;
 	//RenderMinimap(); //test
 
-	// Spatial Partionining
-	m_grid = new Grid();
-
 	//Map reading
 	map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
@@ -34,12 +31,12 @@ void SceneEditor::Init()
 
 	//Player
 	player = PlayerInfo::GetInstance();
-	player->Init(m_grid);
+	player->Init();
 	//player->Init(m_grid,0,1,0,1,0,0);// limiting the player items
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
-	mapeditor->Init(m_grid);
+	mapeditor->Init();
 
 	//Physics code here
 	m_speed = 1.f;
@@ -47,8 +44,8 @@ void SceneEditor::Init()
 	Math::InitRNG();
 
 
-	m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+	m_ghost = new GameObject(GameObject::GO_WALL);
+	m_Block = new Block();
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
@@ -75,7 +72,7 @@ GameObject* SceneEditor::FetchGO()
 		}
 	}
 
-	GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+	GameObject *go = new GameObject(GameObject::GO_BALL);
 	m_goList.push_back(go);
 
 
@@ -96,7 +93,7 @@ Block* SceneEditor::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block();
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -115,7 +112,7 @@ void SceneEditor::Update(double dt)
 	int offsetWindowX = Application::GetWindowWidth() / 8;
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
-	Vector3 mousepos(posX, posY, 0);
+	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
 	player->Update(dt, mousepos);//updates player and tools
 	mapeditor->Update(dt, mousepos);
@@ -154,11 +151,11 @@ void SceneEditor::Update(double dt)
 
 		if (mapeditor->GetIsEditing())
 		{
-			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks, m_grid))
+			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks))
 			{
 				m_objectCount++;
 			}
-			else if (mapeditor->RemoveBlock(m_vBlocks, m_grid))
+			else if (mapeditor->RemoveBlock(m_vBlocks))
 			{
 				m_objectCount--;
 			}
@@ -483,20 +480,17 @@ void SceneEditor::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			cannonball->Update(dt);
-			m_grid->Move(cannonball);
+			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
-			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
-			//Missile->Update(mousepos, dt);
-			//m_grid->Move(drillproj);
+			Missile->Update(mousepos, dt);
 		}
 	}
 }
@@ -513,7 +507,7 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_GLASS)
@@ -522,8 +516,7 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -532,8 +525,7 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -542,8 +534,7 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -552,8 +543,7 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 	}
@@ -729,10 +719,4 @@ void SceneEditor::Exit()
 	delete m_ghost;
 	m_ghost = NULL;
 	}*/
-
-	if (m_grid)
-	{
-		delete m_grid;
-		m_grid = NULL;
-	}
 }

@@ -6,7 +6,7 @@
 class DynamiteTool : public ToolsInfo
 {
 public:
-	DynamiteTool(Grid* grid);
+	DynamiteTool();
 	~DynamiteTool();
 
 	void Init();

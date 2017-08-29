@@ -2,19 +2,13 @@
 #define WOODBLOCK_H
 #include "Blocks.h"
 
-class Grid;
 class Woodblock : public Block
 {
 public:
-	Woodblock(Grid* grid);
+	Woodblock();
 	~Woodblock();
 
-	void Update(double dt);
 	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
-	void BurnUpdate();
-
-protected:
-	bool m_bBurning;
 };
 
 #endif //!WOODBLOCK

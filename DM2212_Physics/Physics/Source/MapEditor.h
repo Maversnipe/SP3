@@ -28,14 +28,14 @@ public:
 
 	~MapEditor();
 
-	void Init(Grid* grid);
-	Block* FetchBlocks(std::vector<Block*>& blocklist, Grid* grid);
+	void Init();
+	Block* FetchBlocks(std::vector<Block*>& blocklist);
 
 	void SaveMap(std::vector<Block*>& blocklist);
 	int DeleteMap(std::vector<Block*>& blocklist);
 
-	bool PlaceBlock(std::vector<Block*>& blocklist,Grid* &m_grid);
-	bool RemoveBlock(std::vector<Block*>& blocklist, Grid* &m_grid);
+	bool PlaceBlock(std::vector<Block*>& blocklist);
+	bool RemoveBlock(std::vector<Block*>& blocklist);
 
 	void SwitchBlock(int i);
 

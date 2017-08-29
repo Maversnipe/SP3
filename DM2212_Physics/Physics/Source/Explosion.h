@@ -5,13 +5,11 @@
 class Explosion : public GameObject
 {
 public:
-	Explosion(Grid* grid);
+	Explosion();
 	~Explosion();
 
-	void Update(double dt);
-
-protected:
-	GameObject* affected;
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
+	void checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 };
 
 #endif
