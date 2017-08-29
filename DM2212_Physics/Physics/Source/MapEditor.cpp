@@ -28,8 +28,8 @@ void MapEditor::Init()
 	blockmanager[0] = new Grassblock();
 	blockmanager[1] = new Glassblock();
 	blockmanager[2] = new Woodblock();
-	blockmanager[3] = new Metalblock();
-	blockmanager[4] = new Brickblock();
+	blockmanager[3] = new Brickblock();
+	blockmanager[4] = new Metalblock();
 }
 
 Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks)
