@@ -3,6 +3,7 @@
 
 #include "SceneBase.h"
 #include "Button.h"
+#include "SoundEngine.h"
 
 class SceneMainMenu : public SceneBase
 {
