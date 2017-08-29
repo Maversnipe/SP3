@@ -14,6 +14,7 @@ Grassblock::~Grassblock()
 void Grassblock::Update(double dt)
 {
 	mass = 0;
+	vel.SetZero();
 
 	this->torque.SetZero();
 
@@ -24,17 +25,9 @@ void Grassblock::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
+	if (m_grid->CheckCollision(this))
 	{
-		Response();
-		//this->getDamaged(1);
 	}
-
-	//if (checkCollision(objs, blks))
-	//{
-	//	//Response();
-	//	//this->getDamaged(1);
-	//}
 }
 
 void Grassblock::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)

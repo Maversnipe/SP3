@@ -17,7 +17,7 @@ void DrillProj::Update(double dt)
 
 	this->aabb.SetAABB(this->pos, this->scale);
 
-	if (m_grid->CheckCollision(this, &affected))
+	if (m_grid->CheckCollision(this))
 	{
 	//	Response();
 	}

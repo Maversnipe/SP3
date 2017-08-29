@@ -92,14 +92,6 @@ bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& 
 	return check;
 }
 
-void Block::Response()
-{
-	if (affected->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
-		return;
-
-	CollisionManager::getCManager()->CollisionResponseB(this, affected);
-}
-
 void Block::getDamaged(int damage)
 {
 	this->m_iHealth -= damage;

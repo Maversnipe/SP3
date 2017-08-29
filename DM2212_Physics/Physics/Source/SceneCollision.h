@@ -49,6 +49,9 @@ public:
 	void RenderMinimap();
 	void RenderMainMinimap();
 
+	// Render Grid
+	void RenderGrid();
+
 	//render background
 	void RenderBG();
 

@@ -10,10 +10,9 @@ public:
 	Block(Grid* grid);
 	virtual ~Block();
 
-	virtual void Update(double dt) {};
+	//virtual void Update(double dt) {};
 	void Init();
 	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
-	void Response();
 
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
@@ -27,8 +26,6 @@ protected:
 	bool m_bDestructable;	//can/cannot be destroyed
 	bool m_bIsdestroyed;	//Is destroyed or not
 	bool m_bIsdamaged;		//Is damaged or not
-
-	GameObject* affected;
 };
 
 #endif // !BLOCKS_H
