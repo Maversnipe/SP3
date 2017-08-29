@@ -214,17 +214,21 @@ void SceneEditor::Update(double dt)
 	if (Application::IsKeyPressed(VK_RETURN) && !isEnter)
 	{
 		isEnter = true;
-		if (optionsmenu)
+		if (optionsmenu && mapeditor->GetIsEditing())
 		{
 			player->Init(m_grid, ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
 			optionsmenu = false;
 			if (mapeditor->GetIsEditing())
+			{
 				mapeditor->SetIsEditing(false);
+			}
 			
 		}
 		else
 		{
 			mapeditor->SetIsEditing(true);//return to editing mode
+			m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
+			RenderMap();
 		}
 	}
 	else if (!Application::IsKeyPressed(VK_RETURN) && isEnter)
@@ -331,8 +335,12 @@ void SceneEditor::Update(double dt)
 
 	//dt *= m_speed;
 
-	//UpdateObjects(dt);
-	//UpdateBlocks(dt);
+	if (!mapeditor->GetIsEditing())
+	{
+		UpdateObjects(dt);
+		UpdateBlocks(dt);
+	}
+	if(!optionsmenu)
 	camera.Update(dt);
 	}
 }
@@ -356,6 +364,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
+				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
@@ -368,6 +377,7 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
+				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
@@ -380,6 +390,8 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 4)
@@ -391,6 +403,8 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 5)
@@ -402,6 +416,8 @@ void SceneEditor::RenderMap()
 				go->vel.Set(0.f, 0.f, 0);
 				go->mass = 1.f;
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
+				go->Init();
+				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 10)
@@ -412,6 +428,7 @@ void SceneEditor::RenderMap()
 				go->scale.Set(4.f, 4.f, 1.f);
 				go->vel.Set(0, 0, 0);
 				go->mass = 1.f;
+				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
 		}
@@ -823,6 +840,8 @@ void SceneEditor::UpdateBlocks(double dt)
 	for (auto &i : m_vBlocks)
 	{
 		//i->Update(m_goList, m_vBlocks, dt);
+		if (!i->active)
+			continue;
 
 		if (i->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
@@ -830,7 +849,8 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
+				//b->Update(dt);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_GLASS)
@@ -839,8 +859,9 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_WOOD)
@@ -849,8 +870,9 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_METAL)
@@ -859,8 +881,9 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 		else if (i->Btype == GameObject::BLOCK_TYPE::GO_BRICK)
@@ -869,8 +892,9 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				b->Update(dt);
-				m_grid->Move(b);
+				//b->Update(dt);
+				//m_grid->Move(b);
+				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
 	}
@@ -1079,7 +1103,7 @@ void SceneEditor::Render()
 	ss.str(std::string());
 	ss.precision(3);
 	ss << "Blocks: " << m_objectCount;
-	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
 
 	ss.str(std::string());
 	ss.precision(5);

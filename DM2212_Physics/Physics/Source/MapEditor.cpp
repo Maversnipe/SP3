@@ -103,7 +103,7 @@ int MapEditor::DeleteMap(std::vector<Block*>& blocklist)
 	int noDeleted =0;
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{
-		if (blocklist[i]->active && blocklist[i]->pos.y >= 20)
+		if (blocklist[i]->active && blocklist[i]->pos.y > 16)
 		{
 			blocklist[i]->active = false;
 			noDeleted++;
