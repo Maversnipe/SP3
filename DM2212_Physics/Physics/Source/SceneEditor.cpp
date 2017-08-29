@@ -16,6 +16,12 @@ SceneEditor::~SceneEditor()
 void SceneEditor::Init()
 {
 	SceneBase::Init();
+	ispickaxe = true;
+	iscannon = true;
+	isthumper = true;
+	isdrill = true;
+	ismissile = true;
+	isdynamite = true;
 	m_objectCount = 0;
 	i_blocklimit = 100;
 	backgroundindex = 1;
@@ -260,28 +266,48 @@ void SceneEditor::Update(double dt)
 							backgroundindex = 0;
 						break;
 					case(Button::EDITOR_MONEY_LEFT):
+						if(player->GetGold() > 10)
 						player->SetGold(player->GetGold() - 10);
 						break;
 					case Button::EDITOR_MONEY_RIGHT:
+						if(player->GetGold() < 990)
 						player->SetGold(player->GetGold() + 10);
 						break;
 					case(Button::EDITOR_PICKAXE):
-						cout << "PICKAXE" << endl;
+						if (ispickaxe)
+							ispickaxe = false;
+						else
+							ispickaxe = true;
 						break;
 					case Button::EDITOR_CANNON:
-						cout << "CANNON" << endl;
+						if (iscannon)
+							iscannon = false;
+						else
+							iscannon = true;
 						break;
 					case(Button::EDITOR_THUMPER):
-						cout << "THUMPER" << endl;
+						if (isthumper)
+							isthumper = false;
+						else
+							isthumper = true;
 						break;
 					case Button::EDITOR_DRILL:
-						cout << "DRILL" << endl;
+						if (isdrill)
+							isdrill = false;
+						else
+							isdrill = true;
 						break;
 					case(Button::EDITOR_MISSILE):
-						cout << "MISSILE" << endl;
+						if (ismissile)
+							ismissile = false;
+						else
+							ismissile = true;
 						break;
 					case Button::EDITOR_DYNAMITE:
-						cout << "DYNAMITE" << endl;
+						if (isdynamite)
+							isdynamite = false;
+						else
+							isdynamite = true;
 						break;
 
 					}
@@ -294,35 +320,17 @@ void SceneEditor::Update(double dt)
 	else if (bLButtonState && !Application::IsMousePressed(0))
 	{
 		bLButtonState = false;
-		std::cout << "LBUTTON UP" << std::endl;
 	}
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
 	{
 		bRButtonState = true;
-		std::cout << "RBUTTON DOWN" << std::endl;
 
-		m_ghost->pos.Set(posX, posY, 0); //IMPT
-		m_ghost->active = true;
-		float sc = 3;
-		m_ghost->scale.Set(sc, sc, sc);
 	}
 	else if (bRButtonState && !Application::IsMousePressed(1))
 	{
 		bRButtonState = false;
-		std::cout << "RBUTTON UP" << std::endl;
 
-		GameObject *go = FetchGO();
-		go->type = GameObject::GO_BALL;
-		go->toolproj = GameObject::TOOL_PROJ::CANNONBALL;
-		go->pos = m_ghost->pos;
-		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-		m_ghost->active = false;
-		float sc = 3.f;
-		go->scale.Set(sc, sc, sc);
-		go->mass = 3.f;
-		go->aabb.SetAABB(go->pos, go->scale);
-		//m_grid->Add(go);
 	}
 	if(!optionsmenu)
 	{
@@ -461,17 +469,34 @@ void SceneEditor::RenderOptions()
 	RenderMesh(meshList[GEO_ITEMSELECT], false);
 	modelStack.PopMatrix();
 
+
+	modelStack.PushMatrix();//SceneBackground
+	modelStack.Translate(center.x-30, center.y-10, 3);
+	modelStack.Scale(5, 5, 1.f);
+	RenderText(meshList[GEO_TEXT], "Player weapons", Color(0, 0, 0));
+	modelStack.PopMatrix();
+
 	modelStack.PushMatrix();//SceneBackground
 	modelStack.Translate(center.x - 30, center.y + 10, 3);
 	modelStack.Scale(10, 10, 1.f);
 	RenderText(meshList[GEO_TEXT], std::to_string(backgroundindex), Color(0, 0, 0));
 	modelStack.PopMatrix();
 
+	modelStack.PushMatrix();//SceneBackground
+	modelStack.Translate(center.x - 50, center.y + 20, 3);
+	modelStack.Scale(5, 5, 1.f);
+	RenderText(meshList[GEO_TEXT], "Background", Color(0, 0, 0));
+	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();//player money
 	modelStack.Translate(center.x + 30, center.y + 10, 3);
 	modelStack.Scale(5, 5, 1.f);
 	RenderText(meshList[GEO_TEXT], std::to_string(player->GetGold()), Color(0, 0, 0));
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();//player money
+	modelStack.Translate(center.x + 25, center.y + 20, 3);
+	modelStack.Scale(5, 5, 1.f);
+	RenderText(meshList[GEO_TEXT], "Money", Color(0, 0, 0));
 	modelStack.PopMatrix();
 
 	for (int i = 0; i < numButtons; ++i)//render buttons
@@ -518,56 +543,74 @@ void SceneEditor::RenderOptions()
 		}
 		case Button::EDITOR_CANNON:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!iscannon)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 		case Button::EDITOR_DRILL:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!isdrill)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 		case Button::EDITOR_PICKAXE:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!ispickaxe)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 		case Button::EDITOR_THUMPER:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!isthumper)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 		case Button::EDITOR_MISSILE:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!ismissile)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 		case Button::EDITOR_DYNAMITE:
 		{
-			modelStack.PushMatrix();
-			modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
-			modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
-			RenderMesh(Buttons[LOCK], false);
-			modelStack.PopMatrix();
+			if (!isdynamite)
+			{
+				modelStack.PushMatrix();
+				modelStack.Translate(ButtArray[i]->GetPos().x, ButtArray[i]->GetPos().y, 4);
+				modelStack.Scale(ButtArray[i]->GetScale().x, ButtArray[i]->GetScale().y, 1);
+				RenderMesh(Buttons[LOCK], false);
+				modelStack.PopMatrix();
+			}
 			break;
 		}
 
@@ -594,7 +637,7 @@ void SceneEditor::UpdateOptions()
 		case Button::EDITOR_BACKGROUND_RIGHT:
 		{
 			ButtArray[i]->SetScale(Vector3(10, 10, 1));
-			ButtArray[i]->SetPos(center + Vector3(-20, 10, 1));
+			ButtArray[i]->SetPos(center + Vector3(-25, 10, 1));
 			break;
 		}
 		case Button::EDITOR_MONEY_LEFT:
@@ -914,7 +957,7 @@ void SceneEditor::RenderGO(GameObject *go)
 void SceneEditor::RenderUI(GameObject * thing)
 {
 	modelStack.PushMatrix();
-	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 10);
+	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 0);
 	switch (thing->Btype)
 	{
 	case 1:
@@ -986,7 +1029,7 @@ void SceneEditor::Render()
 			RenderGO(player->GetActiveTool());//render  player active tool
 	}
 
-
+	//renderobjects
 	for (std::vector<GameObject *>::iterator it = m_goList.begin(); it != m_goList.end(); ++it)
 	{
 		GameObject *go = (GameObject *)*it;
@@ -997,6 +1040,7 @@ void SceneEditor::Render()
 				RenderGO(go); // Only render if object is on screen
 		}
 	}
+	//renderblocks
 	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
 	{
 		Block *go = (Block *)*it;
@@ -1014,8 +1058,6 @@ void SceneEditor::Render()
 		RenderOptions();
 	}
 
-	if (m_ghost->active)
-		RenderGO(m_ghost);
 
 	//On screen text
 	std::ostringstream ss;
@@ -1042,16 +1084,13 @@ void SceneEditor::Render()
 	ss.str(std::string());
 	ss.precision(3);
 	ss << "Blocks: " << m_objectCount;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 6);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
 
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
-
-	RenderTextOnScreen(meshList[GEO_TEXT], "Collision", Color(0, 1, 0), 3, 0, 0);
-
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 	//RenderMinimap(); //test
 
 }
