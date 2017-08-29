@@ -122,6 +122,7 @@ public:
 		GEO_DRILL,
 		GEO_THUMPER,
 		GEO_MISSILE,
+		GEO_DYNAMITE,
 		NUM_TOOLS,
 	};
 	enum BUTTONS
