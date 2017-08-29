@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "background.h"
+#include "Explosion.h"
 
 SceneEditor::SceneEditor()
 {
@@ -849,10 +850,17 @@ void SceneEditor::UpdateObjects(double dt)
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		else  if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
+
 			Missile->Update(m_goList, m_vBlocks, mousepos, dt);
+		}
+		else  if (i->toolproj == GameObject::TOOL_PROJ::EXPLOSION)
+		{
+			Explosion* explosive = static_cast<Explosion*>(i);
+
+			explosive->Update(m_goList, m_vBlocks, dt);
 		}
 	}
 }
