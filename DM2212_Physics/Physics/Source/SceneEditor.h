@@ -67,7 +67,7 @@ protected:
 	bool isdrill;
 	bool ismissile;
 	bool isdynamite;
-	
+	int numplayertools;
 
 	//Physics
 	float m_speed;

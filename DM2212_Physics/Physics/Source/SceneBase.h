@@ -90,6 +90,15 @@ enum TOOL_TYPE
 	NUM_TOOLS,
 };
 
+enum PROJ_TYPE
+{
+	PROJ_NONE = 0,
+	GEO_CANNONBALL,
+	GEO_ROCKET,
+	GEO_EXPLOSION,
+	NUM_PROJ,
+};
+
 enum BUTTONS
 {
 	MENU_NONE = 0,
@@ -168,6 +177,8 @@ protected:
 	Mesh* Editorboxlist[NUM_EDITORBOX];
 	//MENU BUTTONS
 	Mesh* Buttons[MAX_MENU];
+	// Projectile List
+	Mesh* Projectile[NUM_PROJ];
 
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];
