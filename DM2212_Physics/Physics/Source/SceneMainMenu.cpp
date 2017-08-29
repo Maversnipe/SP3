@@ -57,6 +57,7 @@ void SceneMainMenu::Update(double dt)
 				  case(Button::BUTTON_OPTIONS):
 					  break;
 				  case(Button::BUTTON_EXIT):
+					  exit(0);
 					  break;
 				  }
 

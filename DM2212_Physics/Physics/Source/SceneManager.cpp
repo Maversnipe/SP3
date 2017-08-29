@@ -3,6 +3,7 @@
 #include "SceneCollision.h"
 #include "SceneEditor.h"
 #include "SceneMainMenu.h"
+#include "SceneGameOver.h"
 
 SceneManager* SceneManager::scenemanager;
 int SceneManager::prevscene = DEFAULT;
@@ -61,4 +62,5 @@ SceneManager::SceneManager()
 	scenes[1] = new SceneMainMenu;
 	scenes[2] = new SceneCollision;
 	scenes[3] = new SceneEditor;
+	scenes[4] = new SceneGameOver;
 }

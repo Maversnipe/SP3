@@ -228,6 +228,11 @@ void SceneBase::Init()
 	Buttons[LOCK] = MeshBuilder::GenerateQuad("lock", Color(1.f, 0.f, 0.f), 1.f);
 	Buttons[LOCK]->textureID = LoadTGA("Image//lock.tga");
 
+	Gameover[END_MENU] = MeshBuilder::GenerateQuad("background", Color(1.f, 0.f, 0.f), 1.f);
+	Gameover[END_MENU]->textureID = LoadTGA("Image//mainmenu//gameover.tga");
+	Gameover[END_BUTTON] = MeshBuilder::GenerateQuad("Back", Color(1.f, 0.f, 0.f), 1.f);
+	Gameover[END_BUTTON]->textureID = LoadTGA("Image//mainmenu//play.tga");
+	
 	//UI (toolbox)
 	Toolboxlist[GEO_sPICKAXE] = MeshBuilder::GenerateQuad("selectpickaxe", Color(1.f, 0.f, 0.f), 1.f);
 	Toolboxlist[GEO_sPICKAXE]->textureID = LoadTGA("Image//toolbox//selectpickaxe.tga");

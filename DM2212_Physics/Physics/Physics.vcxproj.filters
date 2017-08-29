@@ -130,6 +130,9 @@
     <ClCompile Include="Source\StateManager.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneGameOver.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="Source\background.h" />
     <ClInclude Include="Source\StateManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGameOver.h">
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>

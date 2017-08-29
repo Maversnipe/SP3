@@ -112,6 +112,13 @@ enum BUTTONS
 	MAX_MENU,
 };
 
+enum END
+{
+	END_MENU,
+	END_BUTTON,
+	END_TOTAL,
+};
+
 class SceneBase : public Scene
 {
 public:
@@ -177,6 +184,8 @@ protected:
 	Mesh* Editorboxlist[NUM_EDITORBOX];
 	//MENU BUTTONS
 	Mesh* Buttons[MAX_MENU];
+	//EndGame button
+	Mesh* Gameover[END_TOTAL];
 	// Projectile List
 	Mesh* Projectile[NUM_PROJ];
 
