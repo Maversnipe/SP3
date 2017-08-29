@@ -755,9 +755,8 @@ void SceneEditor::RenderMainMinimap()
 			if (map->Map[i][k] == 1)
 			{
 				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.15, 0.1, 0.05);
+				modelStack.Translate(((k + 1)*0.09) - 3.2, ((map->GetNumOfTiles_Height() - i)*0.25) - 5.2, 0);
 				RenderMesh(BlockList[GEO_GRASS][0], false);
 				modelStack.PopMatrix();
 
@@ -765,36 +764,32 @@ void SceneEditor::RenderMainMinimap()
 			else if (map->Map[i][k] == 2)
 			{
 				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_GLASS][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 3)
 			{
 				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_WOOD][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 4)
 			{
 				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_METAL][0], false);
 				modelStack.PopMatrix();
 			}
 			else if (map->Map[i][k] == 5)
 			{
 				modelStack.PushMatrix();
-
-				modelStack.Scale(0.04, 0.06, 0.05);
-				modelStack.Translate(((k + 1)*0.4) - 10, ((map->GetNumOfTiles_Height() - i) - 30)*0.2, 0);
+				modelStack.Scale(0.025, 0.035, 0.05);
+				modelStack.Translate(((k + 1)*0.77) - 27.5, ((map->GetNumOfTiles_Height() - i)*0.77) - 14.5, 0);
 				RenderMesh(BlockList[GEO_BRICK][0], false);
 				modelStack.PopMatrix();
 			}
@@ -1101,10 +1096,12 @@ void SceneEditor::Render()
 	}
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
 
-	ss.str(std::string());
-	ss.precision(3);
-	ss << "Blocks: " << m_objectCount;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
+	if (mapeditor->GetIsEditing())
+	{
+		ss.str(std::string());
+		ss << "Press D to remove all blocks ";
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
+	}
 
 	ss.str(std::string());
 	ss.precision(5);
