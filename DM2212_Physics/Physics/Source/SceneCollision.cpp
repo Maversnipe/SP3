@@ -2,7 +2,6 @@
 #include "GL\glew.h"
 #include "Application.h"
 #include <sstream>
-#include "SpatialPartitioning\Grid.h"
 #include "SceneManager.h"
 
 SceneCollision::SceneCollision()
@@ -23,9 +22,6 @@ void SceneCollision::Init()
 
 	//RenderMinimap(); //test
 
-	// Spatial Partionining
-	m_grid = new Grid();
-
     //Map reading
     map = new FileIO();
     map->Init(Application::GetWindowHeight() * 4.f, Application::GetWindowWidth() * 4.f, 30, 48, Application::GetWindowHeight() * 1.5f, Application::GetWindowWidth() * 1.5f, 30, 30);
@@ -38,15 +34,15 @@ void SceneCollision::Init()
 
     //Player
     player = PlayerInfo::GetInstance();
-	player->Init(m_grid);
+	player->Init();
 
 	//Physics code here
 	m_speed = 1.f;
 
 	Math::InitRNG();
 
-    m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+    m_ghost = new GameObject(GameObject::GO_WALL);
+	m_Block = new Block();
 	m_objectCount = 0;
 
 	//CMinimap::Init
@@ -71,7 +67,7 @@ GameObject* SceneCollision::FetchGO()
         }
     }
 
-    GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+    GameObject *go = new GameObject(GameObject::GO_BALL);
     m_goList.push_back(go);
 
    
@@ -92,7 +88,7 @@ Block* SceneCollision::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block();
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -239,7 +235,6 @@ void SceneCollision::Update(double dt)
 		go->scale.Set(sc, sc, sc);
 		go->mass = 5.f;
 		go->aabb.SetAABB(go->pos, go->scale);
-		m_grid->Add(go);
     }
 
 	//Physics Simulation Section
@@ -270,7 +265,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_GRASS;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 2)
 			{
@@ -283,7 +277,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_GLASS;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
 			else if (map->Map[i][k] == 1)
 			{
@@ -296,10 +289,9 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 4)
-			{
+            else if (map->Map[i][k] == 4)
+            {
 				Block *go = FetchGo1();
 				go->type = GameObject::GO_BLOCK;
 				go->pos = Vector3((float)(k + 1) * 4.f, (float)(map->GetNumOfTiles_Height() - i) * 4.f, 0);
@@ -309,8 +301,8 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_METAL;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
-			}
+
+            }
 			else if (map->Map[i][k] == 5)
 			{
 				Block *go = FetchGo1();
@@ -322,7 +314,6 @@ void SceneCollision::RenderMap()
 				go->Btype = GameObject::BLOCK_TYPE::GO_BRICK;
 				go->Init();
 				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
 			}
 			else
 				continue;
@@ -468,23 +459,24 @@ void SceneCollision::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			//cannonball->Init();
-			//cannonball->Update(dt);
-			//m_grid->Move(cannonball);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
 		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
-			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		else  if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
 
-			Missile->Update(mousepos, dt);
-			m_grid->Move(Missile);
+			Missile->Update(m_goList, m_vBlocks, mousepos, dt);
+		}
+		else  if (i->toolproj == GameObject::TOOL_PROJ::EXPLOSION)
+		{
+			Explosion* explosive = static_cast<Explosion*>(i);
+
+			explosive->Update(m_goList, m_vBlocks, dt);
 		}
 	}
 }
@@ -503,7 +495,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -513,8 +504,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -524,8 +513,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -535,8 +522,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -546,8 +531,6 @@ void SceneCollision::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -582,11 +565,11 @@ void SceneCollision::RenderGO(GameObject *go)
 		break;
 
 		//GAME
-	case GameObject::GO_TEST_ANIMATION:
+	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		RenderMesh(meshList[GEO_TEST_ANIMATION], false);
+	//	RenderMesh(meshList[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 
@@ -601,14 +584,6 @@ void SceneCollision::RenderGO(GameObject *go)
 			RenderMesh(BlockList[go->Btype][1], false);
 		else if (go->block_status == GameObject::BLOCK_STATUS::BROKEN)
 			RenderMesh(BlockList[go->Btype][2], false);
-		modelStack.PopMatrix();
-		break;
-
-	case GameObject::GO_EXPLOSION:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
 		modelStack.PopMatrix();
 		break;
 

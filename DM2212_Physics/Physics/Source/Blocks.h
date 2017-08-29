@@ -7,13 +7,11 @@
 class Block : public GameObject
 {
 public:
-	Block(Grid* grid);
+	Block();
 	virtual ~Block();
 
-	virtual void Update(double dt) {};
 	void Init();
-	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
-	void Response();
+	void checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 
 	int getHealth() { return m_iHealth; };										//Get health
 	int getType() { return m_iType; };											//Get Type of block
@@ -21,14 +19,14 @@ public:
 	bool Isdestructable() { return m_bDestructable; };							//Get if block can/cannot be destroyed
 	void getDamaged(int damage);//damage block
 
+	GameObject* FetchGO(std::vector<GameObject*>& goList);
+
 protected:
 	int m_iType;			//Type of blocks(0. Grass, 1. Glass, 2. Wood, 3. Metal)
 	int m_iHealth;			//Hp
 	bool m_bDestructable;	//can/cannot be destroyed
 	bool m_bIsdestroyed;	//Is destroyed or not
 	bool m_bIsdamaged;		//Is damaged or not
-
-	GameObject* affected;
 };
 
 #endif // !BLOCKS_H

@@ -2,7 +2,6 @@
 #include "GL\glew.h"
 #include "Application.h"
 #include <sstream>
-#include "SpatialPartitioning\Grid.h"
 #include "background.h"
 
 SceneEditor::SceneEditor()
@@ -27,8 +26,6 @@ void SceneEditor::Init()
 	backgroundindex = 1;
 	//RenderMinimap(); //test
 	optionsmenu = false;
-	// Spatial Partionining
-	m_grid = new Grid();
 
 	//Map reading
 	map = new FileIO();
@@ -40,12 +37,12 @@ void SceneEditor::Init()
 
 	//Player
 	player = PlayerInfo::GetInstance();
-	//player->Init(m_grid);
+	player->Init();
 	//player->Init(m_grid,0,1,0,1,0,0);// limiting the player items
 
 	//mapeditor
 	mapeditor = MapEditor::GetInstance();
-	mapeditor->Init(m_grid);
+	mapeditor->Init();
 
 	//Physics code here
 	m_speed = 1.f;
@@ -53,8 +50,8 @@ void SceneEditor::Init()
 	Math::InitRNG();
 
 
-	m_ghost = new GameObject(m_grid, GameObject::GO_WALL);
-	m_Block = new Block(m_grid);
+	m_ghost = new GameObject(GameObject::GO_WALL);
+	m_Block = new Block();
 
 	initialKE = 0.0f;
 	finalKE = 0.0f;
@@ -85,7 +82,7 @@ GameObject* SceneEditor::FetchGO()
 		}
 	}
 
-	GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+	GameObject *go = new GameObject(GameObject::GO_BALL);
 	m_goList.push_back(go);
 
 
@@ -105,7 +102,7 @@ Block* SceneEditor::FetchGo1()
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block();
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -124,7 +121,7 @@ void SceneEditor::Update(double dt)
 	int offsetWindowX = Application::GetWindowWidth() / 8;
 	int offsetWindowY = Application::GetWindowHeight() / 8;
 	int offsetX = 90;
-	mousepos = Vector3(posX, posY, 0);
+	mousepos.Set(posX, posY, 0);
 	SceneBase::Update(dt);
 	if(!mapeditor->GetIsEditing())
 	player->Update(dt, mousepos);//updates player and tools
@@ -167,11 +164,11 @@ void SceneEditor::Update(double dt)
 
 		if (mapeditor->GetIsEditing())
 		{
-			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks, m_grid))
+			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks))
 			{
 				m_objectCount++;
 			}
-			else if (mapeditor->RemoveBlock(m_vBlocks, m_grid))
+			else if (mapeditor->RemoveBlock(m_vBlocks))
 			{
 				m_objectCount--;
 			}
@@ -219,7 +216,7 @@ void SceneEditor::Update(double dt)
 		isEnter = true;
 		if (optionsmenu && mapeditor->GetIsEditing())
 		{
-			player->Init(m_grid, ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
+			player->Init(ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
 			optionsmenu = false;
 			if (mapeditor->GetIsEditing())
 			{
@@ -811,23 +808,17 @@ void SceneEditor::UpdateObjects(double dt)
 		if (i->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
 		{
 			Cannonball* cannonball = static_cast<Cannonball*>(i);
-			//cannonball->Init();
-			//cannonball->Update(dt);
-			//m_grid->Move(cannonball);
 			cannonball->Update(m_goList, m_vBlocks, dt);
 		}
 		else if (i->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
 		{
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
-			drillproj->Update(dt);
-			m_grid->Move(drillproj);
+			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
 		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
-
-			Missile->Update(mousepos, dt);
-			m_grid->Move(Missile);
+			Missile->Update(m_goList, m_vBlocks, mousepos, dt);
 		}
 	}
 }
@@ -846,7 +837,6 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -856,8 +846,6 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -867,8 +855,6 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -878,8 +864,6 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -889,8 +873,6 @@ void SceneEditor::UpdateBlocks(double dt)
 
 			if (b != NULL)
 			{
-				//b->Update(dt);
-				//m_grid->Move(b);
 				b->Update(m_goList, m_vBlocks, dt);
 			}
 		}
@@ -925,18 +907,17 @@ void SceneEditor::RenderGO(GameObject *go)
 		break;
 
 		//GAME
-	case GameObject::GO_TEST_ANIMATION:
+	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		RenderMesh(meshList[GEO_TEST_ANIMATION], false);
+		//RenderMesh(meshList[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		//modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(BlockList[go->Btype][0], false);
@@ -1128,10 +1109,4 @@ void SceneEditor::Exit()
 	delete m_ghost;
 	m_ghost = NULL;
 	}*/
-
-	if (m_grid)
-	{
-		delete m_grid;
-		m_grid = NULL;
-	}
 }

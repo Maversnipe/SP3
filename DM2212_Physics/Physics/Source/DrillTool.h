@@ -5,7 +5,7 @@
 class DrillTool :public ToolsInfo
 {
 public:
-	DrillTool(Grid* grid);
+	DrillTool();
 	~DrillTool();
 
 	void Init();//set default data

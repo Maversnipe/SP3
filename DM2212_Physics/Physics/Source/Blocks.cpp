@@ -1,8 +1,8 @@
 #include "Blocks.h"
 #include "PlayerInfo.h"
 
-Block::Block(Grid* grid)
-	: GameObject(grid, GameObject::GO_BLOCK),
+Block::Block()
+	: GameObject(GameObject::GO_BLOCK),
 	m_iHealth(0),
 	m_iType((int)GameObject::Btype),
 	m_bIsdestroyed(false),
@@ -43,7 +43,7 @@ void Block::Init()
 	}
 }
 
-bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
+void Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& Blks)
 {
 	bool check = false;
 
@@ -58,13 +58,22 @@ bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& 
 		{
 			CollisionManager::getCManager()->CollisionResponseB(this, i);
 
+			if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+			{
+				i->active = false;
+				GameObject *go = FetchGO(Objs);
+				go->type = GameObject::GO_EXPLOSION;
+				go->toolproj = TOOL_PROJ::EXPLOSION;
+				go->pos = this->pos;
+				go->vel.SetZero();
+				go->scale.Set(2, 2, 2);
+				go->aabb.SetAABB(go->pos, go->scale);
+			}
+
 			if (this->Btype != GameObject::GO_GRASS)
 			{
 				this->getDamaged(1);
 			}
-
-			//affected = i;
-			//break;
 		}
 	}
 
@@ -84,20 +93,8 @@ bool Block::checkCollision(std::vector<GameObject*>& Objs, std::vector<Block*>& 
 		if (check)
 		{
 			CollisionManager::getCManager()->CollisionResponseB(this, i);
-			//affected = i;
-			//break;
 		}
 	}
-
-	return check;
-}
-
-void Block::Response()
-{
-	if (affected->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
-		return;
-
-	CollisionManager::getCManager()->CollisionResponseB(this, affected);
 }
 
 void Block::getDamaged(int damage)
@@ -110,4 +107,25 @@ void Block::getDamaged(int damage)
 		this->vel.SetZero();
 		PlayerInfo::GetInstance()->AddGold(5);
 	}
+}
+
+GameObject* Block::FetchGO(std::vector<GameObject*>& goList)
+{
+	for (std::vector<GameObject *>::iterator it = goList.begin(); it != goList.end(); ++it)
+	{
+		GameObject *go = (GameObject *)*it;
+		if (!go->active)
+		{
+			go->active = true;
+			return go;
+		}
+	}
+	for (unsigned i = 0; i < 10; ++i)
+	{
+		GameObject *go = new GameObject(GameObject::GO_BALL);
+		goList.push_back(go);
+	}
+	GameObject *go = goList.back();
+	go->active = true;
+	return go;
 }

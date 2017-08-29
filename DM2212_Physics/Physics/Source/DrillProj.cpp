@@ -1,7 +1,7 @@
 #include "DrillProj.h"
 
-DrillProj::DrillProj(Grid* grid)
-	: GameObject(grid, GameObject::GO_BALL)
+DrillProj::DrillProj()
+	: GameObject(GameObject::GO_BALL)
 {
 }
 
@@ -9,22 +9,34 @@ DrillProj::~DrillProj()
 {
 }
 
-void DrillProj::Update(double dt)
+void DrillProj::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
 {
-	if (!this->active)
-		return;
-	this->pos += this->vel * static_cast<float>(dt);
-
-	this->aabb.SetAABB(this->pos, this->scale);
-
-	if (m_grid->CheckCollision(this, &affected))
+	if (this->vel.x > 50)
 	{
-	//	Response();
+		this->vel.x = 50;
 	}
-}
+	else if (this->vel.x < -50)
+	{
+		this->vel.x = -50;
+	}
+	if (this->vel.y > 50)
+	{
+		this->vel.y = 50;
+	}
+	else if (this->vel.y < -50)
+	{
+		this->vel.y = -50;
+	}
 
-void DrillProj::Response()
-{/*
- affected->getDamaged(5);*/
-	CollisionManager::getCManager()->CollisionResponseB(this, affected);
+	//Check mass
+	if (this->mass == 0)
+		this->invmass = 0;
+	else
+		this->invmass = 1 / this->mass;
+
+	if (this->active)
+	{
+		this->pos += this->vel * static_cast<float>(dt);
+	}
+	this->aabb.SetAABB(this->pos, this->scale);
 }

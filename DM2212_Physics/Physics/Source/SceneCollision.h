@@ -15,14 +15,13 @@
 #include "Cannonball.h"
 #include "DrillProj.h"
 #include "missile.h"
+#include "Explosion.h"
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "background.h"
 #include "StateManager.h"
 #include "SoundEngine.h"
 
-class Grid;
-class Quadtree;
 class SceneCollision : public SceneBase
 {
 	static const int MAX_SPEED = 10;
@@ -89,9 +88,6 @@ protected:
 
 	//player
 	PlayerInfo* player;
-
-	// Spatial Partioning
-	Grid* m_grid;
 
 	Vector3 mousepos;
 

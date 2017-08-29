@@ -22,17 +22,17 @@ MapEditor::~MapEditor()
 
 }
 
-void MapEditor::Init(Grid* grid)
+void MapEditor::Init()
 {
 	blockmanager = new Block*[totalnumblocks];
-	blockmanager[0] = new Grassblock(grid);
-	blockmanager[1] = new Glassblock(grid);
-	blockmanager[2] = new Woodblock(grid);
-	blockmanager[3] = new Metalblock(grid);
-	blockmanager[4] = new Brickblock(grid);
+	blockmanager[0] = new Grassblock();
+	blockmanager[1] = new Glassblock();
+	blockmanager[2] = new Woodblock();
+	blockmanager[3] = new Metalblock();
+	blockmanager[4] = new Brickblock();
 }
 
-Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
+Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks)
 {
 	for (std::vector<Block *>::iterator it = m_vBlocks.begin(); it != m_vBlocks.end(); ++it)
 	{
@@ -44,7 +44,7 @@ Block * MapEditor::FetchBlocks(std::vector<Block*>& m_vBlocks, Grid* m_grid)
 		}
 	}
 
-	Block *go = new Block(m_grid);
+	Block *go = new Block();
 	m_vBlocks.push_back(go);
 
 	go->active = true;
@@ -112,7 +112,7 @@ int MapEditor::DeleteMap(std::vector<Block*>& blocklist)
 	return noDeleted;
 }
 
-bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
+bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist)
 {
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{
@@ -124,7 +124,7 @@ bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 	}
 	//else if no blocks
 	//place blocks
-	Block* go = FetchBlocks(blocklist, m_grid);
+	Block* go = FetchBlocks(blocklist);
 	go->type = GameObject::GO_BLOCK;
 	go->pos = brickPos;
 	go->scale.Set(4.f, 4.f, 1.f);
@@ -132,11 +132,10 @@ bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist, Grid* &m_grid)
 	go->mass = 1.f;
 	go->Btype = blockmanager[currblockint]->Btype;
 	go->aabb.SetAABB(go->pos, go->scale);
-	m_grid->Add(go);
 	return true;
 }
 
-bool MapEditor::RemoveBlock(std::vector<Block*>& blocklist, Grid *& m_grid)
+bool MapEditor::RemoveBlock(std::vector<Block*>& blocklist)
 {
 	for (unsigned i = 0; i < blocklist.size(); ++i)
 	{

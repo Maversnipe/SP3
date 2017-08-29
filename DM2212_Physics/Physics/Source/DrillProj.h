@@ -7,14 +7,10 @@
 class DrillProj : public GameObject
 {
 public:
-	DrillProj(Grid* grid);
+	DrillProj();
 	~DrillProj();
 
-	void Update(double dt);
-	void Response();
-
-protected:
-	GameObject* affected;
+	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
 };
 
 #endif // !DrillProj_H

@@ -1,6 +1,6 @@
 #include "ToolsInfo.h"
 
-ToolsInfo::ToolsInfo(Grid* grid) : GameObject(grid, GameObject::GO_TOOLS)
+ToolsInfo::ToolsInfo() : GameObject(GameObject::GO_TOOLS)
 {
 }
 
@@ -54,7 +54,7 @@ GameObject* ToolsInfo::FetchGO(vector<GameObject*>& goList)
 	}
 	for (unsigned i = 0; i < 10; ++i)
 	{
-		GameObject *go = new GameObject(m_grid, GameObject::GO_BALL);
+		GameObject *go = new GameObject(GameObject::GO_BALL);
 		goList.push_back(go);
 	}
 	GameObject *go = goList.back();

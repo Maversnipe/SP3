@@ -1,7 +1,7 @@
 #include "Cannon.h"
 
-Cannon::Cannon(Grid* grid) :
-GameObject(grid, GameObject::GO_CANNONT)
+Cannon::Cannon() :
+GameObject(GameObject::GO_CANNONT)
 {
 }
 

@@ -5,7 +5,7 @@
 class MissileTool :public ToolsInfo
 {
 public:
-	MissileTool(Grid* grid);
+	MissileTool();
 	~MissileTool();
 
 	void Init();//set default data

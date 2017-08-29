@@ -7,7 +7,7 @@
 class CannonTool :public ToolsInfo
 {
 public:
-	CannonTool(Grid * grid);
+	CannonTool();
 	~CannonTool();
 
 	void Init();//set default data

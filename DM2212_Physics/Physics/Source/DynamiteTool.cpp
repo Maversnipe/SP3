@@ -2,7 +2,7 @@
 #include "Blocks.h"
 #include <iostream>
 
-DynamiteTool::DynamiteTool(Grid*grid) : ToolsInfo(grid)
+DynamiteTool::DynamiteTool() : ToolsInfo()
 {
 	tooltype = TOOL_TYPE::DYNAMITE;
 	isSet = false;
@@ -25,11 +25,6 @@ void DynamiteTool::Update(double dt, Vector3 mousepos)
 	{
 		pos = mousepos;
 	}
-	else
-	{
-		if (mousepos != pos)
-			dir = (mousepos - pos).Normalized();
-	}
 }
 
 bool DynamiteTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
@@ -43,13 +38,12 @@ bool DynamiteTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList
 	{
 		GameObject *go = FetchGO(goList);
 
-		go->type = GameObject::GO_BALL;
+		go->type = GameObject::GO_EXPLOSION;
 		go->toolproj = TOOL_PROJ::EXPLOSION;
 		go->pos = pos;
-		go->vel = dir * 50;
+		go->vel.SetZero();
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
-		m_grid->Add(go);
 		isSet = false;
 
 		return true;

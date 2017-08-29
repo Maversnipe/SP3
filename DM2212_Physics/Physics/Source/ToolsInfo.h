@@ -9,7 +9,7 @@ using std::vector;
 class ToolsInfo : public GameObject
 {
 public:
-	ToolsInfo(Grid* grid);
+	ToolsInfo();
 	virtual ~ToolsInfo();
 
 	virtual void Init();//set default data

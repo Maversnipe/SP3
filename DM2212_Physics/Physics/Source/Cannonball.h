@@ -5,18 +5,13 @@
 class Cannonball : public GameObject
 {
 public:
-	Cannonball(Grid* grid);
+	Cannonball();
 	~Cannonball();
 
 	void Init();
 
-	void Update(double dt);
 	void Update(std::vector <GameObject*> objs, std::vector <Block*> blks, double dt);
-	bool checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
-	void Response();
-
-protected:
-	GameObject* affected;
+	void checkCollision(std::vector<GameObject *> &Objs, std::vector<Block *> &Blks);
 };
 
 #endif // !CANNONBALL_H

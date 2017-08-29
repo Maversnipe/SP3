@@ -3,11 +3,9 @@
 
 #include "Vector3.h"
 #include "AABB.h"
-#include "SpatialPartitioning\Grid.h"
 
 class GameObject
 {
-	friend Grid;
 public:
 	enum GAMEOBJECT_TYPE
 	{
@@ -79,8 +77,7 @@ public:
 	};
 	BLOCK_STATUS block_status;
 
-	GameObject();
-	GameObject(Grid* grid, GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
+	GameObject(GAMEOBJECT_TYPE typeValue = GO_BALL, BLOCK_TYPE Btype_ = GO_GRASS);
 	~GameObject();
 	virtual void Update() {};
 	bool active;
@@ -111,12 +108,8 @@ public:
 	float staticFric;
 	float dynamicFric;
 
-	// Spatial Partioning
-	GameObject* next_;
-	GameObject* prev_;
-	Grid* m_grid;
-	int m_iCurrCellX;
-	int m_iCurrCellY;
+	// For explosion
+	const float m_fMaxScale = 10.f;
 };
 
 #endif
