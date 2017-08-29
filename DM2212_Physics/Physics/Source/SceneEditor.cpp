@@ -21,6 +21,7 @@ void SceneEditor::Init()
 	isdrill = true;
 	ismissile = true;
 	isdynamite = true;
+	numplayertools = 6;
 	m_objectCount = 0;
 	i_blocklimit = 50;
 	backgroundindex = 1;
@@ -214,7 +215,7 @@ void SceneEditor::Update(double dt)
 	if (Application::IsKeyPressed(VK_RETURN) && !isEnter)
 	{
 		isEnter = true;
-		if (optionsmenu && mapeditor->GetIsEditing())
+		if (optionsmenu && mapeditor->GetIsEditing() && numplayertools !=0)
 		{
 			player->Init(ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
 			optionsmenu = false;
@@ -274,39 +275,66 @@ void SceneEditor::Update(double dt)
 						break;
 					case(Button::EDITOR_PICKAXE):
 						if (ispickaxe)
+						{
 							ispickaxe = false;
+							numplayertools--;
+						}
 						else
+						{
 							ispickaxe = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_CANNON:
 						if (iscannon)
+						{
 							iscannon = false;
-						else
+							numplayertools--;
+						}
+						else {
 							iscannon = true;
+							numplayertools++;
+						}
 						break;
 					case(Button::EDITOR_THUMPER):
-						if (isthumper)
+						if (isthumper) {
 							isthumper = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isthumper = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_DRILL:
-						if (isdrill)
+						if (isdrill) {
 							isdrill = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isdrill = true;
+							numplayertools++;
+						}
 						break;
 					case(Button::EDITOR_MISSILE):
-						if (ismissile)
+						if (ismissile) {
 							ismissile = false;
-						else
+							numplayertools--;
+						}
+						else {
 							ismissile = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_DYNAMITE:
-						if (isdynamite)
+						if (isdynamite) {
 							isdynamite = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isdynamite = true;
+							numplayertools++;
+						}
 						break;
 
 					}
