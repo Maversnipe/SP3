@@ -885,9 +885,23 @@ void SceneEditor::RenderGO(GameObject *go)
 	{
 	case GameObject::GO_BALL:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
+		modelStack.Translate(go->pos.x, go->pos.y, -1.f);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
+		if (go->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
+		{
+			modelStack.Scale(5.f, 5.f, 5.f);
+			RenderMesh(Projectile[GEO_CANNONBALL], false);
+		}
+		else if (go->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		{
+			modelStack.Scale(7.5f, 7.5f, 7.5f);
+			RenderMesh(ToolList[GEO_DRILL], false);
+		}
+		else if (go->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		{
+			modelStack.Scale(7.5f, 7.5f, 7.5f);
+			RenderMesh(Projectile[GEO_ROCKET], false);
+		}
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_WALL:
@@ -911,7 +925,7 @@ void SceneEditor::RenderGO(GameObject *go)
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		//RenderMesh(meshList[GEO_EXPLOSION], false);
+		RenderMesh(Projectile[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 

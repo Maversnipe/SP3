@@ -115,15 +115,15 @@ void SceneBase::Init()
 	meshList[GEO_GRID]->textureID = LoadTGA("Image//Block_White.tga");
 
 	//----------Sprite animation ^-^----------
-	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
-	meshList[GEO_TEST_ANIMATION]->textureID = LoadTGA("Image//maskfish.tga");
-	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_TEST_ANIMATION]);
-	//use dynamic_cast because mesh doesn't have animation
-	if (sa)
-	{
-		sa->m_anim = new Animation();
-		sa->m_anim->Set(0, 5, 0, 1.f, true);
-	}
+	//meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
+	//meshList[GEO_TEST_ANIMATION]->textureID = LoadTGA("Image//maskfish.tga");
+	//SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_TEST_ANIMATION]);
+	////use dynamic_cast because mesh doesn't have animation
+	//if (sa)
+	//{
+	//	sa->m_anim = new Animation();
+	//	sa->m_anim->Set(0, 5, 0, 1.f, true);
+	//}
 
 	//textbox
 	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("ship", Color(1, 1, 1), 1.f);
@@ -168,14 +168,30 @@ void SceneBase::Init()
 		ToolList[GEO_CANNON]->textureID = LoadTGA("Image//Tools//cannon.tga");
 		ToolList[GEO_DRILL] = MeshBuilder::GenerateQuad("Drill", Color(1, 1, 1), 1);
 		ToolList[GEO_DRILL]->textureID = LoadTGA("Image//Tools//drill.tga");
-		//ToolList[GEO_CANNON] = MeshBuilder::GenerateQuad("Cannon", Color(1, 1, 1), 1);
-		//ToolList[GEO_CANNON]->textureID = LoadTGA("");
 		ToolList[GEO_THUMPER] = MeshBuilder::GenerateQuad("Thumper", Color(1, 1, 1), 1);
 		ToolList[GEO_THUMPER]->textureID = LoadTGA("Image//Tools//thumper.tga");
 		ToolList[GEO_MISSILE] = MeshBuilder::GenerateQuad("Missile", Color(1, 1, 1), 1);
 		ToolList[GEO_MISSILE]->textureID = LoadTGA("Image//Tools//napalm.tga");
 		ToolList[GEO_DYNAMITE] = MeshBuilder::GenerateQuad("dynamite", Color(1, 1, 1), 1);
 		ToolList[GEO_DYNAMITE]->textureID = LoadTGA("Image//Tools//dynamite.tga");
+	}
+
+	// Projectile
+	{
+		Projectile[GEO_CANNONBALL] = MeshBuilder::GenerateQuad("cannonball", Color(1, 1, 1), 1);
+		Projectile[GEO_CANNONBALL]->textureID = LoadTGA("Image//Tools//cannonball.tga");
+		Projectile[GEO_ROCKET] = MeshBuilder::GenerateQuad("rocket", Color(1, 1, 1), 1);
+		Projectile[GEO_ROCKET]->textureID = LoadTGA("Image//Tools//napalm.tga");
+		
+		Projectile[GEO_EXPLOSION] = MeshBuilder::GenerateSpriteAnimation("explosion", 1, 10, 1.f);
+		Projectile[GEO_EXPLOSION]->textureID = LoadTGA("Image//weirdexplosion.tga");
+		SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(Projectile[GEO_EXPLOSION]);
+		//use dynamic_cast because mesh doesn't have animation
+		if (sa)
+		{
+			sa->m_anim = new Animation();
+			sa->m_anim->Set(0, 9, 0, 1.f, true);
+		}
 	}
 
 	//minimap
@@ -257,7 +273,7 @@ void SceneBase::Update(double dt)
 	
 	//----------Sprite animation ^-^----------
 	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>
-		(meshList[GEO_TEST_ANIMATION]);
+		(Projectile[GEO_EXPLOSION]);
 	//use dynamic_cast because mesh doesn't have animation
 	if (sa)
 	{

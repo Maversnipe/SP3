@@ -161,45 +161,6 @@ void SceneCollision::Update(double dt)
 		m_speed += 0.1f;
 	}
 
-	//Mouse Section
-	//  static bool bLButtonState = false;
-	//  if(!bLButtonState && Application::IsMousePressed(0))
-	//  {
-	//      bLButtonState = true;
-	//      std::cout << "LBUTTON DOWN" << std::endl;
-	//      
-	//      double x, y;
-	//      Application::GetCursorPos(&x, &y);
-	//      int w = Application::GetWindowWidth();
-	//      int h = Application::GetWindowHeight();
-	//      float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-	//      float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
-	//      m_ghost->pos.Set(posX, posY, 0); //IMPT
-	//      float sc = 2;
-	//      m_ghost->scale.Set(sc, sc, sc);
-	//  }
-	//  else if(bLButtonState && !Application::IsMousePressed(0))
-	//  {
-	//      bLButtonState = false;
-	//      std::cout << "LBUTTON UP" << std::endl;
-
-	//      //spawn small GO_BALL
-	//      GameObject *go = FetchGO();
-	//      go->type = GameObject::GO_EXPLOSION;
-	//      double x, y;
-	//      Application::GetCursorPos(&x, &y);
-	//      int w = Application::GetWindowWidth();
-	//      int h = Application::GetWindowHeight();
-	//      float posX = static_cast<float>(x) / w * m_worldWidth + camera.GetOffset_x();
-	//      float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
-
-	//      go->pos = m_ghost->pos;
-	//      m_ghost->active = false;
-	//      go->scale.Set(1, 1, 1);
-	//      go->mass = 3.f;
-	//go->aabb.SetAABB(go->pos, go->scale);
-	//  }
 	static bool bRButtonState = false;
 	if (!bRButtonState && Application::IsMousePressed(1))
 	{
@@ -215,15 +176,6 @@ void SceneCollision::Update(double dt)
 	{
 		bRButtonState = false;
 		std::cout << "RBUTTON UP" << std::endl;
-
-		/*Block *go = FetchGo1();
-		go->type = GameObject::GO_BLOCK;
-		go->pos = m_ghost->pos;
-		go->scale.Set(4.f, 4.f, 1.f);
-		go->vel.Set(m_ghost->pos.x - posX, m_ghost->pos.y - posY, 0);
-		go->mass = 1.f;
-		go->Btype = GameObject::BLOCK_TYPE::GO_WOOD;
-		go->aabb.SetAABB(go->pos, go->scale);*/
 
 		GameObject *go = FetchGO();
 		go->type = GameObject::GO_BALL;
@@ -542,9 +494,23 @@ void SceneCollision::RenderGO(GameObject *go)
 	{
 	case GameObject::GO_BALL:
 		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
+		modelStack.Translate(go->pos.x, go->pos.y, -1.f);
+		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
+		if (go->toolproj == GameObject::TOOL_PROJ::CANNONBALL)
+		{
+			modelStack.Scale(7.5f, 7.5f, 7.5f);
+			RenderMesh(Projectile[GEO_CANNONBALL], false);
+		}
+		else if (go->toolproj == GameObject::TOOL_PROJ::DRILLPROJ)
+		{
+			modelStack.Scale(7.5f, 7.5f, 7.5f);
+			RenderMesh(ToolList[GEO_DRILL], false);
+		}
+		else if (go->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		{
+			modelStack.Scale(7.5f, 7.5f, 7.5f);
+			RenderMesh(Projectile[GEO_ROCKET], false);
+		}
 		modelStack.PopMatrix();
 		break;
 	case GameObject::GO_WALL:
@@ -562,20 +528,18 @@ void SceneCollision::RenderGO(GameObject *go)
 		RenderMesh(meshList[GEO_BALL], false);
 		modelStack.PopMatrix();
 		break;
-
 		//GAME
 	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
-		modelStack.Translate(50, 50, 0);
+		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
 		modelStack.Scale(10, 10, 1);
-	//	RenderMesh(meshList[GEO_EXPLOSION], false);
+		RenderMesh(Projectile[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		if(go->block_status == GameObject::BLOCK_STATUS::FULL_HEALTH)
 			RenderMesh(BlockList[go->Btype][0], false);
