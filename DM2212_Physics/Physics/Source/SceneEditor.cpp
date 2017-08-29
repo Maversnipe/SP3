@@ -227,8 +227,9 @@ void SceneEditor::Update(double dt)
 		}
 		else
 		{
-			mapeditor->SetIsEditing(true);//return to editing mode
+			mapeditor->DeleteMap(m_vBlocks);
 			m_objectCount = 0;
+			mapeditor->SetIsEditing(true);//return to editing mode
 			for (int i = 0; i < m_goList.size(); ++i)
 			{
 				m_goList[i]->active = false;
@@ -981,35 +982,86 @@ void SceneEditor::RenderUI(GameObject * thing)
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 0);
-	switch (thing->Btype)
+	if (mapeditor->GetIsEditing())
 	{
-	case 1:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sGLASS], false);
-		modelStack.PopMatrix();
+		switch (thing->Btype)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sGLASS], false);
+			modelStack.PopMatrix();
 
-	case 2:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sWOOD], false);
-		modelStack.PopMatrix();
+		case 2:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sWOOD], false);
+			modelStack.PopMatrix();
 
-	case 3:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sMETAL], false);
-		modelStack.PopMatrix();
+		case 3:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sMETAL], false);
+			modelStack.PopMatrix();
 
-	case 4:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sBRICK], false);
-		modelStack.PopMatrix();
+		case 4:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sBRICK], false);
+			modelStack.PopMatrix();
+		}
+	}
+	else
+	{
+		switch (thing->tooltype)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sPICKAXE], false);
+			modelStack.PopMatrix();
+
+		case 2:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sCANNON], false);
+			modelStack.PopMatrix();
+
+		case 3:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sDRILL], false);
+			modelStack.PopMatrix();
+
+		case 4:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sTHUMPER], false);
+			modelStack.PopMatrix();
+
+		case 5:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sMISSILE], false);
+			modelStack.PopMatrix();
+
+		case 6:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sDYNAMITE], false);
+			modelStack.PopMatrix();
+
+		}
 	}
 	modelStack.PopMatrix();
 }
@@ -1040,7 +1092,14 @@ void SceneEditor::Render()
 	RenderBG();
 
 	RenderMinimap(); //test
-	RenderUI(mapeditor->GetCurrentBlock());//render player active tool to change UI
+	if (mapeditor->GetIsEditing())
+	{
+		RenderUI(mapeditor->GetCurrentBlock());//render player active tool to change UI
+	}
+	else
+	{
+		RenderUI(player->GetActiveTool());
+	}
 
 	//RenderMesh(meshList[GEO_AXES], false);
 	if (!optionsmenu)
@@ -1131,13 +1190,13 @@ void SceneEditor::Render()
 	ss.precision(5);
 	ss << "blocks: " << m_objectCount;
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
-	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 	//RenderMinimap(); //test
 
 }
