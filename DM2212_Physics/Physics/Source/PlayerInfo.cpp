@@ -64,7 +64,7 @@ void PlayerInfo::Init(Grid * grid, bool pickaxe, bool cannon, bool thumper, bool
 	if (missile)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools] = new MissileTool(grid);
+		ToolManager[i_NumTools-1] = new MissileTool(grid);
 	}
 }
 
@@ -96,7 +96,7 @@ void PlayerInfo::Update(double dt, Vector3 mousepos)
 
 void PlayerInfo::UseCurrentTool(vector<Block*> blockList, vector<GameObject*> &goList)
 {
-	if (ToolManager[i_ActiveTool]->GetPrice() < i_Money)
+	if (ToolManager[i_ActiveTool]->GetPrice() <= i_Money)
 	{
 		if (ToolManager[i_ActiveTool]->UseTool(blockList, goList))
 			i_Money -= ToolManager[i_ActiveTool]->GetPrice();

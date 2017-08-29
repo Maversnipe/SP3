@@ -54,6 +54,8 @@ void SceneCollision::Init()
 
 	CollisionManager::getCManager()->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
 	//CMinimap:: GetInstance()-> Init(Application::GetWindowWidth() / 8, Application::GetWindowHeight()/8);
+
+	//CSoundEngine::GetInstance()->PlayASound("test");
 }
 
 GameObject* SceneCollision::FetchGO()

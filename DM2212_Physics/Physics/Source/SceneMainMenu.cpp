@@ -82,6 +82,7 @@ void SceneMainMenu::Update(double dt)
 		  }
 	  }
 
+	  CSoundEngine::GetInstance()->PlayASound("test"); //test sound
 }
 
 void SceneMainMenu::Render()
@@ -115,12 +116,10 @@ void SceneMainMenu::Render()
 	float posY = (h - static_cast<float>(y)) / h * m_worldHeight + camera.GetOffset_y();
 	Vector3 mousepos(posX, posY, 0);
 
-	//RenderTest(mousepos);
-	//RenderText();
 	modelStack.PushMatrix();
 	modelStack.Translate(m_worldWidth/2 + 2, m_worldHeight/2+6, 0);
 	modelStack.Scale(m_worldWidth, m_worldHeight, 1);
-	RenderMesh(MenuButtons[MENU_BACKGROUND], false);
+	RenderMesh(Buttons[MENU_BACKGROUND], false);
 	modelStack.PopMatrix();
 
 
@@ -129,7 +128,7 @@ void SceneMainMenu::Render()
 		modelStack.PushMatrix();
 		modelStack.Translate(ButtArray[i - 1]->GetPos().x, ButtArray[i - 1]->GetPos().y, 1);
 		modelStack.Scale(ButtArray[i-1]->GetScale().x, ButtArray[i - 1]->GetScale().y, 1);
-		RenderMesh(MenuButtons[i], false);
+		RenderMesh(Buttons[i], false);
 		modelStack.PopMatrix();
 	}
 
@@ -137,19 +136,4 @@ void SceneMainMenu::Render()
 
 void SceneMainMenu::Exit()
 {
-}
-
-void SceneMainMenu::RenderText()
-{
-	//text, screen is 80x by 60y
-
-}
-
-void SceneMainMenu::RenderTest(Vector3 mousepos)
-{
-	modelStack.PushMatrix();
-	modelStack.Translate(mousepos.x, mousepos.y, mousepos.z);
-	modelStack.Scale(3, 3, 3);
-	RenderMesh(meshList[GEO_BALL], false);
-	modelStack.PopMatrix();
 }

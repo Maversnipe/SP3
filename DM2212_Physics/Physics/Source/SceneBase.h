@@ -23,6 +23,8 @@ enum GEOMETRY_TYPE
 
 	//SP 3
 	GEO_TEST_ANIMATION,
+	GEO_TEXTBOX,
+	GEO_ITEMSELECT,
 	NUM_GEOMETRY,
 };
 
@@ -84,10 +86,11 @@ enum TOOL_TYPE
 	GEO_DRILL,
 	GEO_THUMPER,
 	GEO_MISSILE,
+	GEO_DYNAMITE,
 	NUM_TOOLS,
 };
 
-enum MENU_BUTTONS
+enum BUTTONS
 {
 	MENU_NONE = 0,
 	MENU_PLAY,
@@ -95,6 +98,8 @@ enum MENU_BUTTONS
 	MENU_OPTIONS,
 	MENU_EXIT,
 	MENU_BACKGROUND,
+	ARROW,
+	LOCK,
 	MAX_MENU,
 };
 
@@ -162,7 +167,7 @@ protected:
 	//Editorbox list
 	Mesh* Editorboxlist[NUM_EDITORBOX];
 	//MENU BUTTONS
-	Mesh* MenuButtons[MAX_MENU];
+	Mesh* Buttons[MAX_MENU];
 
 	unsigned m_programID;
 	unsigned m_parameters[U_TOTAL];

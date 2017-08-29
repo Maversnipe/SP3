@@ -35,10 +35,13 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 
 	if (!m_bisSet)
 	{
+		i_Price = 10;
 		pos = mousepos;//update to mouse pos
 	}
 	else
 	{
+		i_Price = 0;
+
 		if (mousepos != pos)
 		{
 			this->dir.Set(mousepos.x - this->pos.x, mousepos.y - this->pos.y, 0);

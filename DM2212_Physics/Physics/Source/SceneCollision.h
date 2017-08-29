@@ -19,6 +19,7 @@
 #include "minimap.h"
 #include "background.h"
 #include "StateManager.h"
+#include "SoundEngine.h"
 
 class Grid;
 class Quadtree;

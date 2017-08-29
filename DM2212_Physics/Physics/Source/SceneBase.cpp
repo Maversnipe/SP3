@@ -125,6 +125,13 @@ void SceneBase::Init()
 		sa->m_anim->Set(0, 5, 0, 1.f, true);
 	}
 
+	//textbox
+	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("ship", Color(1, 1, 1), 1.f);
+	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
+	//item select
+	meshList[GEO_ITEMSELECT] = MeshBuilder::GenerateQuad("items", Color(1, 1, 1), 1.f);
+	meshList[GEO_ITEMSELECT]->textureID = LoadTGA("Image//toolboxbase2.tga");
+
 	//Game (Load Block Textures Here)
 	{
 		BlockList[GEO_GRASS][0] = MeshBuilder::GenerateQuad("Grassblock", Color(0.f, 1.f, 0.f), 1.f);
@@ -167,6 +174,8 @@ void SceneBase::Init()
 		ToolList[GEO_THUMPER]->textureID = LoadTGA("Image//Tools//thumper.tga");
 		ToolList[GEO_MISSILE] = MeshBuilder::GenerateQuad("Missile", Color(1, 1, 1), 1);
 		ToolList[GEO_MISSILE]->textureID = LoadTGA("Image//Tools//napalm.tga");
+		ToolList[GEO_DYNAMITE] = MeshBuilder::GenerateQuad("dynamite", Color(1, 1, 1), 1);
+		ToolList[GEO_DYNAMITE]->textureID = LoadTGA("Image//Tools//dynamite.tga");
 	}
 
 	//minimap
@@ -188,16 +197,20 @@ void SceneBase::Init()
 	BGlist[GEO_BONUS]->textureID = LoadTGA("Image//Background//bonus.tga");
 
 	//Main Menu
-	MenuButtons[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButtons[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
-	MenuButtons[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButtons[MENU_PLAY]->textureID = LoadTGA("Image//mainmenu//play.tga");
-	MenuButtons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButtons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
-	MenuButtons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButtons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
-	MenuButtons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButtons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//editor.tga");
+	Buttons[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
+	Buttons[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[MENU_PLAY]->textureID = LoadTGA("Image//mainmenu//play.tga");
+	Buttons[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
+	Buttons[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
+	Buttons[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//editor.tga");
+	Buttons[ARROW] = MeshBuilder::GenerateQuad("arrow", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[ARROW]->textureID = LoadTGA("Image//arrow.tga");
+	Buttons[LOCK] = MeshBuilder::GenerateQuad("lock", Color(1.f, 0.f, 0.f), 1.f);
+	Buttons[LOCK]->textureID = LoadTGA("Image//lock.tga");
 
 	//UI (toolbox)
 	Toolboxlist[GEO_sPICKAXE] = MeshBuilder::GenerateQuad("selectpickaxe", Color(1.f, 0.f, 0.f), 1.f);
@@ -225,7 +238,7 @@ void SceneBase::Init()
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();
-	CSoundEngine::GetInstance()->AddSound("test", "Sound//Napalm.wav");
+	CSoundEngine::GetInstance()->AddSound("test", "Sound//Theme.mp3");
 
 	bLightEnabled = false;
 }
