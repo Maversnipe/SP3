@@ -5,6 +5,8 @@
 DynamiteTool::DynamiteTool(Grid*grid) : ToolsInfo(grid)
 {
 	tooltype = TOOL_TYPE::DYNAMITE;
+	isSet = false;
+
 }
 
 DynamiteTool::~DynamiteTool()
@@ -15,7 +17,6 @@ void DynamiteTool::Init()
 {
 	i_Price = 10;
 	pos.Set(0.f, 0.f, 0.f);
-	isSet = false;
 }
 
 void DynamiteTool::Update(double dt, Vector3 mousepos)
