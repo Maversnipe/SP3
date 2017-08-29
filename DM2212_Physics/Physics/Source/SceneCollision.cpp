@@ -17,9 +17,9 @@ void SceneCollision::Init()
 {
 	SceneBase::Init();
 
+	StateManager::getInstance()->Init();
 	timer = 0.0f;
 	pause = false;
-	level = 1;
 
 	//RenderMinimap(); //test
 
@@ -99,8 +99,10 @@ Block* SceneCollision::FetchGo1()
 
 void SceneCollision::Update(double dt)
 {
-	/*if (pause)
-		return;*/
+	StateManager::getInstance()->Update(dt);
+	
+	if (StateManager::getInstance()->GetState() != S_PLAYING)
+		return;
 
 	timer += dt;
 
@@ -161,14 +163,6 @@ void SceneCollision::Update(double dt)
 		m_speed += 0.1f;
 	}
 
-	if (Application::IsKeyPressed(VK_ESCAPE))
-	{
-		pause = true;
-	}
-	if (Application::IsKeyPressed(VK_F1))
-	{
-		pause = false;
-	}
 	//Mouse Section
 	//  static bool bLButtonState = false;
 	//  if(!bLButtonState && Application::IsMousePressed(0))
@@ -623,15 +617,6 @@ void SceneCollision::RenderGO(GameObject *go)
 		RenderMesh(ToolList[go->tooltype], false);
 		modelStack.PopMatrix();
 		break;
-
-	case GameObject::GO_CANNONT:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1.f);
-		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_CUBE], false);
-		modelStack.PopMatrix();
-		break;
 	}
 }
 
@@ -688,16 +673,6 @@ void SceneCollision::RenderUI(GameObject * thing)
 	//thing->tooltype;
 }
 
-void SceneCollision::ChangeLvL()
-{
-	switch (level)
-	{
-	case 1:
-		map->Read("Maps//test.csv");
-		RenderMap();
-	}
-}
-
 void SceneCollision::Render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -720,6 +695,12 @@ void SceneCollision::Render()
 	);
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
+
+	if (StateManager::getInstance()->GetState() != S_PLAYING)
+	{
+		StateManager::getInstance()->Render();
+		return;
+	}
 
 	RenderBG();
 

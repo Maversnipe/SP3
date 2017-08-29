@@ -18,6 +18,7 @@
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "background.h"
+#include "StateManager.h"
 
 class Grid;
 class Quadtree;
@@ -54,9 +55,6 @@ public:
 
 	//render UI 
 	void RenderUI(GameObject *thing);
-
-	//Change Level
-	void ChangeLvL();
 
 protected:
 	//Physics
@@ -102,8 +100,6 @@ protected:
 	//GamePlay
 	//Time
 	float timer;
-	//Level
-	int level;
 };
 
 #endif

@@ -13,6 +13,7 @@ CannonTool::CannonTool(Grid* grid) : ToolsInfo(grid)
 	tooltype = TOOL_TYPE::CANNON;
 	cannon = nullptr;
 	cannonball = nullptr;
+	m_breset = false;
 }
 
 CannonTool::~CannonTool()
@@ -39,7 +40,18 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 	else
 	{
 		if (mousepos != pos)
-			dir = (mousepos - pos).Normalized();
+		{
+			this->dir.Set(mousepos.x - this->pos.x, mousepos.y - this->pos.y, 0);
+			if (this->dir != Vector3(0, 0, 0))
+				this->dir.Normalize();
+			this->dir.y = Math::Clamp(std::abs(this->dir.y), sin(-270.f), sin(90.f));
+		}
+
+		if (m_breset == true)
+		{
+			cannon->Init();
+			m_breset = false;
+		}
 
 		cannon->Update(dt, mousepos);
 
@@ -53,12 +65,8 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 		if (cannon->Getbullet() <= 0)
 		{
 			cannon->active = false;
-			cannon = nullptr;
-			m_bisSet = false;
 			Init();
 		}
-
-		
 	}
 }
 
@@ -80,6 +88,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			cannon->aabb.SetAABB(cannon->pos, cannon->scale);
 			m_grid->Add(cannon);
 			cannon->Init();
+			m_breset = true;
 			m_bisSet = true;
 
 			return true;
@@ -98,6 +107,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			go->vel = cannon->dir * 50;
 			go->scale.Set(2, 2, 2);
 			go->aabb.SetAABB(go->pos, go->scale);
+			cannonball = static_cast<Cannonball*>(go);
 			cannon->Decrease(1);
 			m_fcooldown = 2.f;
 		}
