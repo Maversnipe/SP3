@@ -32,9 +32,6 @@ void SceneManager::Update()
 	scenemanager->scenes[currscene]->Update(Application::m_timer.getElapsedTime());
 	if (prevscene != currscene)
 	{
-		//Loading...
-		/*scenemanager->ChangeScene(3);
-		scenemanager->scenes[3]->Render();*/
 		//Swap buffers
 		glfwSwapBuffers(Application::m_window);
 		scenemanager->ChangeScene(currscene);

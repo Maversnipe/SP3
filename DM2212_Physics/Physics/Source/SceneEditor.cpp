@@ -460,17 +460,8 @@ void SceneEditor::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 10)
-			{
-				GameObject *go = FetchGO();
-				go->type = GameObject::GO_WALL;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
-				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
-			}
+			else
+				continue;
 		}
 	}
 }

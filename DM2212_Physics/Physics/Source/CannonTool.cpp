@@ -7,7 +7,7 @@
 
 CannonTool::CannonTool() : ToolsInfo()
 {
-	i_Price = 10;
+	i_Price = 50;
 	pos.Set(0, 0, 0);
 	m_bisSet = false;
 	tooltype = TOOL_TYPE::CANNON;
@@ -22,7 +22,7 @@ CannonTool::~CannonTool()
 
 void CannonTool::Init()
 {
-	i_Price = 10;
+	i_Price = 50;
 	pos.Set(0, 0, 0);
 	m_bisSet = false;
 	cannon = nullptr;
@@ -35,7 +35,7 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 
 	if (!m_bisSet)
 	{
-		i_Price = 10;
+		i_Price = 50;
 		pos = mousepos;//update to mouse pos
 	}
 	else

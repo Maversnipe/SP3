@@ -182,7 +182,7 @@ void StateManager::Update(double dt)
 	float posX = static_cast<float>(x) / w * m_fworldwidth + camera.GetOffset_x();
 	float posY = (h - static_cast<float>(y)) / h * m_fworldheight + camera.GetOffset_y();
 	Vector3 mousepos(posX, posY, 0);
-	std::cout << mousepos << std::endl;
+
 	if (m_currstate == S_PAUSED)
 	{
 		//Mouse Section
@@ -266,17 +266,27 @@ void StateManager::Render()
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "ESC to Pause/Unpause";
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 42);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 7, 42);
 
 	ss.str("");
 	ss.precision(5);
 	ss << "Q and E to change tools";
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 33);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 7, 33);
 
 	ss.str("");
 	ss.precision(5);
-	ss << "Options:change mouse controls";
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 24);
+	ss << "Spacebar to use tool";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 7, 24);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Options:";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 7, 15);
+
+	ss.str("");
+	ss.precision(5);
+	ss << " change mouse controls";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 7, 12);
 }
 
 void StateManager::RenderMesh(Mesh * mesh, bool enableLight)
