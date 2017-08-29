@@ -16,7 +16,6 @@ void CollisionManager::SetWorldSize(int height, int width)
 {
 	m_iworld_height = height;
 	m_iworld_width = width;
-	colltimecheck = 0;
 }
 
 bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)
@@ -197,9 +196,6 @@ void CollisionManager::CollisionResponseC(GameObject * go, GameObject * go2)
 	{
 		if (go2->Btype == GameObject::BLOCK_TYPE::GO_GRASS)
 		{
-			Vector3 vel = go->vel;
-			Vector3 N = m->normal.Normalized();
-			//go->vel = vel - (2.f * vel.Dot(N)) * N;
 			go->vel.SetZero();
 			break;
 		}
@@ -466,34 +462,37 @@ void CollisionManager::CollisionResponseB(GameObject * go, GameObject * go2)
 	}
 	case GameObject::GO_EXPLOSION:
 	{
-		Vector3 u1 = go->vel;
-		Vector3 u2 = go2->vel;
-		Vector3 N = (go2->pos - go->pos).Normalize();
-		Vector3 u1N = u1.Dot(N) * N;
-		Vector3 u2N = u2.Dot(N) * N;
-		go->vel = u1 + 2.f * (u2N - u1N);
+		if (go->Btype != GameObject::GO_GRASS)
+		{
+			Vector3 u1 = go->vel;
+			Vector3 u2 = go2->vel;
+			Vector3 N = (go2->pos - go->pos).Normalize();
+			Vector3 u1N = u1.Dot(N) * N;
+			Vector3 u2N = u2.Dot(N) * N;
+			go->vel = u1 + 2.f * (u2N - u1N);
 
-		if (go->vel.x > 20)
-		{
-			go->vel.x = 20;
-		}
-		else if (go->vel.x < -20)
-		{
-			go->vel.x = -20;
-		}
-		if (go->vel.y > 20)
-		{
-			go->vel.y = 20;
-		}
-		else if (go->vel.y < -20)
-		{
-			go->vel.y = -20;
-		}
+			if (go->vel.x > 20)
+			{
+				go->vel.x = 20;
+			}
+			else if (go->vel.x < -20)
+			{
+				go->vel.x = -20;
+			}
+			if (go->vel.y > 20)
+			{
+				go->vel.y = 20;
+			}
+			else if (go->vel.y < -20)
+			{
+				go->vel.y = -20;
+			}
 
-		PositionalCorrection(go, go2);
+			PositionalCorrection(go, go2);
 
-		go->iscolliding = true;
-		break;
+			go->iscolliding = true;
+			break;
+		}
 	}
 	default:
 		break;

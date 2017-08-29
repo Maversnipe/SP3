@@ -6,7 +6,8 @@ DynamiteTool::DynamiteTool() : ToolsInfo()
 {
 	tooltype = TOOL_TYPE::DYNAMITE;
 	isSet = false;
-
+	i_Price = 60;
+	pos.Set(0, 0, 0);
 }
 
 DynamiteTool::~DynamiteTool()
@@ -15,7 +16,7 @@ DynamiteTool::~DynamiteTool()
 
 void DynamiteTool::Init()
 {
-	i_Price = 10;
+	i_Price = 60;
 	pos.Set(0.f, 0.f, 0.f);
 }
 

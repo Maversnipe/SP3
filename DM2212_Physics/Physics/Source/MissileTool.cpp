@@ -7,7 +7,7 @@ using std::endl;
 
 MissileTool::MissileTool() : ToolsInfo()
 {
-	i_Price = 0;
+	i_Price = 50;
 	pos.Set(0, 0, 0);
 	toolproj = TOOL_PROJ::ROCKET;
 	tooltype = GameObject::TOOL_TYPE::MISSILE;
@@ -19,7 +19,7 @@ MissileTool::~MissileTool()
 
 void MissileTool::Init()
 {
-	i_Price = 0;
+	i_Price = 50;
 	pos.Set(0, 0, 0);
 }
 

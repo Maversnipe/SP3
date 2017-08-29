@@ -3,6 +3,7 @@
 #include "Application.h"
 #include <sstream>
 #include "background.h"
+#include "Explosion.h"
 
 SceneEditor::SceneEditor()
 {
@@ -21,6 +22,7 @@ void SceneEditor::Init()
 	isdrill = true;
 	ismissile = true;
 	isdynamite = true;
+	numplayertools = 6;
 	m_objectCount = 0;
 	i_blocklimit = 50;
 	backgroundindex = 1;
@@ -160,26 +162,27 @@ void SceneEditor::Update(double dt)
 	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
 	{
 		bSpaceState = true;
-		std::cout << "SPACE BAR DOWN" << std::endl;
 
-		if (mapeditor->GetIsEditing())
+		if (!optionsmenu)
 		{
-			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks))
+			if (mapeditor->GetIsEditing())
 			{
-				m_objectCount++;
+				if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks) && !optionsmenu)
+				{
+					m_objectCount++;
+				}
+				else if (mapeditor->RemoveBlock(m_vBlocks))
+				{
+					m_objectCount--;
+				}
 			}
-			else if (mapeditor->RemoveBlock(m_vBlocks))
-			{
-				m_objectCount--;
-			}
+			else
+				player->UseCurrentTool(m_vBlocks, m_goList);
 		}
-		else
-			player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
 	{
 		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
 	}
 	// save file
 	static bool isS = false;
@@ -214,7 +217,7 @@ void SceneEditor::Update(double dt)
 	if (Application::IsKeyPressed(VK_RETURN) && !isEnter)
 	{
 		isEnter = true;
-		if (optionsmenu && mapeditor->GetIsEditing())
+		if (optionsmenu && mapeditor->GetIsEditing() && numplayertools !=0)
 		{
 			player->Init(ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
 			optionsmenu = false;
@@ -226,13 +229,18 @@ void SceneEditor::Update(double dt)
 		}
 		else
 		{
-			mapeditor->SetIsEditing(true);//return to editing mode
-			m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
-			for (int i = 0; i < m_goList.size(); ++i)
+			if (!mapeditor->GetIsEditing())
 			{
-				m_goList[i]->active = false;
+				mapeditor->DeleteMap(m_vBlocks);
+				m_objectCount = 0;
+				mapeditor->SetIsEditing(true);//return to editing mode
+				for (int i = 0; i < m_goList.size(); ++i)
+				{
+					m_goList[i]->active = false;
+				}
+				map->Read("Maps//example.csv");
+				RenderMap();
 			}
-			RenderMap();
 		}
 	}
 	else if (!Application::IsKeyPressed(VK_RETURN) && isEnter)
@@ -274,39 +282,66 @@ void SceneEditor::Update(double dt)
 						break;
 					case(Button::EDITOR_PICKAXE):
 						if (ispickaxe)
+						{
 							ispickaxe = false;
+							numplayertools--;
+						}
 						else
+						{
 							ispickaxe = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_CANNON:
 						if (iscannon)
+						{
 							iscannon = false;
-						else
+							numplayertools--;
+						}
+						else {
 							iscannon = true;
+							numplayertools++;
+						}
 						break;
 					case(Button::EDITOR_THUMPER):
-						if (isthumper)
+						if (isthumper) {
 							isthumper = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isthumper = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_DRILL:
-						if (isdrill)
+						if (isdrill) {
 							isdrill = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isdrill = true;
+							numplayertools++;
+						}
 						break;
 					case(Button::EDITOR_MISSILE):
-						if (ismissile)
+						if (ismissile) {
 							ismissile = false;
-						else
+							numplayertools--;
+						}
+						else {
 							ismissile = true;
+							numplayertools++;
+						}
 						break;
 					case Button::EDITOR_DYNAMITE:
-						if (isdynamite)
+						if (isdynamite) {
 							isdynamite = false;
-						else
+							numplayertools--;
+						}
+						else {
 							isdynamite = true;
+							numplayertools++;
+						}
 						break;
 
 					}
@@ -425,17 +460,8 @@ void SceneEditor::RenderMap()
 				go->aabb.SetAABB(go->pos, go->scale);
 				//m_grid->Add(go);
 			}
-			else if (map->Map[i][k] == 10)
-			{
-				GameObject *go = FetchGO();
-				go->type = GameObject::GO_WALL;
-				go->pos = Vector3((k + 1) * 4, (map->GetNumOfTiles_Height() - i) * 4, 0);
-				go->scale.Set(4.f, 4.f, 1.f);
-				go->vel.Set(0, 0, 0);
-				go->mass = 1.f;
-				go->aabb.SetAABB(go->pos, go->scale);
-				//m_grid->Add(go);
-			}
+			else
+				continue;
 		}
 	}
 }
@@ -815,10 +841,17 @@ void SceneEditor::UpdateObjects(double dt)
 			DrillProj* drillproj = static_cast<DrillProj*>(i);
 			drillproj->Update(m_goList, m_vBlocks, dt);
 		}
-		if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
+		else  if (i->toolproj == GameObject::TOOL_PROJ::ROCKET)
 		{
 			missile* Missile = static_cast<missile*>(i);
+
 			Missile->Update(m_goList, m_vBlocks, mousepos, dt);
+		}
+		else  if (i->toolproj == GameObject::TOOL_PROJ::EXPLOSION)
+		{
+			Explosion* explosive = static_cast<Explosion*>(i);
+
+			explosive->Update(m_goList, m_vBlocks, dt);
 		}
 	}
 }
@@ -953,35 +986,86 @@ void SceneEditor::RenderUI(GameObject * thing)
 {
 	modelStack.PushMatrix();
 	modelStack.Translate(camera.GetOffset_x() + CMinimap::GetInstance()->getScale().x / 2, camera.GetOffset_y() + CMinimap::GetInstance()->getScale().y / 2, 0);
-	switch (thing->Btype)
+	if (mapeditor->GetIsEditing())
 	{
-	case 1:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sGLASS], false);
-		modelStack.PopMatrix();
+		switch (thing->Btype)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sGLASS], false);
+			modelStack.PopMatrix();
 
-	case 2:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sWOOD], false);
-		modelStack.PopMatrix();
+		case 2:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sWOOD], false);
+			modelStack.PopMatrix();
 
-	case 3:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sMETAL], false);
-		modelStack.PopMatrix();
+		case 3:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sMETAL], false);
+			modelStack.PopMatrix();
 
-	case 4:
-		modelStack.PushMatrix();
-		modelStack.Translate(15, 80, 1);
-		modelStack.Scale(38, 11, 1);
-		RenderMesh(Editorboxlist[GEO_sBRICK], false);
-		modelStack.PopMatrix();
+		case 4:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(38, 11, 1);
+			RenderMesh(Editorboxlist[GEO_sBRICK], false);
+			modelStack.PopMatrix();
+		}
+	}
+	else
+	{
+		switch (thing->tooltype)
+		{
+		case 1:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sPICKAXE], false);
+			modelStack.PopMatrix();
+
+		case 2:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sCANNON], false);
+			modelStack.PopMatrix();
+
+		case 3:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sDRILL], false);
+			modelStack.PopMatrix();
+
+		case 4:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sTHUMPER], false);
+			modelStack.PopMatrix();
+
+		case 5:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sMISSILE], false);
+			modelStack.PopMatrix();
+
+		case 6:
+			modelStack.PushMatrix();
+			modelStack.Translate(15, 80, 1);
+			modelStack.Scale(56, 11, 1);
+			RenderMesh(Toolboxlist[GEO_sDYNAMITE], false);
+			modelStack.PopMatrix();
+
+		}
 	}
 	modelStack.PopMatrix();
 }
@@ -1012,7 +1096,14 @@ void SceneEditor::Render()
 	RenderBG();
 
 	RenderMinimap(); //test
-	RenderUI(mapeditor->GetCurrentBlock());//render player active tool to change UI
+	if (mapeditor->GetIsEditing())
+	{
+		RenderUI(mapeditor->GetCurrentBlock());//render player active tool to change UI
+	}
+	else
+	{
+		RenderUI(player->GetActiveTool());
+	}
 
 	//RenderMesh(meshList[GEO_AXES], false);
 	if (!optionsmenu)
@@ -1096,14 +1187,20 @@ void SceneEditor::Render()
 	{
 		ss.str(std::string());
 		ss << "Press D to remove all blocks ";
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 2, 0, 3);
 	}
+
+	ss.str(std::string());
+	ss.precision(5);
+	ss << "blocks: " << m_objectCount;
+	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 	//RenderMinimap(); //test
 
 }

@@ -74,7 +74,7 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			{
 				if (blocklist[i]->pos.x / 4 == x && blocklist[i]->pos.y / 4 == y && blocklist[i]->active)
 				{
-					std::cout << blocklist[i]->Btype + 1 << ",";
+					//std::cout << blocklist[i]->Btype + 1 << ",";
 					myfile << blocklist[i]->Btype+1 << ",";
 					found = true;
 					break;
@@ -84,13 +84,13 @@ void MapEditor::SaveMap(std::vector<Block*>& blocklist)
 			//if no blocks here
 			if (!found)
 			{
-				std::cout << "0,";
+				//std::cout << "0,";
 				myfile << "0,";
 			}
 			found = false;
 
 		}
-		std::cout << "\n";
+		//std::cout << "\n";
 		myfile << "\n";
 	}
 	myfile.close();
@@ -131,6 +131,7 @@ bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist)
 	go->vel.Set(0, 0, 0);
 	go->mass = 1.f;
 	go->Btype = blockmanager[currblockint]->Btype;
+	go->Init();
 	go->aabb.SetAABB(go->pos, go->scale);
 	return true;
 }

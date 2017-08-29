@@ -1,6 +1,10 @@
 #ifndef FILE_IO_H
 #define FILE_IO_H
 
+//Author:Sheng Yang
+//Used for reading maps in csv
+//Reference:Gdev
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -33,9 +37,12 @@ public:
 protected:
 	int m_iScreenHeight;
 	int m_iScreeenWidth;
+
+	//No of blocks 
 	int m_iNoofTiles_Height;
 	int m_iNoofTiles_Width;
 
+	//Size of blocks
 	int m_iTileSize_Height;
 	int m_iTileSize_Width;
 

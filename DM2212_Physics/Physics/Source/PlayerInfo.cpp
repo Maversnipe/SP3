@@ -69,7 +69,7 @@ void PlayerInfo::Init(bool pickaxe, bool cannon, bool thumper, bool drill, bool 
 	if (missile)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools] = new MissileTool();
+		ToolManager[i_NumTools-1] = new MissileTool();
 	}
 	if (dynamite)
 	{

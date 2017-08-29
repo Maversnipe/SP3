@@ -6,7 +6,7 @@ using std::endl;
 
 ThumperTool::ThumperTool() : ToolsInfo()
 {
-	i_Price = 0;
+	i_Price = 70;
 	pos.Set(0, 0, 0);
 	tooltype = TOOL_TYPE::THUMPER;
 }
@@ -17,7 +17,7 @@ ThumperTool::~ThumperTool()
 
 void ThumperTool::Init()
 {
-	i_Price = 0;
+	i_Price = 70;
 	pos.Set(0, 0, 0);
 }
 
