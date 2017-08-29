@@ -13,6 +13,7 @@ CannonTool::CannonTool() : ToolsInfo()
 	tooltype = TOOL_TYPE::CANNON;
 	cannon = nullptr;
 	cannonball = nullptr;
+	m_breset = false;
 }
 
 CannonTool::~CannonTool()
@@ -32,21 +33,28 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 {
 	m_fcooldown -= dt;
 
-	if (cannon != nullptr)
-	{
-		if(cannon->Getbullet() > 2 || cannon->Getbullet() < 0 && cannonball == nullptr)
-			cannon->Init();
-		cannon->vel.SetZero();
-	}
-
 	if (!m_bisSet)
 	{
+		i_Price = 10;
 		pos = mousepos;//update to mouse pos
 	}
 	else
 	{
+		i_Price = 0;
+
 		if (mousepos != pos)
-			dir = (mousepos - pos).Normalized();
+		{
+			this->dir.Set(mousepos.x - this->pos.x, mousepos.y - this->pos.y, 0);
+			if (this->dir != Vector3(0, 0, 0))
+				this->dir.Normalize();
+			this->dir.y = Math::Clamp(std::abs(this->dir.y), sin(-270.f), sin(90.f));
+		}
+
+		if (m_breset == true)
+		{
+			cannon->Init();
+			m_breset = false;
+		}
 
 		cannon->Update(dt, mousepos);
 
@@ -60,11 +68,8 @@ void CannonTool::Update(double dt, Vector3 mousepos)
 		if (cannon->Getbullet() <= 0)
 		{
 			cannon->active = false;
-			cannon = nullptr;
-			m_bisSet = false;
+			Init();
 		}
-
-		
 	}
 }
 
@@ -85,6 +90,7 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			cannon->scale.Set(10, 5, 1);
 			cannon->aabb.SetAABB(cannon->pos, cannon->scale);
 			cannon->Init();
+			m_breset = true;
 			m_bisSet = true;
 
 			return true;
@@ -103,7 +109,9 @@ bool CannonTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList)
 			go->vel = cannon->dir * 50;
 			go->scale.Set(2, 2, 2);
 			go->aabb.SetAABB(go->pos, go->scale);
+			cannonball = static_cast<Cannonball*>(go);
 			cannon->Decrease(1);
+			m_fcooldown = 2.f;
 		}
 	}
 	return false;

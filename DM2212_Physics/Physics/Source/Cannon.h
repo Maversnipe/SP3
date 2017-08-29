@@ -16,12 +16,8 @@ public:
 	int Getbullet();
 	void Decrease(int amount);
 
-	bool GetFiring();
-	void SetFiring(bool state);
-
 private:
 	int m_ibullet;		//Bullets
-	bool m_bfiring;
 };
 
 #endif // !CANNON_H

@@ -19,6 +19,7 @@
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "background.h"
+#include "StateManager.h"
 #include "SoundEngine.h"
 
 class SceneCollision : public SceneBase
@@ -74,9 +75,6 @@ protected:
 	Block *m_Block;
 	void UpdateBlocks(double dt);
 
-	//"Gravity"
-	Vector3 m_vec3Gravity;
-
 	//Minimap
 	Vector3 minimapvector;
 
@@ -84,7 +82,6 @@ protected:
 	float m1, m2;
 	Vector3 u1, u2, v1, v2;
 	Vector3 initialMomentum, finalMomentum;
-	float initialKE, finalKE;
 
 	//Map
 	FileIO* map;
@@ -93,6 +90,13 @@ protected:
 	PlayerInfo* player;
 
 	Vector3 mousepos;
+
+	//Pause
+	bool pause;
+
+	//GamePlay
+	//Time
+	float timer;
 };
 
 #endif

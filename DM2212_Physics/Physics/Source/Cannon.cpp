@@ -11,12 +11,15 @@ Cannon::~Cannon()
 
 void Cannon::Init()
 {
-	m_ibullet = 2;
-	m_bfiring = false;
+	m_ibullet = 5;
 }
 
 void Cannon::Update(double dt, Vector3 mousepos)
 {
+	//Invisible cannon w no collision
+	//Projectile launches from this cannon to prevent from getting stuck
+	//(collision is set on cannon icon placed)
+	
 	//Rotate to mousepos
 	this->dir.Set(mousepos.x - this->pos.x,mousepos.y - this->pos.y, 0);
 	if(this->dir != Vector3(0, 0, 0))
@@ -32,14 +35,4 @@ int Cannon::Getbullet()
 void Cannon::Decrease(int amount)
 {
 	m_ibullet -= amount;
-}
-
-bool Cannon::GetFiring()
-{
-	return m_bfiring;
-}
-
-void Cannon::SetFiring(bool state)
-{
-	m_bfiring = state;
 }

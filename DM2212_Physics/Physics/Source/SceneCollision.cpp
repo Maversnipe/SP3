@@ -16,6 +16,10 @@ void SceneCollision::Init()
 {
 	SceneBase::Init();
 
+	StateManager::getInstance()->Init();
+	timer = 0.0f;
+	pause = false;
+
 	//RenderMinimap(); //test
 
     //Map reading
@@ -40,11 +44,6 @@ void SceneCollision::Init()
     m_ghost = new GameObject(GameObject::GO_WALL);
 	m_Block = new Block();
 	m_objectCount = 0;
-
-	initialKE = 0.0f;
-	finalKE = 0.0f;
-
-	m_vec3Gravity.Set(0, -9.8, 0);
 
 	//CMinimap::Init
 	//cm->SetWorldSize(Application::GetWindowHeight(), Application::GetWindowWidth());
@@ -98,6 +97,13 @@ Block* SceneCollision::FetchGo1()
 
 void SceneCollision::Update(double dt)
 {
+	StateManager::getInstance()->Update(dt);
+	
+	if (StateManager::getInstance()->GetState() != S_PLAYING)
+		return;
+
+	timer += dt;
+
 	double x, y;
 	Application::GetCursorPos(&x, &y);
 	int w = Application::GetWindowWidth();
@@ -154,11 +160,6 @@ void SceneCollision::Update(double dt)
 	{
 		m_speed += 0.1f;
 	}
-
-	/*if (Application::IsKeyPressed(VK_F10))
-	{
-		SceneManager::currscene = 3;
-	}*/
 
 	//Mouse Section
 	//  static bool bLButtonState = false;
@@ -593,15 +594,6 @@ void SceneCollision::RenderGO(GameObject *go)
 		RenderMesh(ToolList[go->tooltype], false);
 		modelStack.PopMatrix();
 		break;
-
-	case GameObject::GO_CANNONT:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z - 1.f);
-		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_CUBE], false);
-		modelStack.PopMatrix();
-		break;
 	}
 }
 
@@ -681,6 +673,12 @@ void SceneCollision::Render()
 	// Model matrix : an identity matrix (model will be at the origin)
 	modelStack.LoadIdentity();
 
+	if (StateManager::getInstance()->GetState() != S_PLAYING)
+	{
+		StateManager::getInstance()->Render();
+		return;
+	}
+
 	RenderBG();
 
 	RenderMinimap(); //test
@@ -752,6 +750,11 @@ void SceneCollision::Render()
 
 	ss.str("");
 	ss.precision(5);
+	ss << "Time: " << timer;
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 46, 3);
+
+	ss.str("");
+	ss.precision(5);
 	ss << "Money: " << PlayerInfo::GetInstance()->GetGold();
 	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
@@ -769,17 +772,19 @@ void SceneCollision::Exit()
 {
 	SceneBase::Exit();
 	//Cleanup GameObjects
-	/* while(m_goList.size() > 0)
+	/*while (m_goList.size() > 0)
 	{
-	GameObject *go = m_goList.back();
-	delete go;
-	m_goList.pop_back();
-	}
-	if(m_ghost)
-	{
-	delete m_ghost;
-	m_ghost = NULL;
+		GameObject *go = m_goList.back();
+		if(go!= NULL)
+			delete go;
+		m_goList.pop_back();
 	}*/
+
+	if (m_ghost)
+	{
+		delete m_ghost;
+		m_ghost = NULL;
+	}
 
 	/*if (m_grid)
 	{

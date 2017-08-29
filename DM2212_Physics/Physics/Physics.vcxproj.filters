@@ -127,6 +127,9 @@
       <Filter>GameObjects\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Source\background.cpp" />
+    <ClCompile Include="Source\StateManager.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GameObject.h">
@@ -261,6 +264,9 @@
       <Filter>GameObjects\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Source\background.h" />
+    <ClInclude Include="Source\StateManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GameObjects">
