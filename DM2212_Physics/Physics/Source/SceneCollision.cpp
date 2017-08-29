@@ -566,11 +566,11 @@ void SceneCollision::RenderGO(GameObject *go)
 		break;
 
 		//GAME
-	case GameObject::GO_TEST_ANIMATION:
+	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		RenderMesh(meshList[GEO_TEST_ANIMATION], false);
+		RenderMesh(meshList[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 
@@ -585,14 +585,6 @@ void SceneCollision::RenderGO(GameObject *go)
 			RenderMesh(BlockList[go->Btype][1], false);
 		else if (go->block_status == GameObject::BLOCK_STATUS::BROKEN)
 			RenderMesh(BlockList[go->Btype][2], false);
-		modelStack.PopMatrix();
-		break;
-
-	case GameObject::GO_EXPLOSION:
-		modelStack.PushMatrix();
-		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
-		RenderMesh(meshList[GEO_BALL], false);
 		modelStack.PopMatrix();
 		break;
 

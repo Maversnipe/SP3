@@ -11,6 +11,8 @@ Explosion::~Explosion()
 
 void Explosion::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, double dt)
 {
+	if (!this->active)
+		return;
 	//Check mass
 	if (this->mass == 0)
 		this->invmass = 0;
@@ -19,7 +21,8 @@ void Explosion::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 
 	if (this->active)
 	{
-
+		this->scale.x += dt * 5.f;
+		this->scale.y += dt * 5.f;
 	}
 	this->aabb.SetAABB(this->pos, this->scale);
 

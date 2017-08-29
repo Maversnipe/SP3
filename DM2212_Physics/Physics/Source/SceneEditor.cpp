@@ -2,7 +2,6 @@
 #include "GL\glew.h"
 #include "Application.h"
 #include <sstream>
-#include "SpatialPartitioning\Grid.h"
 #include "background.h"
 
 SceneEditor::SceneEditor()
@@ -577,18 +576,17 @@ void SceneEditor::RenderGO(GameObject *go)
 		break;
 
 		//GAME
-	case GameObject::GO_TEST_ANIMATION:
+	case GameObject::GO_EXPLOSION:
 		modelStack.PushMatrix();
 		modelStack.Translate(50, 50, 0);
 		modelStack.Scale(10, 10, 1);
-		RenderMesh(meshList[GEO_TEST_ANIMATION], false);
+		RenderMesh(meshList[GEO_EXPLOSION], false);
 		modelStack.PopMatrix();
 		break;
 
 	case GameObject::GO_BLOCK:
 		modelStack.PushMatrix();
 		modelStack.Translate(go->pos.x, go->pos.y, go->pos.z);
-		//modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)) + go->rotation, 0.f, 0.f, 1.f);
 		modelStack.Rotate(Math::RadianToDegree(atan2(go->dir.y, go->dir.x)), 0.f, 0.f, 1.f);
 		modelStack.Scale(go->scale.x, go->scale.y, go->scale.z);
 		RenderMesh(BlockList[go->Btype][0], false);

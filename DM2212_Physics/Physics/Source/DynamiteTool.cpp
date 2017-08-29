@@ -45,7 +45,7 @@ bool DynamiteTool::UseTool(vector<Block*> blockList, vector<GameObject*>& goList
 		go->type = GameObject::GO_BALL;
 		go->toolproj = TOOL_PROJ::EXPLOSION;
 		go->pos = pos;
-		go->vel = dir * 50;
+		go->vel.SetZero();
 		go->scale.Set(2, 2, 2);
 		go->aabb.SetAABB(go->pos, go->scale);
 		isSet = false;

@@ -36,7 +36,6 @@ void DrillProj::Update(std::vector<GameObject*> objs, std::vector<Block*> blks, 
 
 	if (this->active)
 	{
-		this->vel.y += -9.8 * dt;
 		this->pos += this->vel * static_cast<float>(dt);
 	}
 	this->aabb.SetAABB(this->pos, this->scale);

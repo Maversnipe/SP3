@@ -107,6 +107,9 @@ public:
 	//Friction
 	float staticFric;
 	float dynamicFric;
+
+	// For explosion
+	const float m_fMaxScale = 10.f;
 };
 
 #endif

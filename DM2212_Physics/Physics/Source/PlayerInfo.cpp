@@ -18,6 +18,16 @@ PlayerInfo::PlayerInfo()
 
 PlayerInfo::~PlayerInfo()
 {
+	if (ToolManager)
+	{
+		for (int i = 0; i < i_NumTools; i++)
+		{
+			delete ToolManager[i];
+			ToolManager[i] = NULL;
+		}
+		delete[] ToolManager;
+		ToolManager = NULL;
+	}
 }
 
 void PlayerInfo::Init()
@@ -28,8 +38,8 @@ void PlayerInfo::Init()
 	ToolManager[1] = new CannonTool();
 	ToolManager[2] = new ThumperTool();
 	ToolManager[3] = new DrillTool();
-	ToolManager[4] = new DynamiteTool();
-	ToolManager[5] = new MissileTool();
+	ToolManager[4] = new MissileTool();
+	ToolManager[5] = new DynamiteTool();
 }
 
 void PlayerInfo::Init(bool pickaxe, bool cannon, bool thumper, bool drill, bool dynamite, bool missile)
@@ -56,15 +66,15 @@ void PlayerInfo::Init(bool pickaxe, bool cannon, bool thumper, bool drill, bool 
 		i_NumTools++;
 		ToolManager[i_NumTools-1] = new DrillTool();
 	}
-	if (dynamite)
-	{
-		i_NumTools++;
-		ToolManager[i_NumTools-1] = new DynamiteTool();
-	}
 	if (missile)
 	{
 		i_NumTools++;
 		ToolManager[i_NumTools] = new MissileTool();
+	}
+	if (dynamite)
+	{
+		i_NumTools++;
+		ToolManager[i_NumTools-1] = new DynamiteTool();
 	}
 }
 
