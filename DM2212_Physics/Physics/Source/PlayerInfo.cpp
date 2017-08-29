@@ -64,7 +64,7 @@ void PlayerInfo::Init(Grid * grid, bool pickaxe, bool cannon, bool thumper, bool
 	if (missile)
 	{
 		i_NumTools++;
-		ToolManager[i_NumTools] = new MissileTool(grid);
+		ToolManager[i_NumTools-1] = new MissileTool(grid);
 	}
 }
 

@@ -23,7 +23,7 @@ void SceneEditor::Init()
 	ismissile = true;
 	isdynamite = true;
 	m_objectCount = 0;
-	i_blocklimit = 100;
+	i_blocklimit = 50;
 	backgroundindex = 1;
 	//RenderMinimap(); //test
 	optionsmenu = false;
