@@ -18,6 +18,7 @@
 #include "CollisionManager.h"
 #include "minimap.h"
 #include "background.h"
+#include "SoundEngine.h"
 
 class Grid;
 class Quadtree;

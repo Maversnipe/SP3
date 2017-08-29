@@ -236,7 +236,7 @@ void SceneBase::Init()
 
 	//Load sound (test)
 	CSoundEngine::GetInstance()->Init();
-	CSoundEngine::GetInstance()->AddSound("test", "Sound//Napalm.wav");
+	CSoundEngine::GetInstance()->AddSound("test", "Sound//Theme.mp3");
 
 	bLightEnabled = false;
 }

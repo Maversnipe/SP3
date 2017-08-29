@@ -46,6 +46,8 @@ public:
 	//options
 	void RenderOptions();
 	void UpdateOptions();
+	//render UI 
+	void RenderUI(GameObject *thing);
 
 	//render minimap
 	void RenderMinimap();

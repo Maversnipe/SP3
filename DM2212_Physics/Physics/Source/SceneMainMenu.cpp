@@ -82,6 +82,7 @@ void SceneMainMenu::Update(double dt)
 		  }
 	  }
 
+	  CSoundEngine::GetInstance()->PlayASound("test"); //test sound
 }
 
 void SceneMainMenu::Render()
