@@ -161,26 +161,27 @@ void SceneEditor::Update(double dt)
 	if (!bSpaceState && Application::IsKeyPressed(VK_SPACE))
 	{
 		bSpaceState = true;
-		std::cout << "SPACE BAR DOWN" << std::endl;
 
-		if (mapeditor->GetIsEditing())
+		if (!optionsmenu)
 		{
-			if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks) && !optionsmenu)
+			if (mapeditor->GetIsEditing())
 			{
-				m_objectCount++;
+				if (m_objectCount < i_blocklimit && mapeditor->PlaceBlock(m_vBlocks) && !optionsmenu)
+				{
+					m_objectCount++;
+				}
+				else if (mapeditor->RemoveBlock(m_vBlocks))
+				{
+					m_objectCount--;
+				}
 			}
-			else if (mapeditor->RemoveBlock(m_vBlocks))
-			{
-				m_objectCount--;
-			}
+			else
+				player->UseCurrentTool(m_vBlocks, m_goList);
 		}
-		else
-			player->UseCurrentTool(m_vBlocks, m_goList);
 	}
 	else if (bSpaceState && !Application::IsKeyPressed(VK_SPACE))
 	{
 		bSpaceState = false;
-		std::cout << "SPACE BAR UP" << std::endl;
 	}
 	// save file
 	static bool isS = false;
@@ -227,14 +228,18 @@ void SceneEditor::Update(double dt)
 		}
 		else
 		{
-			mapeditor->DeleteMap(m_vBlocks);
-			m_objectCount = 0;
-			mapeditor->SetIsEditing(true);//return to editing mode
-			for (int i = 0; i < m_goList.size(); ++i)
+			if (!mapeditor->GetIsEditing())
 			{
-				m_goList[i]->active = false;
+				mapeditor->DeleteMap(m_vBlocks);
+				m_objectCount = 0;
+				mapeditor->SetIsEditing(true);//return to editing mode
+				for (int i = 0; i < m_goList.size(); ++i)
+				{
+					m_goList[i]->active = false;
+				}
+				map->Read("Maps//example.csv");
+				RenderMap();
 			}
-			RenderMap();
 		}
 	}
 	else if (!Application::IsKeyPressed(VK_RETURN) && isEnter)
@@ -1183,7 +1188,7 @@ void SceneEditor::Render()
 	{
 		ss.str(std::string());
 		ss << "Press D to remove all blocks ";
-		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 2, 0, 3);
+		RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 2, 0, 3);
 	}
 
 	ss.str(std::string());

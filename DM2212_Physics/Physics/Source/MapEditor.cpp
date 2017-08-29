@@ -131,6 +131,7 @@ bool MapEditor::PlaceBlock(std::vector<Block*>& blocklist)
 	go->vel.Set(0, 0, 0);
 	go->mass = 1.f;
 	go->Btype = blockmanager[currblockint]->Btype;
+	go->Init();
 	go->aabb.SetAABB(go->pos, go->scale);
 	return true;
 }
