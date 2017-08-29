@@ -81,7 +81,6 @@ GameObject* SceneEditor::FetchGO()
 		if (!go->active)
 		{
 			go->active = true;
-			//++m_objectCount;
 			return go;
 		}
 	}
@@ -91,7 +90,6 @@ GameObject* SceneEditor::FetchGO()
 
 
 	go->active = true;
-	//++m_objectCount;
 	return go;
 }
 
@@ -189,12 +187,21 @@ void SceneEditor::Update(double dt)
 	// save file
 	static bool isS = false;
 	if (Application::IsKeyPressed('S') && !isS)
+	{
 		isS = true;
+		if (!optionsmenu && mapeditor->GetIsEditing())
+		{
+			mapeditor->SaveMap(m_vBlocks);
+			optionsmenu = true;
+		}
+		else
+			optionsmenu = false;
+	}
 	else if (!Application::IsKeyPressed('S') && isS)
 	{
-		mapeditor->SaveMap(m_vBlocks);
 		isS = false;
 	}
+
 	static bool isD = false;
 	if (Application::IsKeyPressed('D') && !isD)
 		isD = true;
@@ -203,42 +210,26 @@ void SceneEditor::Update(double dt)
 		m_objectCount -= mapeditor->DeleteMap(m_vBlocks);
 		isD = false;
 	}
-	static bool isW = false;
-	if (Application::IsKeyPressed('W') && !isW)
-		isW = true;
-	else if (!Application::IsKeyPressed('W') && isW)
+	static bool isEnter = false;
+	if (Application::IsKeyPressed(VK_RETURN) && !isEnter)
 	{
-		if(mapeditor->GetIsEditing())
-			mapeditor->SetIsEditing(false);
-		else
-			mapeditor->SetIsEditing(true);
-
-		isW = false;
-	}
-	static bool isA = false;
-	if (Application::IsKeyPressed('A') && !isA)
-	{
-		isA = true;
-	}
-	else if (!Application::IsKeyPressed('A') && isA)
-	{
-		//map->Read("Maps//example.csv");
-		//RenderMap();
-		backgroundindex++;
-		isA = false;
-	}
-	static bool isO = false;
-	if (Application::IsKeyPressed('O') && !isO)
-	{
+		isEnter = true;
 		if (optionsmenu)
+		{
+			player->Init(m_grid, ispickaxe, iscannon, isthumper, isdrill, isdynamite, ismissile);
 			optionsmenu = false;
+			if (mapeditor->GetIsEditing())
+				mapeditor->SetIsEditing(false);
+			
+		}
 		else
-			optionsmenu = true;
-		isO = true;
+		{
+			mapeditor->SetIsEditing(true);//return to editing mode
+		}
 	}
-	else if (!Application::IsKeyPressed('O') && isO)
+	else if (!Application::IsKeyPressed(VK_RETURN) && isEnter)
 	{
-		isO = false;
+		isEnter = false;
 	}
 
 	//Mouse Section
@@ -425,19 +416,6 @@ void SceneEditor::RenderMap()
 			}
 		}
 	}
-
-	//For debug
-	/*
-	for (int i = 0; i < map->GetNumOfTiles_Height(); i++)
-	{
-	for (int k = 0; k < map->GetNumOfTiles_Width(); k++)
-	{
-	std::cout << map->Map[i][k];
-	}
-
-	std::cout << std::endl;
-	}
-	*/
 }
 
 void SceneEditor::RenderBG()
@@ -621,7 +599,8 @@ void SceneEditor::RenderOptions()
 }
 
 void SceneEditor::UpdateOptions()
-{//option buttons response and position update;
+{
+	//option buttons response and position update;
 	Vector3 center(m_worldWidth * 0.5 + 2 + camera.GetOffset_x(), m_worldHeight* 0.5 + 6 + camera.GetOffset_y(), 1);
 	float offset = 9.5;
 	for (int i = 0; i < numButtons; ++i)
@@ -989,7 +968,6 @@ void SceneEditor::RenderUI(GameObject * thing)
 		modelStack.PopMatrix();
 	}
 	modelStack.PopMatrix();
-	//thing->tooltype;
 }
 
 void SceneEditor::Render()
@@ -1081,16 +1059,33 @@ void SceneEditor::Render()
 
 	////Exercise 3: render initial and final kinetic energy
 	//
+
+	ss.str(std::string());
+
+	if (mapeditor->GetIsEditing() && !optionsmenu)
+	{
+		ss << "Press S to save / play map";
+	}
+	else if (optionsmenu)
+	{
+		ss << "Press Enter to play map";
+	}
+	else if (!mapeditor->GetIsEditing() && !optionsmenu)
+	{
+		ss << "Press Enter to edit map";
+	}
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(1, 1, 1), 3, 0, 0);
+
 	ss.str(std::string());
 	ss.precision(3);
 	ss << "Blocks: " << m_objectCount;
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 3);
+	//RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
 
 	ss.str(std::string());
 	ss.precision(5);
 	ss << "FPS: " << fps;
 	// ss << "minimappos: " << CMinimap::GetInstance()->getPosition();
-	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 1, 0), 3, 0, 0);
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 3, 0, 57);
 	//RenderMinimap(); //test
 
 }
