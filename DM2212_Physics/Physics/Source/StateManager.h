@@ -17,7 +17,7 @@
 
 #include "Application.h"
 #include "SceneBase.h"
-#include "AABB.h"
+#include "Button.h"
 
 enum States
 {
@@ -28,8 +28,8 @@ enum States
 
 enum PAUSE_BUTTONS
 {
-	PAUSE_NONE = 0,
-	PAUSE_PLAY,
+	PAUSE_MENU,
+	PAUSE_CONTINUE,
 	PAUSE_OPTIONS,
 	PAUSE_EXIT,
 	PAUSE_TOTAL,
@@ -60,21 +60,18 @@ private:
 
 	//Current in game state
 	States m_currstate;
-
-	//Mouseposition
-	Vector3 m_vec3mousepos;
 	
 	//Set limits
 	float m_fworldheight;
 	float m_fworldwidth;
 
-
 	bool inControls;
 	static const int numButtons = 3;
-	AABB* Array[numButtons];
+	Button* Array[numButtons];
 
 	//Buttons
-	Mesh* MenuButton[MAX_MENU];
+	Mesh* MenuButton[PAUSE_TOTAL];
+	Mesh* meshList[NUM_GEOMETRY];
 
 	StateManager();
 };

@@ -1,6 +1,11 @@
 #ifndef COLLISION_MANAGER_H
 #define COLLISION_MANAGER_H
 
+//Author:Sheng Yang
+//Collision manager used for checking detection, responses
+//Reference:Physics framework, https://gamedevelopment.tutsplus.com/tutorials/how-to-create-a-custom-2d-physics-engine-the-basics-and-impulse-resolution--gamedev-6331
+//Singleton
+
 #include "GameObject.h"
 #include "Vector3.h"
 #include <vector>
@@ -62,11 +67,6 @@ protected:
 	int m_iworld_width;
 
 	Manifold *m = new Manifold;
-
-	float colltimecheck = 0;
-
-	//"Gravity"
-	Vector3 m_vec3Gravity = Vector3(0, -9.8, 0);
 };
 
 #endif // !COLLISION_MANAGER_H

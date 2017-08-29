@@ -15,7 +15,7 @@ SceneCollision::~SceneCollision()
 void SceneCollision::Init()
 {
 	SceneBase::Init();
-
+	Vector3 pos(Application::GetWindowWidth(), Application::GetWindowHeight(), 1);
 	StateManager::getInstance()->Init();
 	timer = 0.0f;
 	pause = false;

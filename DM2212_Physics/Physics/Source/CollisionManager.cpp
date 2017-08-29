@@ -16,7 +16,6 @@ void CollisionManager::SetWorldSize(int height, int width)
 {
 	m_iworld_height = height;
 	m_iworld_width = width;
-	colltimecheck = 0;
 }
 
 bool CollisionManager::CheckCollisionC(GameObject * go1, GameObject * go2)

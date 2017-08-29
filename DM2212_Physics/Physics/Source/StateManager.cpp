@@ -1,5 +1,8 @@
 #include "StateManager.h"
 #include "Application.h"
+#include "SceneManager.h"
+#include <sstream>
+#include <string>
 
 StateManager* StateManager::statemanager;
 
@@ -26,7 +29,7 @@ void StateManager::Init()
 	// Enable depth test
 	glEnable(GL_DEPTH_TEST);
 	// Accept fragment if it closer to the camera than the former one
-	glDepthFunc(GL_LESS);
+	//glDepthFunc(GL_LESS);
 
 	glEnable(GL_CULL_FACE);
 
@@ -106,21 +109,56 @@ void StateManager::Init()
 	}
 
 	//PAUSE
-	MenuButton[MENU_BACKGROUND] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButton[MENU_BACKGROUND]->textureID = LoadTGA("Image//mainmenu//mainmenu.tga");
-	MenuButton[MENU_PLAY] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButton[MENU_PLAY]->textureID = LoadTGA("Image//mainmenu//play.tga");
-	MenuButton[MENU_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButton[MENU_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
-	MenuButton[MENU_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButton[MENU_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
-	MenuButton[MENU_SANDBOX] = MeshBuilder::GenerateQuad("sandbox", Color(1.f, 0.f, 0.f), 1.f);
-	MenuButton[MENU_SANDBOX]->textureID = LoadTGA("Image//mainmenu//editor.tga");
+	MenuButton[PAUSE_MENU] = MeshBuilder::GenerateQuad("backround", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButton[PAUSE_MENU]->textureID = LoadTGA("Image//textbox.tga");
+	MenuButton[PAUSE_CONTINUE] = MeshBuilder::GenerateQuad("play", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButton[PAUSE_CONTINUE]->textureID = LoadTGA("Image//mainmenu//continue.tga");
+	MenuButton[PAUSE_OPTIONS] = MeshBuilder::GenerateQuad("options", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButton[PAUSE_OPTIONS]->textureID = LoadTGA("Image//mainmenu//options.tga");
+	MenuButton[PAUSE_EXIT] = MeshBuilder::GenerateQuad("exit", Color(1.f, 0.f, 0.f), 1.f);
+	MenuButton[PAUSE_EXIT]->textureID = LoadTGA("Image//mainmenu//quit.tga");
+
+	//Meshes
+	for (int i = 0; i < NUM_GEOMETRY; ++i)
+	{
+		meshList[i] = NULL;
+	}
+	meshList[GEO_AXES] = MeshBuilder::GenerateAxes("reference", 1000, 1000, 1000);
+	meshList[GEO_BALL] = MeshBuilder::GenerateQuad("ball", Color(1, 1, 1), 2.f);
+	meshList[GEO_CUBE] = MeshBuilder::GenerateCube("cube", Color(1, 1, 1), 1.f);
+	meshList[GEO_SHIP] = MeshBuilder::GenerateQuad("ship", Color(1, 1, 1), 1.f);
+	meshList[GEO_SHIP]->textureID = LoadTGA("Image//rocket.tga");
+	meshList[GEO_TEXT] = MeshBuilder::GenerateText("text", 16, 16);
+	meshList[GEO_TEXT]->textureID = LoadTGA("Image//calibri.tga");
+	meshList[GEO_TEXT]->material.kAmbient.Set(1, 0, 0);
+	meshList[GEO_GRID] = MeshBuilder::GenerateQuad("grid", Color(1, 1, 1), 1.f);
+	meshList[GEO_GRID]->textureID = LoadTGA("Image//Block_White.tga");
+	meshList[GEO_TEST_ANIMATION] = MeshBuilder::GenerateSpriteAnimation("phish", 1, 6, 1.f);
+	meshList[GEO_TEST_ANIMATION]->textureID = LoadTGA("Image//maskfish.tga");
+	SpriteAnimation *sa = dynamic_cast<SpriteAnimation*>(meshList[GEO_TEST_ANIMATION]);
+	if (sa)
+	{
+		sa->m_anim = new Animation();
+		sa->m_anim->Set(0, 5, 0, 1.f, true);
+	}
+	meshList[GEO_TEXTBOX] = MeshBuilder::GenerateQuad("ship", Color(1, 1, 1), 1.f);
+	meshList[GEO_TEXTBOX]->textureID = LoadTGA("Image//textbox.tga");
+	meshList[GEO_ITEMSELECT] = MeshBuilder::GenerateQuad("items", Color(1, 1, 1), 1.f);
+	meshList[GEO_ITEMSELECT]->textureID = LoadTGA("Image//toolboxbase2.tga");
 
 	//Set limits
 	m_fworldheight = 100.f;
 	m_fworldwidth = m_fworldheight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
 	
+	int w = Application::GetWindowWidth();
+	int h = Application::GetWindowHeight();
+
+	float textscale = 1.5;
+
+	Array[0] = new Button(Vector3(25.6 * textscale, 5.6 * textscale), Vector3(132, 78.5, 1.f), Button::BUTTON_TYPE::BUTTON_PLAY);
+	Array[1] = new Button(Vector3(27.6 * textscale, 4.9 * textscale), Vector3(132, 58.5, 1.f), Button::BUTTON_TYPE::BUTTON_OPTIONS);
+	Array[2] = new Button(Vector3(25.6 * textscale, 5.6 * textscale), Vector3(132, 36.5, 1.f), Button::BUTTON_TYPE::BUTTON_EXIT);
+
 	bLightEnabled = false;
 }
 
@@ -129,10 +167,6 @@ void StateManager::Update(double dt)
 	if (Application::IsKeyPressed(VK_ESCAPE))
 	{
 		StateManager::getInstance()->ChangeState(S_PAUSED);
-	}
-	else if (Application::IsKeyPressed(VK_F1))
-	{
-		StateManager::getInstance()->ChangeState(S_PLAYING);
 	}
 
 	if (Application::IsKeyPressed('3'))
@@ -148,21 +182,42 @@ void StateManager::Update(double dt)
 	float posX = static_cast<float>(x) / w * m_fworldwidth + camera.GetOffset_x();
 	float posY = (h - static_cast<float>(y)) / h * m_fworldheight + camera.GetOffset_y();
 	Vector3 mousepos(posX, posY, 0);
-
-	//Mouse Section
-	static bool bLButtonState = false;
-	if (!bLButtonState && Application::IsMousePressed(0))
+	std::cout << mousepos << std::endl;
+	if (m_currstate == S_PAUSED)
 	{
-		bLButtonState = true;
-		std::cout << "LBUTTON DOWN" << std::endl;
-		
-	}
-	else if (bLButtonState && !Application::IsMousePressed(0))
-	{
-		bLButtonState = false;
-		std::cout << "LBUTTON UP" << std::endl;
-	}
+		//Mouse Section
+		static bool bLButtonState = false;
+		if (!bLButtonState && Application::IsMousePressed(0))
+		{
+			bLButtonState = true;
+			std::cout << "LBUTTON DOWN" << std::endl;
 
+			for (unsigned i = 0; i < numButtons; ++i)
+			{
+				if (Array[i]->MouseCheck(mousepos))
+				{
+					switch (Array[i]->buttype)
+					{
+					case(Button::BUTTON_PLAY):
+						StateManager::getInstance()->ChangeState(S_PLAYING);
+						break;
+					case(Button::BUTTON_OPTIONS):
+						SceneManager::currscene = 3;
+						break;
+					case(Button::BUTTON_EXIT):
+						exit(0);
+						break;
+					}
+
+				}
+			}
+		}
+		else if (bLButtonState && !Application::IsMousePressed(0))
+		{
+			bLButtonState = false;
+			std::cout << "LBUTTON UP" << std::endl;
+		}
+	}
 }
 
 void StateManager::ChangeState(States state)
@@ -177,52 +232,69 @@ States StateManager::GetState()
 
 void StateManager::Render()
 {
-	m_fworldheight = 100.f;
-	m_fworldwidth = m_fworldheight * (float)Application::GetWindowWidth() / Application::GetWindowHeight();
-
 	glDisable(GL_DEPTH_TEST);
 
 	//Options
 	modelStack.PushMatrix();
-	modelStack.Translate(0.f, 0.f, -1.f);
+	modelStack.Translate(0.f, 0.f, 0.f);
 	modelStack.Scale(2.f, 2.f, 1.f);
-	RenderMesh(MenuButton[MENU_BACKGROUND], false);
+	RenderMesh(MenuButton[PAUSE_MENU], false);
 	modelStack.PopMatrix();
-
 	glEnable(GL_DEPTH_TEST);
+	
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0.5f, 0.4f, 0.f);
 	modelStack.Scale(0.25f, 0.25f, 1.f);
-	RenderMesh(MenuButton[MENU_PLAY], false);
+	RenderMesh(MenuButton[PAUSE_CONTINUE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0.5f, 0.f, 0.f);
 	modelStack.Scale(0.25f, 0.25f, 1.f);
-	RenderMesh(MenuButton[MENU_OPTIONS], false);
+	RenderMesh(MenuButton[PAUSE_OPTIONS], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
 	modelStack.Translate(0.5f, -0.4f, 0.f);
 	modelStack.Scale(0.25f, 0.25f, 1.f);
-	RenderMesh(MenuButton[MENU_EXIT], false);
+	RenderMesh(MenuButton[PAUSE_EXIT], false);
 	modelStack.PopMatrix();
+
+	//On screen text
+	std::ostringstream ss;
+	ss.str(std::string());
+	ss.precision(5);
+	ss << "ESC to Pause/Unpause";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 42);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Q and E to change tools";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 33);
+
+	ss.str("");
+	ss.precision(5);
+	ss << "Options:change mouse controls";
+	RenderTextOnScreen(meshList[GEO_TEXT], ss.str(), Color(0, 0, 0), 2, 5, 24);
 }
 
 void StateManager::RenderMesh(Mesh * mesh, bool enableLight)
 {
+	if (!mesh || mesh->textureID <= 0) //Proper error check
+		return;
+
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 
 	MVP = projectionStack.Top() * viewStack.Top() * modelStack.Top();
 	glUniformMatrix4fv(m_parameters[U_MVP], 1, GL_FALSE, &MVP.a[0]);
-	if (enableLight && bLightEnabled)
+	modelView = viewStack.Top() * modelStack.Top();
+	glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
+	if (enableLight)
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 1);
-		modelView = viewStack.Top() * modelStack.Top();
-		glUniformMatrix4fv(m_parameters[U_MODELVIEW], 1, GL_FALSE, &modelView.a[0]);
 		modelView_inverse_transpose = modelView.GetInverse().GetTranspose();
-		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView.a[0]);
+		glUniformMatrix4fv(m_parameters[U_MODELVIEW_INVERSE_TRANSPOSE], 1, GL_FALSE, &modelView_inverse_transpose.a[0]);
 
 		//load material
 		glUniform3fv(m_parameters[U_MATERIAL_AMBIENT], 1, &mesh->material.kAmbient.r);
@@ -234,6 +306,7 @@ void StateManager::RenderMesh(Mesh * mesh, bool enableLight)
 	{
 		glUniform1i(m_parameters[U_LIGHTENABLED], 0);
 	}
+
 	if (mesh->textureID > 0)
 	{
 		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 1);
@@ -245,7 +318,7 @@ void StateManager::RenderMesh(Mesh * mesh, bool enableLight)
 	{
 		glUniform1i(m_parameters[U_COLOR_TEXTURE_ENABLED], 0);
 	}
-	mesh->Render();
+	mesh->Render(); //this line should only be called once
 	if (mesh->textureID > 0)
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
